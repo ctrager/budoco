@@ -15,14 +15,20 @@ namespace net_razor
     {
         public Startup(IConfiguration configuration)
         {
+            Console.WriteLine("qq Startup");
             Configuration = configuration;
+            cnfg = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
+        public static IConfiguration cnfg { get; private set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Console.WriteLine("qq ConfigureServices");
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -33,11 +39,16 @@ namespace net_razor
             });
 
             services.AddRazorPages();
+            Console.WriteLine("qq DbConnectionString follows: ");
+            Console.WriteLine(Configuration["Btnet:DbConnectionString"]);
+            Console.WriteLine(Configuration["Btnet:SomeNumber"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Console.WriteLine("qq Configure");
+         
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

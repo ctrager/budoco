@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
-
-
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace net_razor.Pages
 {
     public class IndexModel : PageModel
     {
-        public string foo;      
+        public string foo; 
+        public string line1;
+        public string line2;
+        public string line3;
+
         private readonly ILogger<IndexModel> _logger;
 
         //private Microsoft.AspNetCore.Http.Ses;
@@ -27,7 +29,7 @@ namespace net_razor.Pages
         {
             Console.WriteLine("corey was here");
             
-            foo = "hello";
+            foo = "hello corey";
 
              //var sess = Session;
             //HttpContext context = HttpContext.Current;
@@ -51,6 +53,21 @@ namespace net_razor.Pages
             {
                 foo += ", ";
                 foo += k;    
+            }
+
+            line1 = MyConfig.var1;
+            line2 = Startup.cnfg["Btnet:DbConnectionString"];
+            DataSet ds = new DataSet();
+            string sql = "select * from corey_table";
+            using (var conn = new SqlConnection(Startup.cnfg["Btnet:DbConnectionString"])) 
+            {
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                da.Fill(ds);
+            } 
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                Console.WriteLine(dr[1].ToString());
             }
              
         }
