@@ -16,6 +16,8 @@ namespace net_razor.Pages
         public string line2;
         public string line3;
 
+        public DataTable dt;
+
         private readonly ILogger<IndexModel> _logger;
 
         //private Microsoft.AspNetCore.Http.Ses;
@@ -29,7 +31,7 @@ namespace net_razor.Pages
         {
             Console.WriteLine("corey was here");
             
-            foo = "hello corey";
+            foo = "hello corey ";
 
              //var sess = Session;
             //HttpContext context = HttpContext.Current;
@@ -65,15 +67,17 @@ namespace net_razor.Pages
                 SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                 da.Fill(ds);
             } 
-            foreach (DataRow dr in ds.Tables[0].Rows)
+            dt = ds.Tables[0];
+            
+/*             foreach (DataRow dr in ds1.Tables[0].Rows)
             {
                 Console.WriteLine(dr[1].ToString());
-            }
+            } */
              
         }
         public string GetSomeHtml()
         {
-            Console.WriteLine("this is GetSomeHtml");
+            Console.WriteLine("this is GetSomeHtml  ");
             return "<h1>corey was here</h1>";    
         }
     }

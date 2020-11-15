@@ -13,5 +13,21 @@
     <div>line 1: @Model.line1</div>
     <div>line 2: @Model.line2</div>
     <div>line 3: @Model.line3</div>
+    <table>
+        @{
+            for (int i = 0; i < Model.dt.Rows.Count; i++)
+            {
+                DataRow dr = Model.dt.Rows[i];
+                <tr>
+                    <td>
+                        @dr[0].ToString()
+                    </td>
+                    <td>
+                        @dr[1].ToString()
+                    </td>
+                </tr>
+            }
+        }
+    </table>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
