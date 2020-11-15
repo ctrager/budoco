@@ -112,3 +112,10 @@
 2020-11-15 16:26:46.590 -06:00 [INF] HTTP GET /Admin responded 200 in 5.0606 ms
 2020-11-15 16:26:47.117 -06:00 [INF] HTTP GET /Privacy responded 200 in 12.1423 ms
 2020-11-15 16:26:47.491 -06:00 [INF] HTTP GET / responded 200 in 2.9213 ms
+2020-11-15 16:28:00.345 -06:00 [INF] HTTP GET / responded 200 in 2.6422 ms
+2020-11-15 16:28:01.117 -06:00 [INF] HTTP GET /Privacy responded 200 in 1.2195 ms
+2020-11-15 16:28:01.827 -06:00 [INF] corey qq is logging info
+2020-11-15 16:28:01.827 -06:00 [WRN] corey qq is logging warning withtout
+2020-11-15 16:28:01.829 -06:00 [INF] HTTP GET /Admin responded 200 in 2.1992 ms
+2020-11-15 16:29:05.078 -06:00 [INF] Starting host
+2020-11-15 16:29:11.437 -06:00 [INF] Starting host
