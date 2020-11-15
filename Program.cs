@@ -16,11 +16,13 @@ namespace net_razor
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
+                
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
                 .MinimumLevel.Override("net_razor", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File(@"logs\mylog.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.File(@"logs/mylog.txt", 
+                    rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             try
