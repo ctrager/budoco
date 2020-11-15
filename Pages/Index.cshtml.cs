@@ -31,7 +31,7 @@ namespace net_razor.Pages
         {
             Console.WriteLine("corey was here");
             
-            foo = "hello corey ";
+            foo = "hello corey 222";
 
              //var sess = Session;
             //HttpContext context = HttpContext.Current;
@@ -57,7 +57,7 @@ namespace net_razor.Pages
                 foo += k;    
             }
 
-            line1 = MyConfig.var1;
+            line1 = "line1 - 133 66";
             line2 = Startup.cnfg["Btnet:DbConnectionString"];
             DataSet ds = new DataSet();
             string sql = "select * from corey_table";
