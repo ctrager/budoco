@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace net_razor
 {
@@ -29,6 +30,8 @@ namespace net_razor
         {
             Console.WriteLine("qq ConfigureServices");
 
+            
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -48,6 +51,8 @@ namespace net_razor
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             Console.WriteLine("qq Configure");
+
+            
          
             if (env.IsDevelopment())
             {
@@ -70,10 +75,22 @@ namespace net_razor
 
             app.UseAuthorization();
 
+            app.UseSerilogRequestLogging();
+
+            // corey added a step in the pipeline
+            app.Use(async (context, next) =>
+            {
+                Console.WriteLine(context.Request.Path);
+                
+                await next.Invoke();
+            });
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
+
+
         }
     }
 }

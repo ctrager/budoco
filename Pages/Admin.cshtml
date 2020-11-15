@@ -1,6 +1,18 @@
 @page
 @model AdminModel
+
 @{
+    if (true)
+    {
+        Console.WriteLine("Admin html 1");
+        <p>bad boy</p>
+        return;
+        //Console.WriteLine("Admin html 2");
+    }
+}
+
+@{
+    Console.WriteLine("Admin html 2");
     ViewData["Title"] = "Admin";
 }
 <h1>@ViewData["Title"]</h1>

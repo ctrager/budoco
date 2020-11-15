@@ -4,6 +4,11 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "dotnet_watch_run",
+            "command": "dotnet",
+            "args": ["watch", "run"]
+        },
+        {
             "label": "build",
             "command": "dotnet",
             "type": "shell",

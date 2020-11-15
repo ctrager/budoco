@@ -77,8 +77,7 @@ namespace net_razor.Pages
         }
         public string GetSomeHtml()
         {
-            Console.WriteLine("this is GetSomeHtml  ");
-            return "<h1>corey was here</h1>";    
+            Console.WriteLine("this is GetSomeHtml  ");            return "<h1>corey was here</h1>";    
         }
     }
 }

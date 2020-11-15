@@ -29,6 +29,7 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
+            //"preLaunchTask": "dotnet_watch_run",
             //"processId": "${command:pickProcess}"
             "processName": "net_razor"
         }

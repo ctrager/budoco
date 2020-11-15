@@ -27,6 +27,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin">Admin</a>
                         </li>
+                       @{
+                           for (int i = 0; i < 3; i++) 
+                           {
+                               <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Admin">@i.ToString()</a>
+                               
+                                </li>
+                           }
+                       }
                     </ul>
                 </div>
             </div>

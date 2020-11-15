@@ -16,15 +16,20 @@ namespace net_razor.Pages
         public AdminModel(ILogger<AdminModel> logger)
         {
             _logger = logger;
-            Console.WriteLine("qq admin ctor");
-            Response.Body.Write(UnicodeEncoding.UTF8.GetBytes("this is response.body.write "));
-            Response.CompleteAsync();
-     
+            logger.LogInformation("corey qq is logging info");
+            logger.LogWarning("corey qq is logging warning withtout");
+            System.Diagnostics.Debug.WriteLine("corey qq writeline without add logging");
         }
 
         public void OnGet()
         {
-            Console.WriteLine("qq admin onget  ");
+            
+            //Response.StatusCode = 403;
+            //Response.Body.WriteAsync(UnicodeEncoding.UTF8.GetBytes("this is response.body.write 403"));
+            //Response.CompleteAsync();
+            ///Console.WriteLine("qq admin onget  ");
+            //Response
+            //Response.
         }
     }
 }
