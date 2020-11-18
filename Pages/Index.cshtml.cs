@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Data;
-using System.Data.SqlClient;
+//using System.Data.SqlClient;
 using System.Data.Common;
+//using Npgsql.Sq
+using Npgsql;
+using NpgsqlTypes;
 
 namespace net_razor.Pages
 {
@@ -61,10 +64,10 @@ namespace net_razor.Pages
             line2 = Startup.cnfg["Btnet:DbConnectionString"];
             DataSet ds = new DataSet();
             string sql = "select * from corey_table";
-            using (var conn = new SqlConnection(Startup.cnfg["Btnet:DbConnectionString"])) 
+            using (var conn = new NpgsqlConnection(Startup.cnfg["Btnet:DbConnectionString"])) 
             {
                 conn.Open();
-                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                var da = new NpgsqlDataAdapter(sql, conn);
                 da.Fill(ds);
             } 
             dt = ds.Tables[0];
