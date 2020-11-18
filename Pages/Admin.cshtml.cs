@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Text;
 
-namespace net_razor.Pages
+namespace budoco.Pages
 {
     public class AdminModel : PageModel
     {

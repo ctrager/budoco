@@ -1,8 +1,8 @@
-# net_razor
+# budoco
 dotnet install package Serilog.AspNetCore
 
 to debug and auto load,
-run dotnet watch run in terminal, attach to net_razor process
+run dotnet watch run in terminal, attach to budoco process
 
 dotnet install package mailkit
 
@@ -13,9 +13,10 @@ edit /etc/posgres/
 /etc/postgresql/12/main/pg_hba.confi
 
 change postgres method from "peer" to "md5"
-systemctl restart postgresql
 
 sudo -u postgres psql
 
-ALTER USER postgres PASSWORD 'myPassword';
-ALTER ROLE
+alter user postgres PASSWORD 'MY PASSWORD';
+
+systemctl restart postgresql
+

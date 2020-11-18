@@ -10,7 +10,7 @@ using System.Data.Common;
 using Npgsql;
 using NpgsqlTypes;
 
-namespace net_razor.Pages
+namespace budoco.Pages
 {
     public class IndexModel : PageModel
     {

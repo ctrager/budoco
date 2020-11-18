@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net5.0/net_razor.dll",
+            "program": "${workspaceFolder}/bin/Debug/net5.0/budoco.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
@@ -25,13 +25,13 @@
             }
         },*/
         {
-            // manually run "dotnet watch run" then attach to net_razor.dll
+            // manually run "dotnet watch run" then attach to budoco.dll
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
             //"preLaunchTask": "dotnet_watch_run",
             //"processId": "${command:pickProcess}"
-            "processName": "net_razor"
+            "processName": "budoco"
         }
     ]
 }

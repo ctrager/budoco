@@ -9,7 +9,7 @@ using System.Text;
 using MailKit;
 using MimeKit;
 
-namespace net_razor.Pages
+namespace budoco.Pages
 {
     public class EmailModel : PageModel
     {

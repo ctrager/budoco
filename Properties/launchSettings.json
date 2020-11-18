@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "net_razor": {
+    "budoco": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

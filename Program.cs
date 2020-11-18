@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
-namespace net_razor
+namespace budoco
 {
     public class Program
     {
@@ -19,7 +19,7 @@ namespace net_razor
                 
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
-                .MinimumLevel.Override("net_razor", Serilog.Events.LogEventLevel.Information)
+                .MinimumLevel.Override("budoco", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.File(@"logs/mylog.txt", 
                     rollingInterval: RollingInterval.Day)
