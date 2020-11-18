@@ -1,0 +1,42 @@
+﻿@page
+@model UsersModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div>
+    <div>
+        <a href="User?id=0">Create</a>
+    </div>
+    <table class="dt">
+        @{
+            <tr>
+                @{
+                    for (int i = 0; i < Model.dt.Columns.Count; i++)
+                    {
+
+                        <th>@Model.dt.Columns[i].ColumnName</th>
+                    }
+                }
+                <th>Action</th>
+            </tr>
+            for (int i = 0; i < Model.dt.Rows.Count; i++)
+            {
+                DataRow dr = Model.dt.Rows[i];
+                <tr>
+                    <td>
+                        @dr[0].ToString()
+                    </td>
+                    <td>
+                        @dr[1].ToString()
+                    </td>
+                    <td>
+                        <a href="User?id=@dr[0]">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

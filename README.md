@@ -20,3 +20,11 @@ alter user postgres PASSWORD 'MY PASSWORD';
 
 systemctl restart postgresql
 
+psql -d budoco -U postgres -f misc/setup.sql
+
+
+budoco=# insert into users (us_username) values('isaac');select currval('users_us_id_seq');
+INSERT 0 1
+       4
+
+

@@ -1,0 +1,14 @@
+﻿@page
+@model UserModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div>
+    <form method="post">
+        <div>id<input asp-for="id" value="@Model.id"></input>
+        </div>
+        <div>username<input asp-for="username" value="@Model.username"></input>
+        </div>
+        <div><input type="submit">Send</input></div>
+    </form>
+</div>
