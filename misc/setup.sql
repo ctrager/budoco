@@ -51,9 +51,9 @@ us_org int not null default(1),
 us_most_recent_login_datetime datetime null
 */
 
-insert into users (us_username, us_email, us_is_admin) values('admin', '', true);
-insert into users (us_username, us_email, us_is_admin) values('corey', 'ctrager@gmail.com', false);
-insert into users (us_username, us_email, us_is_admin) values('misayo', 'm@example.com', false);
-insert into users (us_username, us_email, us_is_admin) values('abi', 'a@example.com', false);
-insert into users (us_username, us_email, us_is_admin) values('isaac', 'i@example.com', false);
+insert into users (us_username, us_email, us_is_admin, us_password) values('admin', '', true, '');
+insert into users (us_username, us_email, us_is_admin, us_password) values('corey', 'ctrager@gmail.com', true, '');
+insert into users (us_username, us_email, us_is_admin, us_password) values('misayo', 'm@example.com', false, 'x');
+insert into users (us_username, us_email, us_is_admin, us_password) values('abi', 'a@example.com', false, 'x');
+insert into users (us_username, us_email, us_is_admin, us_password) values('isaac', 'i@example.com', false, 'x');
 
