@@ -29,6 +29,32 @@ namespace budoco
             return ds.Tables[0];
         }
 
+        public static DataTable get_datatable(string sql, Dictionary<string, dynamic> sql_parameters)
+        {
+
+            Console.WriteLine(sql);
+
+            DataSet ds = new DataSet();
+
+            using (var conn = new NpgsqlConnection(get_connection_string()))
+            {
+                conn.Open();
+
+                NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
+
+                foreach (KeyValuePair<string, dynamic> pair in sql_parameters)
+                {
+
+                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                }
+
+                var da = new NpgsqlDataAdapter(cmd);
+                da.Fill(ds);
+
+                return ds.Tables[0];
+            }
+        }
+
         public static DataRow get_datarow(string sql)
         {
             DataTable dt = get_datatable(sql);
@@ -36,26 +62,41 @@ namespace budoco
             if (dt.Rows.Count == 1)
             {
                 return dt.Rows[0];
-
             }
             else
             {
                 return null;
-
             }
         }
 
-        public static string exec(string sql, Dictionary<string, dynamic> sql_parameters)
+        public static DataRow get_datarow(string sql, Dictionary<string, dynamic> sql_parameters)
+        {
+            DataTable dt = get_datatable(sql, sql_parameters);
+
+            if (dt.Rows.Count == 1)
+            {
+                return dt.Rows[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static string exec(string sql, Dictionary<string, dynamic> sql_parameters = null)
         {
             Console.WriteLine(sql);
             using (var conn = new NpgsqlConnection(get_connection_string()))
             {
                 conn.Open();
                 NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-                foreach (KeyValuePair<string, dynamic> pair in sql_parameters)
+                if (sql_parameters is not null)
                 {
+                    foreach (KeyValuePair<string, dynamic> pair in sql_parameters)
+                    {
 
-                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                        cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                    }
                 }
 
                 cmd.ExecuteNonQuery();

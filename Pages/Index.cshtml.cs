@@ -1,33 +1,37 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
+using System.Linq.Expressions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace budoco.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel()
         {
-            _logger = logger;
+            Log.Information("IndexModel ctor");
         }
-
-        public string msg;
 
         public void OnGet()
         {
-            DataTable dt = (DataTable)MyCache.Get(HttpContext.Session.Id + ":dt");
+            HttpContext.Session.SetString("dummy", "dummy"); // to solve problem of session changing?
 
-            if (dt != null)
+            string sql = "select * from sessions where se_id = '" + HttpContext.Session.Id + "'";
+
+            DataRow dr = db_util.get_datarow(sql);
+            if (dr == null)
             {
-                msg = dt.Rows.Count.ToString();
+                Response.Redirect("/Login");
             }
             else
             {
-                msg = "dt is null";
+                Response.Redirect("/Admin/Users");
             }
+
         }
     }
 }

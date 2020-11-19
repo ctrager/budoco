@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
@@ -12,13 +8,6 @@ namespace budoco.Pages
 {
     public class UserModel : PageModel
     {
-
-        private readonly ILogger<UserModel> _logger;
-
-        public UserModel(ILogger<UserModel> logger)
-        {
-            _logger = logger;
-        }
 
         // bindings start 
         [BindProperty]
@@ -36,7 +25,7 @@ namespace budoco.Pages
 
         public void OnGet(int id)
         {
-            this.id = id; //bd_util.get_int_or_zero_from_string(Request.Query["id"]);
+            this.id = id;
 
             if (id != 0)
             {

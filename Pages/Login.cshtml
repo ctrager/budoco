@@ -1,0 +1,35 @@
+@page
+@model LoginModel
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Login";
+}
+<div>
+    @Model.HttpContext.Session.Id
+</div>
+
+@{
+    if (@Model.errs.Count() > 0)
+    {
+        <div class="flash_err">
+            @{
+                foreach (string err in @Model.errs)
+                {
+                    <div>@err</div>
+                }
+            }
+        </div>
+    }
+}
+
+<form method="post">
+    <div>username or email
+        <input asp-for="username" />
+    </div>
+    <div>password
+        <input type="password" asp-for="password" />
+    </div>
+    <div><input type="submit" value="Login"></div>
+</form>
+<div><a href="Register">Register</a></div>
+<div><a href="ResetPassword">Forgot Password?</a></div>

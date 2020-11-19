@@ -40,11 +40,19 @@ namespace budoco
 
             services.AddDistributedMemoryCache();
 
+            services.Configure<CookiePolicyOptions>(options =>
+                    {
+                        // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                        options.CheckConsentNeeded = context => false; // Default is true, make it false
+                        //options.CheckConsentNeeded = false;
+                    });
+
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                //options.Cookie.HttpOnly = false;
                 options.Cookie.IsEssential = true;
+                //options.Cookie.
             });
 
             services.AddRazorPages();
