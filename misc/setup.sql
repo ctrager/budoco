@@ -1,8 +1,3 @@
-drop database if /exists budoco;
-
-create database budoco;
-
-\c budoco
 
 drop table if exists users;
 
@@ -12,8 +7,23 @@ us_id serial,
 us_username varchar(20) not null,
 us_email varchar(40) not null,
 us_is_admin boolean,
-us_password varchar(32)
+us_password varchar(32),
+us_create_timestamp timestamptz default CURRENT_TIMESTAMP not null
 );
+
+CREATE UNIQUE INDEX us_username_index ON users (us_username);
+CREATE UNIQUE INDEX us_email_index ON users (us_email);
+
+create table sessions
+(
+	se_id varchar(40) not null,
+	se_timestamp timestamptz default CURRENT_TIMESTAMP not null,
+	se_user int not null
+);
+
+CREATE UNIQUE INDEX se_id_index ON sessions (se_id);
+
+
 /*
 
 us_salt int null,

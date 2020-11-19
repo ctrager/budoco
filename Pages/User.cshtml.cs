@@ -19,15 +19,20 @@ namespace budoco.Pages
         {
             _logger = logger;
         }
+
+        // bindings start 
         [BindProperty]
         public int id { get; set; }
+
         [BindProperty]
         public string username { get; set; }
 
         [BindProperty]
         public string email { get; set; }
 
-        public string flash;
+        [BindProperty]
+        public bool is_admin { get; set; }
+        // bindings end        
 
         public void OnGet(int id)
         {
@@ -39,42 +44,58 @@ namespace budoco.Pages
 
                 DataTable dt = db_util.get_datatable(sql);
 
-                this.username = (string)dt.Rows[0]["us_username"];
-                this.email = (string)dt.Rows[0]["us_email"];
+                username = (string)dt.Rows[0]["us_username"];
+                email = (string)dt.Rows[0]["us_email"];
             }
         }
 
         public void OnPost()
         {
-            if (!IsValid(username, email))
+            if (!IsValid())
             {
                 return;
             }
 
             string sql;
-            var dict = new Dictionary<string, dynamic>();
+
 
             if (id == 0)
             {
-                sql = "insert into users (us_username) values(@us_username) returning us_id";
-                dict["@us_username"] = username;
-                this.id = (int)db_util.exec_scalar(sql, dict);
+                sql = @"insert into users (us_username, us_email, us_is_admin) 
+                values(@us_username, @us_email, @us_is_admin) 
+                returning us_id";
+
+                this.id = (int)db_util.exec_scalar(sql, GetValuesDict());
                 bd_util.set_flash_msg(HttpContext, "Create was successful");
                 Response.Redirect("User?id=" + this.id.ToString());
 
             }
             else
             {
-                sql = "update users set us_username = @us_username where us_id = @us_id;";
-                dict["@us_id"] = id;
-                dict["@us_username"] = username;
-                db_util.exec(sql, dict);
+                sql = @"update users set 
+                us_username = @us_username,
+                us_email = @us_email,
+                us_is_admin = @us_is_admin
+                where us_id = @us_id;";
+
+                db_util.exec(sql, GetValuesDict());
                 bd_util.set_flash_msg(HttpContext, "Update was successful");
             }
-
         }
 
-        bool IsValid(string username, string email)
+        Dictionary<string, dynamic> GetValuesDict()
+        {
+            var dict = new Dictionary<string, dynamic>();
+
+            dict["@us_id"] = id;
+            dict["@us_username"] = username;
+            dict["@us_email"] = email;
+            dict["@us_is_admin"] = is_admin;
+
+            return dict;
+        }
+
+        bool IsValid()
         {
             var errs = new List<string>();
 
@@ -98,6 +119,5 @@ namespace budoco.Pages
                 return false;
             }
         }
-
     }
 }

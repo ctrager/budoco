@@ -17,8 +17,15 @@ namespace budoco
         public Startup(IConfiguration configuration)
         {
             Console.WriteLine("qq Startup");
+            Log.Warning("qq calling Log.Warning in Startup");
             Configuration = configuration;
             cnfg = configuration;
+
+            // test cache
+            object o = new object();
+            int i = 0;
+            o = i;
+            MyCache.Set("my_int", o);
         }
 
         public IConfiguration Configuration { get; }
@@ -30,8 +37,6 @@ namespace budoco
         public void ConfigureServices(IServiceCollection services)
         {
             Console.WriteLine("qq ConfigureServices");
-
-
 
             services.AddDistributedMemoryCache();
 
@@ -45,18 +50,12 @@ namespace budoco
             services.AddRazorPages();
             Console.WriteLine("qq DbConnectionString follows: ");
             Console.WriteLine(Configuration["Btnet:DbConnectionString"]);
-            Console.WriteLine(Configuration["Btnet:SomeNumber"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             Console.WriteLine("qq Configure");
-
-
-
-
-
 
             if (env.IsDevelopment())
             {
@@ -84,7 +83,11 @@ namespace budoco
             // corey added a step in the pipeline
             app.Use(async (context, next) =>
             {
-                Console.WriteLine(context.Request.Path);
+                int my_int = (int)MyCache.Get("my_int");
+                object o = new object();
+                o = ++my_int;
+                MyCache.Set("my_int", o);
+                Console.WriteLine(context.Request.Path + "," + my_int.ToString());
 
                 await next.Invoke();
             });
@@ -94,7 +97,8 @@ namespace budoco
                 endpoints.MapRazorPages();
             });
 
-
         }
+
     }
+
 }
