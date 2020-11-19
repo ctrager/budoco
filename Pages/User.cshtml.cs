@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
@@ -16,10 +19,13 @@ namespace budoco.Pages
         {
             _logger = logger;
         }
+        [BindProperty]
+        public int id { get; set; }
+        [BindProperty]
+        public string username { get; set; }
 
-        public int id;
-        public string username;
-        public string email;
+        [BindProperty]
+        public string email { get; set; }
 
         public string flash;
 

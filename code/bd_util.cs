@@ -34,6 +34,11 @@ namespace budoco
             string s = context.Session.GetString("flash_err");
             context.Session.SetString("flash_err", "");
 
+            if (s is null)
+            {
+                s = "";
+            }
+
             string[] errs = s.Split('|');
             return errs;
         }
