@@ -33,7 +33,7 @@ namespace budoco.Pages
             var dict = new Dictionary<string, dynamic>();
             dict["@us_id"] = delete_id;
             db_util.exec(sql, dict);
-            HttpContext.Session.SetString("flash", "Delete was successful");
+            bd_util.set_flash_msg(HttpContext, "Delete was successful");
             GetUsers();
         }
 
@@ -43,6 +43,5 @@ namespace budoco.Pages
             string sql = "select * from users";
             dt = db_util.get_datatable(sql);
         }
-
     }
 }

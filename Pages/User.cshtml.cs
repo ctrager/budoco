@@ -19,6 +19,7 @@ namespace budoco.Pages
 
         public int id;
         public string username;
+        public string email;
 
         public string flash;
 
@@ -28,16 +29,22 @@ namespace budoco.Pages
 
             if (id != 0)
             {
-                string sql = "select us_id, us_username from users where us_id = " + id.ToString();
+                string sql = "select * from users where us_id = " + id.ToString();
 
                 DataTable dt = db_util.get_datatable(sql);
 
                 this.username = (string)dt.Rows[0]["us_username"];
+                this.email = (string)dt.Rows[0]["us_email"];
             }
         }
 
-        public void OnPost(int id, string username)
+        public void OnPost()
         {
+            if (!IsValid(username, email))
+            {
+                return;
+            }
+
             string sql;
             var dict = new Dictionary<string, dynamic>();
 
@@ -46,7 +53,7 @@ namespace budoco.Pages
                 sql = "insert into users (us_username) values(@us_username) returning us_id";
                 dict["@us_username"] = username;
                 this.id = (int)db_util.exec_scalar(sql, dict);
-                HttpContext.Session.SetString("flash", "Create was successful");
+                bd_util.set_flash_msg(HttpContext, "Create was successful");
                 Response.Redirect("User?id=" + this.id.ToString());
 
             }
@@ -56,14 +63,35 @@ namespace budoco.Pages
                 dict["@us_id"] = id;
                 dict["@us_username"] = username;
                 db_util.exec(sql, dict);
-                this.id = id;
-                HttpContext.Session.SetString("flash", "Update was successful");
+                bd_util.set_flash_msg(HttpContext, "Update was successful");
             }
 
-            this.username = username;
         }
 
+        bool IsValid(string username, string email)
+        {
+            var errs = new List<string>();
 
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                errs.Add("Username is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                errs.Add("Email is required");
+            }
+
+            if (errs.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                bd_util.set_flash_err(HttpContext, errs);
+                return false;
+            }
+        }
 
     }
 }

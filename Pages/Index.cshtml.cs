@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+
 using System.Data;
 using Npgsql;
 
@@ -19,8 +20,6 @@ namespace budoco.Pages
         public DataTable dt;
 
         private readonly ILogger<IndexModel> _logger;
-
-        //private Microsoft.AspNetCore.Http.Ses;
 
         public IndexModel(ILogger<IndexModel> logger)
         {

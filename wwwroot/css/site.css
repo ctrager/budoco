@@ -92,3 +92,11 @@ form {
 body {
   background-color: white;
 }
+
+.flash_msg {
+  background-color: #ccffcc;
+}
+
+.flash_err {
+  background-color: #ffcccc;
+}

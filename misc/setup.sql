@@ -1,13 +1,18 @@
-drop database if exists budoco;
+drop database if /exists budoco;
 
 create database budoco;
 
 \c budoco
 
+drop table if exists users;
+
 create table users
 (
 us_id serial,
-us_username varchar(20) not null
+us_username varchar(20) not null,
+us_email varchar(40) not null,
+us_is_admin boolean,
+us_password varchar(32)
 );
 /*
 
@@ -36,4 +41,9 @@ us_org int not null default(1),
 us_most_recent_login_datetime datetime null
 */
 
-insert into users (us_username) values('admin');
+insert into users (us_username, us_email, us_is_admin) values('admin', '', true);
+insert into users (us_username, us_email, us_is_admin) values('corey', 'ctrager@gmail.com', false);
+insert into users (us_username, us_email, us_is_admin) values('misayo', 'm@example.com', false);
+insert into users (us_username, us_email, us_is_admin) values('abi', 'a@example.com', false);
+insert into users (us_username, us_email, us_is_admin) values('isaac', 'i@example.com', false);
+

@@ -7,15 +7,18 @@
 
 <script>
     function delete_user(id) {
-        $("#delete_id").val(id)
-        $("#delete_form").submit()
+        if (confirm("Are you sure?")) {
+            $("#delete_id").val(id)
+            $("#delete_form").submit()
+        }
     }
 </script>
 <form id="delete_form" style="" method="post">
     <input id="delete_id" name="delete_id" value="6666" />
 </form>
 <div>
-    <div class="flash">@bd_util.get_flash(Model.HttpContext)</div>
+    <div class="flash_msg">@bd_util.get_flash_msg(Model.HttpContext)</div>
+    <div class="flash_err">@bd_util.get_flash_errs(Model.HttpContext)</div>
     <div>
         <a href="User?id=0">Create</a>
     </div>
@@ -31,16 +34,17 @@
                 }
                 <th>Action</th>
             </tr>
-            for (int i = 0; i < Model.dt.Rows.Count; i++)
+            for (int row = 0; row < Model.dt.Rows.Count; row++)
             {
-                DataRow dr = Model.dt.Rows[i];
+                DataRow dr = Model.dt.Rows[row];
                 <tr>
-                    <td>
-                        @dr[0].ToString()
-                    </td>
-                    <td>
-                        @dr[1].ToString()
-                    </td>
+                    @{
+                        for (int col = 0; col < Model.dt.Columns.Count; col++)
+                        {
+
+                            <td>@dr[col]</td>
+                        }
+                    }
                     <td>
                         <a href="User?id=@dr[0]">
                             Update

@@ -6,11 +6,24 @@
 }
 <div>
     @{
+        // not a redirect
         if (Model.HttpContext.Response.StatusCode == 200)
         {
-            <div class="flash">@bd_util.get_flash(Model.HttpContext)</div>
-        }
+            <div class="flash_msg">@bd_util.get_flash_msg(Model.HttpContext)</div>
+            var errs = bd_util.get_flash_errs(Model.HttpContext);
+            if (errs.Count() > 0)
+            {
 
+                <div class="flash_err">
+                    @{
+                        foreach (string err in errs)
+                        {
+                            <div>@err</div>
+                        }
+                    }
+                </div>
+            }
+        }
     }
 
     <div>
@@ -21,6 +34,8 @@
         <div>id<input asp-for="id" value="@Model.id" disabled></input>
         </div>
         <div>username<input asp-for="username" value="@Model.username"></input>
+        </div>
+        <div>email<input asp-for="email" value="@Model.email"></input>
         </div>
         <div>
             @{
