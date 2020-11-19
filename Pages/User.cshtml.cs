@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
@@ -17,6 +19,8 @@ namespace budoco.Pages
 
         public int id;
         public string username;
+
+        public string flash;
 
         public void OnGet(int id)
         {
@@ -42,6 +46,9 @@ namespace budoco.Pages
                 sql = "insert into users (us_username) values(@us_username) returning us_id";
                 dict["@us_username"] = username;
                 this.id = (int)db_util.exec_scalar(sql, dict);
+                HttpContext.Session.SetString("flash", "Create was successful");
+                Response.Redirect("User?id=" + this.id.ToString());
+
             }
             else
             {
@@ -50,9 +57,13 @@ namespace budoco.Pages
                 dict["@us_username"] = username;
                 db_util.exec(sql, dict);
                 this.id = id;
+                HttpContext.Session.SetString("flash", "Update was successful");
             }
 
             this.username = username;
         }
+
+
+
     }
 }

@@ -25,12 +25,13 @@ namespace budoco
 
         public static IConfiguration cnfg { get; private set; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             Console.WriteLine("qq ConfigureServices");
 
-            
+
 
             services.AddDistributedMemoryCache();
 
@@ -52,8 +53,11 @@ namespace budoco
         {
             Console.WriteLine("qq Configure");
 
-            
-         
+
+
+
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -66,7 +70,7 @@ namespace budoco
             }
 
             app.UseSession();
-            
+
             // for redirecting https to http
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -81,10 +85,10 @@ namespace budoco
             app.Use(async (context, next) =>
             {
                 Console.WriteLine(context.Request.Path);
-                
+
                 await next.Invoke();
             });
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

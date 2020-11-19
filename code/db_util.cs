@@ -47,16 +47,17 @@ namespace budoco
 
         public static string exec(string sql, Dictionary<string, dynamic> sql_parameters)
         {
-
+            Console.WriteLine(sql);
             using (var conn = new NpgsqlConnection(get_connection_string()))
             {
                 conn.Open();
                 NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
                 foreach (KeyValuePair<string, dynamic> pair in sql_parameters)
                 {
+
                     cmd.Parameters.AddWithValue(pair.Key, pair.Value);
                 }
-                Console.WriteLine(cmd.CommandText);
+
                 cmd.ExecuteNonQuery();
             }
             return null;
@@ -65,6 +66,7 @@ namespace budoco
         public static object exec_scalar(string sql, Dictionary<string, dynamic> sql_parameters)
         {
 
+            Console.WriteLine(sql);
             using (var conn = new NpgsqlConnection(get_connection_string()))
             {
                 conn.Open();

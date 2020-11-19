@@ -1,7 +1,6 @@
 using System;
-using System.Data;
-using Npgsql;
-using NpgsqlTypes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace budoco
 {
@@ -16,6 +15,13 @@ namespace budoco
 
             return Convert.ToInt32(s);
 
+        }
+
+        public static string get_flash(HttpContext context)
+        {
+            string flash = context.Session.GetString("flash");
+            context.Session.SetString("flash", "");
+            return flash;
         }
 
     }

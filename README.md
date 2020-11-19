@@ -29,5 +29,7 @@ validate forms
 add db indexes
 logon 
 admin or not
+flash msg
+
 
 

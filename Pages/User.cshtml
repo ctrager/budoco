@@ -1,12 +1,22 @@
 ﻿@page
 @model UserModel
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Home page";
 }
 <div>
+    @{
+        if (Model.HttpContext.Response.StatusCode == 200)
+        {
+            <div class="flash">@bd_util.get_flash(Model.HttpContext)</div>
+        }
+
+    }
+
     <div>
         <a href="Users">Back to Users</a>
     </div>
+
     <form method="post">
         <div>id<input asp-for="id" value="@Model.id" disabled></input>
         </div>

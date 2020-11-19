@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using System.Data;
-//using System.Data.SqlClient;
-using System.Data.Common;
-//using Npgsql.Sq
-using Npgsql;
-using NpgsqlTypes;
 
 namespace budoco.Pages
 {
@@ -22,13 +18,30 @@ namespace budoco.Pages
         }
 
         public DataTable dt;
+        public string flash;
 
         public void OnGet()
+        {
+            GetUsers();
+        }
+
+
+        public void OnPost(int delete_id)
+        {
+            Console.WriteLine("deleting");
+            string sql = "delete from users where us_id = @us_id;";
+            var dict = new Dictionary<string, dynamic>();
+            dict["@us_id"] = delete_id;
+            db_util.exec(sql, dict);
+            HttpContext.Session.SetString("flash", "Delete was successful");
+            GetUsers();
+        }
+
+        void GetUsers()
         {
             DataSet ds = new DataSet();
             string sql = "select * from users";
             dt = db_util.get_datatable(sql);
-
         }
 
     }
