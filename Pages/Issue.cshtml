@@ -35,6 +35,17 @@
         </div>
         <div>desc<input asp-for="desc" value="@Model.desc"></input>
         </div>
+        <div>Project
+            <select asp-for="project_id" asp-items="@Model.projects">
+                <option value="">-- Select Project --</option>
+            </select>
+        </div>
+        <div>Category
+            <select asp-for="category_id" asp-items="@Model.categories">
+                <option value="">-- Select Category --</option>
+            </select>
+        </div>
+
         <div>
             @{
                 string button_text = (@Model.id == 0) ? "Create" : "Update";

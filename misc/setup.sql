@@ -74,13 +74,13 @@ CREATE UNIQUE INDEX pr_name_index ON priorities (pr_name);
 create table queries
 (
 qu_id serial,
-qu_desc varchar(60) not null,
+qu_name varchar(60) not null,
 qu_sql text not null,
 qu_default int not null default 0,
 qu_sort_seq int not null default 0
 );
 
-create unique index qu_desc_index on queries (qu_desc);
+create unique index qu_name_index on queries (qu_name);
 
 insert into users (us_username, us_email, us_is_admin, us_password) values('admin', '', true, '');
 insert into users (us_username, us_email, us_is_admin, us_password) values('corey', 'ctrager@gmail.com', true, '');
@@ -125,21 +125,21 @@ create table posts
 (
 	p_id serial,
 	p_issue int,
-	p_desc text,
+	p_text text,
 	p_created_by_user int not null,
 	p_created_date timestamptz default CURRENT_TIMESTAMP
 );
 
 create index p_issue_index on posts (p_issue);
 
-insert into queries (qu_desc, qu_sql, qu_default) values (
+insert into queries (qu_name, qu_sql, qu_default) values (
 'all issues',
 'select i_id, i_desc, i_project, i_category, i_status, i_priority'
 || chr(10) || ' from issues '
 || chr(10) || ' order by is_id desc',
 1);
 
-insert into queries (qu_desc, qu_sql) values (
+insert into queries (qu_name, qu_sql) values (
 'just with category',
 'select i_id, i_desc, i_created_date '
 || chr(10) || ' from issues '
