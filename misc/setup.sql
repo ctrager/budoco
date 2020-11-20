@@ -106,43 +106,43 @@ insert into statuses (st_name) values ('done');
 
 create table issues 
 (
-is_id serial,
-is_desc varchar(200) not null,
-is_created_by_user int not null,
-is_created_date timestamptz default CURRENT_TIMESTAMP,
-is_status int not null,
-is_priority int not null,
-is_category int not null,
-is_project int not null,
-is_assigned_to_user int null,
-is_last_updated_user int null,
-is_last_updated_date timestamptz null
+i_id serial,
+i_desc varchar(200) not null,
+i_created_by_user int not null default 0,
+i_created_date timestamptz default CURRENT_TIMESTAMP,
+i_status int not null default 0,
+i_priority int not null default 0,
+i_category int not null default 0,
+i_project int not null default 0,
+i_assigned_to_user int null default 0,
+i_last_updated_user int null default 0,
+i_last_updated_date timestamptz null
 );
 
 
 
 create table posts 
 (
-	po_id serial,
-	po_issue int,
-	po_desc text,
-	po_created_by_user int not null,
-	po_created_date timestamptz default CURRENT_TIMESTAMP
+	p_id serial,
+	p_issue int,
+	p_desc text,
+	p_created_by_user int not null,
+	p_created_date timestamptz default CURRENT_TIMESTAMP
 );
 
-create index pst_bug_index on posts (po_issue);
+create index p_issue_index on posts (p_issue);
 
 insert into queries (qu_desc, qu_sql, qu_default) values (
 'all issues',
-'select is_id, is_desc, is_project, is_category, is_status, is_priority'
+'select i_id, i_desc, i_project, i_category, i_status, i_priority'
 || chr(10) || ' from issues '
 || chr(10) || ' order by is_id desc',
 1);
 
 insert into queries (qu_desc, qu_sql) values (
 'just with category',
-'select is_id, is_desc, is_created_date '
+'select i_id, i_desc, i_created_date '
 || chr(10) || ' from issues '
-|| chr(10) || ' where is_category != 0 '
-|| chr(10) || ' order by is_id desc');
+|| chr(10) || ' where i_category != 0 '
+|| chr(10) || ' order by i_id desc');
 

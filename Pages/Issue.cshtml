@@ -1,0 +1,46 @@
+@page
+@model IssueModel
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Issue";
+}
+<div>
+    @{
+        // not a redirect
+        if (Model.HttpContext.Response.StatusCode == 200)
+        {
+            <div class="flash_msg">@bd_util.get_flash_msg(Model.HttpContext)</div>
+            var errs = bd_util.get_flash_errs(Model.HttpContext);
+            if (errs.Count() > 0)
+            {
+
+                <div class="flash_err">
+                    @{
+                        foreach (string err in errs)
+                        {
+                            <div>@err</div>
+                        }
+                    }
+                </div>
+            }
+        }
+    }
+
+    <div>
+        <a href="Issues">Back to Issues</a>
+    </div>
+
+    <form method="post">
+        <div>id<input asp-for="id" value="@Model.id" disabled></input>
+        </div>
+        <div>desc<input asp-for="desc" value="@Model.desc"></input>
+        </div>
+        <div>
+            @{
+                string button_text = (@Model.id == 0) ? "Create" : "Update";
+            }
+
+            <button type="submit">@button_text</button>
+        </div>
+    </form>
+</div>

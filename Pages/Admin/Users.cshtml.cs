@@ -17,7 +17,6 @@ namespace budoco.Pages
         }
 
         public DataTable dt;
-        public string flash;
 
         public void OnGet()
         {

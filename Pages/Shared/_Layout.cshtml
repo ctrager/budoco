@@ -14,7 +14,8 @@
 
 @{
     var is_admin = HttpContextAccessor.HttpContext.Session.GetInt32("us_is_admin");
-    if (is_admin is null) {
+    if (is_admin is null)
+    {
         is_admin = 0;
     }
     //string session_id = HttpContextAccessor.HttpContext.Session.Id;
@@ -39,16 +40,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
                         </li>
                         @{
-                            if (is_admin > 0) {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Admin">Admin</a>
-                        </li>
+                            if (is_admin > 0)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Admin">Admin</a>
+                                </li>
                             }
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Email">Email</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Users">Users</a>
                         </li>
@@ -71,7 +73,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - budoco - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2020 - budoco - <a asp-area="" asp-page="/About">About</a>
         </div>
     </footer>
 
