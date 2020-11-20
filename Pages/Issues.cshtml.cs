@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http;
 using Serilog;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace budoco.Pages
 {
@@ -19,19 +20,42 @@ namespace budoco.Pages
         [FromQuery]
         public int page { get; set; }
 
+        [BindProperty]
+        public IEnumerable<SelectListItem> queries { get; set; }
+        [FromQuery]
+        public int query_id { get; set; }
+
+
         public void OnGet()
         {
+
+            bd_util.redirect_if_not_logged_in(HttpContext);
+
             if (page == 0)
             {
                 page = 1;
             }
 
-            //bd_util.redirect_if_not_logged_in(HttpContext);
+            // which query?
+            DataRow query_row;
+            const int ID = 0;
+            const int SQL = 1;
 
-            DataSet ds = new DataSet();
+            queries = db_util.prepare_select_list("select qu_id, qu_name from queries order by qu_sort_seq, qu_name");
+            if (query_id == 0)
+            {
+                query_row = db_util.get_datarow(
+                    "select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1");
+                query_id = (int)query_row[ID];
+            }
+            else
+            {
+                query_row = db_util.get_datarow(
+                    "select qu_id, qu_sql from queries where qu_id = " + query_id.ToString());
 
-            string sql = @"select i_id as ""Issue Id"", i_desc as ""desc"" 
-            from issues order by i_id asc";
+            }
+
+            string sql = (string)query_row[SQL];
 
             dt = db_util.get_datatable(sql);
         }

@@ -2,29 +2,10 @@
 @model UserModel
 @using Microsoft.AspNetCore.Http
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Users";
 }
 <div>
-    @{
-        // not a redirect
-        if (Model.HttpContext.Response.StatusCode == 200)
-        {
-            <div class="flash_msg">@bd_util.get_flash_msg(Model.HttpContext)</div>
-            var errs = bd_util.get_flash_errs(Model.HttpContext);
-            if (errs.Count() > 0)
-            {
-
-                <div class="flash_err">
-                    @{
-                        foreach (string err in errs)
-                        {
-                            <div>@err</div>
-                        }
-                    }
-                </div>
-            }
-        }
-    }
+    <partial name="_FlashPartial" />
 
     <div>
         <a href="Users">Back to Users</a>

@@ -1,5 +1,6 @@
 ﻿@page
 @model UsersModel
+@using Microsoft.AspNetCore.Mvc.Razor
 
 @{
     ViewData["Title"] = "Users";
@@ -13,12 +14,14 @@
         }
     }
 </script>
-<form id="delete_form" style="" method="post">
+
+<form style="display:none" id="delete_form" style="" method="post">
     <input id="delete_id" name="delete_id" value="6666" />
 </form>
 <div>
-    <div class="flash_msg">@bd_util.get_flash_msg(Model.HttpContext)</div>
-    <div class="flash_err">@bd_util.get_flash_errs(Model.HttpContext)</div>
+
+    <partial name="_FlashPartial" />
+
     <div>
         <a href="User?id=0">Create</a>
     </div>

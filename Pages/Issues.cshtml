@@ -4,8 +4,23 @@
 @{
     ViewData["Title"] = "Issues";
 }
+
+<script>
+    function on_query_change(id) {
+        window.location.href = "Issues?query_id=" + id
+    }
+</script>
+
+
 <div>
     <a href="Issue?id=0">Create Issue</a>
+</div>
+
+<div>
+    Queries
+    <select onchange="on_query_change(this.value)" asp-for="query_id" asp-items="@Model.queries">
+        <option value="">-- Select Query --</option>
+    </select>
 </div>
 
 <div>
@@ -23,7 +38,7 @@
             {
                 if (Model.page > 1)
                 {
-                    <a href="Issues?page=@(Model.page - 1)">Prev</a>
+                    <a href="Issues?query_id=@Model.query_id&page=@(Model.page - 1)">Prev</a>
                 }
                 else
                 {
@@ -33,7 +48,7 @@
                 <span>&nbsp;&nbsp;</span>
                 if (Model.page < number_of_pages)
                 {
-                    <a href="Issues?page=@(Model.page + 1)">Next</a>
+                    <a href="Issues?query_id=@Model.query_id&page=@(Model.page + 1)">Next</a>
                 }
                 else
                 {
@@ -74,7 +89,7 @@
                     }
                     <td>
                         <a href="Issue?id=@dr[0]">
-                            Update
+                            Details
                         </a>
                     </td>
                 </tr>
@@ -86,5 +101,4 @@
             }
         }
     </table>
-
 </div>

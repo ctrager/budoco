@@ -76,7 +76,6 @@ create table queries
 qu_id serial,
 qu_name varchar(60) not null,
 qu_sql text not null,
-qu_default int not null default 0,
 qu_sort_seq int not null default 0
 );
 
@@ -132,17 +131,18 @@ create table posts
 
 create index p_issue_index on posts (p_issue);
 
-insert into queries (qu_name, qu_sql, qu_default) values (
+insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 'all issues',
 'select i_id, i_desc, i_project, i_category, i_status, i_priority'
 || chr(10) || ' from issues '
-|| chr(10) || ' order by is_id desc',
+|| chr(10) || ' order by i_id desc',
 1);
 
-insert into queries (qu_name, qu_sql) values (
+insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 'just with category',
 'select i_id, i_desc, i_created_date '
 || chr(10) || ' from issues '
 || chr(10) || ' where i_category != 0 '
-|| chr(10) || ' order by i_id desc');
+|| chr(10) || ' order by i_id desc',
+2);
 

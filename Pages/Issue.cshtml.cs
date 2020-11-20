@@ -21,26 +21,30 @@ namespace budoco.Pages
         public string desc { get; set; }
 
         [BindProperty]
-        public IEnumerable<SelectListItem> projects { get; set; }
+        public IEnumerable<SelectListItem> assigned_to_users { get; set; }
+        [BindProperty]
+        public int assigned_to_user_id { get; set; }
+
         [BindProperty]
         public IEnumerable<SelectListItem> categories { get; set; }
         [BindProperty]
-        public IEnumerable<SelectListItem> statuses { get; set; }
+        public int category_id { get; set; }
+
+
         [BindProperty]
         public IEnumerable<SelectListItem> priorities { get; set; }
         [BindProperty]
-        public IEnumerable<SelectListItem> assigned_to_users { get; set; }
+        public int priority_id { get; set; }
 
         [BindProperty]
-        public int project_id { get; set; }
+        public IEnumerable<SelectListItem> projects { get; set; }
         [BindProperty]
-        public int category_id { get; set; }
+        public int project_id { get; set; }
+
+        [BindProperty]
+        public IEnumerable<SelectListItem> statuses { get; set; }
         [BindProperty]
         public int status_id { get; set; }
-        [BindProperty]
-        public int priority_id { get; set; }
-        [BindProperty]
-        public int assigned_to_user_id { get; set; }
 
         // bindings end        
 
@@ -118,27 +122,11 @@ namespace budoco.Pages
 
         void PrepareDropdowns()
         {
-            var list = PrepareSelectList("select pj_id, pj_name from projects");
-            projects = new SelectList(list, "val", "nam");
-
-            list = PrepareSelectList("select ca_id, ca_name from categories");
-            categories = new SelectList(list, "val", "nam");
-        }
-
-        List<Dictionary<string, dynamic>> PrepareSelectList(string sql)
-        {
-            var list = new List<Dictionary<string, dynamic>>();
-
-            DataTable dt = db_util.get_datatable(sql);
-            foreach (DataRow dr in dt.Rows)
-            {
-                var d = new Dictionary<string, dynamic>();
-                d["val"] = dr[0];
-                d["nam"] = dr[1];
-                list.Add(d);
-            }
-            return list;
-
+            assigned_to_users = db_util.prepare_select_list("select us_id, us_username from users");
+            categories = db_util.prepare_select_list("select ca_id, ca_name from categories");
+            projects = db_util.prepare_select_list("select pj_id, pj_name from projects");
+            priorities = db_util.prepare_select_list("select pr_id, pr_name from priorities");
+            statuses = db_util.prepare_select_list("select st_id, st_name from statuses");
         }
 
         bool IsValid()

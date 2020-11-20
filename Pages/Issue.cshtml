@@ -9,20 +9,7 @@
         // not a redirect
         if (Model.HttpContext.Response.StatusCode == 200)
         {
-            <div class="flash_msg">@bd_util.get_flash_msg(Model.HttpContext)</div>
-            var errs = bd_util.get_flash_errs(Model.HttpContext);
-            if (errs.Count() > 0)
-            {
-
-                <div class="flash_err">
-                    @{
-                        foreach (string err in errs)
-                        {
-                            <div>@err</div>
-                        }
-                    }
-                </div>
-            }
+            <partial name="_FlashPartial" />
         }
     }
 
@@ -35,14 +22,39 @@
         </div>
         <div>desc<input asp-for="desc" value="@Model.desc"></input>
         </div>
-        <div>Project
+
+        <div>
+            Category
+            <select asp-for="category_id" asp-items="@Model.categories">
+                <option value="">-- Select Category --</option>
+            </select>
+        </div>
+
+        <div>
+            Project
             <select asp-for="project_id" asp-items="@Model.projects">
                 <option value="">-- Select Project --</option>
             </select>
         </div>
-        <div>Category
-            <select asp-for="category_id" asp-items="@Model.categories">
-                <option value="">-- Select Category --</option>
+
+        <div>
+            Priority
+            <select asp-for="priority_id" asp-items="@Model.priorities">
+                <option value="">-- Select Priority --</option>
+            </select>
+        </div>
+
+        <div>
+            Status
+            <select asp-for="status_id" asp-items="@Model.statuses">
+                <option value="">-- Select Status --</option>
+            </select>
+        </div>
+
+        <div>
+            Assigned to
+            <select asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_users">
+                <option value="">-- Assign to --</option>
             </select>
         </div>
 

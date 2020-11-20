@@ -25,11 +25,13 @@ psql -d budoco -U postgres -f misc/setup.sql
 
 todo:
 
-validate forms
-add db indexes
-logon 
-admin or not
+issue - text
+issue - posts
+issue - attachments
+issue - history
 
+login - register with confirm
+login - reset password with confirm
 
-
+deploy
 

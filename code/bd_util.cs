@@ -30,7 +30,7 @@ namespace budoco
             context.Session.SetString("flash_msg", msg);
         }
 
-        public static string[] get_flash_errs(HttpContext context)
+        public static List<string> get_flash_errs(HttpContext context)
         {
             string s = context.Session.GetString("flash_err");
             context.Session.SetString("flash_err", "");
@@ -40,8 +40,10 @@ namespace budoco
                 s = "";
             }
 
-            string[] errs = s.Split('|');
-            return errs;
+            string[] err_array = s.Split('|');
+
+            return new List<string>(err_array);
+
         }
 
         public static void set_flash_err(HttpContext context, List<string> errs)

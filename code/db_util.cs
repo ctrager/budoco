@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using Npgsql;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace budoco
 {
@@ -104,7 +105,7 @@ namespace budoco
             return null;
         }
 
-        public static object exec_scalar(string sql, Dictionary<string, dynamic> sql_parameters)
+        public static object exec_scalar(string sql, Dictionary<string, dynamic> sql_parameters = null)
         {
 
             Console.WriteLine(sql);
@@ -112,17 +113,33 @@ namespace budoco
             {
                 conn.Open();
                 NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-                foreach (KeyValuePair<string, dynamic> pair in sql_parameters)
+                if (sql_parameters is not null)
                 {
-                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                    foreach (KeyValuePair<string, dynamic> pair in sql_parameters)
+                    {
+                        cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                    }
                 }
-                Console.WriteLine(cmd.CommandText);
                 var result = cmd.ExecuteScalar();
-                Console.WriteLine("scalar follows");
-                Console.WriteLine(result.ToString());
                 return result;
             }
         }
+
+        public static SelectList prepare_select_list(string sql)
+        {
+            var list = new List<Dictionary<string, dynamic>>();
+
+            DataTable dt = db_util.get_datatable(sql);
+            foreach (DataRow dr in dt.Rows)
+            {
+                var d = new Dictionary<string, dynamic>();
+                d["val"] = dr[0];
+                d["nam"] = dr[1];
+                list.Add(d);
+            }
+            return new SelectList(list, "val", "nam");
+        }
+
 
     }
 }

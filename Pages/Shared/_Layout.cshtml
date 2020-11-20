@@ -34,10 +34,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Issues</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Issues">Issues</a>
                         </li>
                         @{
-                            if (is_admin > 0)
+                            if (is_admin >= 0)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Admin">Admin</a>
@@ -49,13 +49,10 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Users">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/User">User</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" href="/Login?action=signout">Sign Out</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/About">About</a>
                         </li>
                     </ul>
                 </div>
@@ -67,12 +64,6 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - budoco - <a asp-area="" asp-page="/About">About</a>
-        </div>
-    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
