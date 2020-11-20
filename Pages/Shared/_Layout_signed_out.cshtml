@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">@Startup.cnfg["Btnet:AppName"]</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">@Startup.cnfg.AppName</a>
             </div>
         </nav>
     </header>
@@ -29,7 +29,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - @Startup.cnfg["Btnet:AppName"] - <a asp-area="" asp-page="/About">About</a>
+            &copy; 2020 - @Startup.cnfg.AppName - <a asp-area="" asp-page="/About">About</a>
         </div>
     </footer>
 

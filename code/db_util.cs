@@ -10,7 +10,7 @@ namespace budoco
 
         public static string get_connection_string()
         {
-            return Startup.cnfg["Btnet:DbConnectionString"];
+            return Startup.cnfg.DbConnectionString;
         }
 
         public static DataTable get_datatable(string sql)

@@ -1,11 +1,48 @@
 @page
 @model IssuesModel
-@using Microsoft.AspNetCore.Http
+
 @{
     ViewData["Title"] = "Issues";
 }
 <div>
     <a href="Issue?id=0">Create Issue</a>
+</div>
+
+<div>
+    @{
+        int number_of_pages = Model.dt.Rows.Count / Startup.cnfg.RowsPerPage;
+        if (Model.dt.Rows.Count % Startup.cnfg.RowsPerPage > 0)
+        {
+            number_of_pages++;
+        }
+
+        if (number_of_pages > 0)
+        {
+            <span>Page @Model.page of @number_of_pages&nbsp;&nbsp;</span>
+            if (number_of_pages > 1)
+            {
+                if (Model.page > 1)
+                {
+                    <a href="Issues?page=@(Model.page - 1)">Prev</a>
+                }
+                else
+                {
+                    <span class="gray">Prev</span>
+                }
+
+                <span>&nbsp;&nbsp;</span>
+                if (Model.page < number_of_pages)
+                {
+                    <a href="Issues?page=@(Model.page + 1)">Next</a>
+                }
+                else
+                {
+                    <span class="gray">Next</span>
+                }
+            }
+        }
+
+    }
 </div>
 
 <div>
@@ -21,7 +58,10 @@
                 }
                 <th>Action</th>
             </tr>
-            for (int row = 0; row < Model.dt.Rows.Count; row++)
+            int start_row = (Model.page - 1) * Startup.cnfg.RowsPerPage;
+            int row_count = 0;
+
+            for (int row = start_row; row < Model.dt.Rows.Count; row++)
             {
                 DataRow dr = Model.dt.Rows[row];
                 <tr>
@@ -38,6 +78,11 @@
                         </a>
                     </td>
                 </tr>
+                row_count++;
+                if (row_count == Startup.cnfg.RowsPerPage)
+                {
+                    break;
+                }
             }
         }
     </table>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace budoco
@@ -19,18 +20,20 @@ namespace budoco
             Console.WriteLine("qq Startup");
             Log.Warning("qq calling Log.Warning in Startup");
             Configuration = configuration;
-            cnfg = configuration;
+
+            Configuration.GetSection("Budoco").Bind(cnfg);
 
             // test cache
             object o = new object();
             int i = 0;
             o = i;
             MyCache.Set("my_int", o);
+
         }
 
         public IConfiguration Configuration { get; }
 
-        public static IConfiguration cnfg { get; private set; }
+        public static MyConfig cnfg = new MyConfig();
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -60,7 +63,7 @@ namespace budoco
 
             services.AddRazorPages();
             Console.WriteLine("qq DbConnectionString follows: ");
-            Console.WriteLine(Configuration["Btnet:DbConnectionString"]);
+            Console.WriteLine(Configuration["Budoco:DbConnectionString"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
