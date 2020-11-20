@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System;
 
 namespace budoco.Pages
 {
@@ -18,19 +19,10 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            HttpContext.Session.SetString("dummy", "dummy"); // to solve problem of session changing?
+            bd_util.redirect_if_not_logged_in(HttpContext);
 
-            string sql = "select * from sessions where se_id = '" + HttpContext.Session.Id + "'";
-
-            DataRow dr = db_util.get_datarow(sql);
-            if (dr == null)
-            {
-                Response.Redirect("/Login");
-            }
-            else
-            {
-                Response.Redirect("/Admin/Users");
-            }
+            // logged in so, redirect to main issues list
+            Response.Redirect("/Issues");
 
         }
     }

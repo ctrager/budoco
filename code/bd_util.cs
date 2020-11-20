@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using System.Collections.Generic;
+using System.Data;
 
 namespace budoco
 {
@@ -15,7 +16,6 @@ namespace budoco
             }
 
             return Convert.ToInt32(s);
-
         }
 
         public static string get_flash_msg(HttpContext context)
@@ -29,6 +29,7 @@ namespace budoco
         {
             context.Session.SetString("flash_msg", msg);
         }
+
         public static string[] get_flash_errs(HttpContext context)
         {
             string s = context.Session.GetString("flash_err");
@@ -49,5 +50,31 @@ namespace budoco
             context.Session.SetString("flash_err", s);
         }
 
+        public static void redirect_if_not_logged_in(HttpContext context)
+        {
+            // Session was changing every page. Stackoverflow person
+            // said session needs at least one thing. This seems to work.
+            context.Session.SetString("dummy", "dummy");
+
+            string sql = @"select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '" + context.Session.Id + "'";
+
+            DataRow dr = db_util.get_datarow(sql);
+
+            if (dr is null)
+            {
+                context.Response.Redirect("/Login");
+                return;
+            }
+
+            context.Session.SetInt32("us_id", (int)dr["us_id"]);
+            context.Session.SetString("us_username", (string)dr["us_username"]);
+            context.Session.SetString("us_email", (string)dr["us_email"]);
+            context.Session.SetInt32("us_is_admin", Convert.ToInt32((bool)dr["us_is_admin"]));
+
+        }
+
     }
+
 }

@@ -2,21 +2,12 @@
 @model AdminModel
 
 @{
-    @* if ()
-    {
-        Console.WriteLine("Admin html 1");
-        <p>bad boy</p>
-        //return;
-        //Console.WriteLine("Admin html 2");
-    } *@
-}
-
-@{
-    Console.WriteLine("Admin html 2");
     ViewData["Title"] = "Admin";
 }
 <h1>@ViewData["Title"]</h1>
 
-<div><a href="/">home</a></div>
-<div><a href="privacy">privacy</a></div>
-<div><a href="Privacy">Privacy</a></div>
+<div><a href="/Admin/Users">Users</a></div>
+<div><a href="/Admin/Projects">Projects</a></div>
+<div><a href="/Admin/Categories">Categories</a></div>
+<div><a href="/Admin/Statuses">Statuses</a></div>
+<div><a href="/Admin/Priorities">Priorities</a></div>

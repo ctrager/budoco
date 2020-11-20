@@ -25,16 +25,20 @@ namespace budoco.Pages
 
         public void OnGet(int id)
         {
+
+            bd_util.redirect_if_not_logged_in(HttpContext);
+
             this.id = id;
 
             if (id != 0)
             {
                 string sql = "select * from users where us_id = " + id.ToString();
 
-                DataTable dt = db_util.get_datatable(sql);
+                DataRow dr = db_util.get_datarow(sql);
 
-                username = (string)dt.Rows[0]["us_username"];
-                email = (string)dt.Rows[0]["us_email"];
+                username = (string)dr["us_username"];
+                email = (string)dr["us_email"];
+                is_admin = (bool)dr["us_is_admin"];
             }
         }
 

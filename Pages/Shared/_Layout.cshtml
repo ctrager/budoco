@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,6 +11,15 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
+@{
+    var is_admin = HttpContextAccessor.HttpContext.Session.GetInt32("us_is_admin");
+    if (is_admin is null) {
+        is_admin = 0;
+    }
+    //string session_id = HttpContextAccessor.HttpContext.Session.Id;
+}
+
 
 <body>
     <header>
@@ -26,13 +38,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
                         </li>
+                        @{
+                            if (is_admin > 0) {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Admin">Admin</a>
                         </li>
+                            }
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Email">Email</a>
                         </li>
-
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Users">Users</a>
                         </li>

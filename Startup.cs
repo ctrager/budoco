@@ -47,6 +47,9 @@ namespace budoco
                         //options.CheckConsentNeeded = false;
                     });
 
+            services.AddHttpContextAccessor();
+            //TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(20);

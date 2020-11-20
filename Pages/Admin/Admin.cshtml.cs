@@ -6,30 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace budoco.Pages
 {
     public class AdminModel : PageModel
     {
-        private readonly ILogger<AdminModel> _logger;
-
-        public AdminModel(ILogger<AdminModel> logger)
-        {
-            _logger = logger;
-            logger.LogInformation("corey qq is logging info");
-            logger.LogWarning("corey qq is logging warning withtout");
-            System.Diagnostics.Debug.WriteLine("corey qq writeline without add logging");
-        }
-
         public void OnGet()
         {
-            
-            //Response.StatusCode = 403;
-            //Response.Body.WriteAsync(UnicodeEncoding.UTF8.GetBytes("this is response.body.write 403"));
-            //Response.CompleteAsync();
-            ///Console.WriteLine("qq admin onget  ");
-            //Response
-            //Response.
+
+            bd_util.redirect_if_not_logged_in(HttpContext);
+
+            var is_admin = HttpContext.Session.GetInt32("us_is_admin");
+
         }
     }
 }

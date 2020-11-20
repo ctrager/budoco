@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using System.Data;
 
 namespace budoco.Pages
@@ -22,6 +21,7 @@ namespace budoco.Pages
 
         public void OnGet()
         {
+            bd_util.redirect_if_not_logged_in(HttpContext);
             GetUsers();
         }
 
