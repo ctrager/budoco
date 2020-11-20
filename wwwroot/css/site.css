@@ -84,6 +84,15 @@ td {
   padding: 3px;
 }
 
+th {
+  /*background-color: yellow;*/
+  border: 1px solid lightgrey;
+  background-color: #eeffee;
+  border-collapse: collapse;
+  padding: 3px;
+}
+
+
 form {
   border: 1px solid gray;
   background: lightgray;
@@ -103,4 +112,28 @@ body {
 
 .gray {
   color: #dddddd;
+}
+
+th {
+  font-weight: normal;
+}
+
+.unsorted {
+  background-color: #eeffee;
+  font-weight: normal;
+  color: blue;
+}
+
+.sorted {
+  background-color: yellow;
+  font-weight: normal;
+  color: blue;
+}
+
+.unsorted:hover {
+  text-decoration: underline;
+}
+
+.sorted:hover {
+  text-decoration: underline;
 }

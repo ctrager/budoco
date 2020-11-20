@@ -20,6 +20,12 @@ namespace budoco.Pages
         [FromQuery]
         public int page { get; set; }
 
+        [FromQuery]
+        public int sort { get; set; }
+
+        [FromQuery]
+        public string dir { get; set; }
+
         [BindProperty]
         public IEnumerable<SelectListItem> queries { get; set; }
         [FromQuery]
@@ -56,6 +62,21 @@ namespace budoco.Pages
             }
 
             string sql = (string)query_row[SQL];
+
+            // trim order by clause and replace with ours  
+            if (sort > 0)
+            {
+                if (dir != "asc" && dir != "desc")
+                {
+                    dir = "asc";
+                }
+                int start_of_order_by = sql.IndexOf("order by");
+                sql = sql.Substring(0, start_of_order_by);
+                // sort is 0 based everywhere but the sql
+                sql += "order by " + (sort + 1).ToString() + " " + dir;
+            }
+
+            sql = sql.Replace("$ME", HttpContext.Session.GetInt32("us_id").ToString());
 
             dt = db_util.get_datatable(sql);
         }

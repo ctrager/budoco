@@ -25,13 +25,31 @@ psql -d budoco -U postgres -f misc/setup.sql
 
 todo:
 
-issue - text
-issue - posts
-issue - attachments
-issue - history
-
 login - register with confirm
 login - reset password with confirm
 
-deploy
+deploy/install
+
+issue - text
+issue - posts
+issue - attachments (blobs)
+issue - history
+
+full text search
+
+deploy/install
+
+send and receive emails
+
+more query examples
+
+create and run queries
+
+queries with variables - $ME = self
+
+admin pages
+
+"migration" scheme
+
+sortable, filterable grid
 

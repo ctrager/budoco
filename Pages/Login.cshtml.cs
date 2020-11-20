@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 using System.Data;
 using Serilog;
 
@@ -25,10 +26,21 @@ namespace budoco.Pages
 
         public List<string> errs = new List<string>();
 
-        public void OnPost(string action)
+        public void OnGet(string action)
         {
-            if (action is not null) {
+            //           HttpContext.Session.SetString("dummy", "dummy");
+            if (action is not null)
+            {
                 Signout();
+                return;
+            }
+        }
+
+        public void OnPost()
+        {
+
+            if (!IsValid())
+            {
                 return;
             }
 
@@ -66,11 +78,36 @@ namespace budoco.Pages
 
         }
 
-        public void Signout() 
+        public void Signout()
         {
             string sql = "delete from sessions where se_id = '" + HttpContext.Session.Id + "'";
             db_util.exec(sql);
-            Response.Redirect("/");
+            Response.Redirect("/Login");
+        }
+
+        bool IsValid()
+        {
+            var errs = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                errs.Add("User or email is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                errs.Add("Password is required.");
+            }
+
+            if (errs.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                bd_util.set_flash_err(HttpContext, errs);
+                return false;
+            }
         }
     }
 }

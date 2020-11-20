@@ -12,19 +12,7 @@
     @Model.HttpContext.Session.Id
 </div>
 
-@{
-    if (@Model.errs.Count() > 0)
-    {
-        <div class="flash_err">
-            @{
-                foreach (string err in @Model.errs)
-                {
-                    <div>@err</div>
-                }
-            }
-        </div>
-    }
-}
+<partial name="_FlashPartial" />
 
 <form method="post">
     <div>username or email

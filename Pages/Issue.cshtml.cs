@@ -84,8 +84,8 @@ namespace budoco.Pages
             {
 
                 sql = @"insert into issues 
-                (i_desc, i_created_by_user, i_category, i_project) 
-                values(@i_desc, @i_created_by_user, @i_category, @i_project) 
+                (i_desc, i_created_by_user, i_category, i_project, i_priority, i_status, i_assigned_to_user) 
+                values(@i_desc, @i_created_by_user, @i_category, @i_project, @i_priority, @i_status, @i_assigned_to_user) 
                 returning i_id";
 
                 this.id = (int)db_util.exec_scalar(sql, GetValuesDict());
@@ -98,7 +98,10 @@ namespace budoco.Pages
                 i_desc = @i_desc, 
                 i_last_updated_user = @i_last_updated_user,
                 i_category = @i_category,
-                i_project = @i_project
+                i_project = @i_project,
+                i_priority = @i_priority,
+                i_status = @i_status,
+                i_assigned_to_user = @i_assigned_to_user
                 where i_id = @i_id;";
 
                 db_util.exec(sql, GetValuesDict());
@@ -115,7 +118,10 @@ namespace budoco.Pages
             dict["@i_created_by_user"] = HttpContext.Session.GetInt32("us_id");
             dict["@i_last_updated_user"] = HttpContext.Session.GetInt32("us_id");
             dict["@i_category"] = category_id;
+            dict["@i_assigned_to_user"] = assigned_to_user_id;
             dict["@i_project"] = project_id;
+            dict["@i_priority"] = priority_id;
+            dict["@i_status"] = status_id;
 
             return dict;
         }

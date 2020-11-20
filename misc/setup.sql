@@ -132,17 +132,25 @@ create table posts
 create index p_issue_index on posts (p_issue);
 
 insert into queries (qu_name, qu_sql, qu_sort_seq) values (
-'all issues',
-'select i_id, i_desc, i_project, i_category, i_status, i_priority'
+'All issues',
+'select i_id, i_desc, i_project, i_category, i_status, i_priority, i_created_by_user, i_assigned_to_user'
 || chr(10) || ' from issues '
 || chr(10) || ' order by i_id desc',
 1);
 
 insert into queries (qu_name, qu_sql, qu_sort_seq) values (
-'just with category',
-'select i_id, i_desc, i_created_date '
+'All open issues',
+'select i_id, i_desc, i_status '
 || chr(10) || ' from issues '
-|| chr(10) || ' where i_category != 0 '
+|| chr(10) || ' where (i_status != 3) '
+|| chr(10) || ' order by i_id desc',
+2);
+
+insert into queries (qu_name, qu_sql, qu_sort_seq) values (
+'Issues assigned to me',
+'select i_id, i_desc '
+|| chr(10) || ' from issues '
+|| chr(10) || ' where (i_assigned_to_user_id == $ME) '
 || chr(10) || ' order by i_id desc',
 2);
 
