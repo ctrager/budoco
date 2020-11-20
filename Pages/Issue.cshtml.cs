@@ -59,6 +59,8 @@ namespace budoco.Pages
                 DataRow dr = db_util.get_datarow(sql);
 
                 desc = (string)dr["i_desc"];
+                category_id = (int)dr["i_category"];
+                project_id = (int)dr["i_project"];
 
             }
         }
@@ -66,7 +68,6 @@ namespace budoco.Pages
         public void OnPost()
         {
             PrepareDropdowns();
-
 
             if (!IsValid())
             {
@@ -79,8 +80,8 @@ namespace budoco.Pages
             {
 
                 sql = @"insert into issues 
-                (i_desc, i_created_by_user) 
-                values(@i_desc, @i_created_by_user) 
+                (i_desc, i_created_by_user, i_category, i_project) 
+                values(@i_desc, @i_created_by_user, @i_category, @i_project) 
                 returning i_id";
 
                 this.id = (int)db_util.exec_scalar(sql, GetValuesDict());
@@ -91,7 +92,9 @@ namespace budoco.Pages
             {
                 sql = @"update issues set 
                 i_desc = @i_desc, 
-                i_last_updated_user = @i_last_updated_user
+                i_last_updated_user = @i_last_updated_user,
+                i_category = @i_category,
+                i_project = @i_project
                 where i_id = @i_id;";
 
                 db_util.exec(sql, GetValuesDict());
@@ -107,6 +110,9 @@ namespace budoco.Pages
             dict["@i_desc"] = desc;
             dict["@i_created_by_user"] = HttpContext.Session.GetInt32("us_id");
             dict["@i_last_updated_user"] = HttpContext.Session.GetInt32("us_id");
+            dict["@i_category"] = category_id;
+            dict["@i_project"] = project_id;
+
             return dict;
         }
 
