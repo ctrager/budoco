@@ -14,9 +14,6 @@ namespace budoco.Pages
 
         // bindings start 
         [BindProperty]
-        public int id { get; set; }
-
-        [BindProperty]
         public string username { get; set; }
 
         [BindProperty]
@@ -24,11 +21,10 @@ namespace budoco.Pages
 
         // bindings end  
 
-        public List<string> errs = new List<string>();
+        int user_id = 0;
 
         public void OnGet(string action)
         {
-            //           HttpContext.Session.SetString("dummy", "dummy");
             if (action is not null)
             {
                 Signout();
@@ -44,37 +40,16 @@ namespace budoco.Pages
                 return;
             }
 
-            // check user and password
-            string sql = @"select * from users where 
-            (us_username = @us_username or us_email = @us_email) 
-            and us_password = @us_password";
+            // login - insert row in sessions
 
-            var dict = new Dictionary<string, dynamic>();
-
-            dict["@us_username"] = username;
-            dict["@us_email"] = username; // on purpose, user can login typing either
-            dict["@us_password"] = password;
-
-            DataRow user_dr = db_util.get_datarow(sql, dict);
-
-            if (user_dr is null)
-            {
-                errs.Add("User or Password incorrect");
-            }
-            else
-            {
-                // login 
-
-                dict.Clear();
-
-                sql = @"insert into sessions (se_id, se_user)
+            string sql = @"insert into sessions (se_id, se_user)
                 values (@se_id, @se_user)";
 
-                dict["@se_id"] = HttpContext.Session.Id;
-                dict["@se_user"] = user_dr[0];
-                db_util.exec(sql, dict);
-                Response.Redirect("Issues");
-            }
+            var dict = new Dictionary<string, dynamic>();
+            dict["@se_id"] = HttpContext.Session.Id;
+            dict["@se_user"] = user_id;
+            db_util.exec(sql, dict);
+            Response.Redirect("Issues");
 
         }
 
@@ -97,6 +72,50 @@ namespace budoco.Pages
             if (string.IsNullOrWhiteSpace(password))
             {
                 errs.Add("Password is required.");
+            }
+
+            if (errs.Count == 0)
+            {
+                // check user and password
+                string sql = @"select * from users where 
+                (us_username = @us_username or us_email = @us_email)";
+
+                var dict = new Dictionary<string, dynamic>();
+
+                dict["@us_username"] = username;
+                dict["@us_email"] = username; // on purpose, user can login typing either
+
+                DataRow dr_user = db_util.get_datarow(sql, dict);
+
+                if (dr_user is null)
+                {
+                    errs.Add("User or Password incorect.");
+                }
+                else
+                {
+                    string password_in_db = (string)dr_user["us_password"];
+
+                    // users added via script, so admin, etc
+                    if (password_in_db.Length < 48)
+                    {
+                        // later, force reset of password
+                        // for now, just allow in
+                        user_id = (int)dr_user[0];
+                    }
+                    else
+                    {
+                        if (!bd_util.check_password_against_hash(password, password_in_db))
+                        {
+                            // on purpose lowercase password so that Corey knows the diff
+                            errs.Add("User or password incorrect.");
+                        }
+                        else
+                        {
+                            // success
+                            user_id = (int)dr_user[0];
+                        }
+                    }
+                }
             }
 
             if (errs.Count == 0)

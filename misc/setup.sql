@@ -8,6 +8,7 @@ drop table if exists priorities;
 drop table if exists statuses;
 drop table if exists queries;
 drop table if exists posts;
+drop table if exists emailed_links;
 
 create table users
 (
@@ -15,7 +16,8 @@ us_id serial,
 us_username varchar(20) not null,
 us_email varchar(40) not null,
 us_is_admin boolean default false,
-us_password varchar(32) not null default '',
+us_password varchar(48) not null default '',
+us_is_active boolean default true,
 us_create_timestamp timestamptz default CURRENT_TIMESTAMP not null
 );
 
@@ -82,7 +84,7 @@ qu_sort_seq int not null default 0
 create unique index qu_name_index on queries (qu_name);
 
 insert into users (us_username, us_email, us_is_admin, us_password) values('admin', '', true, '');
-insert into users (us_username, us_email, us_is_admin, us_password) values('corey', 'ctrager@gmail.com', true, '');
+insert into users (us_username, us_email, us_is_admin, us_password) values('corey', 'ctrager@gmail.com', true, 'x');
 insert into users (us_username, us_email, us_is_admin, us_password) values('misayo', 'm@example.com', false, 'x');
 insert into users (us_username, us_email, us_is_admin, us_password) values('abi', 'a@example.com', false, 'x');
 insert into users (us_username, us_email, us_is_admin, us_password) values('isaac', 'i@example.com', false, 'x');
@@ -122,14 +124,28 @@ i_last_updated_date timestamptz null
 
 create table posts 
 (
-	p_id serial,
-	p_issue int,
-	p_text text,
-	p_created_by_user int not null,
-	p_created_date timestamptz default CURRENT_TIMESTAMP
+p_id serial,
+p_issue int,
+p_text text,
+p_created_by_user int not null,
+p_created_date timestamptz default CURRENT_TIMESTAMP
 );
 
 create index p_issue_index on posts (p_issue);
+
+
+create table emailed_links
+(
+el_guid varchar(36),
+el_date timestamptz default CURRENT_TIMESTAMP,
+el_email varchar(40) not null,
+el_action varchar(20) not null, -- "registration" or "forgot"
+el_username varchar(20) null,
+el_user_id int null,
+el_password varchar(48) null
+);
+
+create unique index el_guid_index on emailed_links (el_guid);
 
 insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 'All issues',

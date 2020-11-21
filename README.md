@@ -45,11 +45,9 @@ more query examples
 
 create and run queries
 
-queries with variables - $ME = self
 
 admin pages
 
 "migration" scheme
 
-sortable, filterable grid
-
+change own username or email

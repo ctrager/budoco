@@ -18,7 +18,6 @@
     {
         is_admin = 0;
     }
-    //string session_id = HttpContextAccessor.HttpContext.Session.Id;
 }
 
 
@@ -37,7 +36,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Issues">Issues</a>
                         </li>
                         @{
-                            if (is_admin >= 0)
+                            if (is_admin > 0)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Admin">Admin</a>

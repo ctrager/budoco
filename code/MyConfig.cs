@@ -6,5 +6,7 @@ namespace budoco
         public string AppName { get; set; }
 
         public int RowsPerPage { get; set; }
+
+        public bool AutoConfirmRegistration { get; set; }
     }
 }

@@ -5,13 +5,7 @@
     ViewData["Title"] = "Issue";
 }
 <div>
-    @{
-        // not a redirect
-        if (Model.HttpContext.Response.StatusCode == 200)
-        {
-            <partial name="_FlashPartial" />
-        }
-    }
+    <partial name="_FlashPartial" />
 
     <div>
         <a href="Issues">Back to Issues</a>

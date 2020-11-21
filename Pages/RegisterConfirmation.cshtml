@@ -1,0 +1,19 @@
+@page
+@{
+    Layout = "_Layout_signed_out";
+}
+
+@model RegisterConfirmationModel
+
+@{
+    ViewData["Title"] = "Registration Confirmation";
+}
+
+<partial name="_FlashPartial" />
+
+@{
+    if (Model.is_success)
+    {
+        <a href="/Login">Login</a>
+    }
+}
