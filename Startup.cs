@@ -17,8 +17,7 @@ namespace budoco
     {
         public Startup(IConfiguration configuration)
         {
-            bd_util.console_write_line("qq Startup");
-            Log.Warning("qq calling Log.Warning in Startup");
+            bd_util.console_write_line("Startup");
             Configuration = configuration;
 
             Configuration.GetSection("Budoco").Bind(cnfg);
@@ -39,7 +38,7 @@ namespace budoco
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            bd_util.console_write_line("qq ConfigureServices");
+            bd_util.console_write_line("ConfigureServices");
 
             services.AddDistributedMemoryCache();
 
@@ -68,7 +67,7 @@ namespace budoco
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            bd_util.console_write_line("qq Configure");
+            bd_util.console_write_line("Configure");
 
             if (env.IsDevelopment())
             {

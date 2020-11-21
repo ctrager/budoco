@@ -139,3 +139,19 @@ label {
   display: inline-block;
   min-width: 100px;
 }
+
+p {
+  margin-bottom: 20px;
+  font-weight: normal;
+}
+
+.about {
+  width: 800px;
+
+}
+
+.about>p>b {
+  font-size: 18px;
+  font-style: italic;
+  color: red;
+}
