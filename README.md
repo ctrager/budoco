@@ -1,4 +1,4 @@
-# Budoco
+## Budoco
 
 ## What is Budoco?
 
@@ -27,7 +27,7 @@ If Budoco is amusing you in any way, let me know at ctrager@yahoo.com
 
 These instructions are a work in progress. They are for Linux Mint 20, based on Ubuntu 20.04. 
 
-# 1) Create the postgresql database. 
+### 1) Create the postgresql database. 
 
 If you already have postgresql running and you have a postgres user and password combo that works, then just create an
 empty database for Budoco and skip ahead. I named my database "budoco".
@@ -76,7 +76,7 @@ localhost:5432:*:postgres:YOUR PASSWORD
 ```
 
 
-# 2) Install dotnet core 5 sdk
+### 2) Install dotnet core 5 sdk
 
 Skip to step 3 if this is already installed.
 
@@ -93,13 +93,15 @@ sudo apt-get install -y apt-transport-https
 sudo apt-get update 
 sudo apt-get install -y dotnet-sdk-5.0
 ```
-# 3) Create the Budoco tables.
+### 3) Create the Budoco tables.
 
 Assuming you've checked out this repository into a folder called budoco, navigate to that folder and create the tables:
 ```
 psql -d budoco -U postgres -f misc/setup.sql
+psql -d budoco -U postgres -f misc/queries.sql
 ```
-# 4) Configure Budoco
+
+### 4) Configure Budoco
 
 Here we are in the year 2020 and Microsoft adopted a format for configuration files that does *NOT* support comments. It makes me miss Windows 3.1 from the early 90s.
 
@@ -148,8 +150,24 @@ The app needs your password for your database and for your smtp server. For each
 
 ```
 
+## Running Budoco
 
-## Corey's TODO:
+```
+dotnet run
+```
+
+## Using Budoco
+
+The philosophy of both old BugTracker.NET and new Budoco is that you customize it by writing SQL queries and then storing those queries in the database. The Issues page displays the list of queries in its dropdown.
+
+Add your queries following the examples in queries.sql
+
+Note the little variable $ME in some of the queries, which you can use like this to restrict rows to just the logged on users issues:
+```
+where i_created_by_user = $ME
+```
+
+## Corey's Roadmap/TODO:
 
 * Post comments, files to bugs. Save files as blobs in db.
 
@@ -163,7 +181,7 @@ The app needs your password for your database and for your smtp server. For each
 
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 
-## BugTracker.NET features that I'll probably never work on, because they are not fun.
+### BugTracker.NET features that I'll probably never work on, because they are not fun.
 
 * Permissions. Who can and can't see what, edit what.
   
@@ -173,5 +191,5 @@ The app needs your password for your database and for your smtp server. For each
 
 * Email notifications.
 
-=  
+  
 
