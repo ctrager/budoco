@@ -8,10 +8,24 @@ namespace budoco
 {
     public static class db_util
     {
+        static string connection_string = "";
 
         public static string get_connection_string()
         {
-            return Startup.cnfg.DbConnectionString;
+            //"server=127.0.0.1;database=budoco;user id='postgres';password='password';"
+
+            if (connection_string == "")
+            {
+                connection_string = "server=" + Startup.cnfg.DbServer;
+                connection_string += ";database=" + Startup.cnfg.DbDatabase;
+                connection_string += ";user id=" + Startup.cnfg.DbUser;
+                string password = System.IO.File.ReadAllText(Startup.cnfg.DbPasswordFile);
+                Console.WriteLine("password=" + password);
+                connection_string += ";password='" + password;
+                connection_string += "'";
+            }
+
+            return connection_string;
         }
 
         public static DataTable get_datatable(string sql, Dictionary<string, dynamic> sql_parameters = null)

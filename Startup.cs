@@ -62,8 +62,7 @@ namespace budoco
             });
 
             services.AddRazorPages();
-            Console.WriteLine("qq DbConnectionString follows: ");
-            Console.WriteLine(Configuration["Budoco:DbConnectionString"]);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,7 +100,10 @@ namespace budoco
                 // object o = new object();
                 // o = ++my_int;
                 // MyCache.Set("my_int", o);
-                Console.WriteLine(context.Request.Path);
+                Console.WriteLine(
+                    DateTime.Now.ToString("h:mm tt") + ", "
+                    + context.Session.Id + ","
+                    + context.Request.Path);
 
                 await next.Invoke();
             });

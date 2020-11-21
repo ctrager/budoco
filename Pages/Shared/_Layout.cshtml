@@ -13,11 +13,7 @@
 </head>
 
 @{
-    var is_admin = HttpContextAccessor.HttpContext.Session.GetInt32("us_is_admin");
-    if (is_admin is null)
-    {
-        is_admin = 0;
-    }
+    bool is_admin = bd_util.is_user_admin(HttpContextAccessor.HttpContext);
 }
 
 
@@ -36,7 +32,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Issues">Issues</a>
                         </li>
                         @{
-                            if (is_admin > 0)
+                            if (is_admin)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Admin">Admin</a>
@@ -50,6 +46,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="/Login?action=signout">Sign Out</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="/About">About</a>
                         </li>

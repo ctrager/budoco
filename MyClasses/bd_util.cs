@@ -71,11 +71,21 @@ namespace budoco
                 return;
             }
 
+            // save in session so that downstream pages don't have to reread
             context.Session.SetInt32("us_id", (int)dr["us_id"]);
             context.Session.SetString("us_username", (string)dr["us_username"]);
             context.Session.SetString("us_email", (string)dr["us_email"]);
             context.Session.SetInt32("us_is_admin", Convert.ToInt32((bool)dr["us_is_admin"]));
 
+        }
+
+        public static bool is_user_admin(HttpContext context)
+        {
+            object us_is_admin = context.Session.GetInt32("us_is_admin");
+            if (us_is_admin is null)
+                return false;
+
+            return (int)us_is_admin == 0 ? false : true;
         }
 
         // https://stackoverflow.com/questions/4181198/how-to-hash-a-password/10402129#10402129
