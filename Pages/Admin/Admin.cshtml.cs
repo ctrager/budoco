@@ -14,11 +14,7 @@ namespace budoco.Pages
     {
         public void OnGet()
         {
-
             bd_util.redirect_if_not_logged_in(HttpContext);
-
-            var is_admin = HttpContext.Session.GetInt32("us_is_admin");
-
         }
     }
 }
