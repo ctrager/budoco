@@ -3,9 +3,14 @@
     if (Model.HttpContext.Response.StatusCode == 200)
     {
 
-        <div>
-            <div class="flash_msg">@bd_util.get_flash_msg(Model.HttpContext)</div>
+        <div class="flash">
             @{
+                string msg = bd_util.get_flash_msg(Model.HttpContext);
+                if (!string.IsNullOrEmpty(msg))
+                {
+                    <div class="flash_msg">@msg</div>
+                }
+
                 var errs = bd_util.get_flash_errs(Model.HttpContext);
                 if (errs.Count > 0)
                 {

@@ -21,7 +21,25 @@
 
         <ul class="navbar">
             <li class="nav-item logo">
-                <a class="nav-link" asp-page="/">@Startup.cnfg.AppName</a>
+                <a class="nav-link" asp-page="/Index">@Startup.cnfg.AppName</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Issues">Issues</a>
+            </li>
+            @{
+                if (is_admin)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Admin/Admin">Admin</a>
+                    </li>
+                }
+            }
+            <!-- <li class="nav-item">
+                <a class="nav-link" asp-page="/Email">Email</a>
+            </li> -->
+
+            <li class="nav-item">
+                <a class="nav-link" href="/Login?action=signout">Sign Out</a>
             </li>
 
             <li class="nav-item">

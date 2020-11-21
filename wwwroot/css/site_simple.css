@@ -1,0 +1,141 @@
+﻿body,
+div,
+input,
+button,
+select {
+  font-family: arial;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+div {
+
+  margin: 5px;
+}
+
+a {
+  color: #0000ff;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #0000ff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff6633;
+  text-decoration: none;
+}
+
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid lightgrey;
+  padding: 3px;
+}
+
+th {
+  /*background-color: yellow;*/
+  border: 1px solid lightgrey;
+  background-color: #eeeeee;
+  padding: 3px;
+}
+
+
+.flash_msg {
+  background-color: #ccffcc;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.flash_err {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+
+  background-color: #ffaaaa;
+  font-weight: bold;
+}
+
+.gray {
+  color: #dddddd;
+}
+
+th {
+  font-weight: normal;
+}
+
+.unsorted {
+  background-color: #eeeeee;
+  font-weight: normal;
+  color: blue;
+}
+
+.sorted {
+  background-color: yellow;
+  font-weight: normal;
+  color: blue;
+}
+
+.unsorted:hover {
+  color: #ff6633;
+}
+
+.sorted:hover {
+  color: #ff6633;
+}
+
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #eeeeee;
+}
+
+.nav-item {
+  float: left;
+}
+
+.nav-item a {
+  display: block;
+  text-align: center;
+  padding: 10px;
+}
+
+.logo {
+  background-color: #bbffbb;
+}
+
+form {
+  border: 1px solid gray;
+  background: #eeeeee;
+  padding: 5px;
+  margin-top: 10px;
+  width: 800px;
+}
+
+form>div {
+  margin-left: 10px;
+  margin-top: 16px;
+}
+
+button {
+  color: blue;
+}
+
+label {
+  display: inline-block;
+  min-width: 100px;
+}

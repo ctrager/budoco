@@ -95,14 +95,15 @@ namespace budoco
             string s = context.Session.GetString("flash_err");
             context.Session.SetString("flash_err", "");
 
-            if (s is null)
+            if (string.IsNullOrWhiteSpace(s))
             {
-                s = "";
+                return new List<string>();
             }
-
-            string[] err_array = s.Split('|');
-
-            return new List<string>(err_array);
+            else
+            {
+                string[] err_array = s.Split('|');
+                return new List<string>(err_array);
+            }
 
         }
 

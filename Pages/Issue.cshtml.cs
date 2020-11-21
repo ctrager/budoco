@@ -50,9 +50,9 @@ namespace budoco.Pages
 
         public void OnGet(int id)
         {
-            PrepareDropdowns();
+            bd_util.redirect_if_not_logged_in(HttpContext);
 
-            //bd_util.redirect_if_not_logged_in(HttpContext);
+            PrepareDropdowns();
 
             this.id = id;
 

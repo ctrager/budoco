@@ -12,41 +12,46 @@
     </div>
 
     <form method="post">
-        <div>id<input asp-for="id" value="@Model.id" disabled></input>
-        </div>
-        <div>desc<input asp-for="desc" value="@Model.desc"></input>
+        <div>
+            <label>Id:</label>
+            <input asp-for="id" value="@Model.id" disabled></input>
         </div>
 
         <div>
-            Category
+            <label>Description</label>
+            <input asp-for="desc" value="@Model.desc"></input>
+        </div>
+
+        <div>
+            <label>Category</label>
             <select asp-for="category_id" asp-items="@Model.categories">
                 <option value="">-- Select Category --</option>
             </select>
         </div>
 
         <div>
-            Project
+            <label>Project</label>
             <select asp-for="project_id" asp-items="@Model.projects">
                 <option value="">-- Select Project --</option>
             </select>
         </div>
 
         <div>
-            Priority
+            <label>Priority</label>
             <select asp-for="priority_id" asp-items="@Model.priorities">
                 <option value="">-- Select Priority --</option>
             </select>
         </div>
 
         <div>
-            Status
+            <label>Status</label>
             <select asp-for="status_id" asp-items="@Model.statuses">
                 <option value="">-- Select Status --</option>
             </select>
         </div>
 
         <div>
-            Assigned to
+            <label>Assigned To</label>
             <select asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_users">
                 <option value="">-- Assign to --</option>
             </select>
@@ -62,6 +67,6 @@
     </form>
 
     <div>
-        <a href="Issue?id=0">Create Issue</a>
+        <a href="Issue?id=0">Clear and create another issue</a>
     </div>
 </div>

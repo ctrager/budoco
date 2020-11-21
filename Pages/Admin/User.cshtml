@@ -12,13 +12,21 @@
     </div>
 
     <form method="post">
-        <div>id<input asp-for="id" value="@Model.id" disabled></input>
+        <div>
+            <label>Id</label>
+            <input asp-for="id" value="@Model.id" disabled></input>
         </div>
-        <div>username<input asp-for="username" value="@Model.username"></input>
+        <div>
+            <label>Username</label>
+            <input asp-for="username" value="@Model.username"></input>
         </div>
-        <div>email<input asp-for="email" value="@Model.email"></input>
+        <div>
+            <label>Email</label>
+            <input asp-for="email" value="@Model.email"></input>
         </div>
-        <div>is_admin<input asp-for="is_admin" value="true" />
+        <div>
+            <label>Is Admin</label>
+            <input asp-for="is_admin" value="true" />
         </div>
         <div>
             @{
