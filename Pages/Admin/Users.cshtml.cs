@@ -41,7 +41,6 @@ namespace budoco.Pages
             DataSet ds = new DataSet();
             string sql = "select * from users";
             dt = db_util.get_datatable(sql);
-            MyCache.Set(HttpContext.Session.Id + ":dt", dt);
         }
     }
 }

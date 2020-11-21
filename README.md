@@ -51,3 +51,5 @@ admin pages
 "migration" scheme
 
 change own username or email
+
+safer way to store password that doesn't go to github

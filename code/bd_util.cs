@@ -72,6 +72,9 @@ namespace budoco
             }
 
             context.Session.SetInt32("us_id", (int)dr["us_id"]);
+            context.Session.SetString("us_username", (string)dr["us_username"]);
+            context.Session.SetString("us_email", (string)dr["us_email"]);
+            context.Session.SetInt32("us_is_admin", Convert.ToInt32((bool)dr["us_is_admin"]));
 
         }
 

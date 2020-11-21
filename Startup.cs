@@ -24,10 +24,10 @@ namespace budoco
             Configuration.GetSection("Budoco").Bind(cnfg);
 
             // test cache
-            object o = new object();
-            int i = 0;
-            o = i;
-            MyCache.Set("my_int", o);
+            // object o = new object();
+            // int i = 0;
+            // o = i;
+            // MyCache.Set("my_int", o);
 
         }
 
@@ -97,11 +97,11 @@ namespace budoco
             // corey added a step in the pipeline
             app.Use(async (context, next) =>
             {
-                int my_int = (int)MyCache.Get("my_int");
-                object o = new object();
-                o = ++my_int;
-                MyCache.Set("my_int", o);
-                Console.WriteLine(context.Request.Path + "," + my_int.ToString());
+                // int my_int = (int)MyCache.Get("my_int");
+                // object o = new object();
+                // o = ++my_int;
+                // MyCache.Set("my_int", o);
+                Console.WriteLine(context.Request.Path);
 
                 await next.Invoke();
             });
