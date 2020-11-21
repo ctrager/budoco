@@ -21,6 +21,7 @@ namespace budoco
             Configuration = configuration;
 
             Configuration.GetSection("Budoco").Bind(cnfg);
+            bd_util.console_write_line(Startup.cnfg.DebugWhatEnvIsThis);
 
             // test cache
             // object o = new object();

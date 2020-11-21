@@ -16,6 +16,7 @@ namespace budoco
         public string SmtpUser { get; set; }
         public string SmtpPasswordFile { get; set; }
 
+        public string DebugWhatEnvIsThis { get; set; }
         public bool DebugAutoConfirmRegistration { get; set; }
         public bool DebugSkipSendingEmails { get; set; }
 

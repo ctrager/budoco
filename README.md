@@ -14,9 +14,9 @@ I moved on to other technologies, and then retired and stopped coding in 2016,
 Dev teams moved on to Github and Jira for their issue tracking needs.
 Microsoft moved on too.
 
-But then...2020: I started writing Budoco in November 2020 in order to distract myself from election anxiety and to break the COVID-19 monotony.
+But then...2020: I started writing Budoco in November 2020 in order to distract myself from election anxiety and to break the COVID-19 monotony. 
 
-Budoco runs on Microsoft's cross-platform Dotnet Core 5 can run. I've been developing it on Linux Mint, based on Ubuntu 20.04. It uses Postgres as its database.
+Budoco runs on Microsoft's cross-platform Dotnet Core 5. I've been developing it on Linux Mint based on Ubuntu 20.04. It uses Postgres as its database.
 
 If Budoco is amusing you in any way, let me know at ctrager@yahoo.com
    
@@ -25,58 +25,153 @@ If Budoco is amusing you in any way, let me know at ctrager@yahoo.com
 ## How to Install
 
 
-dotnet install package Serilog.AspNetCore
+These instructions are a work in progress. They are for Linux Mint 20, based on Ubuntu 20.04. 
 
-to debug and auto load,
-run dotnet watch run in terminal, attach to budoco process
+# 1) Create the postgresql database. 
 
-dotnet install package mailkit
+If you already have postgresql running and you have a postgres user and password combo that works, then just create an
+empty database for Budoco and skip ahead. I named my database "budoco".
 
+These were the steps I followed to install postgresql and tweak it. I have no idea if this is best practice or something really bad, but it worked for me.
+
+```
 sudo apt install postgresql
+```
 
-edit /etc/posgres/
+Then start psql command line tool:
 
-/etc/postgresql/12/main/pg_hba.confi
-
-change postgres method from "peer" to "md5"
-
+```
 sudo -u postgres psql
+```
 
-alter user postgres PASSWORD 'MY PASSWORD';
+```
+alter user postgres password 'YOUR PASSWORD';
+create database budoco;
+\q
 
+```
+Then change postgres configuration to require password:
+```
+sudo nano /etc/postgresql/12/main/pg_hba.conf
+```
+Change the line below so from "peer" to "md5"
+```
+local     all     postgres     peer
+```
+Restart postgres
+```
 systemctl restart postgresql
+```
+The following should now prompt for a password:
+```
+psql -U postgres
+```
+To avoid being prompted every time, create this file in your home dir:
+```
+.pgpass
+```
+with one line:
+```
+localhost:5432:*:postgres:YOUR PASSWORD
+```
 
+
+# 2) Install dotnet core 5 sdk
+
+Skip to step 3 if this is already installed.
+
+I used the instructions here in Nov 2020: https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-
+
+```
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+
+sudo dpkg -i packages-microsoft-prod.deb
+
+sudo apt-get update 
+
+sudo apt-get install -y apt-transport-https
+sudo apt-get update 
+sudo apt-get install -y dotnet-sdk-5.0
+```
+# 3) Create the Budoco tables.
+
+Assuming you've checked out this repository into a folder called budoco, navigate to that folder and create the tables:
+```
 psql -d budoco -U postgres -f misc/setup.sql
+```
+# 4) Configure Budoco
+
+Here we are in the year 2020 and Microsoft adopted a format for configuration files that does *NOT* support comments. It makes me miss Windows 3.1 from the early 90s.
+
+You need to edit some or all of the following files to make sure that the database connection info and the credentials for your smtp server are correct.
+
+Note differences especially between appsettings.json and the overrides in the appsettings.Development.json file.
+
+The app needs your password for your database and for your smtp server. For each of those passwords create a file that has a single line, the password, with no trailing line break. Then edit the .json files wit the locations of the two password files.
+
+"DebugAutoConfirmRegistration" allows you to play with the app, registrating as multiple users with fake email accounts.
+
+"WebsiteUrlRootWithoutSlash" setting is used for the emails that the app sends out.
+
+```
+{
+  "DetailedErrors": true,
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "Budoco": {
+    "DbServer": "127.0.0.1",
+    "DbDatabase": "budoco",
+    "DbUser": "postgres",
+    "DbPasswordFile": "budoco_db.txt",
+
+    "AppName": "Budoco",
+    "WebsiteUrlRootWithoutSlash": "https://YOURDOMAIN.COM",  
+    "RowsPerPage": 30,
+  
+    "LogFolder": "budoco_logs",
+
+    "SmtpHost": "smtp.gmail.com",
+    "SmtpPort": 465,
+    "SmtpUser": "YOUR_GMAIL@gmail.com",
+    "SmtpPasswordFile": "budoco_smtp.txt",
+
+    "DebugAutoConfirmRegistration": false,
+    "DebugSkipSendingEmails": false
+  }
+}
+
+```
 
 
 ## Corey's TODO:
 
-These instructions are a work in progress. They are for Linux Mint 20, based on Ubuntu 20.04:
+* Post comments, files to bugs. Save files as blobs in db.
 
-1) Install Posgres
+* Full text search.
 
-2) Install dotnet core sdk
+* More query examples in queries.sql
 
-3) Edit appsettings.json and/or appsettings.Develop.json
+* Finish admin pages
 
-4) Create your two files to hold your postgres and smtp passwords. The files should contain just one line, your password, with no line break.
+* Send emails from the Issue page, that become part of the Issue posts.
 
-5) Build and run:
-    
-dotnet build
+* *RECEIVE* emails into the app that get posted to the relevant Issue.
 
+## BugTracker.NET features that I'll probably never work on, because they are not fun.
 
+* Permissions. Who can and can't see what, edit what.
+  
+* Custom fields. 
+  
+* Integration with version control. 
 
-deploy/install, both google and yahoo require extra steps to enable smtp
+* Email notifications.
 
-issue - text
-issue - posts
-issue - attachments (blobs)
+=  
 
-full text search
-
-more query examples
-
-create and run queries
-
-admin pages
