@@ -50,9 +50,27 @@ namespace budoco.Pages
 
                     db_util.exec(sql, dict);
 
-                    bd_util.set_flash_msg(HttpContext, "An email with password reset instructions was sent to " + email);
 
-                    Console.WriteLine(guid);
+                    string body = "Follow or browse to this link to reset password:\n"
+                        + Startup.cnfg.WebsiteUrlRootWithoutSlash
+                        + "/ResetPassword?guid="
+                        + guid;
+
+                    string email_result = bd_util.send_email(
+                        email, // to
+                        Startup.cnfg.SmtpUser,  // from
+                        Startup.cnfg.AppName + ": Reset Password", // subject
+                        body);
+
+                    if (email_result != "")
+                    {
+                        errs.Add("Unable to send password reset email. Please try again.");
+                    }
+                    else
+                    {
+                        bd_util.set_flash_msg(HttpContext, "An email with password reset instructions was sent to " + email);
+                    }
+
                 }
                 else
                 {

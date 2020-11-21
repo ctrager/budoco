@@ -23,6 +23,7 @@ namespace budoco.Pages
         public string password { get; set; }
 
         // bindings end  
+        List<string> errs = new List<string>();
 
         public void OnGet(string action)
         {
@@ -53,24 +54,43 @@ namespace budoco.Pages
 
             db_util.exec(sql, dict);
 
-            if (Startup.cnfg.AutoConfirmRegistration)
+            if (Startup.cnfg.DebugAutoConfirmRegistration)
             {
-                // send out email...
                 Response.Redirect("/RegisterConfirmation?guid=" + guid);
             }
             else
             {
                 // send an email
                 // and tell user to check it
-                bd_util.set_flash_msg(HttpContext, "Please check your email to confirm registration.");
-                Response.Redirect("RegisterPleaseConfirm");
+
+                string body = "Follow or browse to this link to confirm registration:\n"
+                    + Startup.cnfg.WebsiteUrlRootWithoutSlash
+                    + "/RegisterConfirmation?guid="
+                    + guid;
+
+                string email_result = bd_util.send_email(
+                    email, // to
+                    Startup.cnfg.SmtpUser,  // from
+                    Startup.cnfg.AppName + ": Confirm registration", // subject
+                    body);
+
+                if (email_result != "")
+                {
+                    errs.Add("Error sending email.");
+                    errs.Add(email_result);
+                    bd_util.set_flash_err(HttpContext, errs);
+                }
+                else
+                {
+                    bd_util.set_flash_msg(HttpContext, "Please check your email to confirm registration.");
+                    Response.Redirect("RegisterPleaseConfirm");
+                }
             }
         }
 
 
         bool IsValid()
         {
-            var errs = new List<string>();
             string sql;
             var dict = new Dictionary<string, dynamic>();
 

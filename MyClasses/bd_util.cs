@@ -4,11 +4,15 @@ using Microsoft.AspNetCore.Http.Extensions;
 using System.Collections.Generic;
 using System.Data;
 using System.Security.Cryptography;
+using MailKit;
+using MimeKit;
+using Serilog;
 
 namespace budoco
 {
     public static class bd_util
     {
+
         public static int get_int_or_zero_from_string(string s)
         {
             if (s is null)
@@ -17,6 +21,61 @@ namespace budoco
             }
 
             return Convert.ToInt32(s);
+        }
+
+        public static string send_email(string to, string from, string subject, string body)
+        {
+            var message = new MimeMessage();
+
+            message.To.Add(new MailboxAddress("", to));
+            message.From.Add(new MailboxAddress("", from));
+            message.Subject = subject;
+            bd_util.console_write_line("email to: " + to);
+            bd_util.console_write_line("email body: " + body);
+            message.Body = new TextPart("plain")
+            {
+                Text = body
+            };
+
+            string result = "";
+
+
+            if (!Startup.cnfg.DebugSkipSendingEmails)
+            {
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    try
+                    {
+                        client.Connect(
+                            Startup.cnfg.SmtpHost,
+                            Startup.cnfg.SmtpPort,
+                            MailKit.Security.SecureSocketOptions.Auto);
+
+                        string password = System.IO.File.ReadAllText(Startup.cnfg.SmtpPasswordFile);
+                        bd_util.console_write_line(Startup.cnfg.SmtpUser);
+                        bd_util.console_write_line("authenticating...");
+                        client.Authenticate(Startup.cnfg.SmtpUser, password);
+                        bd_util.console_write_line("sending...");
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+                    catch (Exception e)
+                    {
+                        result = e.Message;
+                        bd_util.console_write_line(e.Message);
+                        bd_util.console_write_line(e.StackTrace);
+
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static void console_write_line(string msg)
+        {
+            Console.WriteLine(msg);
+            Log.Information(msg);
         }
 
         public static string get_flash_msg(HttpContext context)

@@ -53,3 +53,5 @@ admin pages
 change own username or email
 
 safer way to store password that doesn't go to github
+
+both google and yahoo require extra steps to enable smtp

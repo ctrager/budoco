@@ -20,7 +20,6 @@ namespace budoco
                 connection_string += ";database=" + Startup.cnfg.DbDatabase;
                 connection_string += ";user id=" + Startup.cnfg.DbUser;
                 string password = System.IO.File.ReadAllText(Startup.cnfg.DbPasswordFile);
-                Console.WriteLine("password=" + password);
                 connection_string += ";password='" + password;
                 connection_string += "'";
             }
@@ -137,7 +136,7 @@ namespace budoco
 
         static void log_sql(string sql, Dictionary<string, dynamic> sql_parameters = null)
         {
-            Console.WriteLine(sql);
+            bd_util.console_write_line(sql);
         }
 
     }

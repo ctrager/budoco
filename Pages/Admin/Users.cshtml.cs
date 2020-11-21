@@ -27,7 +27,7 @@ namespace budoco.Pages
 
         public void OnPost(int delete_id)
         {
-            Console.WriteLine("deleting");
+            bd_util.console_write_line("deleting");
             string sql = "delete from users where us_id = @us_id;";
             var dict = new Dictionary<string, dynamic>();
             dict["@us_id"] = delete_id;
