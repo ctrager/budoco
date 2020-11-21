@@ -65,6 +65,9 @@ namespace budoco.Pages
                 desc = (string)dr["i_desc"];
                 category_id = (int)dr["i_category"];
                 project_id = (int)dr["i_project"];
+                priority_id = (int)dr["i_priority"];
+                status_id = (int)dr["i_status"];
+                assigned_to_user_id = (int)dr["i_assigned_to_user"];
 
             }
         }
@@ -101,7 +104,8 @@ namespace budoco.Pages
                 i_project = @i_project,
                 i_priority = @i_priority,
                 i_status = @i_status,
-                i_assigned_to_user = @i_assigned_to_user
+                i_assigned_to_user = @i_assigned_to_user,
+                i_last_updated_date = CURRENT_TIMESTAMP
                 where i_id = @i_id;";
 
                 db_util.exec(sql, GetValuesDict());

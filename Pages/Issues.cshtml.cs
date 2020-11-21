@@ -42,24 +42,70 @@ namespace budoco.Pages
                 page = 1;
             }
 
+            if (dir is null)
+            {
+                dir = "";
+            }
+
+
+
             // which query?
             DataRow query_row;
             const int ID = 0;
             const int SQL = 1;
 
+            if (query_id == 0)
+            {
+                // get from session?
+                // save so that when we navigte back, we are in same place
+                object obj = HttpContext.Session.GetInt32("issues_query_id");
+                if (obj is not null)
+                {
+                    query_id = (int)obj;
+                    obj = (int)HttpContext.Session.GetInt32("issues_sort");
+                    sort = (int)obj;
+                    obj = (int)HttpContext.Session.GetInt32("issues_page");
+                    page = (int)obj;
+                    dir = (string)HttpContext.Session.GetString("issues_dir");
+                }
+            }
+
+            // first query or previously selected query
             queries = db_util.prepare_select_list("select qu_id, qu_name from queries order by qu_sort_seq, qu_name");
             if (query_id == 0)
             {
+                // first query
                 query_row = db_util.get_datarow(
                     "select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1");
                 query_id = (int)query_row[ID];
+                sort = 0;
+                page = 1;
+                dir = "";
+
             }
             else
             {
+                // previously selected query
                 query_row = db_util.get_datarow(
                     "select qu_id, qu_sql from queries where qu_id = " + query_id.ToString());
 
+                if (query_row is null) // bad query id from session or url?
+                {
+                    // first query
+                    query_row = db_util.get_datarow(
+                        "select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1");
+                    query_id = (int)query_row[ID];
+                    sort = 0;
+                    page = 1;
+                    dir = "";
+                }
             }
+
+            // save so that when we navigte back, we are in same place
+            HttpContext.Session.SetInt32("issues_query_id", query_id);
+            HttpContext.Session.SetInt32("issues_page", page);
+            HttpContext.Session.SetInt32("issues_sort", sort);
+            HttpContext.Session.SetString("issues_dir", dir);
 
             string sql = (string)query_row[SQL];
 

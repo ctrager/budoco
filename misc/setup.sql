@@ -37,8 +37,7 @@ create table projects
 (
 pj_id serial,
 pj_name varchar(30) not null,
-pj_default int not null default 0,
-pj_sort_seq int not null default 0
+pj_default int not null default 0
 );
 
 CREATE UNIQUE INDEX pj_name_index ON projects (pj_name);
@@ -47,8 +46,7 @@ create table categories
 (
 ca_id serial,
 ca_name varchar(30) not null,
-ca_default int not null default 0,
-ca_sort_seq int not null default 0
+ca_default int not null default 0
 );
 
 CREATE UNIQUE INDEX ca_name_index ON categories (ca_name);
@@ -57,8 +55,7 @@ create table statuses
 (
 st_id serial,
 st_name varchar(30) not null,
-st_default int not null default 0,
-st_sort_seq int not null default 0
+st_default int not null default 0
 );
 
 CREATE UNIQUE INDEX st_name_index ON statuses (st_name);
@@ -67,8 +64,7 @@ create table priorities
 (
 pr_id serial,
 pr_name varchar(30) not null,
-pr_default int not null default 0,
-pr_sort_seq int not null default 0
+pr_default int not null default 0
 );
 
 CREATE UNIQUE INDEX pr_name_index ON priorities (pr_name);
@@ -148,25 +144,8 @@ el_password varchar(48) null
 create unique index el_guid_index on emailed_links (el_guid);
 
 insert into queries (qu_name, qu_sql, qu_sort_seq) values (
-'All issues',
-'select i_id, i_desc, i_project, i_category, i_status, i_priority, i_created_by_user, i_assigned_to_user'
+'Raw, no joins, no aliases',
+'select * '
 || chr(10) || ' from issues '
 || chr(10) || ' order by i_id desc',
-1);
-
-insert into queries (qu_name, qu_sql, qu_sort_seq) values (
-'All open issues',
-'select i_id, i_desc, i_status '
-|| chr(10) || ' from issues '
-|| chr(10) || ' where (i_status != 3) '
-|| chr(10) || ' order by i_id desc',
-2);
-
-insert into queries (qu_name, qu_sql, qu_sort_seq) values (
-'Issues assigned to me',
-'select i_id, i_desc '
-|| chr(10) || ' from issues '
-|| chr(10) || ' where (i_assigned_to_user_id == $ME) '
-|| chr(10) || ' order by i_id desc',
-2);
-
+999);

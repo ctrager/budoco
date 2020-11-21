@@ -40,94 +40,89 @@
     <a href="Issue?id=0">Create Issue</a>
 </div>
 
-@{
-    if (Model.dt.Rows.Count > 0)
-    {
-        <div>
-            Queries
-            <select onchange="on_query_change()" asp-for="query_id" asp-items="@Model.queries">
-                <option value="">-- Select Query --</option>
-            </select>
-        </div>
+<div>
+    Queries
+    <select onchange="on_query_change()" asp-for="query_id" asp-items="@Model.queries">
+        <option value="">-- Select Query --</option>
+    </select>
+</div>
 
-        <div>
-            @{
-                int number_of_pages = Model.dt.Rows.Count / Startup.cnfg.RowsPerPage;
-                if (Model.dt.Rows.Count % Startup.cnfg.RowsPerPage > 0)
+<div>
+    @{
+        int number_of_pages = Model.dt.Rows.Count / Startup.cnfg.RowsPerPage;
+        if (Model.dt.Rows.Count % Startup.cnfg.RowsPerPage > 0)
+        {
+            number_of_pages++;
+        }
+
+        if (number_of_pages > 0)
+        {
+            <span>Page @Model.page of @number_of_pages&nbsp;&nbsp;</span>
+            if (number_of_pages > 1)
+            {
+                if (Model.page > 1)
                 {
-                    number_of_pages++;
+                    <a href="Issues?query_id=@Model.query_id&page=@(Model.page - 1)&sort=@Model.sort">Prev</a>
+                }
+                else
+                {
+                    <span class="gray">Prev</span>
                 }
 
-                if (number_of_pages > 0)
+                <span>&nbsp;&nbsp;</span>
+                if (Model.page < number_of_pages)
                 {
-                    <span>Page @Model.page of @number_of_pages&nbsp;&nbsp;</span>
-                    if (number_of_pages > 1)
-                    {
-                        if (Model.page > 1)
-                        {
-                            <a href="Issues?query_id=@Model.query_id&page=@(Model.page - 1)&sort=@Model.sort">Prev</a>
-                        }
-                        else
-                        {
-                            <span class="gray">Prev</span>
-                        }
-
-                        <span>&nbsp;&nbsp;</span>
-                        if (Model.page < number_of_pages)
-                        {
-                            <a href="Issues?query_id=@Model.query_id&page=@(Model.page + 1)&sort=@Model.sort">Next</a>
-                        }
-                        else
-                        {
-                            <span class="gray">Next</span>
-                        }
-                    }
+                    <a href="Issues?query_id=@Model.query_id&page=@(Model.page + 1)&sort=@Model.sort">Next</a>
                 }
-
+                else
+                {
+                    <span class="gray">Next</span>
+                }
             }
-        </div>
+        }
 
-        <div>
-            <table class="dt">
+    }
+</div>
+
+<div>
+    <table class="dt">
+        @{
+            <tr>
                 @{
-                    <tr>
-                        @{
-                            for (int i = 0; i < Model.dt.Columns.Count; i++)
-                            {
-                                string class_name = (@Model.sort == i ? "sorted" : "unsorted");
-                                <th class="@class_name" onclick="on_sort(@i)">@Model.dt.Columns[i].ColumnName</th>
-                            }
-                        }
-                        <th>Action</th>
-                    </tr>
-                    int start_row = (Model.page - 1) * Startup.cnfg.RowsPerPage;
-                    int row_count = 0;
-
-                    for (int row = start_row; row < Model.dt.Rows.Count; row++)
+                    for (int i = 0; i < Model.dt.Columns.Count; i++)
                     {
-                        DataRow dr = Model.dt.Rows[row];
-                        <tr>
-                            @{
-                                for (int col = 0; col < Model.dt.Columns.Count; col++)
-                                {
-
-                                    <td>@dr[col]</td>
-                                }
-                            }
-                            <td>
-                                <a href="Issue?id=@dr[0]">
-                                    Details
-                                </a>
-                            </td>
-                        </tr>
-                        row_count++;
-                        if (row_count == Startup.cnfg.RowsPerPage)
-                        {
-                            break;
-                        }
+                        string class_name = (@Model.sort == i ? "sorted" : "unsorted");
+                        <th class="@class_name" onclick="on_sort(@i)">@Model.dt.Columns[i].ColumnName</th>
                     }
                 }
-            </table>
-        </div>
-    }
-}
+                <th>Action</th>
+            </tr>
+            int start_row = (Model.page - 1) * Startup.cnfg.RowsPerPage;
+            int row_count = 0;
+
+            for (int row = start_row; row < Model.dt.Rows.Count; row++)
+            {
+                DataRow dr = Model.dt.Rows[row];
+                <tr>
+                    @{
+                        for (int col = 0; col < Model.dt.Columns.Count; col++)
+                        {
+
+                            <td>@dr[col]</td>
+                        }
+                    }
+                    <td>
+                        <a href="Issue?id=@dr[0]">
+                            Details
+                        </a>
+                    </td>
+                </tr>
+                row_count++;
+                if (row_count == Startup.cnfg.RowsPerPage)
+                {
+                    break;
+                }
+            }
+        }
+    </table>
+</div>

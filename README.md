@@ -25,33 +25,16 @@ psql -d budoco -U postgres -f misc/setup.sql
 
 todo:
 
-login - register with confirm
-login - reset password with confirm
-
-deploy/install
+deploy/install, both google and yahoo require extra steps to enable smtp
 
 issue - text
 issue - posts
 issue - attachments (blobs)
-issue - history
 
 full text search
-
-deploy/install
-
-send and receive emails
 
 more query examples
 
 create and run queries
 
-
 admin pages
-
-"migration" scheme
-
-change own username or email
-
-safer way to store password that doesn't go to github
-
-both google and yahoo require extra steps to enable smtp
