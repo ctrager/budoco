@@ -54,7 +54,7 @@ namespace budoco.Pages
 
             bd_db.exec(sql, dict);
 
-            if (bd_config.get("DebugAutoConfirmRegistration"))
+            if (bd_config.get("DebugAutoConfirmRegistration") == 1)
             {
                 Response.Redirect("/RegisterConfirmation?guid=" + guid);
             }

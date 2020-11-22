@@ -38,18 +38,19 @@ namespace budoco.Pages
                 if (dr_user is not null)
                 {
                     // insert unguessable bytes into db for user to confirm registration
-                    sql = @"insert into emailed_links 
-                     (el_guid, el_email, el_user_id, el_action)
-                    values(@el_guid, @el_email, @el_user_id, @el_action)";
+                    // sql = @"insert into emailed_links 
+                    //  (el_guid, el_email, el_user_id, el_action)
+                    // values(@el_guid, @el_email, @el_user_id, @el_action)";
 
-                    var guid = Guid.NewGuid();
-                    dict["@el_guid"] = guid;
-                    dict["@el_email"] = email;
-                    dict["@el_action"] = "reset";
-                    dict["@el_user_id"] = dr_user[0];
+                    // var guid = Guid.NewGuid();
+                    // dict["@el_guid"] = guid;
+                    // dict["@el_email"] = email;
+                    // dict["@el_action"] = "reset";
+                    // dict["@el_user_id"] = dr_user[0];
 
-                    bd_db.exec(sql, dict);
+                    // bd_db.exec(sql, dict);
 
+                    string guid = bd_util.insert_change_password_request_link(email, (int)dr_user["us_id"]);
 
                     string body = "Follow or browse to this link to reset password:\n"
                         + bd_config.get("WebsiteUrlRootWithoutSlash")

@@ -21,6 +21,8 @@ namespace budoco.Pages
 
         [BindProperty]
         public bool is_admin { get; set; }
+
+
         // bindings end        
 
         public void OnGet(int id)
@@ -30,16 +32,13 @@ namespace budoco.Pages
 
             this.id = id;
 
-            if (id != 0)
-            {
-                string sql = "select * from users where us_id = " + id.ToString();
+            string sql = "select * from users where us_id = " + id.ToString();
 
-                DataRow dr = bd_db.get_datarow(sql);
+            DataRow dr = bd_db.get_datarow(sql);
 
-                username = (string)dr["us_username"];
-                email = (string)dr["us_email"];
-                is_admin = (bool)dr["us_is_admin"];
-            }
+            username = (string)dr["us_username"];
+            email = (string)dr["us_email"];
+            is_admin = (bool)dr["us_is_admin"];
         }
 
         public void OnPost()
@@ -52,28 +51,14 @@ namespace budoco.Pages
             string sql;
 
 
-            if (id == 0)
-            {
-                sql = @"insert into users (us_username, us_email, us_is_admin) 
-                values(@us_username, @us_email, @us_is_admin) 
-                returning us_id";
-
-                this.id = (int)bd_db.exec_scalar(sql, GetValuesDict());
-                bd_util.set_flash_msg(HttpContext, "Create was successful");
-                Response.Redirect("User?id=" + this.id.ToString());
-
-            }
-            else
-            {
-                sql = @"update users set 
+            sql = @"update users set 
                 us_username = @us_username,
                 us_email = @us_email,
                 us_is_admin = @us_is_admin
                 where us_id = @us_id;";
 
-                bd_db.exec(sql, GetValuesDict());
-                bd_util.set_flash_msg(HttpContext, "Update was successful");
-            }
+            bd_db.exec(sql, GetValuesDict());
+            bd_util.set_flash_msg(HttpContext, "Update was successful");
         }
 
         Dictionary<string, dynamic> GetValuesDict()

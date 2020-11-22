@@ -79,11 +79,7 @@ qu_sort_seq int not null default 0
 
 create unique index qu_name_index on queries (qu_name);
 
-insert into users (us_username, us_email, us_is_admin, us_password) values('admin', '', true, '');
-insert into users (us_username, us_email, us_is_admin, us_password) values('corey', 'ctrager@gmail.com', true, 'x');
-insert into users (us_username, us_email, us_is_admin, us_password) values('misayo', 'm@example.com', false, 'x');
-insert into users (us_username, us_email, us_is_admin, us_password) values('abi', 'a@example.com', false, 'x');
-insert into users (us_username, us_email, us_is_admin, us_password) values('isaac', 'i@example.com', false, 'x');
+insert into users (us_username, us_email, us_is_admin, us_password) values('admin', '', true, 'x');
 
 insert into projects (pj_name) values ('proj 1');
 insert into projects (pj_name) values ('proj 2');

@@ -29,11 +29,7 @@
             <input asp-for="is_admin" value="true" />
         </div>
         <div>
-            @{
-                string button_text = (@Model.id == 0) ? "Create" : "Update";
-            }
-
-            <button type="submit">@button_text</button>
+            <button type="submit">Update</button>
         </div>
     </form>
 </div>

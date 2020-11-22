@@ -94,13 +94,19 @@ namespace budoco.Pages
                 else
                 {
                     string password_in_db = (string)dr_user["us_password"];
+                    user_id = (int)dr_user[0];
 
-                    // users added via script, so admin, etc
-                    if (password_in_db.Length < 48)
+                    // admin user's first time
+                    if (user_id == 1 && password_in_db.Length < 48)
                     {
-                        // later, force reset of password
-                        // for now, just allow in
-                        user_id = (int)dr_user[0];
+
+                        // force password reset
+                        string guid = bd_util.insert_change_password_request_link(
+                            "none", user_id);
+
+                        errs.Add("You must create a password.");
+                        Response.Redirect("/ResetPassword?guid=" + guid);
+
                     }
                     else
                     {
@@ -108,11 +114,6 @@ namespace budoco.Pages
                         {
                             // on purpose lowercase password so that Corey knows the diff
                             errs.Add("User or password incorrect.");
-                        }
-                        else
-                        {
-                            // success
-                            user_id = (int)dr_user[0];
                         }
                     }
                 }

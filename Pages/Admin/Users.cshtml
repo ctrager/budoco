@@ -6,25 +6,11 @@
     ViewData["Title"] = "Users";
 }
 
-<script>
-    function delete_user(id) {
-        if (confirm("Are you sure?")) {
-            $("#delete_id").val(id)
-            $("#delete_form").submit()
-        }
-    }
-</script>
 
-<form style="display:none" id="delete_form" style="" method="post">
-    <input id="delete_id" name="delete_id" value="6666" />
-</form>
 <div>
 
     <partial name="_FlashPartial" />
 
-    <div>
-        <a href="User?id=0">Create</a>
-    </div>
     <table class="dt">
         @{
             <tr>
@@ -51,10 +37,6 @@
                     <td>
                         <a href="User?id=@dr[0]">
                             Update
-                        </a>
-                        &nbsp;&nbsp;
-                        <a href="#" onclick="javascript:delete_user(@dr[0])">
-                            Delete
                         </a>
                     </td>
                 </tr>

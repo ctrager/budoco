@@ -122,6 +122,9 @@ Here we are in the year 2020 and Microsoft adopted a format for configuration fi
 dotnet run
 ```
 
+Login as admin. Type something, anything as your password. 
+You will be redirected to a reset password page.
+
 ## Using Budoco
 
 The philosophy of both old BugTracker.NET and new Budoco is that you customize it by writing SQL queries and then storing those queries in the database. The Issues page displays the list of queries in its dropdown.

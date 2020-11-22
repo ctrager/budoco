@@ -28,8 +28,9 @@ DbPassword: YOUR_PASSWORD
 # usual. 
 ###############################################################################
 
-# For development, you can set to true to not send email
-DebugSkipSendingEmails: false
+# For development/test, you can set to true to not send email
+# 0 = DO send emails, 1 = do NOT send emails
+DebugSkipSendingEmails: 0
 
 SmtpHost: smtp.gmail.com
 SmtpPort: 465
@@ -64,4 +65,5 @@ LogFolder: budoco_logs
 # For development, when a new user registers,
 # confirm that registration automatically without 
 # the user having to confirm by clicking the email
-DebugAutoConfirmRegistration: false
+DebugAutoConfirmRegistration: 0
+

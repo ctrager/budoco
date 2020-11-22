@@ -40,7 +40,7 @@ namespace budoco
             string result = "";
 
 
-            if (!bd_config.get("DebugSkipSendingEmails"))
+            if (bd_config.get("DebugSkipSendingEmails") == 0)
             {
                 using (var client = new MailKit.Net.Smtp.SmtpClient())
                 {
@@ -184,5 +184,28 @@ namespace budoco
 
             return true;
         }
+
+        public static string insert_change_password_request_link(string email, int user_id)
+
+        {
+            // insert unguessable bytes into db for user to confirm registration
+            string sql = @"insert into emailed_links 
+                     (el_guid, el_email, el_user_id, el_action)
+                    values(@el_guid, @el_email, @el_user_id, @el_action)";
+
+            var guid = Guid.NewGuid();
+            Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
+
+            dict["@el_guid"] = guid;
+            dict["@el_email"] = email;
+            dict["@el_action"] = "reset";
+            dict["@el_user_id"] = user_id;
+
+            bd_db.exec(sql, dict);
+
+            return guid.ToString();
+
+        }
+
     }
 }
