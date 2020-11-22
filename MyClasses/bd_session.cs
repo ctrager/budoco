@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace budoco
 {
-    public static class MyCache
+    public static class bd_session
     {
         //Because we can't store objects in HttpContext.Session
 

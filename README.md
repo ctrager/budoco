@@ -29,8 +29,7 @@ These instructions are a work in progress. They are for Linux Mint 20, based on 
 
 ### 1) Create the postgresql database. 
 
-If you already have postgresql running and you have a postgres user and password combo that works, then just create an
-empty database for Budoco and skip ahead. I named my database "budoco".
+If you already have postgresql running and you have a postgres user and password combo that works, then just create an empty database for Budoco and skip ahead. I named my database "budoco".
 
 These were the steps I followed to install postgresql and tweak it. I have no idea if this is best practice or something really bad, but it worked for me.
 
@@ -78,7 +77,7 @@ localhost:5432:*:postgres:YOUR PASSWORD
 
 ### 2) Install dotnet core 5 sdk
 
-Skip to step 3 if this is already installed.
+Skip to step 3 if you already have the dotnet core 5 sdk installed.
 
 I used the instructions here in Nov 2020: https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-
 
@@ -113,7 +112,7 @@ Open the new copy and edit it according to the instructions in it.
 The hardest part is getting your emails to work, not just because of getting the settings correct but because Gmail, Yahoo, etc, make you do extra steps at their website, for everybody's protection.
 
 \<RANT>
-Here we are in the year 2020 and Microsoft adopted a format for configuration files that does *NOT* support comments. It makes me miss Windows 3.1 from the early 90s.
+Here we are in the year 2020 and Microsoft adopted a format for configuration files, "appsetings.json", that does *NOT* support comments. It makes me miss the ".ini" files from Windows 3.1 from the early 90s.
 \</RANT>
 
 ## Running Budoco
@@ -122,8 +121,7 @@ Here we are in the year 2020 and Microsoft adopted a format for configuration fi
 dotnet run
 ```
 
-Login as admin. Type something, anything as your password. 
-You will be redirected to a reset password page.
+Login as admin. Type something, anything as your password. You will be redirected to a reset password page. If you are just playing around and want to create more users, set "DebugAutoConfirmRegistration" to 1 in budoco_config_active.txt.
 
 ## Using Budoco
 
@@ -145,6 +143,8 @@ where i_created_by_user = $ME
 * More query examples in queries.sql
 
 * Finish admin pages
+
+* Logically deleting stuff. Setting to inactive. 
 
 * Send emails from the Issue page, that become part of the Issue posts.
 
