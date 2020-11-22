@@ -14,7 +14,7 @@ namespace budoco.Pages
     {
 
         // bindings start 
-        [BindProperty]
+        [FromQuery]
         public int id { get; set; }
 
         [BindProperty]
@@ -50,14 +50,16 @@ namespace budoco.Pages
 
         // bindings end        
 
-        public void OnGet(int id)
+        //https://stackoverflow.com/questions/56172036/razor-view-disabled-html-attribute-based-on-viewmodel-property
+        public string null_or_disabled = null;
+
+        public void OnGet()
         {
             if (!bd_util.check_user_permissions(HttpContext))
                 return;
 
-            PrepareDropdowns();
 
-            this.id = id;
+            PrepareDropdowns();
 
             if (id != 0)
             {
@@ -72,6 +74,9 @@ namespace budoco.Pages
                 priority_id = (int)dr["i_priority"];
                 status_id = (int)dr["i_status"];
                 assigned_to_user_id = (int)dr["i_assigned_to_user"];
+
+                if (HttpContext.Session.GetInt32("us_is_report_only") == 1)
+                    null_or_disabled = "disabled";
 
             }
         }

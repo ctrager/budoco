@@ -19,56 +19,61 @@
 
         <div>
             <label>Description</label>
-            <input asp-for="description" value="@Model.description"></input>
+            <input asp-for="description" value="@Model.description" disabled="@Model.null_or_disabled"></input>
         </div>
 
         <div>
             <label>Details</label>
-            <textarea asp-for="details" value="@Model.details"></textarea>
+            <textarea asp-for="details" value="@Model.details" disabled="@Model.null_or_disabled"></textarea>
         </div>
 
         <div>
             <label>Category</label>
-            <select asp-for="category_id" asp-items="@Model.categories">
+            <select asp-for="category_id" asp-items="@Model.categories" disabled="@Model.null_or_disabled">
                 <option value="">-- Select Category --</option>
             </select>
         </div>
 
         <div>
             <label>Project</label>
-            <select asp-for="project_id" asp-items="@Model.projects">
+            <select asp-for="project_id" asp-items="@Model.projects" disabled="@Model.null_or_disabled">
                 <option value="">-- Select Project --</option>
             </select>
         </div>
 
         <div>
             <label>Priority</label>
-            <select asp-for="priority_id" asp-items="@Model.priorities">
+            <select asp-for="priority_id" asp-items="@Model.priorities" disabled="@Model.null_or_disabled">
                 <option value="">-- Select Priority --</option>
             </select>
         </div>
 
         <div>
             <label>Status</label>
-            <select asp-for="status_id" asp-items="@Model.statuses">
+            <select asp-for="status_id" asp-items="@Model.statuses" disabled="@Model.null_or_disabled">
                 <option value="">-- Select Status --</option>
             </select>
         </div>
 
         <div>
             <label>Assigned To</label>
-            <select asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_users">
+            <select asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_users" disabled="@Model.null_or_disabled">
                 <option value="">-- Assign to --</option>
             </select>
         </div>
 
-        <div>
+        
             @{
-                string button_text = (@Model.id == 0) ? "Create" : "Update";
+                if (Model.null_or_disabled is null) 
+                {
+                    string button_text = (Model.id == 0) ? "Create" : "Update";
+                    <div>
+                    <button type="submit" >@button_text</button>
+                    </div>
+                }
             }
 
-            <button type="submit">@button_text</button>
-        </div>
+        
     </form>
 
     <div>
