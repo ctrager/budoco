@@ -5,131 +5,138 @@
     ViewData["Title"] = "Issues";
 }
 
-<script>
-    function getUrlVars() {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for (var i = 0; i < hashes.length; i++) {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    }
+<partial name="_FlashPartial" />
 
-    function on_query_change() {
-        var query_id = $("#query_id").val();
-        window.location.href = "Issues?page=1&query_id=" + query_id
-    }
-
-    function on_sort(col) {
-        var query_id = $("#query_id").val();
-        var query_string_vars = getUrlVars();
-        var prev_sort = query_string_vars["sort"];
-        var prev_dir = query_string_vars["dir"];
-        var dir = "asc"
-        if (col == prev_sort) {
-            dir = (prev_dir == "asc" ? "desc" : "asc");
-        }
-        window.location.href = "Issues?page=1&query_id=" + query_id + "&sort=" + col + "&dir=" + dir
-    }
-</script>
-
-
-<div>
-    <a href="Issue?id=0">Create Issue</a>
-</div>
-
-<div>
-    Queries
-    <select onchange="on_query_change()" asp-for="query_id" asp-items="@Model.queries">
-        <option value="">-- Select Query --</option>
-    </select>
-</div>
-
-<div>
-    @{
-        int number_of_pages = Model.dt.Rows.Count / bd_config.get("RowsPerPage");
-        if (Model.dt.Rows.Count % bd_config.get("RowsPerPage") > 0)
-        {
-            number_of_pages++;
-        }
-
-        if (number_of_pages > 0)
-        {
-            <span>Page @Model.page of @number_of_pages&nbsp;&nbsp;</span>
-            if (number_of_pages > 1)
-            {
-                if (Model.page > 1)
-                {
-                    <a href="Issues?query_id=@Model.query_id&page=@(Model.page - 1)&sort=@Model.sort">Prev</a>
+@{
+    if (HttpContext.Response.StatusCode == 200)
+    {
+        <script>
+            function getUrlVars() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
                 }
-                else
-                {
-                    <span class="gray">Prev</span>
-                }
-
-                <span>&nbsp;&nbsp;</span>
-                if (Model.page < number_of_pages)
-                {
-                    <a href="Issues?query_id=@Model.query_id&page=@(Model.page + 1)&sort=@Model.sort">Next</a>
-                }
-                else
-                {
-                    <span class="gray">Next</span>
-                }
+                return vars;
             }
-        }
 
-    }
-</div>
+            function on_query_change() {
+                var query_id = $("#query_id").val();
+                window.location.href = "Issues?page=1&query_id=" + query_id
+            }
 
-<div>
-    <table class="dt">
-        @{
-            <tr>
-                @{
-                    for (int i = 0; i < Model.dt.Columns.Count; i++)
-                    {
-                        string class_name = (@Model.sort == i ? "sorted" : "unsorted");
-                        <th class="@class_name" onclick="on_sort(@i)">@Model.dt.Columns[i].ColumnName</th>
-                    }
+            function on_sort(col) {
+                var query_id = $("#query_id").val();
+                var query_string_vars = getUrlVars();
+                var prev_sort = query_string_vars["sort"];
+                var prev_dir = query_string_vars["dir"];
+                var dir = "asc"
+                if (col == prev_sort) {
+                    dir = (prev_dir == "asc" ? "desc" : "asc");
                 }
-                <th>Action</th>
-            </tr>
-            int start_row = (Model.page - 1) * bd_config.get("RowsPerPage");
-            int row_count = 0;
+                window.location.href = "Issues?page=1&query_id=" + query_id + "&sort=" + col + "&dir=" + dir
+            }
+        </script>
 
-            for (int row = start_row; row < Model.dt.Rows.Count; row++)
-            {
-                DataRow dr = Model.dt.Rows[row];
-                <tr>
-                    @{
-                        for (int col = 0; col < Model.dt.Columns.Count; col++)
+
+        <div>
+            <a href="Issue?id=0">Create Issue</a>
+        </div>
+
+        <div>
+            Queries
+            <select onchange="on_query_change()" asp-for="query_id" asp-items="@Model.queries">
+                <option value="">-- Select Query --</option>
+            </select>
+        </div>
+
+        <div>
+            @{
+                int number_of_pages = Model.dt.Rows.Count / bd_config.get("RowsPerPage");
+                if (Model.dt.Rows.Count % bd_config.get("RowsPerPage") > 0)
+                {
+                    number_of_pages++;
+                }
+
+                if (number_of_pages > 0)
+                {
+                    <span>Page @Model.page of @number_of_pages&nbsp;&nbsp;</span>
+                    if (number_of_pages > 1)
+                    {
+                        if (Model.page > 1)
                         {
-                            if (col == 0)
-                            {
-                                <td><a href="Issue?id=@dr[0]">@dr[col]</a></td>
-                            }
-                            else
-                            {
-                                <td>@dr[col]</td>
-                            }
+                            <a href="Issues?query_id=@Model.query_id&page=@(Model.page - 1)&sort=@Model.sort">Prev</a>
+                        }
+                        else
+                        {
+                            <span class="gray">Prev</span>
+                        }
 
+                        <span>&nbsp;&nbsp;</span>
+                        if (Model.page < number_of_pages)
+                        {
+                            <a href="Issues?query_id=@Model.query_id&page=@(Model.page + 1)&sort=@Model.sort">Next</a>
+                        }
+                        else
+                        {
+                            <span class="gray">Next</span>
                         }
                     }
-                    <td>
-                        <a href="Issue?id=@dr[0]">
-                            Details
-                        </a>
-                    </td>
-                </tr>
-                row_count++;
-                if (row_count == bd_config.get("RowsPerPage"))
-                {
-                    break;
                 }
+
             }
-        }
-    </table>
-</div>
+        </div>
+
+        <div>
+            <table class="dt">
+                @{
+                    <tr>
+                        @{
+                            for (int i = 0; i < Model.dt.Columns.Count; i++)
+                            {
+                                string class_name = (@Model.sort == i ? "sorted" : "unsorted");
+                                <th class="@class_name" onclick="on_sort(@i)">@Model.dt.Columns[i].ColumnName</th>
+                            }
+                        }
+                        <th>Action</th>
+                    </tr>
+                    int start_row = (Model.page - 1) * bd_config.get("RowsPerPage");
+                    int row_count = 0;
+
+                    for (int row = start_row; row < Model.dt.Rows.Count; row++)
+                    {
+                        DataRow dr = Model.dt.Rows[row];
+                        <tr>
+                            @{
+                                for (int col = 0; col < Model.dt.Columns.Count; col++)
+                                {
+                                    if (col == 0)
+                                    {
+                                        <td><a href="Issue?id=@dr[0]">@dr[col]</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@dr[col]</td>
+                                    }
+
+                                }
+                            }
+                            <td>
+                                <a href="Issue?id=@dr[0]">
+                                    Details
+                                </a>
+                            </td>
+                        </tr>
+                        row_count++;
+                        if (row_count == bd_config.get("RowsPerPage"))
+                        {
+                            break;
+                        }
+                    }
+                }
+            </table>
+        </div>
+    }
+}

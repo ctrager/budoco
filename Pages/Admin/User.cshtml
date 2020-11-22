@@ -25,8 +25,16 @@
             <input asp-for="email" value="@Model.email"></input>
         </div>
         <div>
-            <label>Is Admin</label>
+            <label>Admin</label>
             <input asp-for="is_admin" value="true" />
+        </div>
+        <div>
+            <label>Active</label>
+            <input asp-for="is_active" value="true" />
+        </div>
+        <div>
+            <label>Report Only</label>
+            <input asp-for="is_report_only" value="true" />
         </div>
         <div>
             <button type="submit">Update</button>

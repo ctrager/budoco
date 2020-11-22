@@ -8,8 +8,9 @@ select {
 }
 
 h1 {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: normal;
+  letter-spacing: 1px
 }
 
 div {
@@ -53,14 +54,14 @@ th {
 .flash_msg {
   background-color: #ccffcc;
   border: 1px solid black;
-  border-radius: 5px;
+  border-radius: 6px;
   padding: 10px;
   margin: 10px;
 }
 
 .flash_err {
   border: 1px solid black;
-  border-radius: 5px;
+  border-radius: 6px;
   padding: 10px;
   margin: 10px;
 
@@ -120,6 +121,7 @@ th {
 
 form {
   border: 1px solid gray;
+  border-radius: 6px;
   background: #eeeeee;
   padding: 5px;
   margin-top: 10px;
@@ -139,6 +141,32 @@ label {
   display: inline-block;
   min-width: 100px;
 }
+
+.login_form {
+  width: 420px;
+}
+
+.login_register {
+  margin-top: 20px;
+  padding: 10px;
+  background: #eeffee;
+  border-radius: 6px;
+  width: 400px;
+  border: 1px solid gray;
+}
+
+.login_form>div>label {
+  min-width: 150px;
+}
+
+.register_form {
+  width: 420px;
+}
+
+.register_form>div>label {
+  min-width: 150px;
+}
+
 
 p {
   margin-bottom: 20px;

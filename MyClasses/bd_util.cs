@@ -106,13 +106,20 @@ namespace budoco
 
         }
 
+        public static void set_flash_err(HttpContext context, string s)
+        {
+            context.Session.SetString("flash_err", s);
+        }
+
         public static void set_flash_err(HttpContext context, List<string> errs)
         {
             string s = string.Join('|', errs);
             context.Session.SetString("flash_err", s);
         }
 
-        public static void redirect_if_not_logged_in(HttpContext context)
+        public const bool MUST_BE_ADMIN = true;
+
+        public static bool check_user_permissions(HttpContext context, bool must_be_admin = false)
         {
             // Session was changing every page. Stackoverflow person
             // said session needs at least one thing. This seems to work.
@@ -127,14 +134,38 @@ namespace budoco
             if (dr is null)
             {
                 context.Response.Redirect("/Login");
-                return;
+                return false;
             }
+
+            bool is_active = (bool)dr["us_is_active"];
+            bool is_admin = (bool)dr["us_is_admin"];
 
             // save in session so that downstream pages don't have to reread
             context.Session.SetInt32("us_id", (int)dr["us_id"]);
             context.Session.SetString("us_username", (string)dr["us_username"]);
             context.Session.SetString("us_email", (string)dr["us_email"]);
             context.Session.SetInt32("us_is_admin", Convert.ToInt32((bool)dr["us_is_admin"]));
+            context.Session.SetInt32("us_is_active", Convert.ToInt32((bool)dr["us_is_active"]));
+            context.Session.SetInt32("us_is_report_only", Convert.ToInt32((bool)dr["us_is_report_only"]));
+
+            if (!is_active)
+            {
+                bd_util.set_flash_err(context, "Your user account is set to inactive.");
+                context.Response.Redirect("/Login");
+                return false;
+            }
+
+            if (must_be_admin)
+            {
+                if (!is_admin)
+                {
+                    bd_util.set_flash_err(context, "Attempt to view admin only page.");
+                    context.Response.Redirect("/Index");
+                    return false;
+                }
+            }
+
+            return true;
 
         }
 

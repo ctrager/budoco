@@ -67,6 +67,8 @@ namespace budoco.Pages
             bd_db.exec(sql, dict);
 
             bd_util.set_flash_msg(HttpContext, "Password has been reset successfully.");
+
+            Response.Redirect("/Index");
         }
 
         int GetUserIdUsingGuid()

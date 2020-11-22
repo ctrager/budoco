@@ -9,13 +9,17 @@
     ViewData["Title"] = "Login";
 }
 
+@{
+    Console.WriteLine("Login response code:" + HttpContext.Response.StatusCode);
+}
+
 <h1>Login</h1>
 
 <partial name="_FlashPartial" />
 
-<form method="post">
+<form class="login_form" method="post">
     <div>
-        <label>Enter either Username or Email</label>
+        <label>Username or Email</label>
         <input asp-for="username" />
     </div>
     <div>
@@ -24,5 +28,10 @@
     </div>
     <div><button type="submit">Login</button></div>
 </form>
-<div><a href="Register">Register</a></div>
+
 <div><a href="ResetPasswordRequest">Forgot Password?</a></div>
+
+<div class="login_register">
+    <div>Is this your first time?</div>
+    <div><a href="Register">Register</a></div>
+</div>

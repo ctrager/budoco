@@ -62,6 +62,10 @@ RowsPerPage: 30
 # Location of logs
 LogFolder: budoco_logs 
 
+# if 1, newly registered users start as inactive until admin sets to active
+NewUserStartsInactive: 0
+NewUserStartsReportOnly: 0
+
 # For development, when a new user registers,
 # confirm that registration automatically without 
 # the user having to confirm by clicking the email

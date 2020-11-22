@@ -15,10 +15,11 @@ create table users
 us_id serial,
 us_username varchar(20) not null,
 us_email varchar(40) not null,
-us_is_admin boolean default false,
 us_password varchar(48) not null default '',
+us_is_admin boolean default false,
 us_is_active boolean default true,
-us_create_timestamp timestamptz default CURRENT_TIMESTAMP not null
+us_is_report_only boolean default false,
+us_created_date timestamptz default CURRENT_TIMESTAMP not null
 );
 
 CREATE UNIQUE INDEX us_username_index ON users (us_username);
@@ -116,8 +117,6 @@ i_assigned_to_user int null default 0,
 i_last_updated_user int null default 0,
 i_last_updated_date timestamptz null
 );
-
-
 
 create table posts 
 (

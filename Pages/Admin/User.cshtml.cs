@@ -10,7 +10,7 @@ namespace budoco.Pages
     {
 
         // bindings start 
-        [BindProperty]
+        [FromQuery]
         public int id { get; set; }
 
         [BindProperty]
@@ -22,15 +22,18 @@ namespace budoco.Pages
         [BindProperty]
         public bool is_admin { get; set; }
 
+        [BindProperty]
+        public bool is_active { get; set; }
+
+        [BindProperty]
+        public bool is_report_only { get; set; }
 
         // bindings end        
 
-        public void OnGet(int id)
+        public void OnGet()
         {
 
-            bd_util.redirect_if_not_logged_in(HttpContext);
-
-            this.id = id;
+            bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN);
 
             string sql = "select * from users where us_id = " + id.ToString();
 
@@ -39,10 +42,15 @@ namespace budoco.Pages
             username = (string)dr["us_username"];
             email = (string)dr["us_email"];
             is_admin = (bool)dr["us_is_admin"];
+            is_active = (bool)dr["us_is_active"];
+            is_report_only = (bool)dr["us_is_report_only"];
         }
 
         public void OnPost()
         {
+            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
+                return;
+
             if (!IsValid())
             {
                 return;
@@ -54,7 +62,9 @@ namespace budoco.Pages
             sql = @"update users set 
                 us_username = @us_username,
                 us_email = @us_email,
-                us_is_admin = @us_is_admin
+                us_is_admin = @us_is_admin,
+                us_is_active = @us_is_active,
+                us_is_report_only = @us_is_report_only
                 where us_id = @us_id;";
 
             bd_db.exec(sql, GetValuesDict());
@@ -69,6 +79,8 @@ namespace budoco.Pages
             dict["@us_username"] = username;
             dict["@us_email"] = email;
             dict["@us_is_admin"] = is_admin;
+            dict["@us_is_active"] = is_active;
+            dict["@us_is_report_only"] = is_report_only;
 
             return dict;
         }

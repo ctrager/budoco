@@ -93,6 +93,13 @@ namespace budoco.Pages
                 }
                 else
                 {
+
+                    if (!(bool)dr_user["us_is_active"])
+                    {
+                        bd_util.set_flash_err(HttpContext, "Your user account is set to inactive.");
+                        return false;
+                    }
+
                     string password_in_db = (string)dr_user["us_password"];
                     user_id = (int)dr_user[0];
 
@@ -104,7 +111,7 @@ namespace budoco.Pages
                         string guid = bd_util.insert_change_password_request_link(
                             "none", user_id);
 
-                        errs.Add("You must create a password.");
+                        bd_util.set_flash_err(HttpContext, "You must create a password.");
                         Response.Redirect("/ResetPassword?guid=" + guid);
 
                     }

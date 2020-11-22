@@ -4,6 +4,6 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<div>
-    @Model.HttpContext.Session.Id
-</div>
+@{
+    Console.WriteLine("Index response code:" + HttpContext.Response.StatusCode);
+}

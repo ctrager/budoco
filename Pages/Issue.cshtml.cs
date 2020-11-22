@@ -33,7 +33,6 @@ namespace budoco.Pages
         [BindProperty]
         public int category_id { get; set; }
 
-
         [BindProperty]
         public IEnumerable<SelectListItem> priorities { get; set; }
         [BindProperty]
@@ -53,7 +52,8 @@ namespace budoco.Pages
 
         public void OnGet(int id)
         {
-            bd_util.redirect_if_not_logged_in(HttpContext);
+            if (!bd_util.check_user_permissions(HttpContext))
+                return;
 
             PrepareDropdowns();
 
@@ -84,6 +84,9 @@ namespace budoco.Pages
             {
                 return;
             }
+
+            if (string.IsNullOrWhiteSpace(details))
+                details = "";
 
             string sql;
 

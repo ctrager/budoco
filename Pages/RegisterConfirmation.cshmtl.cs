@@ -46,9 +46,25 @@ namespace budoco.Pages
                 }
                 else
                 {
+
+                    bool is_active = true;
+                    bool is_report_only = false;
+
+                    if (bd_config.get("NewUserStartsInactive") == 1)
+                        is_active = false;
+
+                    if (bd_config.get("NewUserStartsReportOnly") == 1)
+                        is_report_only = true;
+
+                    dict["@us_username"] = (string)dr_registration["el_username"];
+                    dict["@us_email"] = (string)dr_registration["el_email"];
+                    dict["@us_password"] = (string)dr_registration["el_password"];
+                    dict["@us_is_active"] = is_active;
+                    dict["@us_is_report_only"] = is_report_only;
+
                     // create user
-                    sql = @"insert into users (us_username, us_email, us_password) 
-                    values(@us_username, @us_email, @us_password) 
+                    sql = @"insert into users (us_username, us_email, us_password, us_is_active, us_is_report_only) 
+                    values(@us_username, @us_email, @us_password, @us_is_active, @us_is_report_only) 
                     returning us_id";
 
                     bd_db.exec_scalar(sql, dict);

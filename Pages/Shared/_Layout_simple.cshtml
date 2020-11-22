@@ -12,51 +12,67 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @bd_config.get("AppName")</title>
-    <link rel="stylesheet" href="~/css/site_simple.css" />
+    <link rel="stylesheet" href="~/css/budoco.css" />
 </head>
 
+@{
+    Console.WriteLine("layout: " +
+            HttpContextAccessor.HttpContext.Response.StatusCode.ToString());
+    if (HttpContextAccessor.HttpContext.Response.StatusCode == 302)
+    {
 
-<body>
-    <div>
+        <body>This is a redirect</body>
+        IgnoreBody();
+    }
+    else
+    {
 
-        <ul class="navbar">
-            <li class="nav-item logo">
-                <a class="nav-link" asp-page="/Index">@bd_config.get("AppName")</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-page="/Issues">Issues</a>
-            </li>
-            @{
-                if (is_admin)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Admin/Admin">Admin</a>
+        <body>
+
+            <div>
+
+                <ul class="navbar">
+                    <li class="nav-item logo">
+                        <a class="nav-link" asp-page="/Index">@bd_config.get("AppName")</a>
                     </li>
-                }
-            }
-            <!-- <li class="nav-item">
-                <a class="nav-link" asp-page="/Email">Email</a>
-            </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Issues">Issues</a>
+                    </li>
+                    @{
+                        if (is_admin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Admin/Admin">Admin</a>
+                            </li>
+                        }
+                    }
+                    <!-- <li class="nav-item">
+                                                                                <a class="nav-link" asp-page="/Email">Email</a>
+                                                                            </li> -->
 
-            <li class="nav-item">
-                <a class="nav-link" href="/Login?action=signout">Sign Out</a>
-            </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Login?action=signout">Sign Out</a>
+                    </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/About">About</a>
-            </li>
-        </ul>
-    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/About">About</a>
+                    </li>
+                </ul>
+            </div>
 
-    <div class="render_body">
+            <div class="render_body">
 
-        @RenderBody()
-    </div>
+                @RenderBody()
+            </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+            @await RenderSectionAsync("Scripts", required: false)
+
+
+        </body>
+    }
+}
 
 </html>

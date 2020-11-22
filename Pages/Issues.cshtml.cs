@@ -35,7 +35,8 @@ namespace budoco.Pages
         public void OnGet()
         {
 
-            bd_util.redirect_if_not_logged_in(HttpContext);
+            if (!bd_util.check_user_permissions(HttpContext))
+                return;
 
             if (page == 0)
             {
