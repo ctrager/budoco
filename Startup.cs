@@ -20,8 +20,7 @@ namespace budoco
             bd_util.console_write_line("Startup");
             Configuration = configuration;
 
-            Configuration.GetSection("Budoco").Bind(cnfg);
-            bd_util.console_write_line(Startup.cnfg.DebugWhatEnvIsThis);
+            bd_util.console_write_line(Configuration["Budoco:DebugWhatEnvIsThis"]);
 
             // test cache
             // object o = new object();
@@ -32,9 +31,6 @@ namespace budoco
         }
 
         public IConfiguration Configuration { get; }
-
-        public static MyConfig cnfg = new MyConfig();
-
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -51,7 +47,6 @@ namespace budoco
                     });
 
             services.AddHttpContextAccessor();
-            //TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSession(options =>
             {
@@ -101,8 +96,8 @@ namespace budoco
                 // o = ++my_int;
                 // MyCache.Set("my_int", o);
                 bd_util.console_write_line(
-                    DateTime.Now.ToString("h:mm tt") + ", "
-                    + context.Session.Id + ","
+                    DateTime.Now.ToString("hh:mm:ss")
+                    + " "
                     + context.Request.Path);
 
                 await next.Invoke();

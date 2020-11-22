@@ -71,11 +71,11 @@ namespace budoco.Pages
             }
 
             // first query or previously selected query
-            queries = db_util.prepare_select_list("select qu_id, qu_name from queries order by qu_sort_seq, qu_name");
+            queries = bd_db.prepare_select_list("select qu_id, qu_name from queries order by qu_sort_seq, qu_name");
             if (query_id == 0)
             {
                 // first query
-                query_row = db_util.get_datarow(
+                query_row = bd_db.get_datarow(
                     "select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1");
                 query_id = (int)query_row[ID];
                 sort = 0;
@@ -86,13 +86,13 @@ namespace budoco.Pages
             else
             {
                 // previously selected query
-                query_row = db_util.get_datarow(
+                query_row = bd_db.get_datarow(
                     "select qu_id, qu_sql from queries where qu_id = " + query_id.ToString());
 
                 if (query_row is null) // bad query id from session or url?
                 {
                     // first query
-                    query_row = db_util.get_datarow(
+                    query_row = bd_db.get_datarow(
                         "select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1");
                     query_id = (int)query_row[ID];
                     sort = 0;
@@ -124,7 +124,7 @@ namespace budoco.Pages
 
             sql = sql.Replace("$ME", HttpContext.Session.GetInt32("us_id").ToString());
 
-            dt = db_util.get_datatable(sql);
+            dt = bd_db.get_datatable(sql);
         }
     }
 }

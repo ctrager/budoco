@@ -12,16 +12,19 @@ namespace budoco
 {
     public class Program
     {
-        
+
         public static int Main(string[] args)
         {
+            Console.WriteLine("Main");
+            bd_config.load_config();
+
             Log.Logger = new LoggerConfiguration()
-                
+
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
                 .MinimumLevel.Override("budoco", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File(@"logs/mylog.txt", 
+                .WriteTo.File(@"logs/mylog.txt",
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
@@ -40,7 +43,7 @@ namespace budoco
             {
                 Log.CloseAndFlush();
             }
-    }
+        }
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 // dotnet install package Serilog.AspNetCore
@@ -49,6 +52,6 @@ namespace budoco
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-        
+
     }
 }

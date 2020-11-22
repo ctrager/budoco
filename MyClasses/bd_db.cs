@@ -6,24 +6,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace budoco
 {
-    public static class db_util
+    public static class bd_db
     {
-        static string connection_string = "";
 
         public static string get_connection_string()
         {
             //"server=127.0.0.1;database=budoco;user id='postgres';password='password';"
 
-            if (connection_string == "")
-            {
-                connection_string = "server=" + Startup.cnfg.DbServer;
-                connection_string += ";database=" + Startup.cnfg.DbDatabase;
-                connection_string += ";user id=" + Startup.cnfg.DbUser;
-                string password = System.IO.File.ReadAllText(Startup.cnfg.DbPasswordFile);
-                connection_string += ";password='" + password;
-                connection_string += "'";
-            }
-
+            string connection_string = "server=" + bd_config.get("DbServer");
+            connection_string += ";database=" + bd_config.get("DbDatabase");
+            connection_string += ";user id=" + bd_config.get("DbUser");
+            connection_string += ";password='" + bd_config.get("DbPassword");
+            connection_string += "'";
             return connection_string;
         }
 
@@ -83,7 +77,7 @@ namespace budoco
         {
             var list = new List<Dictionary<string, dynamic>>();
 
-            DataTable dt = db_util.get_datatable(sql);
+            DataTable dt = bd_db.get_datatable(sql);
             foreach (DataRow dr in dt.Rows)
             {
                 var d = new Dictionary<string, dynamic>();

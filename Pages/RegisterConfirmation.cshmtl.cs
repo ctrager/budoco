@@ -24,7 +24,7 @@ namespace budoco.Pages
             string sql = "select * from emailed_links where el_guid = @el_guid";
             var dict = new Dictionary<string, dynamic>();
             dict["@el_guid"] = guid;
-            DataRow dr_registration = db_util.get_datarow(sql, dict);
+            DataRow dr_registration = bd_db.get_datarow(sql, dict);
 
             if (dr_registration is null)
             {
@@ -40,7 +40,7 @@ namespace budoco.Pages
 
                 sql = "select 1 from users where us_username = @us_username";
 
-                if (db_util.exists(sql, dict))
+                if (bd_db.exists(sql, dict))
                 {
                     errs.Add("Already registered. Did you click twice?");
                 }
@@ -51,7 +51,7 @@ namespace budoco.Pages
                     values(@us_username, @us_email, @us_password) 
                     returning us_id";
 
-                    db_util.exec_scalar(sql, dict);
+                    bd_db.exec_scalar(sql, dict);
 
                     bd_util.set_flash_msg(HttpContext, "Registration was succesful");
 

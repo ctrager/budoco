@@ -103,52 +103,18 @@ psql -d budoco -U postgres -f misc/queries.sql
 
 ### 4) Configure Budoco
 
+Copy the example config file. The copy must be named "budoco_config_active.txt"
+
+```
+cp budoco_config_example.txt budoco_config_active.txt
+```
+
+Open the new copy and edit it according to the instructions in it. 
+The hardest part is getting your emails to work, not just because of getting the settings correct but because Gmail, Yahoo, etc, make you do extra steps at their website, for everybody's protection.
+
+\<RANT>
 Here we are in the year 2020 and Microsoft adopted a format for configuration files that does *NOT* support comments. It makes me miss Windows 3.1 from the early 90s.
-
-You need to edit some or all of the following files to make sure that the database connection info and the credentials for your smtp server are correct.
-
-Note differences especially between appsettings.json and the overrides in the appsettings.Development.json file.
-
-The app needs your password for your database and for your smtp server. For each of those passwords create a file that has a single line, the password, with no trailing line break. Then edit the .json files wit the locations of the two password files.
-
-"DebugAutoConfirmRegistration" allows you to play with the app, registrating as multiple users with fake email accounts.
-
-"WebsiteUrlRootWithoutSlash" setting is used for the emails that the app sends out.
-
-```
-{
-  "DetailedErrors": true,
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
-    }
-  },
-  "AllowedHosts": "*",
-  "Budoco": {
-    "DbServer": "127.0.0.1",
-    "DbDatabase": "budoco",
-    "DbUser": "postgres",
-    "DbPasswordFile": "budoco_db.txt",
-
-    "AppName": "Budoco",
-    "WebsiteUrlRootWithoutSlash": "https://YOURDOMAIN.COM",  
-    "RowsPerPage": 30,
-  
-    "LogFolder": "budoco_logs",
-
-    "SmtpHost": "smtp.gmail.com",
-    "SmtpPort": 465,
-    "SmtpUser": "YOUR_GMAIL@gmail.com",
-    "SmtpPasswordFile": "budoco_smtp.txt",
-
-    "DebugAutoConfirmRegistration": false,
-    "DebugSkipSendingEmails": false
-  }
-}
-
-```
+\</RANT>
 
 ## Running Budoco
 

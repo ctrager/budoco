@@ -31,7 +31,7 @@ namespace budoco.Pages
             string sql = "delete from users where us_id = @us_id;";
             var dict = new Dictionary<string, dynamic>();
             dict["@us_id"] = delete_id;
-            db_util.exec(sql, dict);
+            bd_db.exec(sql, dict);
             bd_util.set_flash_msg(HttpContext, "Delete was successful");
             GetUsers();
         }
@@ -40,7 +40,7 @@ namespace budoco.Pages
         {
             DataSet ds = new DataSet();
             string sql = "select * from users";
-            dt = db_util.get_datatable(sql);
+            dt = bd_db.get_datatable(sql);
         }
     }
 }

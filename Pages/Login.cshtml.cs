@@ -48,7 +48,7 @@ namespace budoco.Pages
             var dict = new Dictionary<string, dynamic>();
             dict["@se_id"] = HttpContext.Session.Id;
             dict["@se_user"] = user_id;
-            db_util.exec(sql, dict);
+            bd_db.exec(sql, dict);
             Response.Redirect("Issues");
 
         }
@@ -56,7 +56,7 @@ namespace budoco.Pages
         public void Signout()
         {
             string sql = "delete from sessions where se_id = '" + HttpContext.Session.Id + "'";
-            db_util.exec(sql);
+            bd_db.exec(sql);
             Response.Redirect("/Login");
         }
 
@@ -85,7 +85,7 @@ namespace budoco.Pages
                 dict["@us_username"] = username;
                 dict["@us_email"] = username; // on purpose, user can login typing either
 
-                DataRow dr_user = db_util.get_datarow(sql, dict);
+                DataRow dr_user = bd_db.get_datarow(sql, dict);
 
                 if (dr_user is null)
                 {

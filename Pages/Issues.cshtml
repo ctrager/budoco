@@ -49,8 +49,8 @@
 
 <div>
     @{
-        int number_of_pages = Model.dt.Rows.Count / Startup.cnfg.RowsPerPage;
-        if (Model.dt.Rows.Count % Startup.cnfg.RowsPerPage > 0)
+        int number_of_pages = Model.dt.Rows.Count / bd_config.get("RowsPerPage");
+        if (Model.dt.Rows.Count % bd_config.get("RowsPerPage") > 0)
         {
             number_of_pages++;
         }
@@ -97,7 +97,7 @@
                 }
                 <th>Action</th>
             </tr>
-            int start_row = (Model.page - 1) * Startup.cnfg.RowsPerPage;
+            int start_row = (Model.page - 1) * bd_config.get("RowsPerPage");
             int row_count = 0;
 
             for (int row = start_row; row < Model.dt.Rows.Count; row++)
@@ -118,7 +118,7 @@
                     </td>
                 </tr>
                 row_count++;
-                if (row_count == Startup.cnfg.RowsPerPage)
+                if (row_count == bd_config.get("RowsPerPage"))
                 {
                     break;
                 }

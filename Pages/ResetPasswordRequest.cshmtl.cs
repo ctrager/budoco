@@ -33,7 +33,7 @@ namespace budoco.Pages
                 var sql = "select * from users where us_email = @us_email";
                 var dict = new Dictionary<string, dynamic>();
                 dict["@us_email"] = email;
-                DataRow dr_user = db_util.get_datarow(sql, dict);
+                DataRow dr_user = bd_db.get_datarow(sql, dict);
 
                 if (dr_user is not null)
                 {
@@ -48,18 +48,18 @@ namespace budoco.Pages
                     dict["@el_action"] = "reset";
                     dict["@el_user_id"] = dr_user[0];
 
-                    db_util.exec(sql, dict);
+                    bd_db.exec(sql, dict);
 
 
                     string body = "Follow or browse to this link to reset password:\n"
-                        + Startup.cnfg.WebsiteUrlRootWithoutSlash
+                        + bd_config.get("WebsiteUrlRootWithoutSlash")
                         + "/ResetPassword?guid="
                         + guid;
 
                     string email_result = bd_util.send_email(
                         email, // to
-                        Startup.cnfg.SmtpUser,  // from
-                        Startup.cnfg.AppName + ": Reset Password", // subject
+                        bd_config.get("SmtpUser"),  // from
+                        bd_config.get("AppName") + ": Reset Password", // subject
                         body);
 
                     if (email_result != "")

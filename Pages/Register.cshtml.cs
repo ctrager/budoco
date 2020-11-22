@@ -52,9 +52,9 @@ namespace budoco.Pages
             dict["@el_password"] = hashed_password;
             dict["@el_action"] = "register";
 
-            db_util.exec(sql, dict);
+            bd_db.exec(sql, dict);
 
-            if (Startup.cnfg.DebugAutoConfirmRegistration)
+            if (bd_config.get("DebugAutoConfirmRegistration"))
             {
                 Response.Redirect("/RegisterConfirmation?guid=" + guid);
             }
@@ -64,14 +64,14 @@ namespace budoco.Pages
                 // and tell user to check it
 
                 string body = "Follow or browse to this link to confirm registration:\n"
-                    + Startup.cnfg.WebsiteUrlRootWithoutSlash
+                    + bd_config.get("WebsiteUrlRootWithoutSlash")
                     + "/RegisterConfirmation?guid="
                     + guid;
 
                 string email_result = bd_util.send_email(
                     email, // to
-                    Startup.cnfg.SmtpUser,  // from
-                    Startup.cnfg.AppName + ": Confirm registration", // subject
+                    bd_config.get("SmtpUser"),  // from
+                    bd_config.get("AppName") + ": Confirm registration", // subject
                     body);
 
                 if (email_result != "")
@@ -102,7 +102,7 @@ namespace budoco.Pages
             {
                 sql = "select 1 from users where us_username = @us_username";
                 dict["@us_username"] = username;
-                if (db_util.exists(sql, dict))
+                if (bd_db.exists(sql, dict))
                 {
                     errs.Add("Username already registered.");
                 }
@@ -116,7 +116,7 @@ namespace budoco.Pages
             {
                 sql = "select 1 from users where us_email = @us_email";
                 dict["@us_email"] = email;
-                if (db_util.exists(sql, dict))
+                if (bd_db.exists(sql, dict))
                 {
                     errs.Add("Email already registered.");
                 }

@@ -1,0 +1,67 @@
+# Save this, but make a copy and rename that copy to budoco_config_active.txt
+# Edit the values in the copy. 
+# 
+
+
+###############################################################################
+# Start of important settings
+###############################################################################
+
+
+###############################################################################
+# Database 
+###############################################################################
+
+DbServer: 127.0.0.1
+DbDatabase: budoco
+DbUser: postgres
+DbPassword: YOUR_PASSWORD
+
+###############################################################################
+# Smtp 
+#
+# I tested with my usual email accounts, not a special service.
+# For both Gmail and Yahoo, sending emails won't work until you go
+# do stuff on their web sites. It's not easy to find. For Google
+# you will get security alerts. For Yahoo, it will just fail. You
+# have to generate a special password at their website, not YOUR_GMAIL
+# usual. 
+###############################################################################
+
+# For development, you can set to true to not send email
+DebugSkipSendingEmails: false
+
+SmtpHost: smtp.gmail.com
+SmtpPort: 465
+SmtpUser: YOUR_GMAIL@gmail.com
+SmtpPassword: YOUR_PASSWORD
+
+# I still use yahoo mail:
+# SmtpHost: smtp.mail.yahoo.com
+# SmtpPort: 587
+
+# This is for the links in emails that the app sends.
+# For example, for new user registration, password reset.
+
+WebsiteUrlRootWithoutSlash: https://YOURDOMAIN.COM
+# or
+# WebsiteUrlRootWithoutSlash: http://localhost:5000
+
+
+###############################################################################
+# End of important settings
+###############################################################################
+
+# Rename the app
+AppName: Budoco
+
+# Number of rows on the issues page
+RowsPerPage: 30
+  
+# Location of logs
+LogFolder: budoco_logs 
+
+# For development, when a new user registers,
+# confirm that registration automatically without 
+# the user having to confirm by clicking the email
+DebugAutoConfirmRegistration: false

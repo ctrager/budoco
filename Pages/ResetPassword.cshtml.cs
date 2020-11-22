@@ -64,7 +64,7 @@ namespace budoco.Pages
             dict["@us_password"] = bd_util.compute_password_hash(password);
             dict["@us_id"] = user_id;
 
-            db_util.exec(sql, dict);
+            bd_db.exec(sql, dict);
 
             bd_util.set_flash_msg(HttpContext, "Password has been reset successfully.");
         }
@@ -74,7 +74,7 @@ namespace budoco.Pages
             string sql = "select * from emailed_links where el_guid = @el_guid";
 
             dict["@el_guid"] = guid;
-            DataRow dr_reset = db_util.get_datarow(sql, dict);
+            DataRow dr_reset = bd_db.get_datarow(sql, dict);
 
             if (dr_reset is null)
             {

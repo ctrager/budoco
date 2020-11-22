@@ -60,7 +60,7 @@ namespace budoco.Pages
             {
                 string sql = "select * from issues where i_id = " + id.ToString();
 
-                DataRow dr = db_util.get_datarow(sql);
+                DataRow dr = bd_db.get_datarow(sql);
 
                 desc = (string)dr["i_desc"];
                 category_id = (int)dr["i_category"];
@@ -91,7 +91,7 @@ namespace budoco.Pages
                 values(@i_desc, @i_created_by_user, @i_category, @i_project, @i_priority, @i_status, @i_assigned_to_user) 
                 returning i_id";
 
-                this.id = (int)db_util.exec_scalar(sql, GetValuesDict());
+                this.id = (int)bd_db.exec_scalar(sql, GetValuesDict());
                 bd_util.set_flash_msg(HttpContext, "Create was successful");
                 Response.Redirect("Issue?id=" + this.id.ToString());
             }
@@ -108,7 +108,7 @@ namespace budoco.Pages
                 i_last_updated_date = CURRENT_TIMESTAMP
                 where i_id = @i_id;";
 
-                db_util.exec(sql, GetValuesDict());
+                bd_db.exec(sql, GetValuesDict());
                 bd_util.set_flash_msg(HttpContext, "Update was successful");
             }
         }
@@ -132,11 +132,11 @@ namespace budoco.Pages
 
         void PrepareDropdowns()
         {
-            assigned_to_users = db_util.prepare_select_list("select us_id, us_username from users");
-            categories = db_util.prepare_select_list("select ca_id, ca_name from categories");
-            projects = db_util.prepare_select_list("select pj_id, pj_name from projects");
-            priorities = db_util.prepare_select_list("select pr_id, pr_name from priorities");
-            statuses = db_util.prepare_select_list("select st_id, st_name from statuses");
+            assigned_to_users = bd_db.prepare_select_list("select us_id, us_username from users");
+            categories = bd_db.prepare_select_list("select ca_id, ca_name from categories");
+            projects = bd_db.prepare_select_list("select pj_id, pj_name from projects");
+            priorities = bd_db.prepare_select_list("select pr_id, pr_name from priorities");
+            statuses = bd_db.prepare_select_list("select st_id, st_name from statuses");
         }
 
         bool IsValid()

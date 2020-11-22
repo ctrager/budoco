@@ -40,21 +40,20 @@ namespace budoco
             string result = "";
 
 
-            if (!Startup.cnfg.DebugSkipSendingEmails)
+            if (!bd_config.get("DebugSkipSendingEmails"))
             {
                 using (var client = new MailKit.Net.Smtp.SmtpClient())
                 {
                     try
                     {
                         client.Connect(
-                            Startup.cnfg.SmtpHost,
-                            Startup.cnfg.SmtpPort,
+                            bd_config.get("SmtpHost"),
+                            bd_config.get("SmtpPort"),
                             MailKit.Security.SecureSocketOptions.Auto);
 
-                        string password = System.IO.File.ReadAllText(Startup.cnfg.SmtpPasswordFile);
-                        bd_util.console_write_line(Startup.cnfg.SmtpUser);
-                        bd_util.console_write_line("authenticating...");
-                        client.Authenticate(Startup.cnfg.SmtpUser, password);
+                        string smtp_user = bd_config.get("SmtpUser");
+                        string smtp_password = bd_config.get("SmtpPassword");
+                        client.Authenticate(smtp_user, smtp_password);
                         bd_util.console_write_line("sending...");
                         client.Send(message);
                         client.Disconnect(true);
@@ -123,7 +122,7 @@ namespace budoco
                 inner join users on se_user = us_id
                 where se_id = '" + context.Session.Id + "'";
 
-            DataRow dr = db_util.get_datarow(sql);
+            DataRow dr = bd_db.get_datarow(sql);
 
             if (dr is null)
             {

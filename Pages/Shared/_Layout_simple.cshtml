@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @Startup.cnfg.AppName</title>
+    <title>@ViewData["Title"] - @bd_config.get("AppName")</title>
     <link rel="stylesheet" href="~/css/site_simple.css" />
 </head>
 
@@ -21,7 +21,7 @@
 
         <ul class="navbar">
             <li class="nav-item logo">
-                <a class="nav-link" asp-page="/Index">@Startup.cnfg.AppName</a>
+                <a class="nav-link" asp-page="/Index">@bd_config.get("AppName")</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-page="/Issues">Issues</a>
