@@ -155,3 +155,16 @@ p {
   font-style: italic;
   color: red;
 }
+
+
+textarea {
+  width: 600px;
+  height: 100px;
+}
+
+input:disabled {
+  /* same color as form */
+  background: #eeeeee;
+  border: none;
+  color: black;
+}

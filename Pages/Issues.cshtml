@@ -107,8 +107,15 @@
                     @{
                         for (int col = 0; col < Model.dt.Columns.Count; col++)
                         {
+                            if (col == 0)
+                            {
+                                <td><a href="Issue?id=@dr[0]">@dr[col]</a></td>
+                            }
+                            else
+                            {
+                                <td>@dr[col]</td>
+                            }
 
-                            <td>@dr[col]</td>
                         }
                     }
                     <td>

@@ -18,7 +18,10 @@ namespace budoco.Pages
         public int id { get; set; }
 
         [BindProperty]
-        public string desc { get; set; }
+        public string description { get; set; }
+
+        [BindProperty]
+        public string details { get; set; }
 
         [BindProperty]
         public IEnumerable<SelectListItem> assigned_to_users { get; set; }
@@ -62,7 +65,8 @@ namespace budoco.Pages
 
                 DataRow dr = bd_db.get_datarow(sql);
 
-                desc = (string)dr["i_desc"];
+                description = (string)dr["i_description"];
+                details = (string)dr["i_details"];
                 category_id = (int)dr["i_category"];
                 project_id = (int)dr["i_project"];
                 priority_id = (int)dr["i_priority"];
@@ -87,8 +91,8 @@ namespace budoco.Pages
             {
 
                 sql = @"insert into issues 
-                (i_desc, i_created_by_user, i_category, i_project, i_priority, i_status, i_assigned_to_user) 
-                values(@i_desc, @i_created_by_user, @i_category, @i_project, @i_priority, @i_status, @i_assigned_to_user) 
+                (i_description, i_details, i_created_by_user, i_category, i_project, i_priority, i_status, i_assigned_to_user) 
+                values(@i_description, @i_details, @i_created_by_user, @i_category, @i_project, @i_priority, @i_status, @i_assigned_to_user) 
                 returning i_id";
 
                 this.id = (int)bd_db.exec_scalar(sql, GetValuesDict());
@@ -98,7 +102,8 @@ namespace budoco.Pages
             else
             {
                 sql = @"update issues set 
-                i_desc = @i_desc, 
+                i_description = @i_description, 
+                i_details = @i_details,
                 i_last_updated_user = @i_last_updated_user,
                 i_category = @i_category,
                 i_project = @i_project,
@@ -118,7 +123,8 @@ namespace budoco.Pages
             var dict = new Dictionary<string, dynamic>();
 
             dict["@i_id"] = id;
-            dict["@i_desc"] = desc;
+            dict["@i_description"] = description;
+            dict["@i_details"] = details;
             dict["@i_created_by_user"] = HttpContext.Session.GetInt32("us_id");
             dict["@i_last_updated_user"] = HttpContext.Session.GetInt32("us_id");
             dict["@i_category"] = category_id;
@@ -143,7 +149,7 @@ namespace budoco.Pages
         {
             var errs = new List<string>();
 
-            if (string.IsNullOrWhiteSpace(desc))
+            if (string.IsNullOrWhiteSpace(description))
             {
                 errs.Add("Description is required.");
             }

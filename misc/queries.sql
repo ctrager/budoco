@@ -2,14 +2,14 @@ truncate table queries;
 
 insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 'All issues',
-'select i_id, i_desc, i_project, i_category, i_status, i_priority, i_created_by_user, i_assigned_to_user'
+'select i_id, i_description, i_project, i_category, i_status, i_priority, i_created_by_user, i_assigned_to_user'
 || chr(10) || ' from issues '
 || chr(10) || ' order by i_id desc',
 1);
 
 insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 'All open issues',
-'select i_id as "ID", i_desc as "Descripton", i_status as "Status", us_username as "Assigned to" '
+'select i_id as "ID", i_description as "Descripton", i_status as "Status", us_username as "Assigned to" '
 || chr(10) || ' from issues '
 || chr(10) || ' left outer join statuses on st_id = i_status'
 || chr(10) || ' left outer join users on us_id = i_assigned_to_user'
@@ -19,7 +19,7 @@ insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 
 insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 'Issues assigned to me',
-'select i_id as "ID", i_desc as "Description", st_name as "Status"'
+'select i_id as "ID", i_description as "Description", st_name as "Status"'
 || chr(10) || ' from issues '
 || chr(10) || ' left outer join statuses on st_id = i_status'
 || chr(10) || ' where (i_assigned_to_user = $ME) '
@@ -29,7 +29,7 @@ insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 insert into queries (qu_name, qu_sql, qu_sort_seq) values (
 'Many joins',
 'select i_id as "ID", ' 
-|| chr(10) || ' i_desc as "DESC", pj_name as "Project", ca_name as "Category", cr8.us_username as "Created by",'
+|| chr(10) || ' i_description as "DESC", pj_name as "Project", ca_name as "Category", cr8.us_username as "Created by",'
 || chr(10) || ' i_created_date "Created", pr_name as "Priority", asg.us_username as "Assigned To",'
 || chr(10) || ' st_name as "Status", lu.us_username as "Last Changed By", i_last_updated_date as "Last Update"'
 || chr(10) || ' from issues '
