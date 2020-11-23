@@ -12,11 +12,6 @@ namespace budoco.Pages
 {
     public class IndexModel : PageModel
     {
-        public IndexModel()
-        {
-            Log.Information("IndexModel ctor");
-        }
-
         public void OnGet()
         {
             if (!bd_util.check_user_permissions(HttpContext))

@@ -69,12 +69,12 @@ namespace budoco
                 {
                     dict[key] = string_value;
                 }
+            }
 
-                bd_util.console_write_line("config:");
-                foreach (var k in dict.Keys)
-                {
-                    bd_util.console_write_line(k + "=" + dict[k].ToString());
-                }
+            bd_util.console_write_line("config:");
+            foreach (var k in dict.Keys)
+            {
+                bd_util.console_write_line(k + "=" + dict[k].ToString());
             }
         }
 

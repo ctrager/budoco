@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Data;
 using Serilog;
+using System;
 
 namespace budoco.Pages
 {
@@ -42,11 +43,15 @@ namespace budoco.Pages
 
             // login - insert row in sessions
 
+            string budoco_session_id = Guid.NewGuid().ToString();
+            HttpContext.Response.Cookies.Append(
+                bd_util.BUDOCO_SESSION_ID, budoco_session_id, bd_util.get_cookie_options());
+
             string sql = @"insert into sessions (se_id, se_user)
                 values (@se_id, @se_user)";
 
             var dict = new Dictionary<string, dynamic>();
-            dict["@se_id"] = HttpContext.Session.Id;
+            dict["@se_id"] = budoco_session_id;
             dict["@se_user"] = user_id;
             bd_db.exec(sql, dict);
             Response.Redirect("Issues");
@@ -55,7 +60,8 @@ namespace budoco.Pages
 
         public void Signout()
         {
-            string sql = "delete from sessions where se_id = '" + HttpContext.Session.Id + "'";
+            string session_id = HttpContext.Session.GetString(bd_util.BUDOCO_SESSION_ID);
+            string sql = "delete from sessions where se_id = '" + session_id + "'";
             bd_db.exec(sql);
             Response.Redirect("/Login");
         }

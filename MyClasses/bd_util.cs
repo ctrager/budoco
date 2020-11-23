@@ -12,6 +12,10 @@ namespace budoco
 {
     public static class bd_util
     {
+        public const string BUDOCO_SESSION_ID = "budoco_session_id";
+
+        public const bool MUST_BE_ADMIN = true;
+
 
         public static int get_int_or_zero_from_string(string s)
         {
@@ -117,17 +121,30 @@ namespace budoco
             context.Session.SetString("flash_err", s);
         }
 
-        public const bool MUST_BE_ADMIN = true;
+        public static CookieOptions get_cookie_options()
+        {
+            var options = new CookieOptions();
+            options.Expires = DateTime.Now.AddHours(12);
+            options.IsEssential = true;
+            options.SameSite = SameSiteMode.Strict;
+            return options;
+        }
+
 
         public static bool check_user_permissions(HttpContext context, bool must_be_admin = false)
         {
-            // Session was changing every page. Stackoverflow person
-            // said session needs at least one thing. This seems to work.
-            context.Session.SetString("dummy", "dummy");
+
+            string session_id = context.Request.Cookies[bd_util.BUDOCO_SESSION_ID];
+
+            if (session_id is null)
+            {
+                context.Response.Redirect("/Login");
+                return false;
+            }
 
             string sql = @"select * from sessions 
                 inner join users on se_user = us_id
-                where se_id = '" + context.Session.Id + "'";
+                where se_id = '" + session_id + "'";
 
             DataRow dr = bd_db.get_datarow(sql);
 
