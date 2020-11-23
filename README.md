@@ -152,13 +152,12 @@ where i_created_by_user = $ME
 
 ### BugTracker.NET features that I'll probably never work on, because they are not fun.
 
-* Permissions. Who can and can't see what, edit what.
+* More permissions. 
   
 * Custom fields. 
   
 * Integration with version control. 
 
-* Email notifications.
 
   
 

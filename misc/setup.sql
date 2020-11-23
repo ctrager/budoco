@@ -124,7 +124,8 @@ p_id serial,
 p_issue int,
 p_text text,
 p_created_by_user int not null,
-p_created_date timestamptz default CURRENT_TIMESTAMP
+p_created_date timestamptz default CURRENT_TIMESTAMP,
+p_blob bytea null
 );
 
 create index p_issue_index on posts (p_issue);
