@@ -13,8 +13,6 @@
 
 <div class="form_div">
     <form class="issue_form" method="post">
-        <input type="hidden" asp-for="form_name" value="issue_form" />
-
         <div>
             <label>Id:</label>
             <input asp-for="id" value="@Model.id" disabled></input>
@@ -88,30 +86,85 @@
 @{
     if (Model.id != 0)
     {
+        <div id="posts"></div>
 
-        for (int row = 0; row < Model.dt_posts.Rows.Count; row++)
-        {
-            DataRow dr = Model.dt_posts.Rows[row];
-            <div class="post">
-                <div class="post_who_when">Posted by @dr["us_username"] on @dr["p_created_date"]</div>
-                <div class="post_text">
-                    <pre>@dr["p_text"]</pre>
-                </div>
-            </div>
-        }
+        <script>
+
+            function get_posts() {
+                $.ajax({
+                    type: "Get",
+                    url: "/Issue?handler=Posts&id=@Model.id",
+                    success: function (json_posts) {
+                        $("#post_text").val("");
+                        build_posts_html(json_posts)
+
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+            }
+            
+            function build_posts_html(json_posts) {
+                var s = "";
+                for (i = 0; i < json_posts.length; i++) {
+                    
+                    post = json_posts[i];
+                    s += "<div class='post'>"
+                        s += "<div class='post_who_when'>Posted by "
+                        s += post["us_username"]
+                        s += " on "
+                        s += post["p_created_date"]
+                        s += "&nbsp;&nbsp;#" + post["p_id"] 
+                        s += "</div>"
+                    
+                        s += "<div class='post_text'>"
+                        s += "<pre>" + post["p_text"] + "</pre>"
+                        s += "</div>"
+
+                        
+                    s += "</div>"
+                }
+                
+                $("#posts").html(s)
+            }
+
+            function submit_post() {
+
+                var form_data = $("#post_form").serialize()
+                $.ajax({
+                    type: "POST",
+                    url: "/Issue?handler=AddPost&id=@Model.id",
+                    data: form_data,
+                    success: function (json_posts) {
+                        $("#post_text").val("");
+                        build_posts_html(json_posts)
+
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+            }
+        </script>
 
         <div class="form_div">
-            <form class="post_form" method="post">
-                <input type="hidden" asp-for="form_name" value="post_form" />
-                <input type="hidden" asp-for="id" />
-
+            <form class="post_form" id="post_form" method="post" asp-antiforgery="true">
                 <div>
-                    <textarea asp-for="post_text"></textarea>
+                    <textarea name="post_text" id="post_text"></textarea>
                 </div>
                 <div>
-                    <button type="submit">Comment</button>
+                    <button type="button" onclick="submit_post()">Comment</button>
                 </div>
             </form>
         </div>
     }
+}
+
+@section Scripts {
+     <script>
+         $(document).ready(function() {
+             get_posts()
+         })
+     </script>
 }

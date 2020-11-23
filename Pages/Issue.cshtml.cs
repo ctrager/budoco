@@ -21,9 +21,6 @@ namespace budoco.Pages
         public string post_text { get; set; }
 
         [BindProperty]
-        public string form_name { get; set; }
-
-        [BindProperty]
         public string description { get; set; }
 
         [BindProperty]
@@ -59,8 +56,6 @@ namespace budoco.Pages
         //https://stackoverflow.com/questions/56172036/razor-view-disabled-html-attribute-based-on-viewmodel-property
         public string null_or_disabled = null;
 
-        public DataTable dt_posts;
-
         public void OnGet()
         {
             if (!bd_util.check_user_permissions(HttpContext))
@@ -71,22 +66,12 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-            if (form_name == "issue_form")
-            {
-                OnIssueFormPost();
-            }
-            else
-            {
-                OnPostFormPost();
-                Response.Redirect("Issue?id=" + id.ToString());
-            }
+            OnIssueFormPost();
             GetIssue();
-
         }
 
         void GetIssue()
         {
-
             PrepareDropdowns();
 
             if (id != 0)
@@ -112,46 +97,15 @@ namespace budoco.Pages
                 assigned_to_user_id = (int)dr["i_assigned_to_user"];
 
                 if (HttpContext.Session.GetInt32("us_is_report_only") == 1)
+                {
                     null_or_disabled = "disabled";
-
-
-                sql = @"select p_id, p_text, p_created_date, us_username
-                    from posts 
-                    inner join users on us_id = p_created_by_user
-                    where p_issue = "
-                    + id.ToString()
-                    + " order by p_id asc";
-                dt_posts = bd_db.get_datatable(sql);
-
+                }
             }
-
-
-        }
-
-
-
-        void OnPostFormPost()
-        {
-            if (String.IsNullOrWhiteSpace(post_text))
-                return;
-
-            var sql = @"insert into posts
-                (p_issue, p_text, p_created_by_user)
-                values(@p_issue, @p_text, @p_created_by_user)";
-
-            var dict = new Dictionary<string, dynamic>();
-            dict["@p_issue"] = id;
-            dict["@p_text"] = post_text;
-            dict["@p_created_by_user"] = HttpContext.Session.GetInt32("us_id");
-
-            bd_db.exec(sql, dict);
-
-            bd_util.set_flash_msg(HttpContext, "Update was successful");
-
         }
 
         void OnIssueFormPost()
         {
+            Console.WriteLine("OnIssueFormPost");
             if (!IsValid())
             {
                 return;
@@ -238,6 +192,67 @@ namespace budoco.Pages
                 bd_util.set_flash_err(HttpContext, errs);
                 return false;
             }
+        }
+
+
+
+        public JsonResult OnPostAddPost()
+        {
+            if (String.IsNullOrWhiteSpace(post_text))
+                return new JsonResult(
+                    @"{
+                        'result': 'blank texts'                        
+                    }");
+
+            var sql = @"insert into posts
+                (p_issue, p_text, p_created_by_user)
+                values(@p_issue, @p_text, @p_created_by_user)";
+
+            var dict = new Dictionary<string, dynamic>();
+            dict["@p_issue"] = id;
+            dict["@p_text"] = post_text;
+            dict["@p_created_by_user"] = HttpContext.Session.GetInt32("us_id");
+
+            bd_db.exec(sql, dict);
+
+            return OnGetPosts();
+
+        }
+
+        class PostObject
+        {
+            public int p_id { get; set; }
+            public string p_text { get; set; }
+            public string us_username { get; set; }
+            public string p_created_date { get; set; }
+        }
+
+        public JsonResult OnGetPosts()
+        {
+            Console.WriteLine("OnGetPosts");
+            var list = new List<PostObject>();
+
+            var sql = @"select p_id, p_text, p_created_date, us_username
+                    from posts 
+                    inner join users on us_id = p_created_by_user
+                    where p_issue = "
+                 + id.ToString()
+                 + " order by p_id asc";
+
+            DataTable dt_posts = bd_db.get_datatable(sql);
+
+            foreach (DataRow row in dt_posts.Rows)
+            {
+
+                var p = new PostObject();
+                p.p_id = (int)row["p_id"];
+                p.p_text = (string)row["p_text"];
+                p.us_username = (string)row["us_username"];
+                p.p_created_date = row["p_created_date"].ToString();
+                list.Add(p);
+            }
+            return new JsonResult(list);
+
         }
     }
 }

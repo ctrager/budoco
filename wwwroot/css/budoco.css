@@ -196,8 +196,8 @@ form>div>label {
 }
 
 .post_form>div>textarea {
-  width: 780px;
-  height: 100px;
+  width: 900px;
+  height: 200px;
 }
 
 p {
@@ -233,16 +233,13 @@ input:disabled {
   margin-top: 20px;
   margin-bottom: 20px;
   background: #f0fff0;
-  width: 800px;
+  width: 900px;
   border-radius: 6px;
 }
 
 .post_text {
-  padding: 3px;
-  background: white;
-  margin-top: 5px;
-  width: 780px;
-  border: 1px solid gray;
+  padding: 0px;
+  margin: 0px;
 }
 
 .post_who_when {
@@ -254,4 +251,8 @@ pre {
   overflow-x: auto;
   font-family: "Lucida Console", "Courier New", Courier, monospace;
   font-size: 14px;
+  background: white;
+  margin: 0px;
+  padding: 5px;
+  border: 1px dashed gray;
 }

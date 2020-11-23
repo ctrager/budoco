@@ -109,7 +109,9 @@ namespace budoco
                 bd_util.console_write_line(
                     DateTime.Now.ToString("hh:mm:ss")
                     + " "
-                    + context.Request.Path
+                    //+ context.Request.Path
+                    //+ " "
+                    + context.Request.GetDisplayUrl()
                     + ", "
                     + budoco_session_id);
 
