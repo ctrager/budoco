@@ -136,7 +136,12 @@ where i_created_by_user = $ME
 
 ## Corey's Roadmap/TODO:
 
-* Post comments, files to bugs. Save files as blobs in db.
+* go to issue
+
+* Ajaxify post comments
+update issue when post is inserted
+
+* File attachents, images, Save files as blobs in db.
 
 * Full text search.
 
@@ -144,20 +149,29 @@ where i_created_by_user = $ME
 
 * Finish admin pages
 
-* Logically deleting stuff. Setting to inactive. 
-
 * Send emails from the Issue page, that become part of the Issue posts.
 
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 
+* Org permissions - maybe the only permissions the app needs.
+if user is associated with org, then can only see bugs associated with his org.
+this supports one company, many customers
+works with user is inactive until admin activates
+inject where clause into queries
+
+* Deleting stuff. Logically deleting stuff. Setting to inactive. Need to redo issue dropdowns
+
 ### BugTracker.NET features that I'll probably never work on, because they are not fun.
 
-* More permissions. 
+
+* More and more permissions.
   
 * Custom fields. 
   
 * Integration with version control. 
 
+* email notifications about changes 
+could use most recently updated bug instead
 
   
 

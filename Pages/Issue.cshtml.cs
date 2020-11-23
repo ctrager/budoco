@@ -66,25 +66,25 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext))
                 return;
 
-            GetUser();
+            GetIssue();
         }
 
         public void OnPost()
         {
-            if (form_name == "issue_form") 
+            if (form_name == "issue_form")
             {
                 OnIssueFormPost();
             }
-            else 
+            else
             {
                 OnPostFormPost();
                 Response.Redirect("Issue?id=" + id.ToString());
             }
-            GetUser();
- 
+            GetIssue();
+
         }
 
-        void GetUser()
+        void GetIssue()
         {
 
             PrepareDropdowns();
@@ -94,6 +94,14 @@ namespace budoco.Pages
                 string sql = "select * from issues where i_id = " + id.ToString();
 
                 DataRow dr = bd_db.get_datarow(sql);
+
+                if (dr == null)
+                {
+                    bd_util.set_flash_err(HttpContext, "Issue " + id.ToString() + " not found.");
+                    id = 0;
+                    Response.Redirect("/Issues");
+                    return;
+                }
 
                 description = (string)dr["i_description"];
                 details = (string)dr["i_details"];
@@ -110,7 +118,7 @@ namespace budoco.Pages
                 sql = @"select p_id, p_text, p_created_date, us_username
                     from posts 
                     inner join users on us_id = p_created_by_user
-                    where p_issue = " 
+                    where p_issue = "
                     + id.ToString()
                     + " order by p_id asc";
                 dt_posts = bd_db.get_datatable(sql);
@@ -131,17 +139,17 @@ namespace budoco.Pages
                 (p_issue, p_text, p_created_by_user)
                 values(@p_issue, @p_text, @p_created_by_user)";
 
-            var dict = new Dictionary<string,dynamic>();
+            var dict = new Dictionary<string, dynamic>();
             dict["@p_issue"] = id;
             dict["@p_text"] = post_text;
             dict["@p_created_by_user"] = HttpContext.Session.GetInt32("us_id");
- 
+
             bd_db.exec(sql, dict);
 
             bd_util.set_flash_msg(HttpContext, "Update was successful");
 
         }
-        
+
         void OnIssueFormPost()
         {
             if (!IsValid())

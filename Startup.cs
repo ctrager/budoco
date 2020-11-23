@@ -81,11 +81,12 @@ namespace budoco
 
             // for redirecting https to http
             //app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseSerilogRequestLogging();
 

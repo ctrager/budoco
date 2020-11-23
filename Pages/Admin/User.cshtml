@@ -4,40 +4,42 @@
 @{
     ViewData["Title"] = "Users";
 }
+
+<partial name="_FlashPartial" />
+
 <div>
-    <partial name="_FlashPartial" />
+    <a href="Users">Back to Users</a>
+</div>
+
+<div class="form_div"></div>
+<form method="post">
 
     <div>
-        <a href="Users">Back to Users</a>
+        <label>Id</label>
+        <input asp-for="id" value="@Model.id" disabled></input>
     </div>
-
-    <form method="post">
-        <div>
-            <label>Id</label>
-            <input asp-for="id" value="@Model.id" disabled></input>
-        </div>
-        <div>
-            <label>Username</label>
-            <input asp-for="username" value="@Model.username"></input>
-        </div>
-        <div>
-            <label>Email</label>
-            <input asp-for="email" value="@Model.email"></input>
-        </div>
-        <div>
-            <label>Admin</label>
-            <input asp-for="is_admin" value="true" />
-        </div>
-        <div>
-            <label>Active</label>
-            <input asp-for="is_active" value="true" />
-        </div>
-        <div>
-            <label>Report Only</label>
-            <input asp-for="is_report_only" value="true" />
-        </div>
-        <div>
-            <button type="submit">Update</button>
-        </div>
-    </form>
+    <div>
+        <label>Username</label>
+        <input asp-for="username" value="@Model.username"></input>
+    </div>
+    <div>
+        <label>Email</label>
+        <input asp-for="email" value="@Model.email"></input>
+    </div>
+    <div>
+        <label>Admin</label>
+        <input asp-for="is_admin" value="true" />
+    </div>
+    <div>
+        <label>Active</label>
+        <input asp-for="is_active" value="true" />
+    </div>
+    <div>
+        <label>Report Only</label>
+        <input asp-for="is_report_only" value="true" />
+    </div>
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
 </div>

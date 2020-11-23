@@ -7,6 +7,10 @@ select {
   font-size: 16px;
 }
 
+body {
+  padding-left: 5px;
+}
+
 h1 {
   font-size: 18px;
   font-weight: normal;
@@ -14,7 +18,9 @@ h1 {
 }
 
 div {
-  margin: 5px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
 }
 
 a {
@@ -43,7 +49,6 @@ td {
 }
 
 th {
-  /*background-color: yellow;*/
   border: 1px solid lightgrey;
   background-color: #eeeeee;
   padding: 3px;
@@ -55,14 +60,18 @@ th {
   border: 1px solid black;
   border-radius: 6px;
   padding: 10px;
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 900px;
 }
 
 .flash_err {
   border: 1px solid black;
   border-radius: 6px;
   padding: 10px;
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 900px;
 
   background-color: #ffaaaa;
   font-weight: bold;
@@ -102,6 +111,7 @@ th {
   padding: 0;
   overflow: hidden;
   background-color: #eeeeee;
+  margin-bottom: 10px;
 }
 
 .nav-item {
@@ -114,35 +124,60 @@ th {
   padding: 10px;
 }
 
+.goto_button {
+  margin-top: 8px;
+  margin-left: 20px;
+}
+
+.goto_input {
+
+  margin-left: 0px;
+  margin-right: 20px;
+  width: 50px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.goto input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.goto input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .logo {
   background-color: #bbffbb;
+  margin-right: 20px;
 }
 
 form {
-  border: 1px solid gray;
+  border: 1px solid #cccccc;
   border-radius: 6px;
   background: #eeeeee;
   padding: 5px;
-  margin-top: 10px;
-  width: 800px;
+  display: inline-block;
+
+}
+
+.form_div {
+  display: inline-block;
 }
 
 form>div {
   margin-left: 10px;
-  margin-top: 16px;
+  padding-top: 5px;
+}
+
+form>div>button {
+  margin-top: 10px;
 }
 
 button {
   color: blue;
-}
-
-label {
-  display: inline-block;
-  min-width: 100px;
-}
-
-.login_form {
-  width: 420px;
+  background-color: #ffe000;
 }
 
 .login_register {
@@ -154,24 +189,16 @@ label {
   border: 1px solid gray;
 }
 
-.login_form>div>label {
-  min-width: 150px;
-}
-
-.register_form {
-  width: 420px;
-}
-
-.register_form>div>label {
-  min-width: 150px;
+form>div>label {
+  min-width: 140px;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .post_form>div>textarea {
-
   width: 780px;
   height: 100px;
 }
-
 
 p {
   margin-bottom: 20px;
@@ -180,7 +207,6 @@ p {
 
 .about {
   width: 800px;
-
 }
 
 .about>p>b {
@@ -188,7 +214,6 @@ p {
   font-style: italic;
   color: red;
 }
-
 
 textarea {
   width: 600px;
@@ -200,10 +225,6 @@ input:disabled {
   background: #eeeeee;
   border: none;
   color: black;
-}
-
-form>div {
-  margin: 3px;
 }
 
 .post {
@@ -231,6 +252,6 @@ form>div {
 
 pre {
   overflow-x: auto;
-  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-family: "Lucida Console", "Courier New", Courier, monospace;
   font-size: 14px;
 }
