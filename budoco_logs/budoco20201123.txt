@@ -40,3 +40,665 @@
 2020-11-23 14:21:42.672 -06:00 [INF] appsettings.json
 2020-11-23 14:21:42.674 -06:00 [INF] ConfigureServices
 2020-11-23 14:21:42.823 -06:00 [INF] Configure
+2020-11-23 14:28:05.186 -06:00 [INF] Starting host
+2020-11-23 14:28:05.309 -06:00 [INF] Startup
+2020-11-23 14:28:05.309 -06:00 [INF] appsettings.json
+2020-11-23 14:28:05.311 -06:00 [INF] ConfigureServices
+2020-11-23 14:28:05.480 -06:00 [INF] Configure
+2020-11-23 14:28:24.243 -06:00 [INF] 02:28:24 https://localhost:5001/, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 14:28:24.292 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 14:28:25.072 -06:00 [INF] HTTP GET / responded 302 in 829.3349 ms
+2020-11-23 14:28:25.084 -06:00 [INF] 02:28:25 https://localhost:5001/Issues, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 14:28:25.117 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 14:28:25.121 -06:00 [INF] select qu_id, qu_name from queries order by qu_sort_seq, qu_name
+2020-11-23 14:28:25.124 -06:00 [INF] select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1
+2020-11-23 14:28:25.125 -06:00 [INF] select * 
+ from issues 
+ order by i_id desc
+2020-11-23 14:28:25.261 -06:00 [INF] HTTP GET /Issues responded 200 in 176.9227 ms
+2020-11-23 14:40:15.586 -06:00 [INF] Starting host
+2020-11-23 14:40:15.731 -06:00 [INF] Startup
+2020-11-23 14:40:15.734 -06:00 [INF] appsettings.json
+2020-11-23 14:40:15.736 -06:00 [INF] ConfigureServices
+2020-11-23 14:40:15.921 -06:00 [INF] Configure
+2020-11-23 14:41:48.015 -06:00 [INF] Starting host
+2020-11-23 14:41:48.131 -06:00 [INF] Startup
+2020-11-23 14:41:48.132 -06:00 [INF] appsettings.json
+2020-11-23 14:41:48.133 -06:00 [INF] ConfigureServices
+2020-11-23 14:41:48.239 -06:00 [FTL] Host terminated unexpectedly
+Interop+Crypto+OpenSslCryptographicException: error:2006D080:BIO routines:BIO_new_file:no such file
+   at Interop.Crypto.CheckValidOpenSslHandle(SafeHandle handle)
+   at Internal.Cryptography.Pal.OpenSslX509CertificateReader.FromFile(String fileName, SafePasswordHandle password, X509KeyStorageFlags keyStorageFlags)
+   at System.Security.Cryptography.X509Certificates.X509Certificate..ctor(String fileName, String password, X509KeyStorageFlags keyStorageFlags)
+   at System.Security.Cryptography.X509Certificates.X509Certificate2..ctor(String fileName, String password)
+   at Microsoft.AspNetCore.Hosting.ListenOptionsHttpsExtensions.UseHttps(ListenOptions listenOptions, String fileName, String password)
+   at budoco.Program.<>c.<CreateHostBuilder>b__1_2(ListenOptions listenOptions) in /home/corey/github/budoco/Program.cs:line 62
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions.Listen(EndPoint endPoint, Action`1 configure)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions.Listen(IPAddress address, Int32 port, Action`1 configure)
+   at budoco.Program.<>c.<CreateHostBuilder>b__1_1(KestrelServerOptions serverOptions) in /home/corey/github/budoco/Program.cs:line 59
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsManager`1.<>c__DisplayClass5_0.<Get>b__0()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+   at System.Lazy`1.ExecutionAndPublication(LazyHelper executionAndPublication, Boolean useDefaultConstructor)
+   at System.Lazy`1.CreateValue()
+   at System.Lazy`1.get_Value()
+   at Microsoft.Extensions.Options.OptionsCache`1.GetOrAdd(String name, Func`1 createOptions)
+   at Microsoft.Extensions.Options.OptionsManager`1.Get(String name)
+   at Microsoft.Extensions.Options.OptionsManager`1.get_Value()
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.CreateServiceContext(IOptions`1 options, ILoggerFactory loggerFactory)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl..ctor(IOptions`1 options, IEnumerable`1 transportFactories, IEnumerable`1 multiplexedFactories, ILoggerFactory loggerFactory)
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor, Boolean wrapExceptions)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitIEnumerable(IEnumerableCallSite enumerableCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass1_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
+   at budoco.Program.Main(String[] args) in /home/corey/github/budoco/Program.cs:line 35
+2020-11-23 14:42:06.674 -06:00 [INF] Starting host
+2020-11-23 14:42:06.829 -06:00 [INF] Startup
+2020-11-23 14:42:06.830 -06:00 [INF] appsettings.json
+2020-11-23 14:42:06.832 -06:00 [INF] ConfigureServices
+2020-11-23 14:42:06.937 -06:00 [FTL] Host terminated unexpectedly
+Interop+Crypto+OpenSslCryptographicException: error:2006D080:BIO routines:BIO_new_file:no such file
+   at Interop.Crypto.CheckValidOpenSslHandle(SafeHandle handle)
+   at Internal.Cryptography.Pal.OpenSslX509CertificateReader.FromFile(String fileName, SafePasswordHandle password, X509KeyStorageFlags keyStorageFlags)
+   at System.Security.Cryptography.X509Certificates.X509Certificate..ctor(String fileName, String password, X509KeyStorageFlags keyStorageFlags)
+   at System.Security.Cryptography.X509Certificates.X509Certificate2..ctor(String fileName, String password)
+   at Microsoft.AspNetCore.Hosting.ListenOptionsHttpsExtensions.UseHttps(ListenOptions listenOptions, String fileName, String password)
+   at budoco.Program.<>c.<CreateHostBuilder>b__1_2(ListenOptions listenOptions) in /home/corey/github/budoco/Program.cs:line 62
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions.Listen(EndPoint endPoint, Action`1 configure)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions.Listen(IPAddress address, Int32 port, Action`1 configure)
+   at budoco.Program.<>c.<CreateHostBuilder>b__1_1(KestrelServerOptions serverOptions) in /home/corey/github/budoco/Program.cs:line 59
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsManager`1.<>c__DisplayClass5_0.<Get>b__0()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+   at System.Lazy`1.ExecutionAndPublication(LazyHelper executionAndPublication, Boolean useDefaultConstructor)
+   at System.Lazy`1.CreateValue()
+   at System.Lazy`1.get_Value()
+   at Microsoft.Extensions.Options.OptionsCache`1.GetOrAdd(String name, Func`1 createOptions)
+   at Microsoft.Extensions.Options.OptionsManager`1.Get(String name)
+   at Microsoft.Extensions.Options.OptionsManager`1.get_Value()
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.CreateServiceContext(IOptions`1 options, ILoggerFactory loggerFactory)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl..ctor(IOptions`1 options, IEnumerable`1 transportFactories, IEnumerable`1 multiplexedFactories, ILoggerFactory loggerFactory)
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor, Boolean wrapExceptions)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitIEnumerable(IEnumerableCallSite enumerableCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass1_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
+   at budoco.Program.Main(String[] args) in /home/corey/github/budoco/Program.cs:line 35
+2020-11-23 14:42:54.476 -06:00 [INF] Starting host
+2020-11-23 14:42:54.618 -06:00 [INF] Startup
+2020-11-23 14:42:54.619 -06:00 [INF] appsettings.json
+2020-11-23 14:42:54.621 -06:00 [INF] ConfigureServices
+2020-11-23 14:42:54.731 -06:00 [FTL] Host terminated unexpectedly
+Interop+Crypto+OpenSslCryptographicException: error:2006D080:BIO routines:BIO_new_file:no such file
+   at Interop.Crypto.CheckValidOpenSslHandle(SafeHandle handle)
+   at Internal.Cryptography.Pal.OpenSslX509CertificateReader.FromFile(String fileName, SafePasswordHandle password, X509KeyStorageFlags keyStorageFlags)
+   at System.Security.Cryptography.X509Certificates.X509Certificate..ctor(String fileName, String password, X509KeyStorageFlags keyStorageFlags)
+   at System.Security.Cryptography.X509Certificates.X509Certificate2..ctor(String fileName, String password)
+   at Microsoft.AspNetCore.Hosting.ListenOptionsHttpsExtensions.UseHttps(ListenOptions listenOptions, String fileName, String password)
+   at budoco.Program.<>c.<CreateHostBuilder>b__1_2(ListenOptions listenOptions) in /home/corey/github/budoco/Program.cs:line 62
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions.Listen(EndPoint endPoint, Action`1 configure)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions.Listen(IPAddress address, Int32 port, Action`1 configure)
+   at budoco.Program.<>c.<CreateHostBuilder>b__1_1(KestrelServerOptions serverOptions) in /home/corey/github/budoco/Program.cs:line 59
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsManager`1.<>c__DisplayClass5_0.<Get>b__0()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+   at System.Lazy`1.ExecutionAndPublication(LazyHelper executionAndPublication, Boolean useDefaultConstructor)
+   at System.Lazy`1.CreateValue()
+   at System.Lazy`1.get_Value()
+   at Microsoft.Extensions.Options.OptionsCache`1.GetOrAdd(String name, Func`1 createOptions)
+   at Microsoft.Extensions.Options.OptionsManager`1.Get(String name)
+   at Microsoft.Extensions.Options.OptionsManager`1.get_Value()
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.CreateServiceContext(IOptions`1 options, ILoggerFactory loggerFactory)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl..ctor(IOptions`1 options, IEnumerable`1 transportFactories, IEnumerable`1 multiplexedFactories, ILoggerFactory loggerFactory)
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor, Boolean wrapExceptions)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitConstructor(ConstructorCallSite constructorCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitIEnumerable(IEnumerableCallSite enumerableCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite singletonCallSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass1_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngine.GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
+   at budoco.Program.Main(String[] args) in /home/corey/github/budoco/Program.cs:line 35
+2020-11-23 14:49:24.130 -06:00 [INF] Starting host
+2020-11-23 14:49:24.271 -06:00 [INF] Startup
+2020-11-23 14:49:24.272 -06:00 [INF] appsettings.json
+2020-11-23 14:49:24.273 -06:00 [INF] ConfigureServices
+2020-11-23 14:49:24.428 -06:00 [INF] Configure
+2020-11-23 14:49:24.498 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 14:51:01.455 -06:00 [INF] Starting host
+2020-11-23 14:51:01.597 -06:00 [INF] Startup
+2020-11-23 14:51:01.598 -06:00 [INF] appsettings.json
+2020-11-23 14:51:01.601 -06:00 [INF] ConfigureServices
+2020-11-23 14:51:01.775 -06:00 [INF] Configure
+2020-11-23 14:51:11.146 -06:00 [INF] 02:51:11 https://localhost:5001/Admin/Admin, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 14:51:11.201 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 14:51:12.005 -06:00 [INF] HTTP GET /Admin/Admin responded 200 in 860.1562 ms
+2020-11-23 14:52:11.660 -06:00 [INF] Starting host
+2020-11-23 14:52:11.815 -06:00 [INF] Startup
+2020-11-23 14:52:11.815 -06:00 [INF] appsettings.json
+2020-11-23 14:52:11.818 -06:00 [INF] ConfigureServices
+2020-11-23 14:52:12.013 -06:00 [INF] Configure
+2020-11-23 14:52:12.097 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 14:57:00.876 -06:00 [INF] Starting host
+2020-11-23 14:57:01.031 -06:00 [INF] Startup
+2020-11-23 14:57:01.033 -06:00 [INF] appsettings.json
+2020-11-23 14:57:01.036 -06:00 [INF] ConfigureServices
+2020-11-23 14:57:01.185 -06:00 [INF] Configure
+2020-11-23 15:01:53.562 -06:00 [INF] Starting host
+2020-11-23 15:01:53.702 -06:00 [INF] Startup
+2020-11-23 15:01:53.702 -06:00 [INF] appsettings.json
+2020-11-23 15:01:53.704 -06:00 [INF] ConfigureServices
+2020-11-23 15:01:53.862 -06:00 [INF] Configure
+2020-11-23 15:02:04.794 -06:00 [INF] 03:02:04 http://127.0.0.1:5000/, 
+2020-11-23 15:02:04.921 -06:00 [INF] HTTP GET / responded 302 in 127.1349 ms
+2020-11-23 15:02:04.935 -06:00 [INF] 03:02:04 http://127.0.0.1:5000/Login, 
+2020-11-23 15:02:05.091 -06:00 [INF] HTTP GET /Login responded 200 in 156.2081 ms
+2020-11-23 15:02:32.729 -06:00 [INF] Starting host
+2020-11-23 15:02:32.854 -06:00 [INF] Startup
+2020-11-23 15:02:32.854 -06:00 [INF] appsettings.json
+2020-11-23 15:02:32.856 -06:00 [INF] ConfigureServices
+2020-11-23 15:02:33.009 -06:00 [INF] Configure
+2020-11-23 15:08:05.698 -06:00 [INF] Starting host
+2020-11-23 15:08:05.822 -06:00 [INF] Startup
+2020-11-23 15:08:05.823 -06:00 [INF] appsettings.json
+2020-11-23 15:08:05.825 -06:00 [INF] ConfigureServices
+2020-11-23 15:08:05.966 -06:00 [INF] Configure
+2020-11-23 15:12:49.637 -06:00 [INF] Starting host
+2020-11-23 15:15:27.568 -06:00 [INF] Starting host
+2020-11-23 15:16:46.155 -06:00 [INF] Starting host
+2020-11-23 15:16:46.316 -06:00 [INF] Startup
+2020-11-23 15:16:46.317 -06:00 [INF] appsettings.json
+2020-11-23 15:16:46.319 -06:00 [INF] ConfigureServices
+2020-11-23 15:16:46.481 -06:00 [INF] Configure
+2020-11-23 15:16:49.252 -06:00 [INF] 03:16:49 http://localhost:5000/, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:16:49.314 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:16:50.091 -06:00 [INF] HTTP GET / responded 302 in 840.5498 ms
+2020-11-23 15:16:50.104 -06:00 [INF] 03:16:50 http://localhost:5000/Issues, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:16:50.142 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:16:50.145 -06:00 [INF] select qu_id, qu_name from queries order by qu_sort_seq, qu_name
+2020-11-23 15:16:50.147 -06:00 [INF] select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1
+2020-11-23 15:16:50.148 -06:00 [INF] select * 
+ from issues 
+ order by i_id desc
+2020-11-23 15:16:50.285 -06:00 [INF] HTTP GET /Issues responded 200 in 180.6857 ms
+2020-11-23 15:22:53.048 -06:00 [INF] Starting host
+2020-11-23 15:22:53.296 -06:00 [INF] Startup
+2020-11-23 15:22:53.297 -06:00 [INF] appsettings.json
+2020-11-23 15:22:53.300 -06:00 [INF] ConfigureServices
+2020-11-23 15:22:53.526 -06:00 [INF] Configure
+2020-11-23 15:22:53.599 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 15:22:58.015 -06:00 [INF] 03:22:58 http://localhost:5555/, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:22:58.064 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:22:58.833 -06:00 [INF] HTTP GET / responded 302 in 820.5109 ms
+2020-11-23 15:22:58.855 -06:00 [INF] 03:22:58 http://localhost:5555/Issues, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:22:58.892 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:22:58.895 -06:00 [INF] select qu_id, qu_name from queries order by qu_sort_seq, qu_name
+2020-11-23 15:22:58.897 -06:00 [INF] select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1
+2020-11-23 15:22:58.899 -06:00 [INF] select * 
+ from issues 
+ order by i_id desc
+2020-11-23 15:22:59.035 -06:00 [INF] HTTP GET /Issues responded 200 in 180.5751 ms
+2020-11-23 15:23:21.852 -06:00 [WRN] Unable to bind to https://localhost:443 on the IPv4 loopback interface: 'Permission denied'.
+2020-11-23 15:23:21.855 -06:00 [WRN] Unable to bind to https://localhost:443 on the IPv6 loopback interface: 'Permission denied'.
+2020-11-23 15:23:21.860 -06:00 [FTL] Unable to bind to 'https://localhost' on config reload.
+System.IO.IOException: Failed to bind to address https://localhost:443.
+ ---> System.AggregateException: One or more errors occurred. (Permission denied) (Permission denied)
+ ---> System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.RebindAsync()
+2020-11-23 15:23:34.540 -06:00 [INF] Starting host
+2020-11-23 15:23:34.657 -06:00 [INF] Startup
+2020-11-23 15:23:34.657 -06:00 [INF] appsettings.json
+2020-11-23 15:23:34.659 -06:00 [INF] ConfigureServices
+2020-11-23 15:23:34.798 -06:00 [INF] Configure
+2020-11-23 15:23:34.928 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 15:23:35.048 -06:00 [WRN] Unable to bind to https://localhost:443 on the IPv4 loopback interface: 'Permission denied'.
+2020-11-23 15:23:35.050 -06:00 [WRN] Unable to bind to https://localhost:443 on the IPv6 loopback interface: 'Permission denied'.
+2020-11-23 15:23:35.051 -06:00 [FTL] Unable to start Kestrel.
+System.IO.IOException: Failed to bind to address https://localhost:443.
+ ---> System.AggregateException: One or more errors occurred. (Permission denied) (Permission denied)
+ ---> System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.EndpointsStrategy.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IEnumerable`1 listenOptions, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+2020-11-23 15:23:35.065 -06:00 [FTL] Host terminated unexpectedly
+System.IO.IOException: Failed to bind to address https://localhost:443.
+ ---> System.AggregateException: One or more errors occurred. (Permission denied) (Permission denied)
+ ---> System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.EndpointsStrategy.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IEnumerable`1 listenOptions, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
+   at budoco.Program.Main(String[] args) in /home/corey/github/budoco/Program.cs:line 35
+2020-11-23 15:24:39.854 -06:00 [INF] Starting host
+2020-11-23 15:24:39.971 -06:00 [INF] Startup
+2020-11-23 15:24:39.972 -06:00 [INF] appsettings.json
+2020-11-23 15:24:39.973 -06:00 [INF] ConfigureServices
+2020-11-23 15:24:40.117 -06:00 [INF] Configure
+2020-11-23 15:24:40.246 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 15:24:40.383 -06:00 [WRN] Unable to bind to https://localhost:443 on the IPv4 loopback interface: 'Permission denied'.
+2020-11-23 15:24:40.386 -06:00 [WRN] Unable to bind to https://localhost:443 on the IPv6 loopback interface: 'Permission denied'.
+2020-11-23 15:24:40.387 -06:00 [FTL] Unable to start Kestrel.
+System.IO.IOException: Failed to bind to address https://localhost:443.
+ ---> System.AggregateException: One or more errors occurred. (Permission denied) (Permission denied)
+ ---> System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.EndpointsStrategy.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IEnumerable`1 listenOptions, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+2020-11-23 15:24:40.404 -06:00 [FTL] Host terminated unexpectedly
+System.IO.IOException: Failed to bind to address https://localhost:443.
+ ---> System.AggregateException: One or more errors occurred. (Permission denied) (Permission denied)
+ ---> System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   --- End of inner exception stack trace ---
+ ---> (Inner Exception #1) System.Net.Sockets.SocketException (13): Permission denied
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.<Bind>g__BindSocket|13_0(<>c__DisplayClass13_0& )
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass29_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)<---
+
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.EndpointsStrategy.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IEnumerable`1 listenOptions, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
+   at budoco.Program.Main(String[] args) in /home/corey/github/budoco/Program.cs:line 35
+2020-11-23 15:25:40.409 -06:00 [INF] Starting host
+2020-11-23 15:25:40.539 -06:00 [INF] Startup
+2020-11-23 15:25:40.539 -06:00 [INF] appsettings.json
+2020-11-23 15:25:40.541 -06:00 [INF] ConfigureServices
+2020-11-23 15:25:40.686 -06:00 [INF] Configure
+2020-11-23 15:25:40.840 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 15:25:57.778 -06:00 [INF] 03:25:57 https://localhost:5003/, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:25:57.829 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:25:58.571 -06:00 [INF] HTTP GET / responded 302 in 793.6446 ms
+2020-11-23 15:25:58.583 -06:00 [INF] 03:25:58 https://localhost:5003/Issues, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:25:58.618 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:25:58.622 -06:00 [INF] select qu_id, qu_name from queries order by qu_sort_seq, qu_name
+2020-11-23 15:25:58.624 -06:00 [INF] select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1
+2020-11-23 15:25:58.625 -06:00 [INF] select * 
+ from issues 
+ order by i_id desc
+2020-11-23 15:25:58.764 -06:00 [INF] HTTP GET /Issues responded 200 in 181.7060 ms
+2020-11-23 15:26:44.098 -06:00 [INF] Starting host
+2020-11-23 15:26:44.223 -06:00 [INF] Startup
+2020-11-23 15:26:44.223 -06:00 [INF] appsettings.json
+2020-11-23 15:26:44.225 -06:00 [INF] ConfigureServices
+2020-11-23 15:26:44.404 -06:00 [INF] Configure
+2020-11-23 15:26:44.553 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 15:27:12.902 -06:00 [INF] Starting host
+2020-11-23 15:27:13.107 -06:00 [INF] Startup
+2020-11-23 15:27:13.114 -06:00 [INF] appsettings.json
+2020-11-23 15:27:13.117 -06:00 [INF] ConfigureServices
+2020-11-23 15:27:13.331 -06:00 [INF] Configure
+2020-11-23 15:27:13.511 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 15:27:57.117 -06:00 [INF] 03:27:57 https://localhost:6001/, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:27:57.166 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:27:57.926 -06:00 [INF] HTTP GET / responded 302 in 812.7688 ms
+2020-11-23 15:27:57.942 -06:00 [INF] 03:27:57 https://localhost:6001/Issues, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:27:57.976 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:27:57.979 -06:00 [INF] select qu_id, qu_name from queries order by qu_sort_seq, qu_name
+2020-11-23 15:27:57.983 -06:00 [INF] select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1
+2020-11-23 15:27:57.985 -06:00 [INF] select * 
+ from issues 
+ order by i_id desc
+2020-11-23 15:27:58.118 -06:00 [INF] HTTP GET /Issues responded 200 in 176.2499 ms
+2020-11-23 15:37:54.231 -06:00 [INF] Starting host
+2020-11-23 15:37:54.390 -06:00 [INF] Startup
+2020-11-23 15:37:54.391 -06:00 [INF] appsettings.json
+2020-11-23 15:37:54.393 -06:00 [INF] ConfigureServices
+2020-11-23 15:37:54.588 -06:00 [INF] Configure
+2020-11-23 15:37:54.732 -06:00 [WRN] Overriding address(es) 'https://localhost:5001, http://localhost:5000'. Binding to endpoints defined in UseKestrel() instead.
+2020-11-23 15:47:29.831 -06:00 [INF] Starting host
+2020-11-23 15:47:29.954 -06:00 [INF] Startup
+2020-11-23 15:47:29.955 -06:00 [INF] appsettings.json
+2020-11-23 15:47:29.957 -06:00 [INF] ConfigureServices
+2020-11-23 15:47:30.129 -06:00 [INF] Configure
+2020-11-23 15:47:43.627 -06:00 [INF] 03:47:43 http://localhost:5000/, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:47:43.677 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:47:44.475 -06:00 [INF] HTTP GET / responded 302 in 848.4827 ms
+2020-11-23 15:47:44.490 -06:00 [INF] 03:47:44 http://localhost:5000/Issues, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:47:44.529 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:47:44.532 -06:00 [INF] select qu_id, qu_name from queries order by qu_sort_seq, qu_name
+2020-11-23 15:47:44.534 -06:00 [INF] select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1
+2020-11-23 15:47:44.536 -06:00 [INF] select * 
+ from issues 
+ order by i_id desc
+2020-11-23 15:47:44.676 -06:00 [INF] HTTP GET /Issues responded 200 in 185.6969 ms
+2020-11-23 15:47:45.831 -06:00 [INF] 03:47:45 http://localhost:5000/Issues, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:47:45.833 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:47:45.835 -06:00 [INF] select qu_id, qu_name from queries order by qu_sort_seq, qu_name
+2020-11-23 15:47:45.837 -06:00 [INF] select qu_id, qu_sql from queries where qu_id = 1
+2020-11-23 15:47:45.843 -06:00 [INF] select * 
+ from issues 
+ order by i_id desc
+2020-11-23 15:47:45.849 -06:00 [INF] HTTP GET /Issues responded 200 in 17.9316 ms
+2020-11-23 15:47:47.250 -06:00 [INF] 03:47:47 http://localhost:5000/Admin/Admin, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:47:47.256 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:47:47.263 -06:00 [INF] HTTP GET /Admin/Admin responded 200 in 13.1085 ms
+2020-11-23 15:47:48.180 -06:00 [INF] 03:47:48 http://localhost:5000/Issues, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:47:48.180 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:47:48.183 -06:00 [INF] select qu_id, qu_name from queries order by qu_sort_seq, qu_name
+2020-11-23 15:47:48.185 -06:00 [INF] select qu_id, qu_sql from queries where qu_id = 1
+2020-11-23 15:47:48.186 -06:00 [INF] select * 
+ from issues 
+ order by i_id desc
+2020-11-23 15:47:48.191 -06:00 [INF] HTTP GET /Issues responded 200 in 11.2313 ms
+2020-11-23 15:47:49.001 -06:00 [INF] 03:47:49 http://localhost:5000/Issue?id=0, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:47:49.016 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 15:47:49.019 -06:00 [INF] select us_id, us_username from users
+2020-11-23 15:47:49.023 -06:00 [INF] select ca_id, ca_name from categories
+2020-11-23 15:47:49.028 -06:00 [INF] select pj_id, pj_name from projects
+2020-11-23 15:47:49.029 -06:00 [INF] select pr_id, pr_name from priorities
+2020-11-23 15:47:49.031 -06:00 [INF] select st_id, st_name from statuses
+2020-11-23 15:47:49.079 -06:00 [INF] HTTP GET /Issue?id=0 responded 200 in 77.7264 ms
+2020-11-23 15:47:52.751 -06:00 [INF] 03:47:52 http://localhost:5000/Issue?id=0, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:47:52.780 -06:00 [INF] select us_id, us_username from users
+2020-11-23 15:47:52.782 -06:00 [INF] select ca_id, ca_name from categories
+2020-11-23 15:47:52.783 -06:00 [INF] select pj_id, pj_name from projects
+2020-11-23 15:47:52.784 -06:00 [INF] select pr_id, pr_name from priorities
+2020-11-23 15:47:52.785 -06:00 [INF] select st_id, st_name from statuses
+2020-11-23 15:47:52.790 -06:00 [INF] HTTP POST /Issue?id=0 responded 200 in 39.4020 ms
+2020-11-23 15:47:57.680 -06:00 [INF] 03:47:57 http://localhost:5000/Issue?id=0, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 15:47:57.683 -06:00 [INF] insert into issues 
+                (i_description, i_details, i_created_by_user, i_category, i_project, i_priority, i_status, i_assigned_to_user) 
+                values(@i_description, @i_details, @i_created_by_user, @i_category, @i_project, @i_priority, @i_status, @i_assigned_to_user) 
+                returning i_id
+2020-11-23 15:47:57.687 -06:00 [INF] @i_id=0
+2020-11-23 15:47:57.689 -06:00 [INF] @i_description=asdf
+2020-11-23 15:47:57.690 -06:00 [INF] @i_details=http://localhost:5000/Issues
+2020-11-23 15:47:57.692 -06:00 [INF] @i_created_by_user=1
+2020-11-23 15:47:57.693 -06:00 [INF] @i_last_updated_user=1
+2020-11-23 15:47:57.693 -06:00 [INF] @i_category=0
+2020-11-23 15:47:57.693 -06:00 [INF] @i_assigned_to_user=0
+2020-11-23 15:47:57.693 -06:00 [INF] @i_project=0
+2020-11-23 15:47:57.694 -06:00 [INF] @i_priority=0
+2020-11-23 15:47:57.694 -06:00 [INF] @i_status=0
+2020-11-23 15:47:57.711 -06:00 [INF] select us_id, us_username from users
+2020-11-23 15:47:57.712 -06:00 [INF] select ca_id, ca_name from categories
+2020-11-23 15:47:57.713 -06:00 [INF] select pj_id, pj_name from projects
+2020-11-23 15:47:57.714 -06:00 [INF] select pr_id, pr_name from priorities
+2020-11-23 15:47:57.715 -06:00 [INF] select st_id, st_name from statuses
+2020-11-23 15:47:57.716 -06:00 [INF] select * from issues where i_id = 18
+2020-11-23 15:47:57.727 -06:00 [ERR] HTTP POST /Issue?id=0 responded 500 in 47.9106 ms
+System.InvalidOperationException: The following sections have been defined but have not been rendered by the page at '/Pages/Shared/_Layout_simple.cshtml': 'Scripts'. To ignore an unrendered section call IgnoreSection("sectionName").
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.EnsureRenderedBodyOrSections()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at budoco.Startup.<>c.<<Configure>b__5_0>d.MoveNext() in /home/corey/github/budoco/Startup.cs:line 119
+--- End of stack trace from previous location ---
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2020-11-23 15:47:57.751 -06:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The following sections have been defined but have not been rendered by the page at '/Pages/Shared/_Layout_simple.cshtml': 'Scripts'. To ignore an unrendered section call IgnoreSection("sectionName").
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPage.EnsureRenderedBodyOrSections()
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderLayoutAsync(ViewContext context, ViewBufferTextWriter bodyWriter)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at budoco.Startup.<>c.<<Configure>b__5_0>d.MoveNext() in /home/corey/github/budoco/Startup.cs:line 119
+--- End of stack trace from previous location ---
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)

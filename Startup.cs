@@ -80,7 +80,7 @@ namespace budoco
             app.UseSession();
 
             // for redirecting https to http
-            //app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
@@ -98,7 +98,10 @@ namespace budoco
                 // o = ++my_int;
                 // MyCache.Set("my_int", o);
 
-                // Use our own cookie for authentication
+                // Corey says: use our own guid for authentication so that when we 
+                // restart we don't have to log in again.
+                // Framework generates a new guid each restart. We don't.
+                // 
                 string budoco_session_id = null;
                 if (context.Request.Cookies.ContainsKey(bd_util.BUDOCO_SESSION_ID))
                 {
@@ -109,8 +112,6 @@ namespace budoco
                 bd_util.console_write_line(
                     DateTime.Now.ToString("hh:mm:ss")
                     + " "
-                    //+ context.Request.Path
-                    //+ " "
                     + context.Request.GetDisplayUrl()
                     + ", "
                     + budoco_session_id);
@@ -122,9 +123,6 @@ namespace budoco
             {
                 endpoints.MapRazorPages();
             });
-
         }
-
     }
-
 }

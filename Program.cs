@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
+
 namespace budoco
 {
     public class Program
@@ -44,14 +45,15 @@ namespace budoco
                 Log.CloseAndFlush();
             }
         }
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 // dotnet install package Serilog.AspNetCore
                 .UseSerilog()
+
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
     }
 }
