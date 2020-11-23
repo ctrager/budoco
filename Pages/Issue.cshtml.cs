@@ -18,6 +18,12 @@ namespace budoco.Pages
         public int id { get; set; }
 
         [BindProperty]
+        public string post_text { get; set; }
+
+        [BindProperty]
+        public string form_name { get; set; }
+
+        [BindProperty]
         public string description { get; set; }
 
         [BindProperty]
@@ -53,11 +59,33 @@ namespace budoco.Pages
         //https://stackoverflow.com/questions/56172036/razor-view-disabled-html-attribute-based-on-viewmodel-property
         public string null_or_disabled = null;
 
+        public DataTable dt_posts;
+
         public void OnGet()
         {
             if (!bd_util.check_user_permissions(HttpContext))
                 return;
 
+            GetUser();
+        }
+
+        public void OnPost()
+        {
+            if (form_name == "issue_form") 
+            {
+                OnIssueFormPost();
+            }
+            else 
+            {
+                OnPostFormPost();
+                Response.Redirect("Issue?id=" + id.ToString());
+            }
+            GetUser();
+ 
+        }
+
+        void GetUser()
+        {
 
             PrepareDropdowns();
 
@@ -78,13 +106,44 @@ namespace budoco.Pages
                 if (HttpContext.Session.GetInt32("us_is_report_only") == 1)
                     null_or_disabled = "disabled";
 
+
+                sql = @"select p_id, p_text, p_created_date, us_username
+                    from posts 
+                    inner join users on us_id = p_created_by_user
+                    where p_issue = " 
+                    + id.ToString()
+                    + " order by p_id asc";
+                dt_posts = bd_db.get_datatable(sql);
+
             }
+
+
         }
 
-        public void OnPost()
-        {
-            PrepareDropdowns();
 
+
+        void OnPostFormPost()
+        {
+            if (String.IsNullOrWhiteSpace(post_text))
+                return;
+
+            var sql = @"insert into posts
+                (p_issue, p_text, p_created_by_user)
+                values(@p_issue, @p_text, @p_created_by_user)";
+
+            var dict = new Dictionary<string,dynamic>();
+            dict["@p_issue"] = id;
+            dict["@p_text"] = post_text;
+            dict["@p_created_by_user"] = HttpContext.Session.GetInt32("us_id");
+ 
+            bd_db.exec(sql, dict);
+
+            bd_util.set_flash_msg(HttpContext, "Update was successful");
+
+        }
+        
+        void OnIssueFormPost()
+        {
             if (!IsValid())
             {
                 return;

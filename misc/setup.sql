@@ -121,8 +121,8 @@ i_last_updated_date timestamptz null
 create table posts 
 (
 p_id serial,
-p_issue int,
-p_text text,
+p_issue int not null,
+p_text text not null default "",
 p_created_by_user int not null,
 p_created_date timestamptz default CURRENT_TIMESTAMP,
 p_blob bytea null

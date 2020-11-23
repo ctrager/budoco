@@ -14,7 +14,6 @@ h1 {
 }
 
 div {
-
   margin: 5px;
 }
 
@@ -167,6 +166,12 @@ label {
   min-width: 150px;
 }
 
+.post_form>div>textarea {
+
+  width: 780px;
+  height: 100px;
+}
+
 
 p {
   margin-bottom: 20px;
@@ -195,4 +200,37 @@ input:disabled {
   background: #eeeeee;
   border: none;
   color: black;
+}
+
+form>div {
+  margin: 3px;
+}
+
+.post {
+  border: 1px solid gray;
+  padding: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: #f0fff0;
+  width: 800px;
+  border-radius: 6px;
+}
+
+.post_text {
+  padding: 3px;
+  background: white;
+  margin-top: 5px;
+  width: 780px;
+  border: 1px solid gray;
+}
+
+.post_who_when {
+  font-size: 12px;
+  color: green;
+}
+
+pre {
+  overflow-x: auto;
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 14px;
 }
