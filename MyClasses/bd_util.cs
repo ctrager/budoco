@@ -10,6 +10,14 @@ using Serilog;
 
 namespace budoco
 {
+
+    /* 
+    
+    A big bunch of heterogenous helper functions. Anytime I find myself
+    writing code that isn't DRY, I make a function here.
+    
+    */
+
     public static class bd_util
     {
         public const string BUDOCO_SESSION_ID = "budoco_session_id";

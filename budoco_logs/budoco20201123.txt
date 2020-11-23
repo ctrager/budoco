@@ -20,3 +20,23 @@
                     inner join users on us_id = p_created_by_user
                     where p_issue = 17 order by p_id asc
 2020-11-23 13:43:21.251 -06:00 [INF] HTTP GET /Issue?handler=Posts&id=17 responded 200 in 74.5471 ms
+2020-11-23 14:18:22.574 -06:00 [INF] Starting host
+2020-11-23 14:18:22.753 -06:00 [INF] Startup
+2020-11-23 14:18:22.754 -06:00 [INF] appsettings.json
+2020-11-23 14:18:22.756 -06:00 [INF] ConfigureServices
+2020-11-23 14:18:22.987 -06:00 [INF] Configure
+2020-11-23 14:19:00.135 -06:00 [INF] Starting host
+2020-11-23 14:19:00.267 -06:00 [INF] Startup
+2020-11-23 14:19:00.267 -06:00 [INF] appsettings.json
+2020-11-23 14:19:00.269 -06:00 [INF] ConfigureServices
+2020-11-23 14:19:00.463 -06:00 [INF] Configure
+2020-11-23 14:21:04.557 -06:00 [INF] Starting host
+2020-11-23 14:21:04.733 -06:00 [INF] Startup
+2020-11-23 14:21:04.733 -06:00 [INF] appsettings.json
+2020-11-23 14:21:04.735 -06:00 [INF] ConfigureServices
+2020-11-23 14:21:04.908 -06:00 [INF] Configure
+2020-11-23 14:21:42.523 -06:00 [INF] Starting host
+2020-11-23 14:21:42.672 -06:00 [INF] Startup
+2020-11-23 14:21:42.672 -06:00 [INF] appsettings.json
+2020-11-23 14:21:42.674 -06:00 [INF] ConfigureServices
+2020-11-23 14:21:42.823 -06:00 [INF] Configure

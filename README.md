@@ -136,10 +136,6 @@ where i_created_by_user = $ME
 
 ## Corey's Roadmap/TODO:
 
-* go to issue
-
-* Ajaxify post comments
-update issue when post is inserted
 
 * File attachents, images, Save files as blobs in db.
 
@@ -162,7 +158,6 @@ inject where clause into queries
 * Deleting stuff. Logically deleting stuff. Setting to inactive. Need to redo issue dropdowns
 
 ### BugTracker.NET features that I'll probably never work on, because they are not fun.
-
 
 * More and more permissions.
   

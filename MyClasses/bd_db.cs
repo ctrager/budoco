@@ -6,6 +6,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace budoco
 {
+    /*
+
+        Budoco doesn't use an ORM. Just straight SQL, parameterized queries.
+        Old school, fast, easy.
+
+    */
+
     public static class bd_db
     {
 
@@ -131,8 +138,10 @@ namespace budoco
         static void log_sql(string sql, Dictionary<string, dynamic> sql_parameters = null)
         {
             bd_util.console_write_line(sql);
-            if (sql_parameters is not null) {
-                foreach (string key in sql_parameters.Keys) {
+            if (sql_parameters is not null)
+            {
+                foreach (string key in sql_parameters.Keys)
+                {
                     bd_util.console_write_line(
                         key + "=" + sql_parameters[key].ToString());
                 }
