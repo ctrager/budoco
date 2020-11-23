@@ -24,7 +24,7 @@ namespace budoco
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
                 .MinimumLevel.Override("budoco", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File(@"logs/mylog.txt",
+                .WriteTo.File((string)bd_config.get("LogLocation"),
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 

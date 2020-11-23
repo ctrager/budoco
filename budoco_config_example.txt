@@ -59,8 +59,7 @@ AppName: Budoco
 # Number of rows on the issues page
 RowsPerPage: 30
   
-# Location of logs
-LogFolder: budoco_logs 
+LogLocation: budoco_logs/budoco.txt
 
 # if 1, newly registered users start as inactive until admin sets to active
 NewUserStartsInactive: 0

@@ -1,0 +1,22 @@
+2020-11-23 13:43:17.826 -06:00 [INF] Starting host
+2020-11-23 13:43:18.059 -06:00 [INF] Startup
+2020-11-23 13:43:18.060 -06:00 [INF] appsettings.json
+2020-11-23 13:43:18.067 -06:00 [INF] ConfigureServices
+2020-11-23 13:43:18.305 -06:00 [INF] Configure
+2020-11-23 13:43:19.917 -06:00 [INF] 01:43:19 http://localhost:5000/Issue?id=17, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 13:43:20.006 -06:00 [INF] select * from sessions 
+                inner join users on se_user = us_id
+                where se_id = '10199d97-1a4e-4351-8470-d15c89b4fa4b'
+2020-11-23 13:43:20.757 -06:00 [INF] select us_id, us_username from users
+2020-11-23 13:43:20.760 -06:00 [INF] select ca_id, ca_name from categories
+2020-11-23 13:43:20.762 -06:00 [INF] select pj_id, pj_name from projects
+2020-11-23 13:43:20.764 -06:00 [INF] select pr_id, pr_name from priorities
+2020-11-23 13:43:20.766 -06:00 [INF] select st_id, st_name from statuses
+2020-11-23 13:43:20.768 -06:00 [INF] select * from issues where i_id = 17
+2020-11-23 13:43:21.000 -06:00 [INF] HTTP GET /Issue?id=17 responded 200 in 1086.0222 ms
+2020-11-23 13:43:21.177 -06:00 [INF] 01:43:21 http://localhost:5000/Issue?handler=Posts&id=17, 10199d97-1a4e-4351-8470-d15c89b4fa4b
+2020-11-23 13:43:21.190 -06:00 [INF] select p_id, p_text, p_created_date, us_username
+                    from posts 
+                    inner join users on us_id = p_created_by_user
+                    where p_issue = 17 order by p_id asc
+2020-11-23 13:43:21.251 -06:00 [INF] HTTP GET /Issue?handler=Posts&id=17 responded 200 in 74.5471 ms
