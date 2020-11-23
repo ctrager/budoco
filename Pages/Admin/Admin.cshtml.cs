@@ -14,7 +14,6 @@ namespace budoco.Pages
     {
         public void OnGet()
         {
-            Console.WriteLine("OnGet");
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return;
         }

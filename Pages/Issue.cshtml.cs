@@ -66,6 +66,9 @@ namespace budoco.Pages
 
         public void OnPost()
         {
+            if (!bd_util.check_user_permissions(HttpContext))
+                return;
+
             OnIssueFormPost();
             GetIssue();
         }
