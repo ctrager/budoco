@@ -256,3 +256,21 @@ pre {
   padding: 5px;
   border: 1px dashed gray;
 }
+
+.file_upload_label {
+  color: blue;
+
+}
+
+.file_upload_label {
+  color: blue;
+
+}
+
+.file_upload_label:hover {
+  color: #ff6633;
+}
+
+input[type=file] {
+  display: none;
+}

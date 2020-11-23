@@ -12,39 +12,24 @@
 <form method="post" class="col-sm-6" enctype="multipart/form-data">
     <div><input asp-for="my_string"></intput>
     </div>
-    <div class="form-group row">
-        <label asp-for="UploadedFile" class="col-sm-3 col-form-label"></label>
-        <div class="col-sm-7">
-            <input asp-for="UploadedFile" class="form-control">
-        </div>
+
+
+    <div>
+        <label class="file_upload_label">
+            Attach file:
+            <input type="file" class="file_upload_input" asp-for="UploadedFile" />
+
+        </label>
+
     </div>
 
-    <div class="form-group row">
-
-        <div class="col-sm-7 offset-sm-3">
-            <button class="btn btn-primary" id="submit">Submit</button>
-        </div>
+    <div>
+        <button class="btn btn-primary" id="submit">Submit</button>
     </div>
+
+    <div id="file_name">nothing</div>
 </form>
 
-<script>
-
-    $(function () {
-        $('#submit').on('click', function (evt) {
-            evt.preventDefault();
-            $.ajax({
-                url: '',
-                data: new FormData(document.forms[0]),
-                contentType: false,
-                processData: false,
-                type: 'post',
-                success: function () {
-                    alert('Uploaded by jQuery');
-                }
-            });
-        });
-    });
-</script>
 
 <div>
 
@@ -62,4 +47,31 @@
     });
 
 </div>
+
+
+@section Scripts {
+    <script>
+    $(document).ready(function () {
+
+        $("#UploadedFile").on('change', function () {
+            //alert(this.files[0].name)
+            $("#file_name").html(this.files[0].name);
+        })
+
+
+        $('#submit').on('click', function (evt) {
+            evt.preventDefault();
+            $.ajax({
+                url: '',
+                data: new FormData(document.forms[0]),
+                contentType: false,
+                processData: false,
+                type: 'post',
+                success: function () {
+                    alert('Uploaded by jQuery');
+                }
+            })
+        });
+    })
+    </script>
 }
