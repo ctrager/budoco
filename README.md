@@ -139,14 +139,11 @@ where i_created_by_user = $ME
 
 * File attachents, images, Save files as blobs in db.
 
-* Full text search.
-
 * More query examples in queries.sql
 
 * Finish admin pages
 
 * Send emails from the Issue page, that become part of the Issue posts.
-
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 
 * Org permissions - maybe the only permissions the app needs.

@@ -83,89 +83,135 @@
     <a href="Issue?id=0">Clear and create another issue</a>
 </div>
 
-@section Scripts {
-     <script>
-         $(document).ready(function() {
-             get_posts()
-         })
-     </script>
-}
-
 @{
     if (Model.id != 0)
     {
         <div id="posts"></div>
 
-        <script>
-
-            function get_posts() {
-                $.ajax({
-                    type: "Get",
-                    url: "/Issue?handler=Posts&id=@Model.id",
-                    success: function (json_posts) {
-                        $("#post_text").val("");
-                        build_posts_html(json_posts)
-
-                    },
-                    failure: function (response) {
-                        alert(response);
-                    }
-                });
-            }
-            
-            function build_posts_html(json_posts) {
-                var s = "";
-                for (i = 0; i < json_posts.length; i++) {
-                    
-                    post = json_posts[i];
-                    s += "<div class='post'>"
-                        s += "<div class='post_who_when'>Posted by "
-                        s += post["us_username"]
-                        s += " on "
-                        s += post["p_created_date"]
-                        s += "&nbsp;&nbsp;#" + post["p_id"] 
-                        s += "</div>"
-                    
-                        s += "<div class='post_text'>"
-                        s += "<pre>" + post["p_text"] + "</pre>"
-                        s += "</div>"
-
-                        
-                    s += "</div>"
-                }
-                
-                $("#posts").html(s)
-            }
-
-            function submit_post() {
-
-                var form_data = $("#post_form").serialize()
-                $.ajax({
-                    type: "POST",
-                    url: "/Issue?handler=AddPost&id=@Model.id",
-                    data: form_data,
-                    success: function (json_posts) {
-                        $("#post_text").val("");
-                        build_posts_html(json_posts)
-
-                    },
-                    failure: function (response) {
-                        alert(response);
-                    }
-                });
-            }
-        </script>
-
         <div class="form_div">
-            <form class="post_form" id="post_form" method="post" asp-antiforgery="true">
+            <form class="post_form" id="post_form" method="post" enctype="multipart/form-data">
+                
                 <div>
                     <textarea name="post_text" id="post_text"></textarea>
                 </div>
+
                 <div>
-                    <button type="button" onclick="submit_post()">Comment</button>
+                    <label class="file_upload_label">
+                    Click to attach file:
+                    <input type="file" class="file_upload_input" asp-for="uploaded_file" />
+                    </label>
+                    <span id="file_name"></span>
                 </div>
+
+                <div>
+                    <button type="button" onclick="submit_post()">Add Comment</button>
+                </div>
+            
             </form>
         </div>
     }
+}
+
+@section Scripts {
+    
+    <script>
+    $(document).ready(function() {
+       
+        $("#uploaded_file").on('change', function () {
+            $("#file_name").html(this.files[0].name);
+        });
+
+        get_posts()
+        
+    });
+    
+
+    function get_posts() {
+        $.ajax({
+            type: "Get",
+            url: "/Issue?handler=Posts&id=@Model.id",
+            success: function (json_posts) {
+                // blank out form
+                $("#post_text").val("");
+                $("#file_name").html("");
+
+                // convert the json to html
+                build_posts_html(json_posts)
+
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+    }
+    
+    function build_posts_html(json_posts) {
+        var s = "";
+        for (i = 0; i < json_posts.length; i++) {
+            
+            post = json_posts[i];
+            s += "<div class='post'>"
+                s += "<div class='post_who_when'>Posted by "
+                s += post["us_username"]
+                s += " on "
+                s += post["p_created_date"]
+                s += "&nbsp;&nbsp;#" + post["p_id"] 
+                s += "</div>"
+            
+                s += "<div class='post_text'>"
+                s += "<pre>" + post["p_text"] + "</pre>"
+                s += "</div>"
+
+                
+            s += "</div>"
+        }
+        $("#posts").html(s)
+    }
+        function submit_post() {
+            $.ajax({
+                url: '/Issue?id=@Model.id&handler=AddPost',
+                data: new FormData(document.forms[1]),
+                contentType: false,
+                processData: false,
+                type: 'post',
+                success: function (json_posts) {
+                    // blank out the form we just posted from
+                    $("#post_text").val("");
+                    $("#file_name").html("");
+
+                    // the server responded with a json list
+                    // of the posts. Turn it into html
+                    build_posts_html(json_posts)
+                },
+                failure: function(response) {
+                    alert(response)
+                }
+            })
+        }
+        
+    /* function submit_postxxxxx() {
+
+        var form_data = $("#post_form").serialize()
+        $.ajax({
+            type: "POST",
+            url: "/Issue?handler=AddPost&id=@Model.id",
+            data: form_data,
+            success: function (json_posts) {
+                // blank out the form we just posted from
+                $("#post_text").val("");
+
+                // the server responded with a json list
+                // of the posts. Turn it into html
+                build_posts_html(json_posts)
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        })
+    } */
+
+    </script>
+
+
 }
 

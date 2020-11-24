@@ -195,11 +195,6 @@ form>div>label {
   white-space: nowrap;
 }
 
-.post_form>div>textarea {
-  width: 900px;
-  height: 200px;
-}
-
 p {
   margin-bottom: 20px;
   font-weight: normal;
@@ -218,6 +213,11 @@ p {
 textarea {
   width: 600px;
   height: 100px;
+}
+
+.sql_editor {
+  width: 900px;
+  height: 300px;
 }
 
 input:disabled {
@@ -240,6 +240,14 @@ input:disabled {
 .post_text {
   padding: 0px;
   margin: 0px;
+  width: 900px;
+  color: purple;
+}
+
+.post_form>div>textarea {
+  width: 900px;
+  height: 200px;
+  background: pink
 }
 
 .post_who_when {
@@ -273,4 +281,8 @@ pre {
 
 input[type=file] {
   display: none;
+}
+
+.search_context>b {
+  color: red;
 }

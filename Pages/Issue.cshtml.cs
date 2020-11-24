@@ -18,9 +18,6 @@ namespace budoco.Pages
         public int id { get; set; }
 
         [BindProperty]
-        public string post_text { get; set; }
-
-        [BindProperty]
         public string description { get; set; }
 
         [BindProperty]
@@ -48,8 +45,16 @@ namespace budoco.Pages
 
         [BindProperty]
         public IEnumerable<SelectListItem> statuses { get; set; }
+
         [BindProperty]
         public int status_id { get; set; }
+
+        [BindProperty]
+        public IFormFile uploaded_file { get; set; }
+
+        [BindProperty]
+        public string post_text { get; set; }
+
 
         // bindings end        
 
@@ -201,10 +206,19 @@ namespace budoco.Pages
 
         public JsonResult OnPostAddPost()
         {
+
+            if (uploaded_file is not null)
+            {
+                Console.WriteLine(uploaded_file.Length);
+                Console.WriteLine(uploaded_file.ContentType);
+                Console.WriteLine(uploaded_file.ContentDisposition);
+                Console.WriteLine(uploaded_file.FileName);
+            }
+
             if (String.IsNullOrWhiteSpace(post_text))
                 return new JsonResult(
                     @"{
-                        'result': 'blank texts'                        
+                        'result': 'blank text'                        
                     }");
 
             var sql = @"insert into posts
