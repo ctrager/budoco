@@ -104,7 +104,7 @@
 
                 <div class="post_form_footer">
                     <button type="button" onclick="submit_post()">Add Comment</button>
-                                        <label class="file_upload_label">
+                                        <label class="file_upload_label fake_link">
                     Click here to attach file
                     <input type="file" class="file_upload_input" asp-for="uploaded_file" />
                     </label>
@@ -113,21 +113,20 @@
             
             </form>
         </div>
-    }
+     }
 }
 
 @section Scripts {
     
     <script>
+        
     $(document).ready(function() {
-       
         $("#uploaded_file").on('change', function () {
             $("#file_name").html(this.files[0].name);
         });
 
         get_posts()
-        
-    });
+     });
     
     function get_posts() {
         $.ajax({
@@ -143,33 +142,56 @@
             
             failure: function (response) {
                 alert(response);
+            },
+
+            statusCode: {
+                500: function() {
+                    alert("get - server returned status code of 500");
+                }
             }
         });
     }
     
-        function submit_post() {
-            $.ajax({
-                url: '/Issue?id=@Model.id&handler=AddPost',
-                data: new FormData(document.forms[1]),
-                contentType: false,
-                processData: false,
-                type: 'post',
-                
-                success: function (posts_as_html) {
-                    // blank out the form we just posted from
-                    $("#post_text").val("");
-                    $("#file_name").html("");
-                    $("#posts").html(posts_as_html);
-                },
-                
-                failure: function(response) {
-                    alert(response)
+    function submit_post() {
+        $.ajax({
+            url: '/Issue?id=@Model.id&handler=AddPost',
+            data: new FormData(document.forms[1]),
+            contentType: false,
+            processData: false,
+            type: 'post',
+            
+            success: function (posts_as_html) {
+                // blank out the form we just posted from
+                $("#post_text").val("");
+                $("#file_name").html("");
+                $("#posts").html(posts_as_html);
+            },
+            
+            failure: function(response) {
+                alert(response)
+            },
+
+            statusCode: {
+                500: function() {
+                    alert("post- server returned status code of 500");
                 }
-            })
+            }
+        })
+    }
+
+    function show_hide_image(image_div_id, link) {
+        if ($(link).html() == "View") {
+            $(link).html("Hide")
+            $(image_div_id).show()
+        }
+        else {
+            $(link).html("View")
+            $(image_div_id).hide()
         }
         
-    </script>
+    }
 
+    </script>
 
 }
 

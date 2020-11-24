@@ -148,5 +148,19 @@ namespace budoco
             }
         }
 
+        public static byte[] get_bytea(string sql)
+        {
+            log_sql(sql, null);
+            byte[] bytea;
+            using (var conn = new NpgsqlConnection(get_connection_string()))
+            {
+                var cmd = create_command(conn, sql, null);
+                var reader = cmd.ExecuteReader();
+                reader.Read();
+                bytea = (byte[])reader[0];
+                reader.Close();
+                return bytea;
+            }
+        }
     }
 }

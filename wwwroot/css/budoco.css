@@ -23,19 +23,47 @@ div {
 
 }
 
-a {
-  color: #0000ff;
-  text-decoration: none;
-}
+
+
 
 a:visited {
   color: #0000ff;
   text-decoration: none;
 }
 
-a:hover {
-  color: #ff6633;
+
+a,
+.fake_link {
+  color: #0000ff;
   text-decoration: none;
+}
+
+a,
+button,
+.fake_link {
+  color: blue;
+  text-decoration: none;
+}
+
+a:hover,
+button:hover,
+fake_link:hover {
+  color: #ff6633 !important;
+  text-decoration: none;
+}
+
+.show_hide_image {
+  display: inline;
+  font-size: 12px;
+  color: blue !important;
+}
+
+.show_hide_image:hover {
+  display: inline;
+  font-size: 12px;
+  color: #ff6633 !important;
+  cursor: pointer;
+
 }
 
 
@@ -88,22 +116,15 @@ th {
 .unsorted {
   background-color: #eeeeee;
   font-weight: normal;
-  color: blue;
 }
 
 .sorted {
   background-color: yellow;
   font-weight: normal;
-  color: blue;
+
 }
 
-.unsorted:hover {
-  color: #ff6633;
-}
 
-.sorted:hover {
-  color: #ff6633;
-}
 
 .navbar {
   list-style-type: none;
@@ -176,8 +197,11 @@ form>div>button {
 }
 
 button {
-  color: blue;
   background-color: #ffe000;
+  border-radius: 3px;
+  border: 1px solid gray;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .login_register {
@@ -261,14 +285,6 @@ pre {
   padding: 5px;
 }
 
-.file_upload_label {
-  color: blue;
-
-}
-
-.file_upload_label:hover {
-  color: #ff6633;
-}
 
 input[type=file] {
   display: none;
@@ -300,4 +316,17 @@ input[type=file] {
 
 .issue_form>div>#description {
   width: 800px;
+}
+
+.post_img {
+  max-width: 800px;
+}
+
+.post_hide {
+  font-size: 12px;
+}
+
+
+.span_as_div {
+  display: inline
 }

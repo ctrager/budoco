@@ -3,24 +3,30 @@
     {
         foreach (DataRow dr in Model.dt_posts.Rows)
         {
+            string p_id = @dr[0].ToString();
+
             <div class="post">
                 <div class="post_text">
                     <pre>@dr["p_text"]</pre>
                 </div>
                 <div class="post_who_when">
-                    Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;@dr["p_id"]
+                    Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@dr["p_id"]
                 </div>
 
                 @{
-                    if ((string)dr["p_file_name"] != "junk")
+                    if ((string)dr["p_file_name"] != "")
                     {
                         <div class="post_who_when">
                             File: @dr["p_file_name"], Size: @dr["p_file_length"],
-                            Type: @dr["p_file_content_type"]/@dr["p_file_content_disposition"]
+                            Type: @dr["p_file_content_type"]]
                             &nbsp;&nbsp;
-                            <a href="FetchFile?id=@dr[0]">Download</a>
+                            <a href="/File?handler=File&p_id=@p_id" download="@dr["p_file_name"]">Download</a>
                             &nbsp;&nbsp;
-                            <a href="javascript:view_file(@dr[0])">View</a>
+                            <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@p_id', this)">View</div>
+
+                        </div>
+                        <div style="display:none" class="post_image" id="image_div_@p_id">
+                            <img class="post_img" src="/File?handler=File&p_id=@p_id" />
                         </div>
                     }
                 }

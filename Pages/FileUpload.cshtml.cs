@@ -29,7 +29,6 @@ namespace budoco.Pages
             {
                 Console.WriteLine(UploadedFile.Length);
                 Console.WriteLine(UploadedFile.ContentType);
-                Console.WriteLine(UploadedFile.ContentDisposition);
                 Console.WriteLine(UploadedFile.FileName);
 
                 Console.WriteLine(UploadedFile.Name);

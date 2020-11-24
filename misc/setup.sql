@@ -123,7 +123,6 @@ p_text text not null default '',
 p_file_name text not null default '',
 p_file_length int not null default 0,
 p_file_content_type text not null default '',
-p_file_content_disposition text not null default '',
 p_email_to text not null default '',
 p_email_from text not null default '',
 p_email_subject text not null default '',
@@ -154,6 +153,8 @@ pa_id serial,
 pa_post int not null,
 pa_content bytea null
 );
+
+create unique index pa_post_index on post_attachments (pa_post);
 
 
 insert into users (us_username, us_email, us_is_admin, us_password) 
