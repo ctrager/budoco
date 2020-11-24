@@ -4,6 +4,7 @@
         foreach (DataRow dr in Model.dt_posts.Rows)
         {
             string p_id = @dr[0].ToString();
+            string content_type = (string)@dr["p_file_content_type"];
 
             <div class="post">
                 <div class="post_text">
@@ -14,7 +15,7 @@
                 </div>
 
                 @{
-                    if ((string)dr["p_file_name"] != "")
+                    if (content_type != "")
                     {
                         <div class="post_who_when">
                             File: @dr["p_file_name"], Size: @dr["p_file_length"],
@@ -22,12 +23,23 @@
                             &nbsp;&nbsp;
                             <a href="/File?handler=File&p_id=@p_id" download="@dr["p_file_name"]">Download</a>
                             &nbsp;&nbsp;
-                            <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@p_id', this)">View</div>
+
+                            @{
+                                if (content_type.Contains("image"))
+                                {
+                                    <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@p_id', this)">View
+
+                                    </div>
+                                }
+                            }
 
                         </div>
-                        <div style="display:none" class="post_image" id="image_div_@p_id">
-                            <img class="post_img" src="/File?handler=File&p_id=@p_id" />
-                        </div>
+                        if (content_type.Contains("image"))
+                        {
+                            <div style="display:none" class="post_image" id="image_div_@p_id">
+                                <img class="post_img" src="/File?handler=File&p_id=@p_id" />
+                            </div>
+                        }
                     }
                 }
 
