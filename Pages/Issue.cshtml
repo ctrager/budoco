@@ -83,6 +83,14 @@
     <a href="Issue?id=0">Clear and create another issue</a>
 </div>
 
+@section Scripts {
+     <script>
+         $(document).ready(function() {
+             get_posts()
+         })
+     </script>
+}
+
 @{
     if (Model.id != 0)
     {
@@ -161,10 +169,3 @@
     }
 }
 
-@section Scripts {
-     <script>
-         $(document).ready(function() {
-             get_posts()
-         })
-     </script>
-}
