@@ -211,7 +211,7 @@ p {
 }
 
 textarea {
-  width: 600px;
+  width: 800px;
   height: 100px;
 }
 
@@ -232,7 +232,7 @@ input:disabled {
   padding: 5px;
   margin-top: 20px;
   margin-bottom: 20px;
-  background: #f0fff0;
+  background: #fafffa;
   width: 900px;
   border-radius: 6px;
 }
@@ -241,7 +241,6 @@ input:disabled {
   padding: 0px;
   margin: 0px;
   width: 900px;
-  color: purple;
 }
 
 .post_form>div>textarea {
@@ -258,15 +257,8 @@ pre {
   overflow-x: auto;
   font-family: "Lucida Console", "Courier New", Courier, monospace;
   font-size: 14px;
-  background: white;
   margin: 0px;
   padding: 5px;
-  border: 1px dashed gray;
-}
-
-.file_upload_label {
-  color: blue;
-
 }
 
 .file_upload_label {
@@ -282,6 +274,30 @@ input[type=file] {
   display: none;
 }
 
+.post_form>div>button {
+  margin-top: 0px;
+  margin-left: 10px;
+  margin-bottom: 6px;
+  margin-right: 12px;
+}
+
+.post_form {
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  padding-right: 6px;
+}
+
+.post_form_footer {
+  margin: 0px;
+  padding: 0px;
+}
+
+
 .search_context>b {
   color: red;
+}
+
+.issue_form>div>#description {
+  width: 800px;
 }

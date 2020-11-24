@@ -81,7 +81,7 @@ namespace budoco.Pages
 
                 if (errs.Count > 0)
                 {
-                    bd_util.set_flash_err(HttpContext, errs);
+                    bd_util.set_flash_errs(HttpContext, errs);
                 }
             }
         }

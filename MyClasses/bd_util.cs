@@ -116,7 +116,7 @@ namespace budoco
             context.Session.SetString("flash_err", s);
         }
 
-        public static void set_flash_err(HttpContext context, List<string> errs)
+        public static void set_flash_errs(HttpContext context, List<string> errs)
         {
             string s = string.Join('|', errs);
             context.Session.SetString("flash_err", s);
@@ -145,12 +145,13 @@ namespace budoco
 
             string sql = @"select * from sessions 
                 inner join users on se_user = us_id
-                where se_id = '" + session_id + "'";
+                where se_id = '" + session_id + "'; /*check_user_permissions */";
 
             DataRow dr = bd_db.get_datarow(sql);
 
             if (dr is null)
             {
+                Console.WriteLine("qq redirect 1");
                 context.Response.Redirect("/Login");
                 return false;
             }
@@ -165,6 +166,7 @@ namespace budoco
             context.Session.SetInt32("us_is_admin", Convert.ToInt32((bool)dr["us_is_admin"]));
             context.Session.SetInt32("us_is_active", Convert.ToInt32((bool)dr["us_is_active"]));
             context.Session.SetInt32("us_is_report_only", Convert.ToInt32((bool)dr["us_is_report_only"]));
+            context.Session.SetInt32("us_organization", (int)dr["us_organization"]);
 
             if (!is_active)
             {

@@ -41,21 +41,21 @@ namespace budoco.Pages
             if (string.IsNullOrWhiteSpace(password))
             {
                 errs.Add("Password is required.");
-                bd_util.set_flash_err(HttpContext, errs);
+                bd_util.set_flash_errs(HttpContext, errs);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(retyped_password))
             {
                 errs.Add("Please enter your new password twice.");
-                bd_util.set_flash_err(HttpContext, errs);
+                bd_util.set_flash_errs(HttpContext, errs);
                 return;
             }
 
             if (password != retyped_password)
             {
                 errs.Add("The passwords don't match. Please enter your new password twice.");
-                bd_util.set_flash_err(HttpContext, errs);
+                bd_util.set_flash_errs(HttpContext, errs);
                 return;
             }
 
@@ -81,7 +81,7 @@ namespace budoco.Pages
             if (dr_reset is null)
             {
                 errs.Add("Password reset failed. Please try again.");
-                bd_util.set_flash_err(HttpContext, errs);
+                bd_util.set_flash_errs(HttpContext, errs);
                 Response.Redirect("ResetPasswordRequest");
                 return 0;
             }

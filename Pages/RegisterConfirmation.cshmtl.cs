@@ -29,7 +29,7 @@ namespace budoco.Pages
             if (dr_registration is null)
             {
                 errs.Add("Registration did not succeed. Please register again.");
-                bd_util.set_flash_err(HttpContext, errs);
+                bd_util.set_flash_errs(HttpContext, errs);
                 Response.Redirect("Register");
             }
             else

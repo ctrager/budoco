@@ -12,7 +12,6 @@ namespace budoco.Pages
     public class LoginModel : PageModel
     {
 
-
         // bindings start 
         [BindProperty]
         public string username { get; set; }
@@ -23,6 +22,8 @@ namespace budoco.Pages
         // bindings end  
 
         int user_id = 0;
+
+        List<string> errs = new List<string>();
 
         public void OnGet(string action)
         {
@@ -38,6 +39,7 @@ namespace budoco.Pages
 
             if (!IsValid())
             {
+                bd_util.set_flash_errs(HttpContext, errs);
                 return;
             }
 
@@ -54,6 +56,7 @@ namespace budoco.Pages
             dict["@se_id"] = budoco_session_id;
             dict["@se_user"] = user_id;
             bd_db.exec(sql, dict);
+
             Response.Redirect("Issues");
 
         }
@@ -68,7 +71,6 @@ namespace budoco.Pages
 
         bool IsValid()
         {
-            var errs = new List<string>();
 
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -80,67 +82,59 @@ namespace budoco.Pages
                 errs.Add("Password is required.");
             }
 
-            if (errs.Count == 0)
+            if (errs.Count > 0)
             {
-                // check user and password
-                string sql = @"select * from users where 
-                (us_username = @us_username or us_email = @us_email)";
-
-                var dict = new Dictionary<string, dynamic>();
-
-                dict["@us_username"] = username;
-                dict["@us_email"] = username; // on purpose, user can login typing either
-
-                DataRow dr_user = bd_db.get_datarow(sql, dict);
-
-                if (dr_user is null)
-                {
-                    errs.Add("User or Password incorect.");
-                }
-                else
-                {
-
-                    if (!(bool)dr_user["us_is_active"])
-                    {
-                        bd_util.set_flash_err(HttpContext, "Your user account is set to inactive.");
-                        return false;
-                    }
-
-                    string password_in_db = (string)dr_user["us_password"];
-                    user_id = (int)dr_user[0];
-
-                    // admin user's first time
-                    if (user_id == 1 && password_in_db.Length < 48)
-                    {
-
-                        // force password reset
-                        string guid = bd_util.insert_change_password_request_link(
-                            "none", user_id);
-
-                        bd_util.set_flash_err(HttpContext, "You must create a password.");
-                        Response.Redirect("/ResetPassword?guid=" + guid);
-
-                    }
-                    else
-                    {
-                        if (!bd_util.check_password_against_hash(password, password_in_db))
-                        {
-                            // on purpose lowercase password so that Corey knows the diff
-                            errs.Add("User or password incorrect.");
-                        }
-                    }
-                }
-            }
-
-            if (errs.Count == 0)
-            {
-                return true;
-            }
-            else
-            {
-                bd_util.set_flash_err(HttpContext, errs);
                 return false;
             }
+
+            // check user and password
+            string sql = @"select * from users where 
+            (us_username = @us_username or us_email = @us_email)";
+
+            var dict = new Dictionary<string, dynamic>();
+
+            dict["@us_username"] = username;
+            dict["@us_email"] = username; // on purpose, user can login typing either
+
+            DataRow dr_user = bd_db.get_datarow(sql, dict);
+
+            if (dr_user is null)
+            {
+                errs.Add("User or Password is incorect.");
+                return false;
+            }
+
+            if (!(bool)dr_user["us_is_active"])
+            {
+                errs.Add("Your user account is set to inactive.");
+                return false;
+            }
+
+            user_id = (int)dr_user[0];
+
+            string password_in_db = (string)dr_user["us_password"];
+
+            // admin user's first time
+            if ((string)dr_user["us_username"] == "admin" && password_in_db.Length < 48)
+            {
+
+                // force password reset
+                string guid = bd_util.insert_change_password_request_link(
+                    "none", user_id);
+
+                errs.Add("You must create a password.");
+                Response.Redirect("/ResetPassword?guid=" + guid);
+                return false;
+            }
+
+            if (!bd_util.check_password_against_hash(password, password_in_db))
+            {
+                // on purpose lowercase password so that Corey knows the diff
+                errs.Add("User or password is incorrect.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -43,7 +43,14 @@
         </div>
 
         <div>
-            <label>Priority</label>
+            <label>Organization</label>
+            <select asp-for="organization_id" asp-items="@Model.organizations" disabled="@Model.null_or_disabled">
+                <option value="">-- Select Organization --</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Priorities</label>
             <select asp-for="priority_id" asp-items="@Model.priorities" disabled="@Model.null_or_disabled">
                 <option value="">-- Select Priority --</option>
             </select>
@@ -95,16 +102,13 @@
                     <textarea name="post_text" id="post_text"></textarea>
                 </div>
 
-                <div>
-                    <label class="file_upload_label">
-                    Click to attach file:
+                <div class="post_form_footer">
+                    <button type="button" onclick="submit_post()">Add Comment</button>
+                                        <label class="file_upload_label">
+                    Click here to attach file
                     <input type="file" class="file_upload_input" asp-for="uploaded_file" />
                     </label>
                     <span id="file_name"></span>
-                </div>
-
-                <div>
-                    <button type="button" onclick="submit_post()">Add Comment</button>
                 </div>
             
             </form>

@@ -52,6 +52,12 @@ namespace budoco.Pages
         [BindProperty]
         public int project_id { get; set; }
 
+
+        [BindProperty]
+        public IEnumerable<SelectListItem> organizations { get; set; }
+        [BindProperty]
+        public int organization_id { get; set; }
+
         [BindProperty]
         public IEnumerable<SelectListItem> statuses { get; set; }
 
@@ -111,6 +117,7 @@ namespace budoco.Pages
                 details = (string)dr["i_details"];
                 category_id = (int)dr["i_category"];
                 project_id = (int)dr["i_project"];
+                organization_id = (int)dr["i_organization"];
                 priority_id = (int)dr["i_priority"];
                 status_id = (int)dr["i_status"];
                 assigned_to_user_id = (int)dr["i_assigned_to_user"];
@@ -124,7 +131,6 @@ namespace budoco.Pages
 
         void OnIssueFormPost()
         {
-            Console.WriteLine("OnIssueFormPost");
             if (!IsValid())
             {
                 return;
@@ -139,8 +145,10 @@ namespace budoco.Pages
             {
 
                 sql = @"insert into issues 
-                (i_description, i_details, i_created_by_user, i_category, i_project, i_priority, i_status, i_assigned_to_user) 
-                values(@i_description, @i_details, @i_created_by_user, @i_category, @i_project, @i_priority, @i_status, @i_assigned_to_user) 
+                (i_description, i_details, i_created_by_user, 
+                i_category, i_project, i_organization, i_priority, i_status, i_assigned_to_user) 
+                values(@i_description, @i_details, @i_created_by_user, 
+                @i_category, @i_project, @i_organization, @i_priority, @i_status, @i_assigned_to_user) 
                 returning i_id";
 
                 this.id = (int)bd_db.exec_scalar(sql, GetValuesDict());
@@ -155,6 +163,7 @@ namespace budoco.Pages
                 i_last_updated_user = @i_last_updated_user,
                 i_category = @i_category,
                 i_project = @i_project,
+                i_organization = @i_organization,
                 i_priority = @i_priority,
                 i_status = @i_status,
                 i_assigned_to_user = @i_assigned_to_user,
@@ -178,6 +187,7 @@ namespace budoco.Pages
             dict["@i_category"] = category_id;
             dict["@i_assigned_to_user"] = assigned_to_user_id;
             dict["@i_project"] = project_id;
+            dict["@i_organization"] = organization_id;
             dict["@i_priority"] = priority_id;
             dict["@i_status"] = status_id;
 
@@ -189,6 +199,7 @@ namespace budoco.Pages
             assigned_to_users = bd_db.prepare_select_list("select us_id, us_username from users");
             categories = bd_db.prepare_select_list("select ca_id, ca_name from categories");
             projects = bd_db.prepare_select_list("select pj_id, pj_name from projects");
+            organizations = bd_db.prepare_select_list("select og_id, og_name from organizations");
             priorities = bd_db.prepare_select_list("select pr_id, pr_name from priorities");
             statuses = bd_db.prepare_select_list("select st_id, st_name from statuses");
         }
@@ -208,7 +219,7 @@ namespace budoco.Pages
             }
             else
             {
-                bd_util.set_flash_err(HttpContext, errs);
+                bd_util.set_flash_errs(HttpContext, errs);
                 return false;
             }
         }
@@ -240,9 +251,8 @@ namespace budoco.Pages
         }
         public async Task<ContentResult> OnGetPostsAsync()
         {
-            Console.WriteLine(" Task<ContentResult> OnGetPostsAsync()");
 
-            var sql = @"select p_id, p_text, p_created_date, us_username
+            var sql = @"select posts.*, us_username
                     from posts 
                     inner join users on us_id = p_created_by_user
                     where p_issue = "

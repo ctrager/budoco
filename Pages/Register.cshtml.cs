@@ -78,7 +78,7 @@ namespace budoco.Pages
                 {
                     errs.Add("Error sending email.");
                     errs.Add(email_result);
-                    bd_util.set_flash_err(HttpContext, errs);
+                    bd_util.set_flash_errs(HttpContext, errs);
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace budoco.Pages
             }
             else
             {
-                bd_util.set_flash_err(HttpContext, errs);
+                bd_util.set_flash_errs(HttpContext, errs);
                 return false;
             }
         }
