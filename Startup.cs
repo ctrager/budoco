@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http.Extensions;
 using Serilog;
+using RazorPartialToString.Services;
 
 namespace budoco
 {
@@ -58,6 +59,8 @@ namespace budoco
             });
 
             services.AddRazorPages();
+
+            services.AddTransient<IRazorPartialToStringRenderer, RazorPartialToStringRenderer>();
 
         }
 

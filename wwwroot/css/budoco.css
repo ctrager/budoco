@@ -246,8 +246,7 @@ input:disabled {
 
 .post_form>div>textarea {
   width: 900px;
-  height: 200px;
-  background: pink
+  height: 100px;
 }
 
 .post_who_when {

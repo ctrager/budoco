@@ -7,6 +7,11 @@ using System.Security.Cryptography;
 using MailKit;
 using MimeKit;
 using Serilog;
+using System.IO;
+using Microsoft.AspNetCore;
+using System.Web;
+using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace budoco
 {
@@ -21,19 +26,7 @@ namespace budoco
     public static class bd_util
     {
         public const string BUDOCO_SESSION_ID = "budoco_session_id";
-
         public const bool MUST_BE_ADMIN = true;
-
-
-        public static int get_int_or_zero_from_string(string s)
-        {
-            if (s is null)
-            {
-                return 0;
-            }
-
-            return Convert.ToInt32(s);
-        }
 
         public static string send_email(string to, string from, string subject, string body)
         {

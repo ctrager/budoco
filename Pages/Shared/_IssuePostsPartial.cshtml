@@ -1,0 +1,14 @@
+@{
+    if (Model.dt_posts is not null)
+    {
+        foreach (DataRow dr in Model.dt_posts.Rows)
+        { 
+            <div class="post">
+                <div class="post_who_when">Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;@dr["p_id"]</div>
+                <div class="post_text">
+                    <pre>@dr["p_text"]</pre>
+                </div>
+            </div>
+        }
+    } 
+}

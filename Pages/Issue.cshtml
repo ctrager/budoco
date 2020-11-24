@@ -125,48 +125,24 @@
         
     });
     
-
     function get_posts() {
         $.ajax({
             type: "Get",
             url: "/Issue?handler=Posts&id=@Model.id",
-            success: function (json_posts) {
+ 
+            success: function (posts_as_html) {
                 // blank out form
                 $("#post_text").val("");
                 $("#file_name").html("");
-
-                // convert the json to html
-                build_posts_html(json_posts)
-
+                $("#posts").html(posts_as_html)
             },
+            
             failure: function (response) {
                 alert(response);
             }
         });
     }
     
-    function build_posts_html(json_posts) {
-        var s = "";
-        for (i = 0; i < json_posts.length; i++) {
-            
-            post = json_posts[i];
-            s += "<div class='post'>"
-                s += "<div class='post_who_when'>Posted by "
-                s += post["us_username"]
-                s += " on "
-                s += post["p_created_date"]
-                s += "&nbsp;&nbsp;#" + post["p_id"] 
-                s += "</div>"
-            
-                s += "<div class='post_text'>"
-                s += "<pre>" + post["p_text"] + "</pre>"
-                s += "</div>"
-
-                
-            s += "</div>"
-        }
-        $("#posts").html(s)
-    }
         function submit_post() {
             $.ajax({
                 url: '/Issue?id=@Model.id&handler=AddPost',
@@ -174,42 +150,20 @@
                 contentType: false,
                 processData: false,
                 type: 'post',
-                success: function (json_posts) {
+                
+                success: function (posts_as_html) {
                     // blank out the form we just posted from
                     $("#post_text").val("");
                     $("#file_name").html("");
-
-                    // the server responded with a json list
-                    // of the posts. Turn it into html
-                    build_posts_html(json_posts)
+                    $("#posts").html(posts_as_html);
                 },
+                
                 failure: function(response) {
                     alert(response)
                 }
             })
         }
         
-    /* function submit_postxxxxx() {
-
-        var form_data = $("#post_form").serialize()
-        $.ajax({
-            type: "POST",
-            url: "/Issue?handler=AddPost&id=@Model.id",
-            data: form_data,
-            success: function (json_posts) {
-                // blank out the form we just posted from
-                $("#post_text").val("");
-
-                // the server responded with a json list
-                // of the posts. Turn it into html
-                build_posts_html(json_posts)
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        })
-    } */
-
     </script>
 
 

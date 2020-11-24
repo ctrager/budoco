@@ -7,11 +7,20 @@ using System.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using RazorPartialToString.Services;
+using System.Threading.Tasks;
 
 namespace budoco.Pages
 {
     public class IssueModel : PageModel
     {
+
+        private readonly IRazorPartialToStringRenderer _renderer;
+
+        public IssueModel(IRazorPartialToStringRenderer renderer)
+        {
+            _renderer = renderer;
+        }
 
         // bindings start 
         [FromQuery]
@@ -60,6 +69,7 @@ namespace budoco.Pages
 
         //https://stackoverflow.com/questions/56172036/razor-view-disabled-html-attribute-based-on-viewmodel-property
         public string null_or_disabled = null;
+        public DataTable dt_posts;
 
         public void OnGet()
         {
@@ -67,6 +77,7 @@ namespace budoco.Pages
                 return;
 
             GetIssue();
+
         }
 
         public void OnPost()
@@ -203,10 +214,8 @@ namespace budoco.Pages
         }
 
 
-
-        public JsonResult OnPostAddPost()
+        public Task<ContentResult> OnPostAddPostAsync()
         {
-
             if (uploaded_file is not null)
             {
                 Console.WriteLine(uploaded_file.Length);
@@ -214,12 +223,6 @@ namespace budoco.Pages
                 Console.WriteLine(uploaded_file.ContentDisposition);
                 Console.WriteLine(uploaded_file.FileName);
             }
-
-            if (String.IsNullOrWhiteSpace(post_text))
-                return new JsonResult(
-                    @"{
-                        'result': 'blank text'                        
-                    }");
 
             var sql = @"insert into posts
                 (p_issue, p_text, p_created_by_user)
@@ -232,44 +235,25 @@ namespace budoco.Pages
 
             bd_db.exec(sql, dict);
 
-            return OnGetPosts();
+            return OnGetPostsAsync();
 
         }
-
-        class PostObject
+        public async Task<ContentResult> OnGetPostsAsync()
         {
-            public int p_id { get; set; }
-            public string p_text { get; set; }
-            public string us_username { get; set; }
-            public string p_created_date { get; set; }
-        }
-
-        public JsonResult OnGetPosts()
-        {
-            Console.WriteLine("OnGetPosts");
-            var list = new List<PostObject>();
+            Console.WriteLine(" Task<ContentResult> OnGetPostsAsync()");
 
             var sql = @"select p_id, p_text, p_created_date, us_username
                     from posts 
                     inner join users on us_id = p_created_by_user
                     where p_issue = "
-                 + id.ToString()
-                 + " order by p_id asc";
+              + id.ToString()
+              + " order by p_id asc";
 
-            DataTable dt_posts = bd_db.get_datatable(sql);
+            dt_posts = bd_db.get_datatable(sql);
 
-            foreach (DataRow row in dt_posts.Rows)
-            {
-
-                var p = new PostObject();
-                p.p_id = (int)row["p_id"];
-                p.p_text = (string)row["p_text"];
-                p.us_username = (string)row["us_username"];
-                p.p_created_date = row["p_created_date"].ToString();
-                list.Add(p);
-            }
-            return new JsonResult(list);
-
+            String html = await _renderer.RenderPartialToStringAsync("_IssuePostsPartial", this);
+            return Content(html);
         }
+
     }
 }
