@@ -51,11 +51,17 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-page="/Issues">Issues</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Search">Search</a>
+                    </li>
                     @{
                         if (is_admin)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-page="/Admin/Admin">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Admin/RunSql">Run Sql</a>
                             </li>
                         }
                     }

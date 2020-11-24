@@ -1,0 +1,65 @@
+@page
+@model RunSqlModel
+@using Microsoft.AspNetCore.Mvc.Razor
+
+@{
+    ViewData["Title"] = "Run Sql";
+}
+
+<h1>Run Sql</h1>
+
+<div>
+
+    <partial name="_FlashPartial" />
+
+    @{
+        if (Model.exception is not null) {
+            <div class="flash_err">@Model.exception.Message</div>
+        }
+    }
+
+    <form method="post">
+        <div>
+        <textarea class="sql_editor" asp-for="sql"></textarea>
+        </div>
+        <div>
+        <button>Submit</button>
+        </div>
+    </form>
+
+    @{
+
+        if (Model.dt is not null) {
+    <table class="dt">
+        @{
+            <tr>
+                @{
+                    for (int i = 0; i < Model.dt.Columns.Count; i++)
+                    {
+
+                        <th>@Model.dt.Columns[i].ColumnName</th>
+                    }
+                }
+            </tr>
+            for (int row = 0; row < Model.dt.Rows.Count; row++)
+            {
+                DataRow dr = Model.dt.Rows[row];
+                <tr>
+                    @{
+                        for (int col = 0; col < Model.dt.Columns.Count; col++)
+                        {
+
+                            <td>@dr[col]</td>
+                        }
+                    }
+                </tr>
+            }
+        }
+    </table>
+        }
+    }
+
+
+@section Scripts {
+    
+}

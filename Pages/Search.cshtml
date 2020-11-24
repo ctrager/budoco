@@ -1,0 +1,56 @@
+@page
+@model SearchModel
+@using Microsoft.AspNetCore.Mvc.Razor
+
+@{
+    ViewData["Title"] = "Query";
+}
+
+<h1>Search</h1>
+
+<div>
+
+    <partial name="_FlashPartial" />
+
+    <form method="post">
+        <div>
+        <input asp-for="search_terms"/>
+        </div>
+        <div>
+        <button>Submit</button>
+        </div>
+    </form>
+
+    @{
+
+        if (Model.dt is not null) {
+    <table class="dt">
+        @{
+            <tr>
+                @{
+                    for (int i = 0; i < 3; i++)
+                    {
+
+                        <th>@Model.dt.Columns[i].ColumnName</th>
+                    }
+                }
+            </tr>
+            for (int row = 0; row < Model.dt.Rows.Count; row++)
+            {
+                DataRow dr = Model.dt.Rows[row];
+                <tr>
+                            <td><a href="/Issue?id=@dr[0]">@dr[0]</a></td>
+                            <td><a href="/Issue?id=@dr[0]">@dr[1]</a></td>
+                            
+                            <td><span class="search_context">@Html.Raw(@dr[2])</span></td>
+                </tr>
+            }
+        }
+    </table>
+        }
+    }
+
+
+@section Scripts {
+    
+}

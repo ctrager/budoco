@@ -9,12 +9,6 @@ namespace budoco.Pages
 {
     public class UsersModel : PageModel
     {
-        private readonly ILogger<UsersModel> _logger;
-
-        public UsersModel(ILogger<UsersModel> logger)
-        {
-            _logger = logger;
-        }
 
         public DataTable dt;
 
@@ -23,7 +17,7 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return;
 
-            DataSet ds = new DataSet();
+            //DataSet ds = new DataSet();
             string sql = @"select 
             us_id as ""ID"",
             us_username as ""Username"",
