@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
@@ -28,6 +30,12 @@ namespace budoco.Pages
         [BindProperty]
         public bool is_report_only { get; set; }
 
+        // dropdown
+        [BindProperty]
+        public IEnumerable<SelectListItem> organizations { get; set; }
+        [BindProperty]
+        public int organization_id { get; set; }
+
         // bindings end        
 
         public void OnGet()
@@ -44,6 +52,10 @@ namespace budoco.Pages
             is_admin = (bool)dr["us_is_admin"];
             is_active = (bool)dr["us_is_active"];
             is_report_only = (bool)dr["us_is_report_only"];
+            organization_id = (int)dr["us_organization"];
+
+            organizations = bd_db.prepare_select_list("select og_id, og_name from organizations order by og_name");
+
         }
 
         public void OnPost()
@@ -64,7 +76,8 @@ namespace budoco.Pages
                 us_email = @us_email,
                 us_is_admin = @us_is_admin,
                 us_is_active = @us_is_active,
-                us_is_report_only = @us_is_report_only
+                us_is_report_only = @us_is_report_only,
+                us_organization = @us_organization
                 where us_id = @us_id;";
 
             bd_db.exec(sql, GetValuesDict());
@@ -81,6 +94,7 @@ namespace budoco.Pages
             dict["@us_is_admin"] = is_admin;
             dict["@us_is_active"] = is_active;
             dict["@us_is_report_only"] = is_report_only;
+            dict["@us_organization"] = organization_id;
 
             return dict;
         }

@@ -25,8 +25,10 @@ namespace budoco.Pages
             us_is_admin as ""Admin"",
             us_is_active as ""Active"",
             us_is_report_only as ""Report Only"",
+            coalesce(og_name, '') as ""Organization"",
             us_created_date as ""Created""
-            from users";
+            from users
+            left outer join organizations on og_id = us_organization";
             dt = bd_db.get_datatable(sql);
         }
     }

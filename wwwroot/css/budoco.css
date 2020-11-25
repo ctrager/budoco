@@ -161,13 +161,6 @@ th {
   width: 50px;
 }
 
-/* Chrome, Safari, Edge, Opera */
-.goto input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 /* Firefox */
 .goto input[type=number] {
   -moz-appearance: textfield;
@@ -201,7 +194,7 @@ form>div>button {
 }
 
 button {
-  background-color: #ffe000;
+  background-color: #cceecc;
   border-radius: 3px;
   border: 1px solid gray;
   padding-left: 20px;

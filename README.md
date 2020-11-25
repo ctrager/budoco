@@ -136,15 +136,21 @@ where i_created_by_user = $ME
 
 ## Corey's Roadmap/TODO:
 
-* More query examples in queries.sql
-with $ME and $ORG
+* revisit inactive user
+* revisit report only user
 
 * Finish admin pages
 
+* track last post user/date and status change user/date as fields on issue
+
+* More query examples in queries.sql with $ME/us_id and $ORG/us_organization replacements
+
+* Explore jquery menu widget
+
 * Send emails from the Issue page, that become part of the Issue posts.
+
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 
-* Deleting stuff. Logically deleting stuff. Setting to inactive. Need to redo issue dropdowns
 
 ### BugTracker.NET features that I'll probably never work on, because they are not fun.
 

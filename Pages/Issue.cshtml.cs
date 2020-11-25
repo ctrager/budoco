@@ -314,12 +314,12 @@ namespace budoco.Pages
 
         void PrepareDropdowns()
         {
-            assigned_to_users = bd_db.prepare_select_list("select us_id, us_username from users");
-            categories = bd_db.prepare_select_list("select ca_id, ca_name from categories");
-            projects = bd_db.prepare_select_list("select pj_id, pj_name from projects");
-            organizations = bd_db.prepare_select_list("select og_id, og_name from organizations");
-            priorities = bd_db.prepare_select_list("select pr_id, pr_name from priorities");
-            statuses = bd_db.prepare_select_list("select st_id, st_name from statuses");
+            assigned_to_users = bd_db.prepare_select_list("select us_id, us_username from users where us_is_active = true order by us_username");
+            categories = bd_db.prepare_select_list("select ca_id, ca_name from categories where ca_is_active = true order by ca_name");
+            projects = bd_db.prepare_select_list("select pj_id, pj_name from projects where pj_is_active = true order by pj_name");
+            organizations = bd_db.prepare_select_list("select og_id, og_name from organizations where og_is_active = true order by og_name");
+            priorities = bd_db.prepare_select_list("select pr_id, pr_name from priorities where pr_is_active = true order by pr_name");
+            statuses = bd_db.prepare_select_list("select st_id, st_name from statuses where st_is_active = true order by st_name");
         }
 
         bool IsValid()

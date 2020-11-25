@@ -164,7 +164,6 @@ insert into projects (pj_name) values ('proj 1');
 insert into projects (pj_name) values ('proj 2');
 insert into projects (pj_name) values ('proj 3');
 
-insert into categories (ca_name) values ('no category');
 insert into categories (ca_name) values ('bug');
 insert into categories (ca_name) values ('task');
 insert into categories (ca_name) values ('question');

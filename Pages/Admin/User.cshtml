@@ -39,6 +39,12 @@
         <input asp-for="is_report_only" value="true" />
     </div>
     <div>
+        <label>Organization</label>
+        <select asp-for="organization_id" asp-items="@Model.organizations">
+            <option value=0>None</option>
+        </select>
+    </div>    
+    <div>
         <button type="submit">Update</button>
     </div>
 </form>
