@@ -79,7 +79,7 @@ namespace budoco.Pages
                 where us_id = @us_id;";
 
             bd_db.exec(sql, GetValuesDict());
-            bd_util.set_flash_msg(HttpContext, "Update was successful");
+            bd_util.set_flash_msg(HttpContext, bd_util.UPDATE_WAS_SUCCESSFUL);
         }
 
         Dictionary<string, dynamic> GetValuesDict()

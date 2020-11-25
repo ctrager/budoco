@@ -53,7 +53,7 @@ namespace budoco.Pages
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                bd_util.set_flash_err(HttpContext, "Name is required");
+                bd_util.set_flash_err(HttpContext, bd_util.NAME_IS_REQUIRED);
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace budoco.Pages
             bool name_already_used = bd_db.exists("select 1 from statuses where st_name = @name", dict);
             if (name_already_used)
             {
-                bd_util.set_flash_err(HttpContext, "Name is already being used");
+                bd_util.set_flash_err(HttpContext, bd_util.NAME_ALREADY_USED);
                 return;
             }
 
@@ -74,7 +74,7 @@ namespace budoco.Pages
                 values (@name, @is_active, @is_default)
                 returning st_id";
                 id = (int)bd_db.exec_scalar(sql, dict);
-                bd_util.set_flash_err(HttpContext, "Create was successful");
+                bd_util.set_flash_err(HttpContext, bd_util.CREATE_WAS_SUCCESSFUL);
 
             }
             else
@@ -85,7 +85,7 @@ namespace budoco.Pages
                 st_is_default = @is_default
                 where st_id = @id";
                 bd_db.exec(sql, dict);
-                bd_util.set_flash_err(HttpContext, "Update was successful");
+                bd_util.set_flash_err(HttpContext, bd_util.UPDATE_WAS_SUCCESSFUL);
 
             }
         }

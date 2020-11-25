@@ -270,7 +270,7 @@ namespace budoco.Pages
                 returning i_id";
 
                 this.id = (int)bd_db.exec_scalar(sql, GetValuesDict());
-                bd_util.set_flash_msg(HttpContext, "Create was successful");
+                bd_util.set_flash_msg(HttpContext, bd_util.CREATE_WAS_SUCCESSFUL);
                 Response.Redirect("Issue?id=" + this.id.ToString());
             }
             else
@@ -289,7 +289,7 @@ namespace budoco.Pages
                 where i_id = @i_id;";
 
                 bd_db.exec(sql, GetValuesDict());
-                bd_util.set_flash_msg(HttpContext, "Update was successful");
+                bd_util.set_flash_msg(HttpContext, bd_util.UPDATE_WAS_SUCCESSFUL);
             }
         }
 
