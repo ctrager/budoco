@@ -195,6 +195,43 @@ namespace budoco.Pages
                     null_or_disabled = "disabled";
                 }
             }
+            else
+            {
+
+                //Defaults
+
+                DataRow dr = bd_db.get_datarow("select * from statuses where st_default is true order by st_name limit 1");
+                if (dr is not null)
+                {
+                    status_id = status_selected_id = (int)dr[0];
+                    status_text = (string)dr[1];
+                }
+                dr = bd_db.get_datarow("select * from projects where pj_default is true order by pj_name limit 1");
+                if (dr is not null)
+                {
+                    project_id = project_selected_id = (int)dr[0];
+                    project_text = (string)dr[1];
+                }
+                dr = bd_db.get_datarow("select * from organizations where og_default is true order by og_name limit 1");
+                if (dr is not null)
+                {
+                    organization_id = organization_selected_id = (int)dr[0];
+                    organization_text = (string)dr[1];
+                }
+                dr = bd_db.get_datarow("select * from priorities where pr_default is true order by pr_name limit 1");
+                if (dr is not null)
+                {
+                    priority_id = priority_selected_id = (int)dr[0];
+                    priority_text = (string)dr[1];
+                }
+                dr = bd_db.get_datarow("select * from categories where ca_default is true order by ca_name limit 1");
+                if (dr is not null)
+                {
+                    category_id = category_selected_id = (int)dr[0];
+                    category_text = (string)dr[1];
+                }
+
+            }
         }
 
         void OnIssueFormPost()

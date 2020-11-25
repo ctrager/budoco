@@ -32,8 +32,9 @@
             <label>Category</label>
             <input readonly asp-for="category_text"/>
             <input type="hidden" asp-for="category_id"/>
-            <span 
-            onclick="start_dropdown('#category_')" class="readonly_input_edit">Edit</span>
+            <span onclick="start_dropdown('#category_')" class="readonly_input_edit">Select&nbsp;</span>
+            <span onclick="clear_dropdown('#category_')" class="readonly_input_edit">Clear</span>
+            
             <select class="readonly_input_select" style="display:none" asp-for="category_selected_id" 
             onchange="end_dropdown('#category_')" 
             onblur="end_dropdown('#category_')"
@@ -45,8 +46,9 @@
             <label>Projectory</label>
             <input readonly asp-for="project_text"/>
             <input type="hidden" asp-for="project_id"/>
-            <span 
-            onclick="start_dropdown('#project_')" class="readonly_input_edit">Edit</span>
+            <span onclick="start_dropdown('#project_')" class="readonly_input_edit">Select&nbsp;</span>
+            <span onclick="clear_dropdown('#project_')" class="readonly_input_edit">Clear</span>
+
             <select class="readonly_input_select" style="display:none" asp-for="project_selected_id" 
             onchange="end_dropdown('#project_')" 
             onblur="end_dropdown('#project_')"
@@ -59,8 +61,9 @@
             <label>Organization</label>
             <input readonly asp-for="organization_text"/>
             <input type="hidden" asp-for="organization_id"/>
-            <span 
-            onclick="start_dropdown('#organization_')" class="readonly_input_edit">Edit</span>
+            <span onclick="start_dropdown('#organization_')" class="readonly_input_edit">Select&nbsp;</span>
+            <span onclick="clear_dropdown('#organization_')" class="readonly_input_edit">Clear</span>
+
             <select class="readonly_input_select" style="display:none" asp-for="organization_selected_id" 
             onchange="end_dropdown('#organization_')" 
             onblur="end_dropdown('#organization_')"
@@ -73,8 +76,9 @@
             <label>Priority</label>
             <input readonly asp-for="priority_text"/>
             <input type="hidden" asp-for="priority_id"/>
-            <span 
-            onclick="start_dropdown('#priority_')" class="readonly_input_edit">Edit</span>
+            <span onclick="start_dropdown('#priority_')" class="readonly_input_edit">Select&nbsp;</span>
+            <span onclick="clear_dropdown('#priority_')" class="readonly_input_edit">Clear</span>
+
             <select class="readonly_input_select" style="display:none" asp-for="priority_selected_id" 
             onchange="end_dropdown('#priority_')" 
             onblur="end_dropdown('#priority_')"
@@ -87,8 +91,9 @@
             <label>Status</label>
             <input readonly asp-for="status_text"/>
             <input type="hidden" asp-for="status_id"/>
-            <span 
-            onclick="start_dropdown('#status_')" class="readonly_input_edit">Edit</span>
+            <span onclick="start_dropdown('#status_')" class="readonly_input_edit">Select&nbsp;</span>
+            <span onclick="clear_dropdown('#status_')" class="readonly_input_edit">Clear</span>
+
             <select class="readonly_input_select" style="display:none" asp-for="status_selected_id" 
             onchange="end_dropdown('#status_')" 
             onblur="end_dropdown('#status_')"
@@ -101,8 +106,9 @@
             <label>Assigned To</label>
             <input readonly asp-for="assigned_to_user_text"/>
             <input type="hidden" asp-for="assigned_to_user_id"/>
-            <span 
-            onclick="start_dropdown('#assigned_to_user_')" class="readonly_input_edit">Edit</span>
+            <span onclick="start_dropdown('#assigned_to_user_')" class="readonly_input_edit">Select&nbsp;</span>
+            <span onclick="clear_dropdown('#assigned_to_user_')" class="readonly_input_edit">Clear</span>
+
             <select class="readonly_input_select" style="display:none" asp-for="assigned_to_user_selected_id" 
             onchange="end_dropdown('#assigned_to_user_')" 
             onblur="end_dropdown('#assigned_to_user_')"
@@ -181,7 +187,21 @@
 
     function start_dropdown(prefix)
     {
-        $(prefix + "selected_id").show().focus()
+        dropdown = $(prefix + "selected_id")
+        dropdown.show()
+        /*
+        el = dropdown.get(0)
+        option_count = el.childElementCount
+        console.log(option_count)
+        if (option_count > 8) {
+            el.size = 8
+        }
+        else {
+            el.size = option_count  
+        }
+        */   
+
+  
     }
     
     
@@ -200,6 +220,12 @@
         $(prefix + "selected_id").hide();
     }
  
+    function clear_dropdown(prefix)
+    {     
+        $(prefix + "selected_id option:selected").prop("selected", false)
+        $(prefix + "text").val("");
+        $(prefix + "id").val(0);
+    }
 
     function get_posts() {
         $.ajax({
