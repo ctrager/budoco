@@ -10,14 +10,14 @@
                 <div class="post_text">
                     <pre>@dr["p_text"]</pre>
                 </div>
-                <div class="post_who_when">
+                <div class="info_text">
                     Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@dr["p_id"]
                 </div>
 
                 @{
                     if (content_type != "")
                     {
-                        <div class="post_who_when">
+                        <div class="info_text">
                             File: @dr["p_file_name"], Size: @dr["p_file_length"],
                             Type: @dr["p_file_content_type"]]
                             &nbsp;&nbsp;

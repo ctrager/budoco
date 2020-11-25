@@ -272,7 +272,7 @@ input:disabled {
   height: 100px;
 }
 
-.post_who_when {
+.info_text {
   font-size: 12px;
   color: green;
 }
@@ -329,4 +329,8 @@ input[type=file] {
 
 .span_as_div {
   display: inline
+}
+
+.search_form>div>#search_terms {
+  width: 500px;
 }

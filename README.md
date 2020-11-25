@@ -136,8 +136,24 @@ where i_created_by_user = $ME
 
 ## Corey's Roadmap/TODO:
 
+* Search - postgres not working as documented, or me?
+https://www.postgresql.org/docs/11/textsearch-controls.html
 
-* File attachents, images, Save files as blobs in db.
+select i_id, i_description, 0 as p_id, '' as p_text, 
+
+websearch_to_tsquery('english', 
+'corey peanut'
+
+),
+
+ts_rank(to_tsvector('english', i_description), 
+websearch_to_tsquery('english', 
+'corey peanut'
+
+)) as rank
+from issues 
+
+order by rank desc limit 20
 
 * More query examples in queries.sql
 

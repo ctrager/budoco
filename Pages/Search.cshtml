@@ -3,23 +3,40 @@
 @using Microsoft.AspNetCore.Mvc.Razor
 
 @{
-    ViewData["Title"] = "Query";
+    ViewData["Title"] = "Search";
 }
 
-<h1>Search</h1>
+<h1>Search Issues</h1>
 
 <div>
 
     <partial name="_FlashPartial" />
 
-    <form method="post">
+    <div class="form_div">
+    <form class="search_form" method="post">
+        
         <div>
-        <input asp-for="search_terms"/>
+            <label>Search:</label>
+            <input asp-for="search_terms"/>
         </div>
+
+        <div class="info_text">
+            Examples:
+            <br>
+            dog cat => searchs for text that contains both dog AND cat
+            <br>
+            dog or cat => search for text that contains either dog OR cat
+            <br>
+            dog -cat => search for text that contains dog but NOT cat
+            <br>
+            "dog cat" => search for text that contains the phrase "dog cat"
+        </div>
+
         <div>
-        <button>Submit</button>
+            <button>Search</button>
         </div>
     </form>
+    </div>
 
     @{
 

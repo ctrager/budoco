@@ -26,16 +26,16 @@ namespace budoco.Pages
         {
             string sql_template = @"
 select i_id as ""ID"", i_description as ""Description"", context as ""Context"", max(rank) as score from (
-select i_id, i_description, ts_headline('english', i_description, to_tsquery('$')) as Context, rank from 
+select i_id, i_description, ts_headline('english', i_description, websearch_to_tsquery('english', '$')) as Context, rank from 
 (
 select i_id, i_description, 0 as p_id, '' as p_text, 
-ts_rank(to_tsvector(i_description), to_tsquery('$')) as rank
+ts_rank(to_tsvector('english', i_description), websearch_to_tsquery('english', '$')) as rank
 from issues 
 
 union 
 
 select i_id, i_description, p_id, p_text, 
-ts_rank(to_tsvector(p_text), to_tsquery('$')) 
+ts_rank(to_tsvector('english', p_text), websearch_to_tsquery('english', '$')) 
 from posts 
 inner join issues on i_id = p_issue 
 order by rank desc limit 20
@@ -43,7 +43,8 @@ order by rank desc limit 20
 group by i_id, i_description, context
 order by score, i_id desc";
 
-            string sql = sql_template.Replace("$", search_terms);
+            string escaped_single_quotes = search_terms.Replace("'", "''");
+            string sql = sql_template.Replace("$", escaped_single_quotes);
 
             dt = bd_db.get_datatable(sql);
 
