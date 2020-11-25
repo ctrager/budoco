@@ -28,7 +28,7 @@
             <textarea asp-for="details" value="@Model.details" disabled="@Model.null_or_disabled"></textarea>
         </div>
 
-        <div>
+        <div id="category_elements">
             <label>Category</label>
             <input readonly asp-for="category_text"/>
             <input type="hidden" asp-for="category_id"/>
@@ -41,42 +41,76 @@
             </select>
         </div>
 
-        <div>
-            <label>Project</label>
-            <select asp-for="project_id" asp-items="@Model.projects" disabled="@Model.null_or_disabled">
-                <option value="">-- Select Project --</option>
+        <div id="project_elements">
+            <label>Projectory</label>
+            <input readonly asp-for="project_text"/>
+            <input type="hidden" asp-for="project_id"/>
+            <span 
+            onclick="start_dropdown('#project_')" class="readonly_input_edit">Edit</span>
+            <select class="readonly_input_select" style="display:none" asp-for="project_selected_id" 
+            onchange="end_dropdown('#project_')" 
+            onblur="end_dropdown('#project_')"
+            asp-items="@Model.projects" disabled="@Model.null_or_disabled">
             </select>
         </div>
 
-        <div>
+
+        <div id="organization_elements">
             <label>Organization</label>
-            <select asp-for="organization_id" asp-items="@Model.organizations" disabled="@Model.null_or_disabled">
-                <option value="">-- Select Organization --</option>
+            <input readonly asp-for="organization_text"/>
+            <input type="hidden" asp-for="organization_id"/>
+            <span 
+            onclick="start_dropdown('#organization_')" class="readonly_input_edit">Edit</span>
+            <select class="readonly_input_select" style="display:none" asp-for="organization_selected_id" 
+            onchange="end_dropdown('#organization_')" 
+            onblur="end_dropdown('#organization_')"
+            asp-items="@Model.organizations" disabled="@Model.null_or_disabled">
             </select>
         </div>
 
-        <div>
-            <label>Priorities</label>
-            <select asp-for="priority_id" asp-items="@Model.priorities" disabled="@Model.null_or_disabled">
-                <option value="">-- Select Priority --</option>
+
+        <div id="priority_elements">
+            <label>Priority</label>
+            <input readonly asp-for="priority_text"/>
+            <input type="hidden" asp-for="priority_id"/>
+            <span 
+            onclick="start_dropdown('#priority_')" class="readonly_input_edit">Edit</span>
+            <select class="readonly_input_select" style="display:none" asp-for="priority_selected_id" 
+            onchange="end_dropdown('#priority_')" 
+            onblur="end_dropdown('#priority_')"
+            asp-items="@Model.priorities" disabled="@Model.null_or_disabled">
             </select>
         </div>
 
-        <div>
+
+        <div id="status_elements">
             <label>Status</label>
-            <select asp-for="status_id" asp-items="@Model.statuses" disabled="@Model.null_or_disabled">
-                <option value="">-- Select Status --</option>
+            <input readonly asp-for="status_text"/>
+            <input type="hidden" asp-for="status_id"/>
+            <span 
+            onclick="start_dropdown('#status_')" class="readonly_input_edit">Edit</span>
+            <select class="readonly_input_select" style="display:none" asp-for="status_selected_id" 
+            onchange="end_dropdown('#status_')" 
+            onblur="end_dropdown('#status_')"
+            asp-items="@Model.statuses" disabled="@Model.null_or_disabled">
             </select>
         </div>
 
-        <div>
+  
+        <div id="assigned_to_user_elements">
             <label>Assigned To</label>
-            <select asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_users"
-                disabled="@Model.null_or_disabled">
-                <option value="">-- Assign to --</option>
+            <input readonly asp-for="assigned_to_user_text"/>
+            <input type="hidden" asp-for="assigned_to_user_id"/>
+            <span 
+            onclick="start_dropdown('#assigned_to_user_')" class="readonly_input_edit">Edit</span>
+            <select class="readonly_input_select" style="display:none" asp-for="assigned_to_user_selected_id" 
+            onchange="end_dropdown('#assigned_to_user_')" 
+            onblur="end_dropdown('#assigned_to_user_')"
+            asp-items="@Model.assigned_to_users" disabled="@Model.null_or_disabled">
             </select>
         </div>
 
+  
 
         @{
             if (Model.null_or_disabled is null)

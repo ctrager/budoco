@@ -33,11 +33,8 @@ namespace budoco.Pages
         [BindProperty]
         public string details { get; set; }
 
-        [BindProperty]
-        public IEnumerable<SelectListItem> assigned_to_users { get; set; }
-        [BindProperty]
-        public int assigned_to_user_id { get; set; }
 
+        // dropdown 
         [BindProperty]
         public IEnumerable<SelectListItem> categories { get; set; }
         [BindProperty]
@@ -47,28 +44,55 @@ namespace budoco.Pages
         [BindProperty]
         public string category_text { get; set; }
 
-
+        // dropdown
         [BindProperty]
-        public IEnumerable<SelectListItem> priorities { get; set; }
+        public IEnumerable<SelectListItem> assigned_to_users { get; set; }
         [BindProperty]
-        public int priority_id { get; set; }
+        public int assigned_to_user_id { get; set; }
+        [BindProperty]
+        public int assigned_to_user_selected_id { get; set; }
+        [BindProperty]
+        public string assigned_to_user_text { get; set; }
 
+        // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> projects { get; set; }
         [BindProperty]
         public int project_id { get; set; }
+        [BindProperty]
+        public int project_selected_id { get; set; }
+        [BindProperty]
+        public string project_text { get; set; }
 
+        // dropdown
+        [BindProperty]
+        public IEnumerable<SelectListItem> priorities { get; set; }
+        [BindProperty]
+        public int priority_id { get; set; }
+        [BindProperty]
+        public int priority_selected_id { get; set; }
+        [BindProperty]
+        public string priority_text { get; set; }
 
+        // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> organizations { get; set; }
         [BindProperty]
         public int organization_id { get; set; }
+        [BindProperty]
+        public int organization_selected_id { get; set; }
+        [BindProperty]
+        public string organization_text { get; set; }
 
+        // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> statuses { get; set; }
-
         [BindProperty]
         public int status_id { get; set; }
+        [BindProperty]
+        public int status_selected_id { get; set; }
+        [BindProperty]
+        public string status_text { get; set; }
 
         [BindProperty]
         public IFormFile uploaded_file { get; set; }
@@ -108,9 +132,22 @@ namespace budoco.Pages
             if (id != 0)
             {
                 string sql = @"select issues.*, 
-                coalesce(ca_name, '') as ""ca_name""
-                from issues 
+                coalesce(ca_name, '') as ""category_name"",
+                coalesce(assigned_to.us_username, '') as ""assigned_to_username"",
+                coalesce(pj_name, '') as ""project_name"",
+                coalesce(og_name, '') as ""organization_name"",
+                coalesce(pr_name, '') as ""priority_name"",
+                coalesce(st_name, '') as ""status_name"",
+                created_by.us_username as ""created_by_username""
+  
+              from issues 
+                inner join users created_by on created_by.us_id = i_created_by_user
                 left outer join categories on ca_id = i_category
+                left outer join users assigned_to on assigned_to.us_id = i_assigned_to_user
+                left outer join projects on pj_id = i_project
+                left outer join organizations on og_id = i_organization
+                left outer join priorities on pr_id = i_priority
+                left outer join statuses on st_id = i_status
                 
                 where i_id = " + id.ToString();
 
@@ -126,14 +163,32 @@ namespace budoco.Pages
 
                 description = (string)dr["i_description"];
                 details = (string)dr["i_details"];
+
                 category_id = (int)dr["i_category"];
                 category_selected_id = category_id;
-                category_text = (string)dr["ca_name"];
+                category_text = (string)dr["category_name"];
+
                 project_id = (int)dr["i_project"];
+                project_selected_id = project_id;
+                project_text = (string)dr["project_name"];
+
+
                 organization_id = (int)dr["i_organization"];
+                organization_selected_id = organization_id;
+                organization_text = (string)dr["organization_name"];
+
                 priority_id = (int)dr["i_priority"];
+                priority_selected_id = priority_id;
+                priority_text = (string)dr["project_name"];
+
                 status_id = (int)dr["i_status"];
+                status_selected_id = status_id;
+                status_text = (string)dr["status_name"];
+
                 assigned_to_user_id = (int)dr["i_assigned_to_user"];
+                assigned_to_user_selected_id = assigned_to_user_id;
+                assigned_to_user_text = (string)dr["assigned_to_username"];
+
 
                 if (HttpContext.Session.GetInt32("us_is_report_only") == 1)
                 {
