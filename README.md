@@ -136,8 +136,6 @@ where i_created_by_user = $ME
 
 ## Corey's Roadmap/TODO:
 
-* Redo dropboxes on issue so that we can support inactive rows
-
 * More query examples in queries.sql
 with $ME and $ORG
 

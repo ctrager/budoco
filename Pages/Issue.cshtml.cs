@@ -106,6 +106,10 @@ namespace budoco.Pages
         //https://stackoverflow.com/questions/56172036/razor-view-disabled-html-attribute-based-on-viewmodel-property
         public string null_or_disabled = null;
         public DataTable dt_posts;
+        public string created_by_username;
+        public string created_date;
+        public string last_updated_username;
+        public string last_updated_date;
 
         public void OnGet()
         {
@@ -132,8 +136,10 @@ namespace budoco.Pages
             if (id != 0)
             {
                 string sql = @"select issues.*, 
-                coalesce(ca_name, '') as ""category_name"",
+                coalesce(created_by.us_username, '') as ""created_by_username"",
+                coalesce(last_updated.us_username, '') as ""last_updated_username"",
                 coalesce(assigned_to.us_username, '') as ""assigned_to_username"",
+                coalesce(ca_name, '') as ""category_name"",
                 coalesce(pj_name, '') as ""project_name"",
                 coalesce(og_name, '') as ""organization_name"",
                 coalesce(pr_name, '') as ""priority_name"",
@@ -142,8 +148,9 @@ namespace budoco.Pages
   
               from issues 
                 inner join users created_by on created_by.us_id = i_created_by_user
-                left outer join categories on ca_id = i_category
+                left outer join users last_updated on last_updated.us_id = i_last_updated_user
                 left outer join users assigned_to on assigned_to.us_id = i_assigned_to_user
+                left outer join categories on ca_id = i_category
                 left outer join projects on pj_id = i_project
                 left outer join organizations on og_id = i_organization
                 left outer join priorities on pr_id = i_priority
@@ -160,6 +167,12 @@ namespace budoco.Pages
                     Response.Redirect("/Issues");
                     return;
                 }
+
+                created_by_username = (string)dr["created_by_username"];
+                created_date = (string)dr["i_created_date"].ToString();
+
+                last_updated_username = (string)dr["last_updated_username"];
+                last_updated_date = dr["i_last_updated_date"].ToString();
 
                 description = (string)dr["i_description"];
                 details = (string)dr["i_details"];

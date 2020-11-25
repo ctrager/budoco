@@ -257,7 +257,6 @@ input:disabled {
 
 input:read-only {
   /* same color as form */
-  xbackground: #eeeeee;
   background: transparent;
   border: 1px solid gray;
   width: 300px;

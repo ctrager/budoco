@@ -13,11 +13,16 @@
 
 <div class="form_div">
     <form class="issue_form" method="post">
-        <div>
-            <label>Id:</label>
-            <input asp-for="id" value="@Model.id" disabled></input>
-        </div>
-
+        @{
+            if (Model.id != 0)
+            {
+                <div class="info_text">
+                    Issue #@Model.id created by @Model.created_by_username on @Model.created_date
+                    <br>
+                    Last updated by @Model.last_updated_username on @Model.last_updated_date
+                </div>
+            }
+        }
         <div>
             <label>Description</label>
             <input asp-for="description" value="@Model.description" disabled="@Model.null_or_disabled"></input>
