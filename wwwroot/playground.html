@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--<link rel="stylesheet" href="../lib/select2/dist/css/select2.min.css" />-->
+   <!-- <link rel="stylesheet" href="css/budoco.css" /> -->
+   
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/select2/dist/js/select2.min.js"></script>
+<style>
+
+    
+.fake_link {
+  color: green;
+  text-decoration: none;
+}
+
+fake_link:hover {
+  color: yellow;
+  text-decoration: none;
+}
+
+</style> 
+
+<script>
+
+    $(document).ready(function() {
+
+      $("*").not("div").css("background-color", "yellow");
+    })
+
+    function start_dropdown(suffix)
+    {
+        console.log("start", suffix)
+        $("#select_" + suffix).show()
+        //var selected = $('#proj_select').select2('data');
+        //console.log(JSON.stringify(selected))
+    }
+    
+    
+    function end_dropdown(suffix)
+    {
+        console.log("end", suffix)
+        select = $("#select_" + suffix)
+        selected_option = $("#select_" + suffix + " option:selected")
+
+        console.log(selected_option.text(), selected_option.val())
+        $("#text_" + suffix).val(selected_option.text())
+        $("#value_" + suffix).val(selected_option.val())
+        $("#select_" + suffix).hide()
+    }
+
+</script>
+</head>
+<body>
+<input value="input"/>
+<button>button</button>
+<div>div</div>
+<h1>h1</h1>
+<h2>h2</h2>
+<h3>h3</h3>
+
+    <input id="value_proj" disabled value="2"/>
+    <input id="text_proj" disabled value="two"/>
+    <span onclick="start_dropdown('proj')" class="fake_link">Edit</span>
+
+
+    <select style="display:none" id="select_proj" 
+    onchange="end_dropdown('proj')".v
+    onblur="end_dropdown('proj')"">
+        
+        <option disabled selected value> -- select an option -- </option>
+    
+        <option value="1">one</option>
+        <option value="2">two</option>
+        <option value="3">three</option>
+    </select>
+
+
+</html>

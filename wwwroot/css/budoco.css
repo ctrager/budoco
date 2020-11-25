@@ -4,7 +4,7 @@ input,
 button,
 select {
   font-family: arial;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 body {
@@ -33,24 +33,28 @@ a:visited {
 
 
 a,
-.fake_link {
-  color: #0000ff;
+button,
+.fake_link,
+.readonly_input_edit {
+  color: #0000ff !important;
   text-decoration: none;
 }
 
 a,
 button,
-.fake_link {
-  color: blue;
+.fake_link,
+.readonly_input_edit {
+  color: blue !important;
   text-decoration: none;
 }
 
 a:hover,
 button:hover,
-fake_link:hover {
+.fake_link:hover {
   color: #ff6633 !important;
   text-decoration: none;
 }
+
 
 .show_hide_image {
   display: inline;
@@ -177,7 +181,7 @@ input::-webkit-inner-spin-button {
 form {
   border: 1px solid #cccccc;
   border-radius: 6px;
-  background: #eeeeee;
+  background: #f4f4ff;
   padding: 5px;
   display: inline-block;
 
@@ -189,7 +193,7 @@ form {
 
 form>div {
   margin-left: 10px;
-  padding-top: 5px;
+  padding-top: 4px;
 }
 
 form>div>button {
@@ -246,9 +250,21 @@ textarea {
 
 input:disabled {
   /* same color as form */
-  background: #eeeeee;
+  background: transparent;
   border: none;
   color: black;
+}
+
+input:read-only {
+  /* same color as form */
+  xbackground: #eeeeee;
+  background: transparent;
+  border: 1px solid gray;
+  width: 300px;
+}
+
+input:read-only:focus {
+  outline: none;
 }
 
 .post {

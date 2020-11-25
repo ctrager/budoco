@@ -42,6 +42,11 @@ namespace budoco.Pages
         public IEnumerable<SelectListItem> categories { get; set; }
         [BindProperty]
         public int category_id { get; set; }
+        [BindProperty]
+        public int category_selected_id { get; set; }
+        [BindProperty]
+        public string category_text { get; set; }
+
 
         [BindProperty]
         public IEnumerable<SelectListItem> priorities { get; set; }
@@ -102,7 +107,12 @@ namespace budoco.Pages
 
             if (id != 0)
             {
-                string sql = "select * from issues where i_id = " + id.ToString();
+                string sql = @"select issues.*, 
+                coalesce(ca_name, '') as ""ca_name""
+                from issues 
+                left outer join categories on ca_id = i_category
+                
+                where i_id = " + id.ToString();
 
                 DataRow dr = bd_db.get_datarow(sql);
 
@@ -117,6 +127,8 @@ namespace budoco.Pages
                 description = (string)dr["i_description"];
                 details = (string)dr["i_details"];
                 category_id = (int)dr["i_category"];
+                category_selected_id = category_id;
+                category_text = (string)dr["ca_name"];
                 project_id = (int)dr["i_project"];
                 organization_id = (int)dr["i_organization"];
                 priority_id = (int)dr["i_priority"];

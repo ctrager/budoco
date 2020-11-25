@@ -30,8 +30,14 @@
 
         <div>
             <label>Category</label>
-            <select asp-for="category_id" asp-items="@Model.categories" disabled="@Model.null_or_disabled">
-                <option value="">-- Select Category --</option>
+            <input readonly asp-for="category_text"/>
+            <input type="hidden" asp-for="category_id"/>
+            <span 
+            onclick="start_dropdown('#category_')" class="readonly_input_edit">Edit</span>
+            <select class="readonly_input_select" style="display:none" asp-for="category_selected_id" 
+            onchange="end_dropdown('#category_')" 
+            onblur="end_dropdown('#category_')"
+            asp-items="@Model.categories" disabled="@Model.null_or_disabled">
             </select>
         </div>
 
@@ -125,9 +131,42 @@
             $("#file_name").html(this.files[0].name);
         });
 
+        // hide our dropdowns that show when user clicks "Edit"
+        $(".issue_form").click(function(event){
+            if (event.target.className == "readonly_input_edit"
+            || event.target.className == "readonly_input_select") {
+                 // do nothing
+            } else {
+                $(".readonly_input_select").hide()
+            }
+        });
+
         get_posts()
      });
     
+
+    function start_dropdown(prefix)
+    {
+        $(prefix + "selected_id").show().focus()
+    }
+    
+    
+    function end_dropdown(prefix)
+    {     
+        selected_option = $(prefix + "selected_id option:selected");
+        selected_val = selected_option.val()
+        if (selected_val != "0") {
+            $(prefix + "text").val(selected_option.text());
+        }
+        else
+        {
+            $(prefix + "text").val("");
+        }
+        $(prefix + "id").val(selected_val);
+        $(prefix + "selected_id").hide();
+    }
+ 
+
     function get_posts() {
         $.ajax({
             type: "Get",
@@ -190,7 +229,7 @@
         }
         
     }
-
+    
     </script>
 
 }

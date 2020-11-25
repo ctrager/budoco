@@ -136,9 +136,39 @@ where i_created_by_user = $ME
 
 ## Corey's Roadmap/TODO:
 
+* Redo dropboxes on issue so that we can support inactive rows
+
+* More query examples in queries.sql
+with $ME and $ORG
+
+* Finish admin pages
+
+* Send emails from the Issue page, that become part of the Issue posts.
+* *RECEIVE* emails into the app that get posted to the relevant Issue.
+
+* Deleting stuff. Logically deleting stuff. Setting to inactive. Need to redo issue dropdowns
+
+### BugTracker.NET features that I'll probably never work on, because they are not fun.
+
+* More and more permissions.
+  
+* Custom fields. 
+  
+* Integration with version control. 
+
+* email notifications about changes 
+could use most recently updated bug instead
+
+### Bugs
+
+
 * Search - postgres not working as documented, or me?
 https://www.postgresql.org/docs/11/textsearch-controls.html
 
+The "-" operator doesn't seem to work, even though output of to_tsquery looks right. 
+I don't find anybody on the web discussing it as being buggy though...
+
+```
 select i_id, i_description, 0 as p_id, '' as p_text, 
 
 websearch_to_tsquery('english', 
@@ -154,32 +184,5 @@ websearch_to_tsquery('english',
 from issues 
 
 order by rank desc limit 20
-
-* More query examples in queries.sql
-
-* Finish admin pages
-
-* Send emails from the Issue page, that become part of the Issue posts.
-* *RECEIVE* emails into the app that get posted to the relevant Issue.
-
-* Org permissions - maybe the only permissions the app needs.
-if user is associated with org, then can only see bugs associated with his org.
-this supports one company, many customers
-works with user is inactive until admin activates
-inject where clause into queries
-
-* Deleting stuff. Logically deleting stuff. Setting to inactive. Need to redo issue dropdowns
-
-### BugTracker.NET features that I'll probably never work on, because they are not fun.
-
-* More and more permissions.
-  
-* Custom fields. 
-  
-* Integration with version control. 
-
-* email notifications about changes 
-could use most recently updated bug instead
-
-  
+```
 
