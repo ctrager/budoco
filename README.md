@@ -96,8 +96,8 @@ sudo apt-get install -y dotnet-sdk-5.0
 
 Assuming you've checked out this repository into a folder called budoco, navigate to that folder and create the tables:
 ```
-psql -d budoco -U postgres -f misc/setup.sql
-psql -d budoco -U postgres -f misc/queries.sql
+psql -d budoco -U postgres -f sql/setup.sql
+psql -d budoco -U postgres -f sql/queries.sql
 ```
 
 ### 4) Configure Budoco

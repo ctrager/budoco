@@ -3,11 +3,11 @@ using System.Data;
 
 namespace budoco.Pages
 {
-    public class QueriesModel : PageModel
+    public class OrganizationsModel : PageModel
     {
 
         public DataTable dt;
-        public string singular_table_name = "Query";
+        public string singular_table_name = "Organization";
 
 
         public void OnGet()
@@ -15,7 +15,7 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return;
 
-            string sql = @"select * from queries order by qu_name";
+            string sql = @"select * from organizations order by og_name";
             dt = bd_db.get_datatable(sql);
         }
     }
