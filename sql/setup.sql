@@ -42,7 +42,7 @@ create table projects
 pj_id serial,
 pj_name varchar(30) not null,
 pj_is_active boolean default true,
-pj_default boolean default false
+pj_is_default boolean default false
 );
 
 CREATE UNIQUE INDEX pj_name_index ON projects (pj_name);
@@ -52,7 +52,7 @@ create table categories
 ca_id serial,
 ca_name varchar(30) not null,
 ca_is_active boolean default true,
-ca_default boolean default false
+ca_is_default boolean default false
 );
 
 CREATE UNIQUE INDEX ca_name_index ON categories (ca_name);
@@ -62,7 +62,7 @@ create table statuses
 st_id serial,
 st_name varchar(30) not null,
 st_is_active boolean default true,
-st_default boolean default false
+st_is_default boolean default false
 );
 
 CREATE UNIQUE INDEX st_name_index ON statuses (st_name);
@@ -72,7 +72,7 @@ create table priorities
 pr_id serial,
 pr_name varchar(30) not null,
 pr_is_active boolean default true,
-pr_default boolean default false
+pr_is_default boolean default false
 );
 
 CREATE UNIQUE INDEX pr_name_index ON priorities (pr_name);
@@ -82,7 +82,7 @@ create table organizations
 og_id serial,
 og_name varchar(30) not null,
 og_is_active boolean default true,
-og_default boolean default false
+og_is_default boolean default false
 );
 
 CREATE UNIQUE INDEX og_name_index ON organizations (og_name);
@@ -172,7 +172,7 @@ insert into priorities (pr_name) values ('1-high');
 insert into priorities (pr_name) values ('2-medium');
 insert into priorities (pr_name) values ('3-low');
 
-insert into statuses (st_name, st_default) values ('new', true);
+insert into statuses (st_name, st_is_default) values ('new', true);
 insert into statuses (st_name) values ('in progress');
 insert into statuses (st_name) values ('done');
 

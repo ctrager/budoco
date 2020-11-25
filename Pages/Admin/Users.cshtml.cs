@@ -11,6 +11,8 @@ namespace budoco.Pages
     {
 
         public DataTable dt;
+        public string singular_table_name = "Users";
+
 
         public void OnGet()
         {

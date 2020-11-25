@@ -2,10 +2,12 @@
 @model QueriesModel
 
 @{
-    ViewData["Title"] = "Queries";
+    ViewData["Title"] = "Issue Queries";
 }
 
 <h1>@ViewData["Title"]</h1>
+
+<a href="Query?id=0">Create Issue Query</a>
 
 <partial name="_DataTablePartial" />
 
