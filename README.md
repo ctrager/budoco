@@ -2,34 +2,42 @@
 
 ## What is Budoco?
 
-Budoco is (so far, Nov 2020) a minimalist rewrite of **Bu**gTracker.NET on **Do**tnet **Co**re.
+Budoco is a Issue/Bug/Task tracking system.
 
-BugTracker.NET is an bug/issue tracking web app that runs on ASP.NET and uses MS SQL Server. More about BugTracker.NET here: <a href="http://ifdefined.com/bugtrackernet.html">BugTracker.NET home page</a>
+Budoco is a lighter weight rewrite of **Bu**gTracker.NET, but this time on **Do**tnet **Co**re. 
 
-I first released BugTracker.NET in 2001, originally to learn the hot new language C#. Within a couple years BugTracker.NET was pretty solid. Probably thousands of organziations used it and maybe many are still using it.
+Budoco is cross platform and uses PostgreSQL. BugTracker.NET runs only on Windows and uses MS Sql Server.
 
-But, time moves on.
+More info about BugTracker.NET here: <a href="http://ifdefined.com/bugtrackernet.html">BugTracker.NET home page</a>
 
-I moved on to other technologies, and then retired and stopped coding in 2016, 
-Dev teams moved on to Github and Jira for their issue tracking needs.
-Microsoft moved on too.
-
-But then...2020: I started writing Budoco in November 2020 in order to distract myself from election anxiety and to break the COVID-19 monotony. 
-
-Budoco runs on Microsoft's cross-platform Dotnet Core 5. I've been developing it on Linux Mint based on Ubuntu 20.04. It uses Postgres as its database.
+I first released BugTracker.NET in 2001, originally to learn the hot new language C#. Within a couple years BugTracker.NET was pretty solid. Probably thousands of organziations used it and maybe many are still using it. But, time moves on. I moved on to other technologies, and then retired and mostly stopped coding in 2016. Dev teams moved on too, to Github and Jira for their issue tracking needs. Microsoft moved on too, from Windows only .NET to cross-platform Dotnet Core. They are no longer developing the technologies BugTracker.NET depends on.
 
 If Budoco is amusing you in any way, let me know at ctrager@yahoo.com
-   
-
-
+  
 ## How to Install
 
+These instructions worked for me using Linux Mint 20 based on Ubuntu 20.04.
 
-These instructions are a work in progress. They are for Linux Mint 20, based on Ubuntu 20.04. 
+### 1) Install dotnet core 5 sdk
 
-### 1) Create the postgresql database. 
+Skip to the next step if you already have dotnet core 5 sdk installed.
 
-If you already have postgresql running and you have a postgres user and password combo that works, then just create an empty database for Budoco and skip ahead. I named my database "budoco".
+I used the instructions here in Nov 2020: https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-
+
+```
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+
+sudo dpkg -i packages-microsoft-prod.deb
+
+sudo apt-get update 
+
+sudo apt-get install -y apt-transport-https
+sudo apt-get update 
+sudo apt-get install -y dotnet-sdk-5.0
+```
+
+
+### 2) Install PostgreSQL 12
 
 These were the steps I followed to install postgresql and tweak it. I have no idea if this is best practice or something really bad, but it worked for me.
 
@@ -37,15 +45,11 @@ These were the steps I followed to install postgresql and tweak it. I have no id
 sudo apt install postgresql
 ```
 
-Then start psql command line tool:
+Then use the psql command line tool to give the postgres user a password.
 
 ```
 sudo -u postgres psql
-```
-
-```
 alter user postgres password 'YOUR PASSWORD';
-create database budoco;
 \q
 
 ```
@@ -75,26 +79,18 @@ localhost:5432:*:postgres:YOUR PASSWORD
 ```
 
 
-### 2) Install dotnet core 5 sdk
+### 3) Create the Budoco database.
 
-Skip to step 3 if you already have the dotnet core 5 sdk installed.
-
-I used the instructions here in Nov 2020: https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-
+Create the database:
 
 ```
-wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-
-sudo dpkg -i packages-microsoft-prod.deb
-
-sudo apt-get update 
-
-sudo apt-get install -y apt-transport-https
-sudo apt-get update 
-sudo apt-get install -y dotnet-sdk-5.0
+psql -U postgres
+create database budoco;
+\q
 ```
-### 3) Create the Budoco tables.
 
-Assuming you've checked out this repository into a folder called budoco, navigate to that folder and create the tables:
+Create the tables:
+
 ```
 psql -d budoco -U postgres -f sql/setup.sql
 psql -d budoco -U postgres -f sql/queries.sql
@@ -121,72 +117,44 @@ Here we are in the year 2020 and Microsoft adopted a format for configuration fi
 dotnet run
 ```
 
-Login as admin. Type something, anything as your password. You will be redirected to a reset password page. If you are just playing around and want to create more users, set "DebugAutoConfirmRegistration" to 1 in budoco_config_active.txt.
+Login as admin/admin. You will be redirected to a reset password page. If you are just playing around and want to create more users, set "DebugAutoConfirmRegistration" to 1 in budoco_config_active.txt.
 
 ## Using Budoco
 
-The philosophy of both old BugTracker.NET and new Budoco is that you customize it by writing SQL queries and then storing those queries in the database. The Issues page displays the list of queries in its dropdown.
+The philosophy of both old BugTracker.NET and new Budoco is that they are easy to get started with but if you want to, you can customize it by writing SQL queries and then storing those queries in the database. The Issues page displays the list of queries in its dropdown. 
 
-Add your queries following the examples in queries.sql
-
-Note the little variable $ME in some of the queries, which you can use like this to restrict rows to just the logged on users issues:
+Note the little variable $ME in some of the queries, which you can use like this to limit rows to just that user's issues:
 ```
 where i_created_by_user = $ME
 ```
+However there isn't any per-issue permission system yet. Although your query limits what the user can see in the list, any user can see any issue by just typing in the issue number into the "Go To" box at the top. The only permission system so far is that you can designate a user as report-only or view-only.
 
 ## Corey's Roadmap/TODO:
 
-* revisit inactive user
-* revisit report only user
+* Revisit/retest view-only and report-only users.
 
 * Finish admin pages
 
-* track last post user/date and status change user/date as fields on issue
+* Track last post user/date and status change user/date as fields on issue. It's not a notification system but it's a decent way of seeing what has most recently changed.
 
-* More query examples in queries.sql with $ME/us_id and $ORG/us_organization replacements
+* More query examples in queries.sql.
 
-* Explore jquery menu widget
+* Explore jquery menu widget, because I hate that extra click to open the dropdown.
 
 * Send emails from the Issue page, that become part of the Issue posts.
 
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 
 
-### BugTracker.NET features that I'll probably never work on, because they are not fun.
+### Features that I'll probably never work on, because they are not fun.
 
-* More and more permissions.
+* More and more permissions. It's fun to write code that allows the user to do something. It's less fun to write code to STOP the user from doing something. If you reall
   
+* Any sort of enforcement of workflow.
+
 * Custom fields. 
   
-* Integration with version control. 
+* Integration with version control. If you want that, just use Github, etc.
 
-* email notifications about changes 
-could use most recently updated bug instead
-
-### Bugs
-
-
-* Search - postgres not working as documented, or me?
-https://www.postgresql.org/docs/11/textsearch-controls.html
-
-The "-" operator doesn't seem to work, even though output of to_tsquery looks right. 
-I don't find anybody on the web discussing it as being buggy though...
-
-```
-select i_id, i_description, 0 as p_id, '' as p_text, 
-
-websearch_to_tsquery('english', 
-'corey peanut'
-
-),
-
-ts_rank(to_tsvector('english', i_description), 
-websearch_to_tsquery('english', 
-'corey peanut'
-
-)) as rank
-from issues 
-
-order by rank desc limit 20
-```
+* Email/Slack notifications about changes, or reminders that a issue is growing stale. This app is not going to nag you.
 

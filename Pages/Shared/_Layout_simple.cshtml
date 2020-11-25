@@ -20,7 +20,7 @@
         function goto() {
             var issue_id = $("#goto_id").val();
             if (issue_id == 0)
-                alert("Enter issue id#")
+                alert("Enter issue ID#")
             else
                 location.href = "/Issue?id=" + issue_id
         }
@@ -68,7 +68,7 @@
 
                     <li class="nav-item">
                         <button class="goto_button" onclick="goto()">Go To Issue:</button>
-                        <input type="number" class="goto_input" id="goto_id" placeholder="id#" />
+                        <input type="number" class="goto_input" id="goto_id" placeholder="ID#" />
 
                     </li>
 

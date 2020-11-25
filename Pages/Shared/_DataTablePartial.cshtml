@@ -22,16 +22,28 @@
                         for (int col = 0; col < Model.dt.Columns.Count; col++)
                         {
 
-                            <td>@dr[col]</td>
+
+                            if (col == 0)
+                            {
+                                <td><a href="@(Model.singular_table_name + "?id=" + dr[0])">@dr[col]</a></td>
+                            }
+                            else
+                            {
+                                <td>@dr[col]</td>
+                            }
+
+
                         }
                     }
+
                     <td>
-                        <a href="@Model.singular_table_name?id=@dr[0]">
+                        <a href="@(Model.singular_table_name + "?id=" + dr[0])">
                             Update
                         </a>
                     </td>
                 </tr>
             }
+
         }
     </table>
 </div>
