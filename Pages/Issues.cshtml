@@ -10,39 +10,8 @@
 @{
     if (HttpContext.Response.StatusCode == 200)
     {
-        <script>
-            function getUrlVars() {
-                var vars = [], hash;
-                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-                for (var i = 0; i < hashes.length; i++) {
-                    hash = hashes[i].split('=');
-                    vars.push(hash[0]);
-                    vars[hash[0]] = hash[1];
-                }
-                return vars;
-            }
-
-            function on_query_change() {
-                var query_id = $("#query_id").val();
-                window.location.href = "Issues?page=1&query_id=" + query_id
-            }
-
-            function on_sort(col) {
-                var query_id = $("#query_id").val();
-                var query_string_vars = getUrlVars();
-                var prev_sort = query_string_vars["sort"];
-                var prev_dir = query_string_vars["dir"];
-                var dir = "asc"
-                if (col == prev_sort) {
-                    dir = (prev_dir == "asc" ? "desc" : "asc");
-                }
-                window.location.href = "Issues?page=1&query_id=" + query_id + "&sort=" + col + "&dir=" + dir
-            }
-        </script>
-
-
         <div>
-            <a href="Issue?id=0">Create Issue</a>
+            <a href="Issue">Create Issue</a>
         </div>
 
         <div>
@@ -142,5 +111,35 @@
 }
 
 @section Scripts {
-    
+
+    <script>
+    function getUrlVars() {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+
+    function on_query_change() {
+        var query_id = $("#query_id").val();
+        window.location.href = "Issues?page=1&query_id=" + query_id
+    }
+
+    function on_sort(col) {
+        var query_id = $("#query_id").val();
+        var query_string_vars = getUrlVars();
+        var prev_sort = query_string_vars["sort"];
+        var prev_dir = query_string_vars["dir"];
+        var dir = "asc"
+        if (col == prev_sort) {
+            dir = (prev_dir == "asc" ? "desc" : "asc");
+        }
+        window.location.href = "Issues?page=1&query_id=" + query_id + "&sort=" + col + "&dir=" + dir
+    }
+</script>
+
 }

@@ -31,7 +31,6 @@ namespace budoco.Pages
         [FromQuery]
         public int query_id { get; set; }
 
-
         public void OnGet()
         {
 

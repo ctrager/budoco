@@ -28,6 +28,9 @@ namespace budoco.Pages
         public int id { get; set; }
 
         [BindProperty]
+        public string force_create { get; set; }
+
+        [BindProperty]
         public string description { get; set; }
 
         [BindProperty]
@@ -259,7 +262,7 @@ namespace budoco.Pages
 
             string sql;
 
-            if (id == 0)
+            if (id == 0 || force_create == "force_create")
             {
 
                 sql = @"insert into issues 
