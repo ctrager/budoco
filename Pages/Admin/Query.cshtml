@@ -3,18 +3,45 @@
 @using Microsoft.AspNetCore.Mvc.Razor
 
 @{
-    ViewData["Title"] = "Query";
+    ViewData["Title"] = "Issue Query";
 }
 
-<h1>Query</h1>
+<h1>Issue Query</h1>
+<div>
+    <a href="Queries">Back to Queries</a>
+</div>
 <partial name="_FlashPartial" />
 
 <div class="form_div">
 <form id="sql_form" method="post">
+    @{
+        if (Model.id != 0)
+        {
+    <div>
+        <label>Id</label>
+        <input asp-for="id" value="@Model.id" disabled></input>
+    </div>
+        }
+    }
+    <div>
+        <label>Name</label>
+        <input asp-for="name" value="@Model.name"></input>
+    </div>
+    <div>
+        <label>Active</label>
+        <input asp-for="is_active" value="true" />
+    </div>
+    <div>
+        <label>Default</label>
+        <input asp-for="is_default" value="true" />
+    </div>
+    <div>
+ 
     <div>
         <textarea class="pre" asp-for="sql"></textarea>
     </div>
-    <button type="button" onclick="submit_post()">Run SQL</button>
+    <button type="button" onclick="submit_post()">Run SQL - Don't Save</button>
+    <button>Save in Database</button>
                 
 </form>
 </div>

@@ -152,6 +152,8 @@ default is_admin, active, report_only from active_settings
 
 * Turn emails from trusted senders into issues.
 
+* make sure registration doesn't collide with user - need inactive user placeholder
+
 ### Features that I'll only get to if there are users out there willing to donate some money for them.
 
 * More permissions/restrictions/workflow logic. It's fun to write code that allows the user to do something. It's less fun to write code to STOP the user from doing something. With the old BugTracker.NET, this kind of code became the hardest for me to work with and to be sure it was right.
