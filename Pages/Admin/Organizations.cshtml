@@ -6,10 +6,12 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+<partial name="_FlashPartial" />
+
 
 <a href="Organization?id=0">Create Organization</a>
 
-<partial name="_DataTablePartial" />
+<partial name="_CrudDataTablePartial" />
 
 @section Scripts {
     

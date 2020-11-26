@@ -7,59 +7,44 @@
 }
 
 <h1>Run Sql</h1>
+<partial name="_FlashPartial" />
 
-<div>
-
-    <partial name="_FlashPartial" />
-
-    @{
-        if (Model.exception is not null) {
-            <div class="flash_err">@Model.exception.Message</div>
-        }
-    }
-
-    <form method="post">
-        <div>
+<div class="form_div">
+<form id="sql_form" method="post">
+    <div>
         <textarea class="sql_editor" asp-for="sql"></textarea>
-        </div>
-        <div>
-        <button>Submit</button>
-        </div>
-    </form>
+    </div>
+    <button type="button" onclick="submit_post()">Run SQL</button>
+                
+</form>
+</div>
 
-    @{
-
-        if (Model.dt is not null) {
-    <table class="dt">
-        @{
-            <tr>
-                @{
-                    for (int i = 0; i < Model.dt.Columns.Count; i++)
-                    {
-
-                        <th>@Model.dt.Columns[i].ColumnName</th>
-                    }
-                }
-            </tr>
-            for (int row = 0; row < Model.dt.Rows.Count; row++)
-            {
-                DataRow dr = Model.dt.Rows[row];
-                <tr>
-                    @{
-                        for (int col = 0; col < Model.dt.Columns.Count; col++)
-                        {
-
-                            <td>@dr[col]</td>
-                        }
-                    }
-                </tr>
-            }
-        }
-    </table>
-        }
-    }
-
+<div id="results">
+</div>
 
 @section Scripts {
-    
+<script>
+    function submit_post() {
+
+        $.ajax({
+            url: 'RunSql?handler=Run',
+            data: $('#sql_form').serialize(),
+            type: 'post',
+            
+            success: function (html_from_server) {
+                $("#results").html(html_from_server);
+            },
+            
+            failure: function(response) {
+                alert(response)
+            },
+
+            statusCode: {
+                500: function(responseObject, textStatus, jqXHR) {
+                    alert(JSON.stringify(responseObject));
+                }
+            }
+        }) // end submit post
+    } // end func
+</script>
 }

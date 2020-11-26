@@ -5,8 +5,6 @@
     ViewData["Title"] = "Issue";
 }
 
-<partial name="_FlashPartial" />
-
 <div>
     <a href="Issues">Back to Issues</a>
     &nbsp;&nbsp;&nbsp;
@@ -189,9 +187,10 @@
 
                 <div class="post_form_footer">
                     <button type="button" onclick="submit_post()">Add Comment</button>
-                                        <label class="file_upload_label fake_link">
-                    Click here to attach file
-                    <input type="file" class="file_upload_input" asp-for="uploaded_file" />
+                    
+                    <label class="file_upload_label fake_link">
+                        Click here to attach file
+                        <input type="file" class="file_upload_input" asp-for="uploaded_file" />
                     </label>
                     <span id="file_name"></span>
                 </div>
@@ -314,8 +313,8 @@
                     alert("post- server returned status code of 500");
                 }
             }
-        })
-    }
+        }) // end submit post
+    } // end func
 
     function show_hide_image(image_div_id, link) {
         if ($(link).html() == "View") {
@@ -326,8 +325,7 @@
             $(link).html("View")
             $(image_div_id).hide()
         }
-        
-    }
+    } // end func
     
     function prep_for_another() {
         $("#posts").html("")
