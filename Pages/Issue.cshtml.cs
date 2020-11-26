@@ -113,6 +113,8 @@ namespace budoco.Pages
         public string created_date;
         public string last_updated_username;
         public string last_updated_date;
+        public int prev_issue_id_in_list;
+        public int next_issue_id_in_list;
 
         public void OnGet()
         {
@@ -214,7 +216,7 @@ namespace budoco.Pages
             else
             {
 
-                //Defaults
+                //Defaults values
 
                 DataRow dr = bd_db.get_datarow("select * from statuses where st_is_default is true order by st_name limit 1");
                 if (dr is not null)
@@ -247,6 +249,27 @@ namespace budoco.Pages
                     category_text = (string)dr[1];
                 }
 
+            }
+            Console.WriteLine("qq list");
+            // for prev, next issue
+            List<int> issue_list = bd_session.Get("issue_list");
+            if (issue_list is not null)
+            {
+                int current_position_in_list = issue_list.IndexOf(id);
+                if (current_position_in_list != -1)
+                {
+                    // next
+                    if (current_position_in_list < (issue_list.Count - 1))
+                    {
+                        next_issue_id_in_list = issue_list[current_position_in_list + 1];
+                    }
+
+                    // prev
+                    if (current_position_in_list > 0)
+                    {
+                        prev_issue_id_in_list = issue_list[current_position_in_list - 1];
+                    }
+                }
             }
         }
 

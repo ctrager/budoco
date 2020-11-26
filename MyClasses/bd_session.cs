@@ -15,10 +15,10 @@ namespace budoco
 
         */
 
-        static Dictionary<string, object> cache = new Dictionary<string, object>();
+        static Dictionary<string, dynamic> cache = new Dictionary<string, dynamic>();
         static object my_lock = new object();
 
-        public static void Set(string key, object obj)
+        public static void Set(string key, dynamic obj)
         {
             lock (my_lock)
             {
@@ -26,7 +26,7 @@ namespace budoco
             }
         }
 
-        public static object Get(string key)
+        public static dynamic Get(string key)
         {
             lock (my_lock)
             {

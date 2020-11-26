@@ -9,19 +9,51 @@
 
 <div>
     <a href="Issues">Back to Issues</a>
+    &nbsp;&nbsp;&nbsp;
+    @{
+        
+        if (Model.prev_issue_id_in_list != 0)
+        {
+            <a href="Issue?id=@Model.prev_issue_id_in_list">Prev</a>
+        }
+        else
+        {
+            <span class="gray">Prev</span>
+        }
+
+        <span>&nbsp;&nbsp;</span>
+        if (Model.next_issue_id_in_list != 0)
+        {
+            <a href="Issue?id=@Model.next_issue_id_in_list">Next</a>
+        }
+        else
+        {
+            <span class="gray">Next</span>
+        }
+
+    }
 </div>
 
 <div class="form_div">
     <form class="issue_form" method="post">
         <input asp-for="force_create" value=""/>
         @{
+            
             if (Model.id != 0)
             {
-                <div class="info_text">
-                    Issue #@Model.id created by @Model.created_by_username on @Model.created_date
-                    <br>
-                    Last updated by @Model.last_updated_username on @Model.last_updated_date
+                <div>
+                    <label>ID @Model.id</label>
+                    <span>
+                    Created by @Model.created_by_username on @Model.created_date 
+                    @{if (Model.last_updated_username != "")
+                        {
+                        <span>, Last updated by @Model.last_updated_username on @Model.last_updated_date</span>
+                            
+                        }
+                    }
+                    </span>
                 </div>
+            
             }
         }
         

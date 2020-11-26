@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Reflection;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System;
 
 namespace budoco.Pages
 {
@@ -46,8 +51,6 @@ namespace budoco.Pages
             {
                 dir = "";
             }
-
-
 
             // which query?
             DataRow query_row;
@@ -125,6 +128,17 @@ namespace budoco.Pages
             sql = sql.Replace("$ME", HttpContext.Session.GetInt32("us_id").ToString());
 
             dt = bd_db.get_datatable(sql);
+
+            // cache the list for the prev/next links in issue.cshtml
+            var issue_list = new List<int>();
+            foreach (DataRow row in dt.Rows)
+            {
+                issue_list.Add((int)row[0]);
+            }
+            bd_session.Set("issue_list", issue_list);
+
+
+
         }
     }
 }
