@@ -57,8 +57,6 @@ namespace RazorPartialToString.Services
                     new HtmlHelperOptions()
                 );
                 await partial.RenderAsync(viewContext);
-                Console.WriteLine("in partial renderer");
-                Console.WriteLine(output.ToString());
                 return output.ToString();
             }
         }

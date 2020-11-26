@@ -133,11 +133,12 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* cache datatable so that we can scroll next previous bug without returning to list.
-
-* Revisit/retest view-only and report-only users.
+* Revisit reportonly, issue.cs , user class, 
+default is_admin, active, report_only from active_settings
 
 * Finish admin pages
+
+* date formats, True/Fals
 
 * Track last post user/date and status change user/date as fields on issue. It's not a notification system but it's a decent way of seeing what has most recently changed.
 

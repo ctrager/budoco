@@ -83,7 +83,7 @@ namespace budoco
 
         public static void console_write_line(string msg)
         {
-            Console.WriteLine(msg);
+            Console.WriteLine(msg); // here on purpose
             Log.Information(msg);
         }
 
@@ -156,7 +156,6 @@ namespace budoco
 
             if (dr is null)
             {
-                Console.WriteLine("qq redirect 1");
                 context.Response.Redirect("/Login");
                 return false;
             }

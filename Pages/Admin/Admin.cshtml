@@ -5,11 +5,8 @@
     ViewData["Title"] = "Admin";
 }
 
-@{
-    Console.WriteLine("Admin response code:" + HttpContext.Response.StatusCode);
-}
 <h1>Admin</h1>
-<br>
+<partial name="_FlashPartial" />
 
 <div><a href="/Admin/Users">Users</a></div>
 <br>
@@ -26,7 +23,10 @@
 
 <h1>Under Construction</h1>
 <div><a href="/Admin/Email">Email</a></div>
+@{if (bd_config.get("DebugEnableRunSql") == 1) 
+{                            
 <div><a href="/Admin/RunSql">RunSql</a></div>
+}}
 <div><a href="/Admin/Logs">Logs</a></div>
 
 @section Scripts {

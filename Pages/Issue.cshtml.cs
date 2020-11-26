@@ -250,7 +250,6 @@ namespace budoco.Pages
                 }
 
             }
-            Console.WriteLine("qq list");
             // for prev, next issue
             List<int> issue_list = bd_session.Get("issue_list");
             if (issue_list is not null)

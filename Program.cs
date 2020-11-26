@@ -16,7 +16,7 @@ namespace budoco
 
         public static int Main(string[] args)
         {
-            Console.WriteLine("Main");
+            Console.WriteLine("Main"); // here on purpose
             bd_config.load_config();
 
             Log.Logger = new LoggerConfiguration()

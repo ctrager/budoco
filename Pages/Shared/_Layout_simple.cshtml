@@ -28,7 +28,7 @@
 </head>
 
 @{
-    Console.WriteLine("layout_simple http status: " +
+    bd_util.console_write_line("layout_simple http status: " +
             HttpContextAccessor.HttpContext.Response.StatusCode.ToString());
     if (HttpContextAccessor.HttpContext.Response.StatusCode == 302)
     {
@@ -61,8 +61,14 @@
                                 <a class="nav-link" asp-page="/Admin/Admin">Admin</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-page="/Admin/RunSql">Run Sql</a>
+                                <a class="nav-link" asp-page="/Admin/Users">Users</a>
                             </li>
+                            if (bd_config.get("DebugEnableRunSql") == 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-page="/Admin/RunSql">Run Sql</a>
+                                </li>
+                            }
                         }
                     }
 

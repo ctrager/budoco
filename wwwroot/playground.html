@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.css" />-->
+  <link rel="stylesheet" href="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.css" />
+  <link rel="stylesheet" href="../lib/codemirror/codemirror.css" />
    <!-- <link rel="stylesheet" href="css/budoco.css" /> -->
-   
+  
+  
     <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/codemirror/codemirror.js"></script>
+    <script src="../lib/codemirror/sql.js"></script>
     <script src="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <style>
 
@@ -19,13 +23,15 @@ fake_link:hover {
   text-decoration: none;
 }
 
+.my_textarea_container {
+  border: 1px solid black;
+  background-color: yellow;
+
+}
 </style> 
 
 <script>
     var count = 0;
-
-    $(document).ready(function() {
-    })
 
     function foo() {
       $("#count").html(count++)
@@ -41,10 +47,24 @@ fake_link:hover {
         el.size = c
     }
 
+    $(document).ready(function() {
+      console.log("ready")
+      var myTextarea = document.getElementById("my_textarea");
+      var editor = CodeMirror.fromTextArea(myTextarea, {
+        value: "select * from projects;",
+        lineNumbers: true,
+        mode: "sql"
+  });
+    })
+
 </script>
 </head>
 <body>
+  <h1> h1 </h1>
+    <div class="my_textarea_container">
+      <textarea id="my_textarea"></textarea>
 
+    </div>
     <button onclick="foo()">click</button>
     
     

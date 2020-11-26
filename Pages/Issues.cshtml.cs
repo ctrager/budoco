@@ -36,6 +36,8 @@ namespace budoco.Pages
         [FromQuery]
         public int query_id { get; set; }
 
+        string qu_sql;
+
         public void OnGet()
         {
 
@@ -53,9 +55,6 @@ namespace budoco.Pages
             }
 
             // which query?
-            DataRow query_row;
-            const int ID = 0;
-            const int SQL = 1;
 
             if (query_id == 0)
             {
@@ -73,34 +72,29 @@ namespace budoco.Pages
                 }
             }
 
-            // first query or previously selected query
-            queries = bd_db.prepare_select_list("select qu_id, qu_name from queries order by qu_sort_seq, qu_name");
+            // prepare dropdown
+            queries = bd_db.prepare_select_list(
+                @"select qu_id, qu_name from queries 
+                where qu_is_active
+                order by qu_is_default desc, qu_name asc");
+
             if (query_id == 0)
             {
-                // first query
-                query_row = bd_db.get_datarow(
-                    "select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1");
-                query_id = (int)query_row[ID];
-                sort = 0;
-                page = 1;
-                dir = "";
-
+                use_default_query();
             }
             else
             {
                 // previously selected query
-                query_row = bd_db.get_datarow(
-                    "select qu_id, qu_sql from queries where qu_id = " + query_id.ToString());
+                DataRow query_row = bd_db.get_datarow(
+                    "select qu_id, qu_sql from queries where qu_is_active and qu_id = " + query_id.ToString());
 
                 if (query_row is null) // bad query id from session or url?
                 {
-                    // first query
-                    query_row = bd_db.get_datarow(
-                        "select qu_id, qu_sql from queries order by qu_sort_seq, qu_name limit 1");
-                    query_id = (int)query_row[ID];
-                    sort = 0;
-                    page = 1;
-                    dir = "";
+                    use_default_query();
+                }
+                else
+                {
+                    qu_sql = (string)query_row["qu_sql"];
                 }
             }
 
@@ -110,7 +104,9 @@ namespace budoco.Pages
             HttpContext.Session.SetInt32("issues_sort", sort);
             HttpContext.Session.SetString("issues_dir", dir);
 
-            string sql = (string)query_row[SQL];
+            // qu_sql is original from db
+            // sql - we are going to alter it
+            var sql = qu_sql;
 
             // trim order by clause and replace with ours  
             if (sort > 0)
@@ -138,6 +134,21 @@ namespace budoco.Pages
             bd_session.Set("issue_list", issue_list);
 
 
+
+        }
+
+        void use_default_query()
+        {
+            // first query
+            DataRow query_row = bd_db.get_datarow(
+                @"select qu_id, qu_sql from queries 
+                where qu_is_active
+                order by qu_is_default desc, qu_name asc limit 1");
+            query_id = (int)query_row["qu_id"];
+            sort = 0;
+            page = 1;
+            dir = "";
+            qu_sql = (string)query_row["qu_sql"];
 
         }
     }

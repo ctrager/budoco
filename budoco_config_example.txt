@@ -70,3 +70,6 @@ NewUserStartsReportOnly: 0
 # the user having to confirm by clicking the email
 DebugAutoConfirmRegistration: 0
 
+# Run any sql query - this page is dangerous
+DebugEnableRunSql: 0
+

@@ -36,7 +36,10 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return Content("<div>Must be admin</div>");
 
-
+            if (bd_config.get("DebugEnableRunSql") == 0)
+            {
+                return Content("<div>DebugEnableRunSql: 0</div>");
+            }
             dt = null;
             error = null;
 
