@@ -39,7 +39,7 @@ namespace budoco.Pages
 
         // dropdown 
         [BindProperty]
-        public IEnumerable<SelectListItem> categories { get; set; }
+        public IEnumerable<SelectListItem> category_list { get; set; }
         [BindProperty]
         public int category_id { get; set; }
         [BindProperty]
@@ -49,7 +49,7 @@ namespace budoco.Pages
 
         // dropdown
         [BindProperty]
-        public IEnumerable<SelectListItem> assigned_to_users { get; set; }
+        public IEnumerable<SelectListItem> assigned_to_user_list { get; set; }
         [BindProperty]
         public int assigned_to_user_id { get; set; }
         [BindProperty]
@@ -59,7 +59,7 @@ namespace budoco.Pages
 
         // dropdown
         [BindProperty]
-        public IEnumerable<SelectListItem> projects { get; set; }
+        public IEnumerable<SelectListItem> project_list { get; set; }
         [BindProperty]
         public int project_id { get; set; }
         [BindProperty]
@@ -69,7 +69,7 @@ namespace budoco.Pages
 
         // dropdown
         [BindProperty]
-        public IEnumerable<SelectListItem> priorities { get; set; }
+        public IEnumerable<SelectListItem> priority_list { get; set; }
         [BindProperty]
         public int priority_id { get; set; }
         [BindProperty]
@@ -79,7 +79,7 @@ namespace budoco.Pages
 
         // dropdown
         [BindProperty]
-        public IEnumerable<SelectListItem> organizations { get; set; }
+        public IEnumerable<SelectListItem> organization_list { get; set; }
         [BindProperty]
         public int organization_id { get; set; }
         [BindProperty]
@@ -89,7 +89,7 @@ namespace budoco.Pages
 
         // dropdown
         [BindProperty]
-        public IEnumerable<SelectListItem> statuses { get; set; }
+        public IEnumerable<SelectListItem> status_list { get; set; }
         [BindProperty]
         public int status_id { get; set; }
         [BindProperty]
@@ -103,8 +103,9 @@ namespace budoco.Pages
         [BindProperty]
         public string post_text { get; set; }
 
-
         // bindings end        
+        public string dropdown_partial_prefix;
+        public string dropdown_partial_label;
 
         //https://stackoverflow.com/questions/56172036/razor-view-disabled-html-attribute-based-on-viewmodel-property
         public string null_or_disabled = null;
@@ -339,12 +340,12 @@ namespace budoco.Pages
 
         void PrepareDropdowns()
         {
-            assigned_to_users = bd_db.prepare_select_list("select us_id, us_username from users where us_is_active = true order by us_username");
-            categories = bd_db.prepare_select_list("select ca_id, ca_name from categories where ca_is_active = true order by ca_name");
-            projects = bd_db.prepare_select_list("select pj_id, pj_name from projects where pj_is_active = true order by pj_name");
-            organizations = bd_db.prepare_select_list("select og_id, og_name from organizations where og_is_active = true order by og_name");
-            priorities = bd_db.prepare_select_list("select pr_id, pr_name from priorities where pr_is_active = true order by pr_name");
-            statuses = bd_db.prepare_select_list("select st_id, st_name from statuses where st_is_active = true order by st_name");
+            assigned_to_user_list = bd_db.prepare_select_list("select us_id, us_username from users where us_is_active = true order by us_username");
+            category_list = bd_db.prepare_select_list("select ca_id, ca_name from categories where ca_is_active = true order by ca_name");
+            project_list = bd_db.prepare_select_list("select pj_id, pj_name from projects where pj_is_active = true order by pj_name");
+            organization_list = bd_db.prepare_select_list("select og_id, og_name from organizations where og_is_active = true order by og_name");
+            priority_list = bd_db.prepare_select_list("select pr_id, pr_name from priorities where pr_is_active = true order by pr_name");
+            status_list = bd_db.prepare_select_list("select st_id, st_name from statuses where st_is_active = true order by st_name");
         }
 
         bool IsValid()

@@ -236,10 +236,6 @@ p {
   color: red;
 }
 
-textarea {
-  width: 800px;
-  height: 100px;
-}
 
 .sql_editor {
   width: 900px;
@@ -284,7 +280,7 @@ input:read-only:focus {
 }
 
 .post_form>div>textarea {
-  width: 900px;
+  width: 890px;
   height: 100px;
 }
 
@@ -354,63 +350,75 @@ input[type=file] {
 }
 
 .issue_form>div>#description {
-  width: 800px;
+  width: 775px;
 }
+
+.issue_form>div>textarea {
+  width: 775px;
+  height: 80px;
+  margin-left: 0px;
+}
+
 
 .issue_form>div>label {
-  min-width: 110px;
+  min-width: 95px;
+  margin-right: 0px;
 }
 
-.flex {
+.issue_dropdown_container {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
 
-.flex>div {
-  display: flex;
-  direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  width: 430px;
+.issue_dropdown_group {
+  position: relative;
+  margin-right: 40px;
 }
 
-.flex>div>label {
-  width: 105px;
+.issue_readonly_input_select {
+  position: absolute;
+  z-index: 99;
+  width: 20px;
   display: inline-block;
+  visibility: hidden;
+  font-size: 18px;
 }
 
-.flex>div>input {
-
-  width: 180px;
-  margin-right: 10px;
+.issue_readonly_input_select>option {
+  font-size: 18px;
 }
+
+.issue_dropdown_group>label {
+  display: inline-block;
+  width: 90px;
+}
+
+
+/* controls the order of the dropdowns 
+going left to right, then down, then left to right, etc */
 
 #category_elements {
   order: 1;
-
-}
-
-#status_elements {
-  order: 2;
-}
-
-#priority_elements {
-  order: 3;
 }
 
 #assigned_to_user_elements {
+  order: 2;
+}
+
+#organization_elements {
+  order: 3;
+}
+
+#priority_elements {
   order: 4;
 }
 
 #project_elements {
   order: 5;
-  width: 800px;
-
 }
 
-#organization_elements {
+#status_elements {
   order: 6;
-
 }
