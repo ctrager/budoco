@@ -136,7 +136,8 @@ However there isn't any per-issue permission system yet. Although your query lim
 * Revisit reportonly, issue.cs , user class, 
 default is_admin, active, report_only from active_settings
 
-* Finish admin pages
+* Finish admin pages, delete query
+
 
 * date formats, True/Fals
 

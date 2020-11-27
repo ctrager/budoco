@@ -78,12 +78,17 @@ table {
 td {
   border: 1px solid lightgrey;
   padding: 3px;
+  text-align: left;
+  vertical-align: top;
+
 }
 
 th {
   border: 1px solid lightgrey;
   background-color: #eeeeee;
   padding: 3px;
+  text-align: left;
+  vertical-align: top;
 }
 
 
@@ -252,7 +257,10 @@ input:read-only {
   /* same color as form */
   background: transparent;
   border: 1px solid gray;
-  width: 300px;
+}
+
+.issue_form>div>input:read-only {
+  width: 200px;
 }
 
 input:read-only:focus {
@@ -322,9 +330,7 @@ input[type=file] {
   color: red;
 }
 
-.issue_form>div>#description {
-  width: 800px;
-}
+
 
 .post_img {
   max-width: 800px;
@@ -341,4 +347,70 @@ input[type=file] {
 
 .search_form>div>#search_terms {
   width: 500px;
+}
+
+.issue_form {
+  width: 900px;
+}
+
+.issue_form>div>#description {
+  width: 800px;
+}
+
+.issue_form>div>label {
+  min-width: 110px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.flex>div {
+  display: flex;
+  direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  width: 430px;
+}
+
+.flex>div>label {
+  width: 105px;
+  display: inline-block;
+}
+
+.flex>div>input {
+
+  width: 180px;
+  margin-right: 10px;
+}
+
+#category_elements {
+  order: 1;
+
+}
+
+#status_elements {
+  order: 2;
+}
+
+#priority_elements {
+  order: 3;
+}
+
+#assigned_to_user_elements {
+  order: 4;
+}
+
+#project_elements {
+  order: 5;
+  width: 800px;
+
+}
+
+#organization_elements {
+  order: 6;
+
 }

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <!--
   <link rel="stylesheet" href="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.css" />
   <link rel="stylesheet" href="../lib/codemirror/codemirror.css" />
+ -->
    <!-- <link rel="stylesheet" href="css/budoco.css" /> -->
   
-  
+  <!--
     <script src="../lib/jquery/dist/jquery.min.js"></script>
     <script src="../lib/codemirror/codemirror.js"></script>
     <script src="../lib/codemirror/sql.js"></script>
     <script src="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+  -->
 <style>
 
     
@@ -28,67 +31,56 @@ fake_link:hover {
   background-color: yellow;
 
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.x {
+  width: 400px;
+  margin: 4px;
+  background-color: yellow;
+  font-size: 12px;
+}
+
+#aa {
+  order: 4;
+  color: red;
+}
+#bb {
+  order: 1;
+}
+#cc {
+  order: 2;
+}
+
+#dd {
+  order: 3;
+}
+
+#ee {
+  order: 5;
+}
+#ff {
+  order: 6;
+}
+
 </style> 
 
 <script>
-    var count = 0;
-
-    function foo() {
-      $("#count").html(count++)
-      foo2("sel1")
-      foo2("sel2")
-    }
-    function foo2(id) {
-      el = document.getElementById(id)
-      c = el.childElementCount
-      if (c > 5)
-        el.size = 4
-      else
-        el.size = c
-    }
-
-    $(document).ready(function() {
-      console.log("ready")
-      var myTextarea = document.getElementById("my_textarea");
-      var editor = CodeMirror.fromTextArea(myTextarea, {
-        value: "select * from projects;",
-        lineNumbers: true,
-        mode: "sql"
-  });
-    })
-
 </script>
 </head>
 <body>
-  <h1> h1 </h1>
-    <div class="my_textarea_container">
-      <textarea id="my_textarea"></textarea>
+  <div class="container">
+    <div id="aa" class="x">&nbsp;AAAAAaaaaaaaaaaa &nbsp;</div>
+    <div id="bb" class="x">&nbsp; BBBBBBBBBBbbbbbbbbbbbbbbbbbbb &nbsp;</div>
+    <div id="cc" class="x">&nbsp; cccdddddddddddd &nbsp;</div>
+    <div id="dd" class="x">&nbsp; EEEEEEEEEEEEEEEEEEeeeeeeeee &nbsp;</div>
+    <div id="ee" class="x">&nbsp; FFFFFFFFFFFFFFFFFFFF &nbsp;</div>
+    <div id="ff" class="x">&nbsp; GGGGGGGGGG &nbsp;</div>
 
-    </div>
-    <button onclick="foo()">click</button>
-    
-    
-    <br>
-    <div id="count">0</div>
-    <br>
-    <select id="sel1">       
-        <option value="1">one</option>
-        <option value="2">two</option>
-        <option value="3">three</option>
-    </select>
-
-    <br>
-    <select id="sel2">       
-        <option value="1">one</option>
-        <option value="2">two</option>
-        <option value="3">cccthree</option>
-        <option value="4">ddd three</option>
-        <option value="5">eeethree</option>
-        <option value="6">fffthree</option>
-        <option value="7">gggfthree</option>
-        <option value="8">hh three</option>
-        <option value="9">iiithree</option>
-    </select>
-
-
+  </div>
+</body>
 </html>

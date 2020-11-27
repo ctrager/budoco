@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Issue";
 }
+<partial name="_FlashPartial" />
 
 <div>
     <a href="Issues">Back to Issues</a>
@@ -64,7 +65,8 @@
             <label>Details</label>
             <textarea asp-for="details" value="@Model.details" disabled="@Model.null_or_disabled"></textarea>
         </div>
-
+        
+        <div><div class="flex">
         <div id="category_elements">
             <label>Category</label>
             <input readonly asp-for="category_text"/>
@@ -81,7 +83,7 @@
         </div>
 
         <div id="project_elements">
-            <label>Projectory</label>
+            <label>Project</label>
             <input readonly asp-for="project_text"/>
             <input type="hidden" asp-for="project_id"/>
             <span onclick="clear_dropdown('#project_')" class="readonly_input_edit">Clear&nbsp;</span>
@@ -154,7 +156,7 @@
             asp-items="@Model.assigned_to_users" disabled="@Model.null_or_disabled">
             </select>
         </div>
-
+        </flex></div>
   
 
         @{
