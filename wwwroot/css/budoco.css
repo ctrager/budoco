@@ -281,7 +281,7 @@ input:read-only:focus {
 
 .post_form>div>textarea {
   width: 890px;
-  height: 100px;
+  height: 80px;
 }
 
 .info_text {
@@ -326,8 +326,6 @@ input[type=file] {
   color: red;
 }
 
-
-
 .post_img {
   max-width: 800px;
 }
@@ -359,10 +357,21 @@ input[type=file] {
   margin-left: 0px;
 }
 
+textarea {
+  width: 800px;
+  height: 180px;
+}
 
 .issue_form>div>label {
   min-width: 95px;
   margin-right: 0px;
+}
+
+.issue_dropdown_group>label {
+  display: inline-block;
+  width: 95px;
+  margin-right: 0px;
+
 }
 
 .issue_dropdown_container {
@@ -374,27 +383,19 @@ input[type=file] {
 
 .issue_dropdown_group {
   position: relative;
-  margin-right: 40px;
+  width: 430px;
+  white-space: nowrap;
 }
 
-.issue_readonly_input_select {
-  position: absolute;
-  z-index: 99;
-  width: 20px;
-  display: inline-block;
-  visibility: hidden;
-  font-size: 18px;
+.issue_dropdown_group>select {
+  width: 290px;
+  padding: 2px;
 }
 
-.issue_readonly_input_select>option {
-  font-size: 18px;
-}
+.issue_dropdown_group>select>option {
+  font-size: 16px;
 
-.issue_dropdown_group>label {
-  display: inline-block;
-  width: 90px;
 }
-
 
 /* controls the order of the dropdowns 
 going left to right, then down, then left to right, etc */

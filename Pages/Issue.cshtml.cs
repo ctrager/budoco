@@ -42,60 +42,37 @@ namespace budoco.Pages
         public IEnumerable<SelectListItem> category_list { get; set; }
         [BindProperty]
         public int category_id { get; set; }
-        [BindProperty]
-        public int category_selected_id { get; set; }
-        [BindProperty]
-        public string category_text { get; set; }
+
 
         // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> assigned_to_user_list { get; set; }
         [BindProperty]
         public int assigned_to_user_id { get; set; }
-        [BindProperty]
-        public int assigned_to_user_selected_id { get; set; }
-        [BindProperty]
-        public string assigned_to_user_text { get; set; }
 
         // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> project_list { get; set; }
         [BindProperty]
         public int project_id { get; set; }
-        [BindProperty]
-        public int project_selected_id { get; set; }
-        [BindProperty]
-        public string project_text { get; set; }
 
         // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> priority_list { get; set; }
         [BindProperty]
         public int priority_id { get; set; }
-        [BindProperty]
-        public int priority_selected_id { get; set; }
-        [BindProperty]
-        public string priority_text { get; set; }
 
         // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> organization_list { get; set; }
         [BindProperty]
         public int organization_id { get; set; }
-        [BindProperty]
-        public int organization_selected_id { get; set; }
-        [BindProperty]
-        public string organization_text { get; set; }
 
         // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> status_list { get; set; }
         [BindProperty]
         public int status_id { get; set; }
-        [BindProperty]
-        public int status_selected_id { get; set; }
-        [BindProperty]
-        public string status_text { get; set; }
 
         [BindProperty]
         public IFormFile uploaded_file { get; set; }
@@ -184,30 +161,11 @@ namespace budoco.Pages
                 details = (string)dr["i_details"];
 
                 category_id = (int)dr["i_category"];
-                category_selected_id = category_id;
-                category_text = (string)dr["category_name"];
-
                 project_id = (int)dr["i_project"];
-                project_selected_id = project_id;
-                project_text = (string)dr["project_name"];
-
-
                 organization_id = (int)dr["i_organization"];
-                organization_selected_id = organization_id;
-                organization_text = (string)dr["organization_name"];
-
                 priority_id = (int)dr["i_priority"];
-                priority_selected_id = priority_id;
-                priority_text = (string)dr["project_name"];
-
                 status_id = (int)dr["i_status"];
-                status_selected_id = status_id;
-                status_text = (string)dr["status_name"];
-
                 assigned_to_user_id = (int)dr["i_assigned_to_user"];
-                assigned_to_user_selected_id = assigned_to_user_id;
-                assigned_to_user_text = (string)dr["assigned_to_username"];
-
 
                 if (HttpContext.Session.GetInt32("us_is_report_only") == 1)
                 {
@@ -222,32 +180,27 @@ namespace budoco.Pages
                 DataRow dr = bd_db.get_datarow("select * from statuses where st_is_default is true order by st_name limit 1");
                 if (dr is not null)
                 {
-                    status_id = status_selected_id = (int)dr[0];
-                    status_text = (string)dr[1];
+                    status_id = (int)dr[0];
                 }
                 dr = bd_db.get_datarow("select * from projects where pj_is_default is true order by pj_name limit 1");
                 if (dr is not null)
                 {
-                    project_id = project_selected_id = (int)dr[0];
-                    project_text = (string)dr[1];
+                    project_id = (int)dr[0];
                 }
                 dr = bd_db.get_datarow("select * from organizations where og_is_default is true order by og_name limit 1");
                 if (dr is not null)
                 {
-                    organization_id = organization_selected_id = (int)dr[0];
-                    organization_text = (string)dr[1];
+                    organization_id = (int)dr[0];
                 }
                 dr = bd_db.get_datarow("select * from priorities where pr_is_default is true order by pr_name limit 1");
                 if (dr is not null)
                 {
-                    priority_id = priority_selected_id = (int)dr[0];
-                    priority_text = (string)dr[1];
+                    priority_id = (int)dr[0];
                 }
                 dr = bd_db.get_datarow("select * from categories where ca_is_default is true order by ca_name limit 1");
                 if (dr is not null)
                 {
-                    category_id = category_selected_id = (int)dr[0];
-                    category_text = (string)dr[1];
+                    category_id = (int)dr[0];
                 }
 
             }

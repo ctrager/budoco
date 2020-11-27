@@ -71,32 +71,16 @@
 
         <div id="category_elements" class="issue_dropdown_group">
             <label>Category</label>
-            <input readonly asp-for="category_text"/>
-            <input type="hidden" asp-for="category_id"/>
-            
-            <span onclick="clear_dropdown('#category_')" class="readonly_input_edit">Clear&nbsp;</span>
-            <span onclick="start_dropdown('#category_')" class="readonly_input_edit">Select</span>
-            
-            <select class="issue_readonly_input_select" asp-for="category_selected_id" 
-            onchange="dropdown_on_change('#category_')" 
-            onblur="close_dropdown('#category_')"
-            asp-items="@Model.category_list" disabled="@Model.null_or_disabled">
+            <select asp-for="category_id" asp-items="@Model.category_list" disabled="@Model.null_or_disabled">
+                <option value="0">[None]</option>
             </select>
         </div>
 
 
         <div id="status_elements" class="issue_dropdown_group">
             <label>Status</label>
-            <input readonly asp-for="status_text"/>
-            <input type="hidden" asp-for="status_id"/>
-        
-            <span onclick="clear_dropdown('#status_')" class="readonly_input_edit">Clear&nbsp;</span>
-            <span onclick="start_dropdown('#status_')" class="readonly_input_edit">Select</span>
-        
-            <select class="issue_readonly_input_select" asp-for="status_selected_id" 
-            onchange="dropdown_on_change('#status_')" 
-            onblur="close_dropdown('#status_')"
-            asp-items="@Model.status_list" disabled="@Model.null_or_disabled">
+            <select asp-for="status_id" asp-items="@Model.status_list" disabled="@Model.null_or_disabled">
+                <option value="0">[None]</option>
             </select>
         </div>
 
@@ -104,59 +88,31 @@
 
         <div id="project_elements" class="issue_dropdown_group">
             <label>Project</label>
-            <input readonly asp-for="project_text"/>
-            <input type="hidden" asp-for="project_id"/>
-            <span onclick="clear_dropdown('#project_')" class="readonly_input_edit">Clear&nbsp;</span>
-            <span onclick="start_dropdown('#project_')" class="readonly_input_edit">Select</span>
-    
-            <select class="issue_readonly_input_select" asp-for="project_selected_id" 
-            onchange="dropdown_on_change('#project_')" 
-            onblur="close_dropdown('#project_')"
-            asp-items="@Model.project_list" disabled="@Model.null_or_disabled">
+            <select asp-for="project_id" asp-items="@Model.project_list" disabled="@Model.null_or_disabled">
+                <option value="0">[None]</option>
             </select>
         </div>
 
 
         <div id="organization_elements" class="issue_dropdown_group">
             <label>Organization</label>
-            <input readonly asp-for="organization_text"/>
-            <input type="hidden" asp-for="organization_id"/>
-            <span onclick="clear_dropdown('#organization_')" class="readonly_input_edit">Clear&nbsp;</span>
-            <span onclick="start_dropdown('#organization_')" class="readonly_input_edit">Select</span>
-       
-            <select class="issue_readonly_input_select" asp-for="organization_selected_id" 
-            onchange="dropdown_on_change('#organization_')" 
-            onblur="close_dropdown('#organization_')"
-            asp-items="@Model.organization_list" disabled="@Model.null_or_disabled">
+            <select asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.null_or_disabled">
+                <option value="0">[None]</option>
             </select>
         </div>
 
 
         <div id="priority_elements" class="issue_dropdown_group">
             <label>Priority</label>
-            <input readonly asp-for="priority_text"/>
-            <input type="hidden" asp-for="priority_id"/>
-            <span onclick="clear_dropdown('#priority_')" class="readonly_input_edit">Clear&nbsp;</span>
-            <span onclick="start_dropdown('#priority_')" class="readonly_input_edit">Select</span>
-     
-            <select class="issue_readonly_input_select" asp-for="priority_selected_id" 
-            onchange="dropdown_on_change('#priority_')" 
-            onblur="close_dropdown('#priority_')"
-            asp-items="@Model.priority_list" disabled="@Model.null_or_disabled">
+            <select asp-for="priority_id" asp-items="@Model.priority_list" disabled="@Model.null_or_disabled">
+                <option value="0">[None]</option>
             </select>
         </div>
 
         <div id="assigned_to_user_elements" class="issue_dropdown_group">
             <label>Assigned To</label>
-            <input readonly asp-for="assigned_to_user_text"/>
-            <input type="hidden" asp-for="assigned_to_user_id"/>
-            <span onclick="clear_dropdown('#assigned_to_user_')" class="readonly_input_edit">Clear&nbsp;</span>
-            <span onclick="start_dropdown('#assigned_to_user_')" class="readonly_input_edit">Select</span>
-         
-            <select class="issue_readonly_input_select" asp-for="assigned_to_user_selected_id" 
-            onchange="dropdown_on_change('#assigned_to_user_')" 
-            onblur="close_dropdown('#assigned_to_user_')"
-            asp-items="@Model.assigned_to_user_list" disabled="@Model.null_or_disabled">
+            <select asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_user_list" disabled="@Model.null_or_disabled">
+                <option value="0">[None]</option>
             </select>
         </div>
         </flex></div>
@@ -177,7 +133,7 @@
 </div>
 
 <div>
-    <div class="fake_link" onclick="prep_for_another()">Create another issue like this one</div>
+    <div class="fake_link" onclick="prep_for_another()">Use this issue as a starting point for new issue</div>
 </div>
 
 @{
@@ -196,7 +152,7 @@
                     <button type="button" onclick="submit_post()">Add Comment</button>
                     
                     <label class="file_upload_label fake_link">
-                        Click here to attach file
+                        Attach file
                         <input type="file" class="file_upload_input" asp-for="uploaded_file" />
                     </label>
                     <span id="file_name"></span>
@@ -216,56 +172,9 @@
             $("#file_name").html(this.files[0].name);
         });
 
-        // hide our dropdowns that show when user clicks "Edit"
-        $(".issue_form").click(function(event){
-            if (event.target.className == "readonly_input_edit"
-            || event.target.className == "issue_readonly_input_select") {
-                 // do nothing
-            } else {
-                $(".issue_readonly_input_select").css("visibility", "hidden")
-            }
-        });
-
         get_posts()
      });
-    
-
-    function start_dropdown(prefix) 
-    {
-        dropdown = $(prefix + "selected_id")
-        dropdown.width("200px")
-        dropdown.css("min-width", "200px")
-        dropdown.css("visibility", "visible")
-    }
-    
-    
-    function dropdown_on_change(prefix)
-    {     
-        dropdown = $(prefix + "selected_id").css("visibility", "hidden");
-        selected_option = $(prefix + "selected_id option:selected");
-        selected_val = selected_option.val()
-        if (selected_val != "0") {
-            $(prefix + "text").val(selected_option.text());
-        }
-        else
-        {
-            $(prefix + "text").val("");
-        }
-        $(prefix + "id").val(selected_val);
-        close_dropdown(prefix);
-    }
  
-    function close_dropdown(prefix) {
-        dropdown = $(prefix + "selected_id").css("visibility", "hidden");
-    }
-
-    function clear_dropdown(prefix)
-    {     
-        $(prefix + "selected_id option:selected").prop("selected", false)
-        $(prefix + "text").val("");
-        $(prefix + "id").val(0);
-    }
-
     function get_posts() {
         $.ajax({
             type: "Get",

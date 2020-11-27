@@ -49,7 +49,16 @@ namespace budoco.Pages
             }
             catch (Exception e)
             {
-                error = e.Message;
+
+                if (e.Message == "Cannot find table 0.")
+                {
+                    // suppres this - this is just what happens when we run a query that does't SELECT 
+                    // like an update   
+                }
+                else
+                {
+                    error = e.Message;
+                }
             }
 
             String html = await _renderer.RenderPartialToStringAsync("_PlainDataTablePartial", this);
