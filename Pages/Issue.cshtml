@@ -148,14 +148,35 @@
                     <textarea name="post_text" id="post_text"></textarea>
                 </div>
 
+                <div id="file_div1">
+                    <span class="fake_link" style="display:none" id="remove_file1" onclick="remove_attachment(1)">Remove</span>
+                    <label class="file_name_label fake_link">
+                        <span class="fake_link" id="attach_file1">Attach File</span>
+                        <input style="display:none" onchange="on_change_file_name(1)" type="file" asp-for="uploaded_file1" />
+                    </label>
+                    <span class="file_name" id="file_name1"></span>
+                </div>
+                
+                <div id="file_div2" style="display:none">
+                    <span class="fake_link" style="display:none" id="remove_file2" onclick="remove_attachment(2)">Remove</span>
+                    <label class="file_name_label fake_link">
+                        <span class="fake_link" id="attach_file2">Attach File</span>
+                        <input style="display:none" onchange="on_change_file_name(2)" type="file" asp-for="uploaded_file2" />
+                    </label>
+                    <span class="file_name" id="file_name2"></span>
+                </div>
+
+                <div id="file_div3" style="display:none">
+                    <span class="fake_link" style="display:none" id="remove_file3" onclick="remove_attachment(3)">Remove</span>
+                    <label class="file_name_label ">
+                        <span class="fake_link" id="attach_file3">Attach File</span>
+                        <input style="display:none" onchange="on_change_file_name(3)" type="file" asp-for="uploaded_file3" />
+                       </label>
+                    <span class="file_name" id="file_name3"></span>
+                </div>
+
                 <div class="post_form_footer">
                     <button type="button" onclick="submit_post()">Add Comment/File</button>
-                    
-                    <label class="file_upload_label fake_link">
-                        Attach file
-                        <input type="file" class="file_upload_input" asp-for="uploaded_file" />
-                    </label>
-                    <span id="file_name"></span>
                 </div>
             
             </form>
@@ -168,9 +189,9 @@
     <script>
         
     $(document).ready(function() {
-        $("#uploaded_file").on('change', function () {
-            $("#file_name").html(this.files[0].name);
-        });
+        //$("#uploaded_file").on('change', function () {
+        //    $("#file_name").html(this.files[0].name);
+        //});
 
         get_posts()
      });
@@ -202,22 +223,41 @@
     function submit_post() {
        
         if ($('#post_text').val().trim() == "" 
-        && $("#file_name").html() == "") {
+        && $("#uploaded_file1").val() == "") {
             alert("Some text or a file is required");
             return;
         }
 
         $.ajax({
             url: '/Issue?id=@Model.id&handler=AddPost',
-            data: new FormData(document.forms[1]),
+            data: new FormData(document.getElementById("post_form")),
             contentType: false,
             processData: false,
             type: 'post',
             
             success: function (posts_as_html) {
-                // blank out the form we just posted from
+                // blank out the form we just posted
                 $("#post_text").val("");
-                $("#file_name").html("");
+
+                $("#file_name1").html("");
+                $("#file_name2").html("");
+                $("#file_name3").html("");
+
+                $("#attach_file1").show();
+                $("#attach_file2").hide();
+                $("#attach_file3").hide();
+                
+                $("#remove_file1").hide();
+                $("#remove_file2").hide();
+                $("#remove_file3").hide();
+
+                $("#file_div2").hide();
+                $("#file_div3").hide();
+
+                $("#uploaded_file1").val("");
+                $("#uploaded_file2").val("");
+                $("#uploaded_file3").val("");
+
                 $("#posts").html(posts_as_html);
             },
             
@@ -250,6 +290,27 @@
         $("#force_create").val("force_create")
         $("#create_or_update_button").html("Create")
     }
+
+    function remove_attachment(suffix) {
+        $("#uploaded_file" + suffix).val("");
+        $("#file_name" + suffix).html("");
+        $("#remove_file" + suffix).hide();
+        $("#attach_file" + suffix).show();
+    }
+
+    function on_change_file_name(suffix) {
+        filename = $("#uploaded_file" + suffix).val();
+        $("#file_name" + suffix).html(filename);
+        $("#attach_file" + suffix).hide();
+        $("#remove_file" + suffix).show();
+        
+        if (suffix == 1)
+            $("#file_div2").show();
+        else if (suffix == 2)
+            $("#file_div3").show();
+
+    }  
+         
     </script>
 
 }

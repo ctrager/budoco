@@ -9,7 +9,7 @@ namespace budoco.Pages
     public class FileModel : PageModel
     {
         [FromQuery]
-        public int p_id { get; set; }
+        public int pa_id { get; set; }
 
         public ActionResult OnGetFile()
         {
@@ -20,8 +20,8 @@ namespace budoco.Pages
                 return null;
             }
 
-
-            var sql = "select p_file_content_type from posts where p_id = " + p_id.ToString();
+            var sql = @"select pa_file_content_type 
+                from post_attachments where pa_id = " + pa_id.ToString();
 
             DataRow dr = bd_db.get_datarow(sql);
 
@@ -31,14 +31,11 @@ namespace budoco.Pages
                 return null;
             }
 
-            sql = "select pa_content from post_attachments where pa_post = " + p_id.ToString();
+            // can i do this in one step?
+            sql = "select pa_content from post_attachments where pa_id = " + pa_id.ToString();
             byte[] bytea = bd_db.get_bytea(sql);
 
-            //var cr = new ContentResult();
-
-            //cr.ContentType = (string)dr["p_file_content_type"];
-            //cr.Content = (bytea);
-            return File(bytea, (string)dr["p_file_content_type"]);
+            return File(bytea, (string)dr["pa_file_content_type"]);
         }
     }
 }

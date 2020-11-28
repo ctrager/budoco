@@ -3,47 +3,45 @@
     {
         foreach (DataRow dr in Model.dt_posts.Rows)
         {
-            string p_id = @dr[0].ToString();
-            string content_type = (string)@dr["p_file_content_type"];
+            int p_id = (int)dr[0];
 
             <div class="post">
-                @{
-                    string p_text = (string)@dr["p_text"];
-                    if (p_text != "")
-                    {
-                        <div class="post_text">
-                            <pre>@p_text</pre>
-                        </div>
-                    }
-                }
-
+                <div class="post_text">
+                    <pre>@dr["p_text"]</pre>
+                </div>
                 <div class="info_text">
-                    Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@dr["p_id"]
+                    Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
                 </div>
 
                 @{
-                    if (content_type != "")
+                    DataTable dt_files = Model.GetPostAttachments(p_id);
+                    foreach (DataRow file_row in dt_files.Rows)
                     {
-                        <div class="info_text">
-                            File: @dr["p_file_name"], Size: @dr["p_file_length"],
-                            Type: @dr["p_file_content_type"]]
-                            &nbsp;&nbsp;
-                            <a href="/File?handler=File&p_id=@p_id" download="@dr["p_file_name"]">Download</a>
-                            &nbsp;&nbsp;
-
-                            @{
-                                if (content_type.Contains("image"))
-                                {
-                                    <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@p_id', this)">View</div>
-                                }
-                            }
-
-                        </div>
-                        if (content_type.Contains("image"))
+                        int pa_id = (int)file_row[0];
+                        string content_type = (string)file_row["pa_file_content_type"];
+                        if (content_type != "")
                         {
-                            <div style="display:none" class="post_image" id="image_div_@p_id">
-                                <img class="post_img" src="/File?handler=File&p_id=@p_id" />
+                            <div class="info_text">
+                                File: @file_row["pa_file_name"], Size: @file_row["pa_file_length"],
+                                Type: @file_row["pa_file_content_type"]]
+                                &nbsp;&nbsp;
+                                <a href="/File?handler=File&pa_id=@pa_id" download="@file_row["pa_file_name"]">Download</a>
+                                &nbsp;&nbsp;
+
+                                @{
+                                    if (content_type.Contains("image"))
+                                    {
+                                        <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@pa_id', this)">View</div>
+                                    }
+                                }
+
                             </div>
+                            if (content_type.Contains("image"))
+                            {
+                                <div style="display:none" class="post_image" id="image_div_@pa_id">
+                                    <img class="post_img" src="/File?handler=File&pa_id=@pa_id" />
+                                </div>
+                            }
                         }
                     }
                 }

@@ -75,7 +75,11 @@ namespace budoco.Pages
         public int status_id { get; set; }
 
         [BindProperty]
-        public IFormFile uploaded_file { get; set; }
+        public IFormFile uploaded_file1 { get; set; }
+        [BindProperty]
+        public IFormFile uploaded_file2 { get; set; }
+        [BindProperty]
+        public IFormFile uploaded_file3 { get; set; }
 
         [BindProperty]
         public string post_text { get; set; }
@@ -337,45 +341,28 @@ namespace budoco.Pages
         public Task<ContentResult> OnPostAddPostAsync()
         {
             var sql = @"insert into posts
-                (p_issue, p_text, p_created_by_user,
-                p_file_name, p_file_length, p_file_content_type)
-                values(@p_issue, @p_text, @p_created_by_user,
-                @p_file_name, @p_file_length, @p_file_content_type)
+                (p_issue, p_text, p_created_by_user)
+                values(@p_issue, @p_text, @p_created_by_user)
                 returning p_id";
 
             var dict = new Dictionary<string, dynamic>();
 
+            if (string.IsNullOrWhiteSpace(post_text))
+            {
+                post_text = "";
+            }
             dict["@p_issue"] = id;
-            if (string.IsNullOrWhiteSpace(post_text)) { post_text = ""; }
             dict["@p_text"] = post_text;
             dict["@p_created_by_user"] = HttpContext.Session.GetInt32("us_id");
 
-            if (uploaded_file is not null)
-            {
-                dict["@p_file_name"] = uploaded_file.FileName;
-                dict["@p_file_length"] = uploaded_file.Length;
-                dict["@p_file_content_type"] = uploaded_file.ContentType;
-            }
-            else
-            {
-                dict["@p_file_name"] = "";
-                dict["@p_file_length"] = 0;
-                dict["@p_file_content_type"] = "";
-            }
-
             int post_id = (int)bd_db.exec_scalar(sql, dict);
 
-            // insert the blob
-            if (uploaded_file is not null)
-            {
-                MemoryStream memory_stream = new MemoryStream();
-                uploaded_file.CopyTo(memory_stream);
-                dict["@pa_post"] = post_id;
-                dict["@pa_content"] = memory_stream.ToArray();
-                sql = @"insert into post_attachments (pa_post, pa_content) 
-                    values(@pa_post, @pa_content)";
-                bd_db.exec(sql, dict);
-            }
+            if (uploaded_file1 is not null)
+                InsertPostAttachment(post_id, id, uploaded_file1);
+            if (uploaded_file2 is not null)
+                InsertPostAttachment(post_id, id, uploaded_file2);
+            if (uploaded_file3 is not null)
+                InsertPostAttachment(post_id, id, uploaded_file3);
 
             // update timestamp on parent issue table
             sql = @"update issues set 
@@ -387,14 +374,38 @@ namespace budoco.Pages
             bd_db.exec(sql, dict);
 
             return OnGetPostsAsync();
-
         }
+
+        void InsertPostAttachment(int post_id, int issue_id, IFormFile uploaded_file)
+        {
+
+            var sql = @"insert into post_attachments
+                (pa_post, pa_issue, pa_file_name, pa_file_length, pa_file_content_type, pa_content)
+                values(@pa_post, @pa_issue, @pa_file_name, @pa_file_length, @pa_file_content_type, @pa_content)";
+
+            var dict = new Dictionary<string, dynamic>();
+
+            dict["@pa_post"] = post_id;
+            dict["@pa_issue"] = issue_id;
+            dict["@pa_file_name"] = uploaded_file.FileName;
+            dict["@pa_file_length"] = uploaded_file.Length;
+            dict["@pa_file_content_type"] = uploaded_file.ContentType;
+
+            MemoryStream memory_stream = new MemoryStream();
+            uploaded_file.CopyTo(memory_stream);
+
+            dict["@pa_content"] = memory_stream.ToArray();
+
+            bd_db.exec(sql, dict);
+        }
+
         public async Task<ContentResult> OnGetPostsAsync()
         {
 
             var sql = @"select posts.*, us_username
                     from posts 
                     inner join users on us_id = p_created_by_user
+
                     where p_issue = " + id.ToString()
                     + " order by p_id asc";
 
@@ -402,6 +413,17 @@ namespace budoco.Pages
 
             String html = await _renderer.RenderPartialToStringAsync("_IssuePostsPartial", this);
             return Content(html);
+        }
+
+        public DataTable GetPostAttachments(int p_id)
+        {
+            var sql = @"select pa_id, pa_file_name, pa_file_length, pa_file_content_type
+                    from post_attachments
+                    where pa_post = " + p_id.ToString()
+                    + " order by pa_id asc";
+
+            return bd_db.get_datatable(sql);
+
         }
 
     }

@@ -122,19 +122,29 @@ create table posts
 p_id serial,
 p_issue int not null,
 p_text text not null default '',
-p_file_name text not null default '',
-p_file_length int not null default 0,
-p_file_content_type text not null default '',
 p_email_to text not null default '',
 p_email_from text not null default '',
 p_email_subject text not null default '',
 p_email_body text not null default '',
 p_created_by_user int not null,
-p_created_date timestamptz default CURRENT_TIMESTAMP,
-p_tsvector_for_search tsvector null
+p_created_date timestamptz default CURRENT_TIMESTAMP
 );
 
 create index p_issue_index on posts (p_issue);
+
+create table post_attachments
+(
+pa_id serial,
+pa_post int not null,
+pa_issue int not null, 
+pa_file_name text not null default '',
+pa_file_length int not null default 0,
+pa_file_content_type text not null default '',
+pa_content bytea null
+);
+
+create index pa_post_index on post_attachments (pa_post);
+
 
 create table emailed_links
 (
@@ -148,15 +158,6 @@ el_password varchar(48) null
 );
 
 create unique index el_guid_index on emailed_links (el_guid);
-
-create table post_attachments
-(
-pa_id serial,
-pa_post int not null,
-pa_content bytea null
-);
-
-create unique index pa_post_index on post_attachments (pa_post);
 
 
 insert into users (us_username, us_email, us_is_admin, us_password) 
@@ -183,8 +184,5 @@ insert into organizations (og_name) values ('org 2');
 insert into organizations (og_name) values ('org 3');
 
 insert into queries (qu_name, qu_sql) values (
-'select * from issues - load sql/queries.sql file for better queries',
-'select * from issues '
-|| chr(10) || ' from issues '
-|| chr(10) || ' order by i_id desc');
-
+'Raw "select * from issues" Please run queries.sql',
+'select * from issues order by i_id desc');

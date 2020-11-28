@@ -24,27 +24,14 @@ div {
 }
 
 
-
-
+a,
+button,
+.fake_link,
 a:visited {
-  color: #0000ff;
-  text-decoration: none;
-}
-
-
-a,
-button,
-.fake_link {
-  color: #0000ff;
-  text-decoration: none;
-}
-
-a,
-button,
-.fake_link {
   color: blue;
   text-decoration: none;
 }
+
 
 a:hover,
 button:hover,
@@ -295,9 +282,17 @@ pre {
   padding: 5px;
 }
 
-
+/*
 input[type=file] {
   display: none;
+}
+*/
+
+/* "Attach file */
+.file_name_label {
+  width: auto;
+  margin-right: 0px;
+  display: inline;
 }
 
 .post_form>div>button {
