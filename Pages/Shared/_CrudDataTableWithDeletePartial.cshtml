@@ -1,5 +1,18 @@
 <partial name="_FlashPartial" />
 
+<script>
+    function delete_row(id) {
+        if (confirm("Are you sure?")) {
+            $("#delete_id").val(id);
+            $("#delete_form").submit();
+        }
+    }
+</script>
+
+<form style="display:none" id="delete_form" method="post">
+    <input id="delete_id" name="delete_id" value="-1" />
+</form>
+
 <div class="data_table_div">
 
     <table class="dt">
@@ -36,6 +49,11 @@
                         <a href="@(Model.singular_table_name + "?id=" + dr[0])">
                             Update
                         </a>
+                        &nbsp;&nbsp;
+                        <a href="#" onclick="delete_row(@dr[0])">
+                            Delete
+                        </a>
+
                     </td>
                 </tr>
             }
