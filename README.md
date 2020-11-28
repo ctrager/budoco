@@ -162,3 +162,7 @@ uses an inactive option
 
 * Email/Slack notifications about changes, or reminders that a issue is growing stale. I don't like to enable nagging.
 
+url parser
+https://mathiasbynens.be/demo/url-regex
+https://gist.github.com/dperini/729294
+Copyright (c) 2010-2018 Diego Perini (http://www.iport.it)
