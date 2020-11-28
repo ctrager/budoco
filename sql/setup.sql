@@ -113,7 +113,8 @@ i_organization int not null default 0,
 i_assigned_to_user int null default 0,
 i_last_updated_user int null default 0,
 i_last_updated_date timestamptz null,
-i_tsvector_for_search tsvector null
+i_last_post_user int null default 0,
+i_last_post_date timestamptz null
 );
 
 create table posts 

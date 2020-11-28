@@ -15,7 +15,13 @@ namespace budoco
 
     public static class bd_db
     {
+        static string date_format;
 
+        // "static constructor"
+        static bd_db()
+        {
+            date_format = bd_config.get("DateFormat");
+        }
         public static string get_connection_string()
         {
             //"server=127.0.0.1;database=budoco;user id='postgres';password='password';"
@@ -162,5 +168,30 @@ namespace budoco
                 return bytea;
             }
         }
+
+        public static dynamic format(dynamic data)
+        {
+
+            if (data is Boolean) // typedata.Type.ToString() == "System.Boolean")
+            {
+                if (data == true)
+                {
+                    return "Y";
+                }
+                else
+                {
+                    return "N";
+                }
+            }
+            else
+            if (data is DateTime)
+            {
+                return data.ToString(date_format);
+            }
+
+            return data.ToString();
+
+        }
+
     }
 }

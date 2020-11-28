@@ -54,6 +54,7 @@ namespace budoco
         public static void load_config()
         {
             bd_util.console_write_line("bd_config.load_config()");
+            dict.Clear();
 
             var lines = File.ReadLines("budoco_config_active.txt");
 
@@ -114,6 +115,7 @@ namespace budoco
         {
             return dict[key];
         }
+
 
     }
 }

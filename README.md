@@ -133,15 +133,11 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* Revisit reportonly, issue.cs , user class, 
-default is_admin, active, report_only from active_settings
+* Add is_active == false options to dropdowns if current user has them
 
 * Finish admin pages, delete query
 
-
-* date formats, True/Fals
-
-* Track last post user/date and status change user/date as fields on issue. It's not a notification system but it's a decent way of seeing what has most recently changed.
+* date formats, True/False
 
 * More query examples in queries.sql. Format long text, dates, true/false. 
 

@@ -61,6 +61,9 @@ RowsPerPage: 30
   
 LogLocation: budoco_logs/budoco.txt
 
+#https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+DateFormat=yyyy-MM-dd HH:mm
+
 # if 1, newly registered users start as inactive until admin sets to active
 NewUserStartsInactive: 0
 NewUserStartsReportOnly: 0

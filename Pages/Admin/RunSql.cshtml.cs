@@ -52,7 +52,7 @@ namespace budoco.Pages
 
                 if (e.Message == "Cannot find table 0.")
                 {
-                    // suppres this - this is just what happens when we run a query that does't SELECT 
+                    // suppress this - this is just what happens when we run a query that does't SELECT 
                     // like an update   
                 }
                 else

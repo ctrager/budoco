@@ -122,11 +122,14 @@ namespace budoco.Pages
                 coalesce(created_by.us_username, '') as ""created_by_username"",
                 coalesce(last_updated.us_username, '') as ""last_updated_username"",
                 coalesce(assigned_to.us_username, '') as ""assigned_to_username"",
-                coalesce(ca_name, '') as ""category_name"",
-                coalesce(pj_name, '') as ""project_name"",
-                coalesce(og_name, '') as ""organization_name"",
-                coalesce(pr_name, '') as ""priority_name"",
-                coalesce(st_name, '') as ""status_name"",
+                coalesce(assigned_to.us_is_active, true) as ""assigned_to_is_active"",
+                
+                coalesce(ca_is_active, true) as ""ca_is_active"",
+                coalesce(pj_is_active, true) as ""pj_is_active"",
+                coalesce(og_is_active, true) as ""og_is_active"",
+                coalesce(pr_is_active, true) as ""pr_is_active"",
+                coalesce(st_is_active, true) as ""st_is_active"",
+         
                 created_by.us_username as ""created_by_username""
   
               from issues 
@@ -171,39 +174,16 @@ namespace budoco.Pages
                 {
                     null_or_disabled = "disabled";
                 }
+
+                // if this issue uses an option where is_active == false,
+                // we still want to show it
+
             }
             else
             {
-
-                //Defaults values
-
-                DataRow dr = bd_db.get_datarow("select * from statuses where st_is_default is true order by st_name limit 1");
-                if (dr is not null)
-                {
-                    status_id = (int)dr[0];
-                }
-                dr = bd_db.get_datarow("select * from projects where pj_is_default is true order by pj_name limit 1");
-                if (dr is not null)
-                {
-                    project_id = (int)dr[0];
-                }
-                dr = bd_db.get_datarow("select * from organizations where og_is_default is true order by og_name limit 1");
-                if (dr is not null)
-                {
-                    organization_id = (int)dr[0];
-                }
-                dr = bd_db.get_datarow("select * from priorities where pr_is_default is true order by pr_name limit 1");
-                if (dr is not null)
-                {
-                    priority_id = (int)dr[0];
-                }
-                dr = bd_db.get_datarow("select * from categories where ca_is_default is true order by ca_name limit 1");
-                if (dr is not null)
-                {
-                    category_id = (int)dr[0];
-                }
-
+                SelectDefaultDropdownOptions();
             }
+
             // for prev, next issue
             List<int> issue_list = bd_session.Get("issue_list");
             if (issue_list is not null)
@@ -223,6 +203,37 @@ namespace budoco.Pages
                         prev_issue_id_in_list = issue_list[current_position_in_list - 1];
                     }
                 }
+            }
+        }
+
+        void SelectDefaultDropdownOptions()
+        {
+            //Defaults values for dropdowns
+
+            DataRow dr = bd_db.get_datarow("select * from statuses where st_is_default is true order by st_name limit 1");
+            if (dr is not null)
+            {
+                status_id = (int)dr[0];
+            }
+            dr = bd_db.get_datarow("select * from projects where pj_is_default is true order by pj_name limit 1");
+            if (dr is not null)
+            {
+                project_id = (int)dr[0];
+            }
+            dr = bd_db.get_datarow("select * from organizations where og_is_default is true order by og_name limit 1");
+            if (dr is not null)
+            {
+                organization_id = (int)dr[0];
+            }
+            dr = bd_db.get_datarow("select * from priorities where pr_is_default is true order by pr_name limit 1");
+            if (dr is not null)
+            {
+                priority_id = (int)dr[0];
+            }
+            dr = bd_db.get_datarow("select * from categories where ca_is_default is true order by ca_name limit 1");
+            if (dr is not null)
+            {
+                category_id = (int)dr[0];
             }
         }
 
@@ -254,6 +265,7 @@ namespace budoco.Pages
             }
             else
             {
+
                 sql = @"update issues set 
                 i_description = @i_description, 
                 i_details = @i_details,
@@ -363,6 +375,15 @@ namespace budoco.Pages
                     values(@pa_post, @pa_content)";
                 bd_db.exec(sql, dict);
             }
+
+            // update timestamp on parent issue table
+            sql = @"update issues set 
+            i_last_post_user = @i_last_post_user,
+            i_last_post_date = CURRENT_TIMESTAMP
+            where i_id = " + id.ToString();
+            dict["@i_last_post_user"] = HttpContext.Session.GetInt32("us_id");
+
+            bd_db.exec(sql, dict);
 
             return OnGetPostsAsync();
 
