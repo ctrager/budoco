@@ -165,6 +165,7 @@ namespace budoco.Pages
                 last_updated_date = dr["i_last_updated_date"].ToString();
 
                 description = (string)dr["i_description"];
+
                 details = (string)dr["i_details"];
 
                 category_id = (int)dr["i_category"];
@@ -209,6 +210,7 @@ namespace budoco.Pages
                 }
             }
         }
+
 
         void SelectDefaultDropdownOptions()
         {

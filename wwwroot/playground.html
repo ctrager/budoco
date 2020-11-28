@@ -1,86 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
- <!--
-  <link rel="stylesheet" href="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.css" />
-  <link rel="stylesheet" href="../lib/codemirror/codemirror.css" />
- -->
-   <!-- <link rel="stylesheet" href="css/budoco.css" /> -->
-  
-      <script src="../lib/jquery/dist/jquery.min.js"></script>
-  <!--
-      <script src="../lib/codemirror/codemirror.js"></script>
-    <script src="../lib/codemirror/sql.js"></script>
-    <script src="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-  -->
-<style>
-.container {
-  display: flex;
-  flex-direction: row;
-}
-.parent {
-  position: relative;
-  margin-left: 20px;
-  background-color: lightgray;
-}
-.child{
-  flex-grow: 0;
-  margin-right: 20px;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
-#my_select{
-  position: absolute;
-  z-index: 99;
-  width: 5px;
-  display: inline-block;
-  visibility: hidden;
-  background-color: yellow;
-  opacity: 75%; /* so that you can see that other stuff didn't move */
-}
+  <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.min.css" />
+  
+  <script src="lib/jquery/dist/jquery.min.js"></script>
+  <script src="lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+  
+<style>
+  body, div {font-size: 24px}
 </style> 
 <script>
-function my_open() 
-{
-	alert("hello")
-  el = $("#my_select")
-  el.width("100px")
-  el.css("visibility", "visible")
-}
-function my_close() 
-{
 
-  el = $("#my_select")
-  el.width("5px")
-  el.css("visibility", "hidden")
+function handle_events(event, ui) {
+console.log(event, ui)
 }
+
+function start_select() {
+$( "#my_select" ).selectmenu({
+  create: handle_events,
+  close: handle_events,
+  change: handle_events
+
+})};
+
+function open_select() {
+  $("#my_select").selectmenu("open")
+}
+
 </script>
 </head>
 <body>
-  <textarea>My text</textarea>
-  <br>
   <div class="container">
-  
-    <span class="parent">
-      <span class="child">xxaaaaaa</span>
-      <select id="my_select">
-        <option>11111111111</option>
-        <option>11111111111</option>
-        <option>11111111111</option>
-      </select>
-    </span>
-    
-    <span class="parent">
-      <span class="child">ddddd</span>
-      <span class="child">eeeeee</span>
-      <span class="child">fffff</span>
-    </span>
-  
-  
-  </div>
-  <button onclick="my_open()">open</button>
-  <button onclick="my_close()">close</button>
-  <br>
-  <textarea>My text</textarea>
-  
+    <button onclick="start_select()">start</button>
+    <button onclick="open_select()">open</button>  
+    <br>
+    <select id="my_select">
+      <option value="1">111</option>
+      <option value="1">111 2222</option>
+      <option value="1">1111 222 333</option>
+    </select>
+    <br>
+
+
+
+  <div>
 </body>
 </html>

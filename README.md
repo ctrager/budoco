@@ -133,19 +133,22 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* Add is_active == false options to dropdowns if current user has them
-
-* Finish admin pages, delete query
+* linkify http stuff in comments
+* linkify id#123 in comments
+* and info text about id#123
 
 * More query examples in queries.sql. Format long text, dates, true/false. 
 
-* Explore jquery menu widget, because I hate that extra click to open the dropdown.
+* Finish admin pages, delete query
 
 * Send emails from the Issue page, that become part of the Issue posts.
 
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 
 * Turn emails from trusted senders into issues.
+
+* Handle inactive options, add to dropdowns if issue being viewed
+uses an inactive option
 
 * make sure registration doesn't collide with user - need inactive user placeholder
 

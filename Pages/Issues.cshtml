@@ -66,7 +66,7 @@
                             for (int i = 0; i < Model.dt.Columns.Count; i++)
                             {
                                 string class_name = (@Model.sort == i ? "sorted" : "unsorted");
-                                <th class="@class_name" onclick="on_sort(@i)">@Model.dt.Columns[i].ColumnName</th>
+                                <th class="@class_name fake_link" onclick="on_sort(@i)">@Model.dt.Columns[i].ColumnName</th>
                             }
                         }
                         <th>Action</th>
