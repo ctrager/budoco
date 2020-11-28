@@ -137,8 +137,6 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 * Finish admin pages, delete query
 
-* date formats, True/False
-
 * More query examples in queries.sql. Format long text, dates, true/false. 
 
 * Explore jquery menu widget, because I hate that extra click to open the dropdown.

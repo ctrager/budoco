@@ -38,10 +38,13 @@
     <div>
  
     <div>
-        <textarea class="pre" asp-for="sql"></textarea>
+        <textarea onchange="mark_sql_dirty()" class="pre" asp-for="sql"></textarea>
     </div>
-    <button type="button" onclick="submit_post()">Run SQL - Don't Save</button>
-    <button>Save in Database</button>
+    <div class="info_text">
+        Your query has to work before you can save it.
+    </div>
+    <button type="button" onclick="run_sql()">Run SQL - Don't Save</button>
+    <button type="button" onclick="maybe_save()">Save in Database</button>
                 
 </form>
 </div>
@@ -51,7 +54,27 @@
 
 @section Scripts {
 <script>
-    function submit_post() {
+    var sql_is_dirty = false;
+    function mark_sql_dirty() {
+        sql_is_dirty = true;
+    }
+
+    function maybe_save() {
+        rows = $("#results_table").length;
+        if (sql_is_dirty || rows == 0) {
+            if (confirm("You don't seem to have tested your latest sql change yet.\n\n" +
+            "Are you sure you want to save?")) {
+                $("#sql_form").submit();
+                sql_is_dirty = false;
+            }
+        }
+        else {
+            $("#sql_form").submit();
+            sql_is_dirty = false;
+        }
+    }
+
+    function run_sql() {
 
         $.ajax({
             url: 'RunSql?handler=Run',

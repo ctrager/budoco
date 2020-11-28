@@ -149,7 +149,7 @@
                 </div>
 
                 <div class="post_form_footer">
-                    <button type="button" onclick="submit_post()">Add Comment</button>
+                    <button type="button" onclick="submit_post()">Add Comment/File</button>
                     
                     <label class="file_upload_label fake_link">
                         Attach file
@@ -200,6 +200,13 @@
     }
     
     function submit_post() {
+       
+        if ($('#post_text').val().trim() == "" 
+        && $("#file_name").html() == "") {
+            alert("Some text or a file is required");
+            return;
+        }
+
         $.ajax({
             url: '/Issue?id=@Model.id&handler=AddPost',
             data: new FormData(document.forms[1]),

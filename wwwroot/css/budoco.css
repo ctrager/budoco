@@ -34,42 +34,40 @@ a:visited {
 
 a,
 button,
-.fake_link,
-.readonly_input_edit {
-  color: #0000ff !important;
+.fake_link {
+  color: #0000ff;
   text-decoration: none;
 }
 
 a,
 button,
-.fake_link,
-.readonly_input_edit {
-  color: blue !important;
+.fake_link {
+  color: blue;
   text-decoration: none;
 }
 
 a:hover,
 button:hover,
 .fake_link:hover {
-  color: #ff6633 !important;
+  color: red;
   text-decoration: none;
+  cursor: pointer;
 }
 
+button:hover {
+  color: red;
+  /* don't change cursor */
+}
 
 .show_hide_image {
   display: inline;
-  font-size: 12px;
-  color: blue !important;
+  font-size: 13px;
 }
 
 .show_hide_image:hover {
   display: inline;
-  font-size: 12px;
-  color: #ff6633 !important;
-  cursor: pointer;
-
+  font-size: 13px;
 }
-
 
 table {
   border-collapse: collapse;

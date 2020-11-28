@@ -7,9 +7,16 @@
             string content_type = (string)@dr["p_file_content_type"];
 
             <div class="post">
-                <div class="post_text">
-                    <pre>@dr["p_text"]</pre>
-                </div>
+                @{
+                    string p_text = (string)@dr["p_text"];
+                    if (p_text != "")
+                    {
+                        <div class="post_text">
+                            <pre>@p_text</pre>
+                        </div>
+                    }
+                }
+
                 <div class="info_text">
                     Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@dr["p_id"]
                 </div>
@@ -27,9 +34,7 @@
                             @{
                                 if (content_type.Contains("image"))
                                 {
-                                    <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@p_id', this)">View
-
-                                    </div>
+                                    <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@p_id', this)">View</div>
                                 }
                             }
 

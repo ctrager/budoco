@@ -346,6 +346,7 @@ namespace budoco.Pages
             var dict = new Dictionary<string, dynamic>();
 
             dict["@p_issue"] = id;
+            if (string.IsNullOrWhiteSpace(post_text)) { post_text = ""; }
             dict["@p_text"] = post_text;
             dict["@p_created_by_user"] = HttpContext.Session.GetInt32("us_id");
 
