@@ -49,4 +49,9 @@
             </div>
         }
     }
+
+    if (!string.IsNullOrEmpty(Model.post_error))
+    {
+        <div class="flash_err">@Model.post_error</div>
+    }
 }

@@ -355,6 +355,14 @@ textarea {
   height: 180px;
 }
 
+#post_email_to_label {
+  min-width: unset;
+}
+
+#post_email_to {
+  width: 865px;
+}
+
 .issue_form>div>label {
   min-width: 95px;
   margin-right: 0px;

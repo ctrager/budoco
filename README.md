@@ -137,9 +137,7 @@ However there isn't any per-issue permission system yet. Although your query lim
 * linkify id#123 in comments
 * and info text about id#123
 
-* More query examples in queries.sql. Format long text, dates, true/false. 
-
-* Finish admin pages, delete query
+* More query examples in queries.sql. 
 
 * Send emails from the Issue page, that become part of the Issue posts.
 

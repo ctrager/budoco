@@ -10,6 +10,7 @@ using System.Linq;
 using RazorPartialToString.Services;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.Win32.SafeHandles;
 
 namespace budoco.Pages
 {
@@ -82,6 +83,10 @@ namespace budoco.Pages
         public IFormFile uploaded_file3 { get; set; }
 
         [BindProperty]
+        public string post_type { get; set; }
+        [BindProperty]
+        public string post_email_to { get; set; }
+        [BindProperty]
         public string post_text { get; set; }
 
         // bindings end        
@@ -97,6 +102,7 @@ namespace budoco.Pages
         public string last_updated_date;
         public int prev_issue_id_in_list;
         public int next_issue_id_in_list;
+        public string post_error = "";
 
         public void OnGet()
         {
@@ -342,9 +348,14 @@ namespace budoco.Pages
 
         public Task<ContentResult> OnPostAddPostAsync()
         {
+            if (!IsValidPost())
+            {
+                return OnGetPostsAsync();
+            }
+
             var sql = @"insert into posts
-                (p_issue, p_text, p_created_by_user)
-                values(@p_issue, @p_text, @p_created_by_user)
+                (p_issue, p_post_type, p_text, p_created_by_user)
+                values(@p_issue, @p_post_type, @p_text, @p_created_by_user)
                 returning p_id";
 
             var dict = new Dictionary<string, dynamic>();
@@ -354,6 +365,8 @@ namespace budoco.Pages
                 post_text = "";
             }
             dict["@p_issue"] = id;
+            dict["@p_post_type"] = post_type;
+            dict["@p_email_to"] = post_email_to;
             dict["@p_text"] = post_text;
             dict["@p_created_by_user"] = HttpContext.Session.GetInt32("us_id");
 
@@ -375,7 +388,32 @@ namespace budoco.Pages
 
             bd_db.exec(sql, dict);
 
+            if (post_type == "email")
+            {
+                SendIssueEmail();
+            }
+
             return OnGetPostsAsync();
+        }
+
+        bool IsValidPost()
+        {
+            if (post_type == "email")
+            {
+                if (string.IsNullOrWhiteSpace(post_email_to))
+                {
+                    // post_error instead of set_flash_err because user is at the bottom
+                    // of the page, can't see the error at the top
+                    post_error = @"Email ""To"" is required.";
+
+                    return false;
+                }
+            }
+            return true;
+        }
+        void SendIssueEmail()
+        {
+            post_error = "Email isn't being sent yet. This feature is under construction";
         }
 
         void InsertPostAttachment(int post_id, int issue_id, IFormFile uploaded_file)
@@ -414,7 +452,15 @@ namespace budoco.Pages
             dt_posts = bd_db.get_datatable(sql);
 
             String html = await _renderer.RenderPartialToStringAsync("_IssuePostsPartial", this);
-            return Content(html);
+
+            if (post_error != "")
+            {
+                return Content("<!--error-->" + html);
+            }
+            else
+            {
+                return Content(html);
+            }
         }
 
         public DataTable GetPostAttachments(int p_id)

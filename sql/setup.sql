@@ -22,7 +22,9 @@ us_is_admin boolean default false,
 us_is_active boolean default true,
 us_is_report_only boolean default false,
 us_organization int not null default 0,
-us_created_date timestamptz default CURRENT_TIMESTAMP not null
+us_created_date timestamptz default CURRENT_TIMESTAMP not null,
+/* for matching up incoming emails with the issue, in combo with issue number */
+us_random_string varchar(4) not null default substr(md5(random()::text), 0, 5)
 );
 
 CREATE UNIQUE INDEX us_username_index ON users (us_username);
@@ -121,11 +123,9 @@ create table posts
 (
 p_id serial,
 p_issue int not null,
+p_post_type varchar(8) not null,
 p_text text not null default '',
 p_email_to text not null default '',
-p_email_from text not null default '',
-p_email_subject text not null default '',
-p_email_body text not null default '',
 p_created_by_user int not null,
 p_created_date timestamptz default CURRENT_TIMESTAMP
 );

@@ -143,7 +143,16 @@
 
         <div class="form_div">
             <form class="post_form" id="post_form" method="post" enctype="multipart/form-data">
-                
+                <div>
+                    <input onchange="comment_or_email(this)" type="radio" id="comment" name="post_type" value="comment" checked>
+                    <label for="comment">Comment</label>
+                    <input onchange="comment_or_email(this)" type="radio" id="email" name="post_type" value="email">
+                    <label for="email">Email</label><br>
+                </div>
+                <div id="email_fields" style="display:none">
+                    <label id="post_email_to_label">To:</label>
+                    <input asp-for="post_email_to" value="">
+                </div>
                 <div>
                     <textarea name="post_text" id="post_text"></textarea>
                 </div>
@@ -176,14 +185,13 @@
                 </div>
 
                 <div class="post_form_footer">
-                    <button type="button" onclick="submit_post()">Add Comment/File</button>
+                    <button type="button" onclick="submit_post()">Submit</button>
                 </div>
             
             </form>
         </div>
      }
 }
-
 
 @section Scripts {
     
@@ -200,8 +208,7 @@
  
             success: function (posts_as_html) {
                 // blank out form
-                $("#post_text").val("");
-                $("#file_name").html("");
+                blank_out_post_form();
                 $("#posts").html(posts_as_html)
             },
             
@@ -216,7 +223,31 @@
             }
         });
     }
-    
+    function blank_out_post_form () {
+        // blank out the form we just posted
+        $("#post_email_to").val("");
+        $("#post_text").val("");
+
+        $("#file_name1").html("");
+        $("#file_name2").html("");
+        $("#file_name3").html("");
+
+        $("#attach_file1").show();
+        $("#attach_file2").hide();
+        $("#attach_file3").hide();
+        
+        $("#remove_file1").hide();
+        $("#remove_file2").hide();
+        $("#remove_file3").hide();
+
+        $("#file_div2").hide();
+        $("#file_div3").hide();
+
+        $("#uploaded_file1").val("");
+        $("#uploaded_file2").val("");
+        $("#uploaded_file3").val("");
+    }
+
     function submit_post() {
        
         if ($('#post_text').val().trim() == "" 
@@ -233,28 +264,10 @@
             type: 'post',
             
             success: function (posts_as_html) {
-                // blank out the form we just posted
-                $("#post_text").val("");
-
-                $("#file_name1").html("");
-                $("#file_name2").html("");
-                $("#file_name3").html("");
-
-                $("#attach_file1").show();
-                $("#attach_file2").hide();
-                $("#attach_file3").hide();
-                
-                $("#remove_file1").hide();
-                $("#remove_file2").hide();
-                $("#remove_file3").hide();
-
-                $("#file_div2").hide();
-                $("#file_div3").hide();
-
-                $("#uploaded_file1").val("");
-                $("#uploaded_file2").val("");
-                $("#uploaded_file3").val("");
-
+                console.log(posts_as_html)
+                if (!posts_as_html.startsWith("<!--error-->")) {
+                    blank_out_post_form();
+                }
                 $("#posts").html(posts_as_html);
             },
             
@@ -308,6 +321,15 @@
 
     }  
          
+    function comment_or_email(el) {
+        var post_type = $(el).val();
+        if (post_type == "email") {
+            $("#email_fields").show();
+        }
+        else {
+            $("#email_fields").hide();
+        }
+    }
     </script>
 
 }
