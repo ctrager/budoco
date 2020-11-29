@@ -35,9 +35,10 @@ end loop;
 my_int := 0;
 loop
    my_int := my_int + 1;
-   insert into posts (p_issue, p_text, p_created_by_user)
+   insert into posts (p_issue, p_post_type, p_text, p_created_by_user)
    values(
       number_of_issues,
+      'comment',
       substr(md5(random()::text), 0, floor(random() * 30 + 1)::int),
       1);
    if my_int > 10 then

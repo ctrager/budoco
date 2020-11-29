@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http.Extensions;
 using Serilog;
 using RazorPartialToString.Services;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 namespace budoco
 {
@@ -62,6 +64,12 @@ namespace budoco
 
             services.AddTransient<IRazorPartialToStringRenderer, RazorPartialToStringRenderer>();
 
+            // if nginx is not on same machine
+            // services.Configure<ForwardedHeadersOptions>(options =>
+            // {
+            //     options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
+            // });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,16 +77,27 @@ namespace budoco
         {
             bd_util.console_write_line("Configure");
 
+
+
+            // https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-5.0
+            // for nginx
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             //if (env.IsDevelopment())
             //{
-            app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Error");
-            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            //    app.UseHsts();
-            //}
+            if (bd_config.get("UseDeveloperExceptionPage") == 1)
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
             app.UseSession();
 

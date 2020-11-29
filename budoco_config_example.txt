@@ -53,6 +53,11 @@ WebsiteUrlRootWithoutSlash: https://YOURDOMAIN.COM
 # End of important settings
 ###############################################################################
 
+# When this is 1, you see the stack trace in the web page, but it might
+# be too much info for production. When this is 0, you just see that there
+# was an error and you have to look in the logs for the details.
+UseDeveloperExceptionPage: 1
+
 # Rename the app
 AppName: Budoco
 
