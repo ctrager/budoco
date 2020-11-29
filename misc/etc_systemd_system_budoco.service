@@ -1,0 +1,24 @@
+
+[Unit]
+Description=Budoco at /root/publish
+
+[Service]
+#WorkingDirectory=/var/www/helloapp
+WorkingDirectory=/root/publish
+
+#ExecStart=/usr/bin/dotnet /var/www/helloapp/helloapp.dll
+ExecStart=/root/publish/budoco
+
+Restart=always
+
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+#SyslogIdentifier=dotnet-example
+SyslogIdentifier=budoco
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

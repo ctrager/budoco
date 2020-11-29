@@ -1,3 +1,6 @@
+# this is what my file looked like after sudo certbot --nginx
+# seems to work
+
 server {
     server_name   budoco.net *.budoco.net;
     location / {
