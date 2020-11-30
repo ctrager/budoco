@@ -133,11 +133,23 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
+* More query examples in queries.sql.
+
+* everything 
+* open
+* everything assigned to me
+* everything in my org
+* most recently changed
+* most recently posted to
+* with biggest attachments
+
+
 * linkify http stuff in comments
 * linkify id#123 in comments
 * and info text about id#123
+ 
 
-* More query examples in queries.sql. 
+* User settins page. Favorite query. 
 
 * Send emails from the Issue page, that become part of the Issue posts.
 
