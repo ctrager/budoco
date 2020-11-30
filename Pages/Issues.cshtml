@@ -5,16 +5,13 @@
     ViewData["Title"] = "Issues";
 }
 
-<h1>Issues</h1>
 <partial name="_FlashPartial" />
+
+<div class="content_just_left"> 
 
 @{
     if (HttpContext.Response.StatusCode == 200)
     {
-        <div>
-            <a href="Issue">Create Issue</a>
-        </div>
-
         <div>
             View:
             <select onchange="on_query_change()" asp-for="query_id" asp-items="@Model.queries">
@@ -142,4 +139,5 @@
     }
 </script>
 
+</div>
 }

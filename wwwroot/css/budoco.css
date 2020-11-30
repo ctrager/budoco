@@ -138,7 +138,8 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
 .content_just_left {
 
     position: absolute;
-    left: 15px;
+    left: 10px;
+
 }
 
 /* FORMS */
