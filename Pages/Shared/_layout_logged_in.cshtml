@@ -1,5 +1,4 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@using Microsoft.AspNetCore.Http;
 
 @{
     bool is_admin = bd_util.is_user_admin(HttpContextAccessor.HttpContext);

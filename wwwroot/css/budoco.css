@@ -6,6 +6,7 @@ body {
 
 body,
 button,
+input,
 select {
     font-family: Arial, sans-serif;
     font-size: 16px;
@@ -23,6 +24,10 @@ td {
 th {
     vertical-align: bottom;
     font-weight: normal;
+}
+
+input {
+    width: 240px;
 }
 
 a,
@@ -85,6 +90,7 @@ div {
     letter-spacing: 2px;
     background-color: lightgreen;
     height: 40px;
+    width: 140px;
 
 }
 
@@ -120,12 +126,19 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
 .content_parent {
     /* ...and this is its parent container. */
     text-align: center;
+    position: relative;
 }
 
 .content_child {
     /* This is the item to center... */
     display: inline-block;
     text-align: left;
+}
+
+.content_just_left {
+
+    position: absolute;
+    left: 15px;
 }
 
 /* FORMS */
@@ -137,6 +150,8 @@ form {
     padding-left: 10px;
     padding-bottom: 3px;
     padding-right: 10px;
+    margin-bottom: 10px;
+
 }
 
 .form_table,
@@ -183,6 +198,7 @@ form {
 
 .issue_description_input {
     width: 800px;
+    padding: 2px;
 }
 
 .issue_textarea {
@@ -307,4 +323,14 @@ pre {
 textarea#sql {
     width: 900px;
     height: 120px;
+}
+
+
+.login_register {
+    margin-top: 20px;
+    padding: 10px;
+    background: #eeffee;
+    border-radius: 6px;
+    width: 400px;
+    border: 1px solid gray;
 }

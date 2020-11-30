@@ -10,15 +10,17 @@
 <partial name="_FlashPartial" />
 
 
-<div class="form_div">
-<form class="search_form" method="post">
-    
-    <div>
-        <label>Search Keywords:</label>
-        <input asp-for="search_terms"/>
-    </div>
 
-    <div class="info_text">
+<form class="search_form" method="post">
+    <table class="form_table">
+        
+    <tr>
+        <td><label>Search Keywords:</label>
+        <td><input asp-for="search_terms"/>
+    </tr>
+
+    <tr class="info_text">
+        <td colspan=2>
         These examples are from <a href="https://www.postgresql.org/docs/12/textsearch-controls.html#TEXTSEARCH-PARSING-QUERIES">PostgreSQL's documentation</a>,
         but only the first two seem to be working in Budoco. Why?
         <br>
@@ -29,11 +31,13 @@
         dog -cat => search for text that contains dog but NOT cat
         <br>
         "dog cat" => search for text that contains the phrase "dog cat"
-    </div>
+        </td>
+    </tr>
 
-    <div>
-        <button>Search</button>
-    </div>
+    <tr>
+        <td><button>Search</button>
+    </tr>
+    </table>
 </form>
 </div>
 

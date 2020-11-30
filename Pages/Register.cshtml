@@ -12,20 +12,26 @@
 <h1>Register</h1>
 <partial name="_FlashPartial" />
 
-<div class="form_div">
-    <form class="register_form" method="post">
-        <div><label>Username</label>
-            <input asp-for="username" />
-        </div>
-        <div><label>Email</label>
-            <input type="email" asp-for="email" />
-        </div>
-        <div><label>Create a password</label>
-            <input type="password" asp-for="password" />
-        </div>
-        <div><button type="submit">Register</button></div>
-    </form>
-</div>
+
+<form class="register_form" method="post">
+    <table class="form_table">
+    <tr>
+        <td><label>Username</label>
+        <td><input asp-for="username" />
+    </tr>
+    <tr>
+        <td><label>Email</label>
+        <td><input type="email" asp-for="email" />
+    </tr>
+    <tr>
+        <td><label>Create a password</label>
+        <td><input type="password" asp-for="password" />
+    </tr>
+    <tr>
+        <td><button type="submit">Register</button>
+    </tr>
+    </table>
+</form>
 
 <div><a href="Login">Login</a></div>
 <div><a href="ResetPasswordRequest">Forgot Password?</a></div>
