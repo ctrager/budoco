@@ -15,6 +15,16 @@
     <meta http-equiv="Expires" content="0">
     <title>@ViewData["Title"] - @bd_config.get("AppName")</title>
     <link rel="stylesheet" href="~/css/budoco.css" />
+
+    @{
+        if (bd_config.get("UseCustomCss") == 1)
+        {
+            string custom_css_filename = bd_config.get("CustomCssFilename");
+            <link rel="stylesheet" href="/@custom_css_filename" />
+        }
+    }
+
+
     <script>
         function goto() {
             var issue_id = $("#goto_id").val();
@@ -42,7 +52,7 @@
         <body>
             <table class="menu_table">
                 <tr>
-                    <td class="logo"><a class="logo" asp-page="/Index">@bd_config.get("AppName")</a></td>
+                    <td class="logo"><a asp-page="/Index">@bd_config.get("AppName")</a></td>
 
                     <td class="just_right">
 

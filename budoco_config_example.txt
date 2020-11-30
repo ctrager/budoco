@@ -58,8 +58,12 @@ WebsiteUrlRootWithoutSlash: https://YOURDOMAIN.COM
 # was an error and you have to look in the logs for the details.
 UseDeveloperExceptionPage: 1
 
-# Rename the app
+# You can brand it your way. Change the name. Change the logo colors and font.
+# And if the issue form is too busy, you can hide some of the fields you don't use.
+# See "custom_css_example.css"
 AppName: Budoco
+UseCustomCss: 0
+CustomCssFilename: custom_css_example.css
 
 # Number of rows on the issues page
 RowsPerPage: 30

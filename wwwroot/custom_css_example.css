@@ -1,0 +1,35 @@
+﻿/* change the colors of the logo in the upper right.
+
+You can change the name in budoco_config_active.txt
+
+*/
+
+.menu_table>tbody>tr>td.logo {
+
+    font-size: 20px;
+    letter-spacing: 2px;
+    background-color: blue;
+    height: 60px;
+    width: 140px;
+
+}
+
+
+.menu_table>tbody>tr>td.logo>a,
+.menu_table>tbody>tr>td.logo>a:visited,
+.menu_table>tbody>tr>td.logo>a:hover {
+    color: white;
+    font-weight: bold;
+    font-family: serif;
+    font-size: 24pt;
+}
+
+/* Hide dropdowns you don't need on the issue page */
+
+.issue_organization {
+    display: none;
+}
+
+.issue_project {
+    display: none;
+}
