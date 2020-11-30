@@ -1,4 +1,4 @@
-# run the deploy script
+# Invoke the deploy script on the remote server
 
 # make sure budoco_active_config.txt is in remote budoco folder
 

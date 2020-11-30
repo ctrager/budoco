@@ -1,4 +1,5 @@
 # scp this to home folder, for example /home/corey, or /root
+# this is the script that executes ON the remote server
 
 cd budoco
 
