@@ -1,424 +1,262 @@
-﻿body,
-div,
-input,
-button,
-select {
-  font-family: arial;
-  font-size: 15px;
-}
+﻿/* tags */
 
 body {
-  padding-left: 5px;
+    margin: 8px;
 }
 
-h1 {
-  font-size: 18px;
-  font-weight: normal;
-  letter-spacing: 1px
+body,
+button,
+select {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
 }
 
-div {
-  margin-top: 8px;
-  margin-bottom: 8px;
+select {
+    padding: 2px;
+    background-color: white;
+}
+
+td {
+    vertical-align: top;
+}
+
+th {
+    vertical-align: bottom;
+    font-weight: normal;
 }
 
 a,
 button,
 .fake_link,
 a:visited {
-  color: blue;
-  text-decoration: none;
+    color: blue;
+    text-decoration: none;
 }
-
 
 a:hover,
 button:hover,
 .fake_link:hover {
-  color: red;
-  text-decoration: none;
-  cursor: pointer;
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 button:hover {
-  color: red;
-  /* don't change cursor */
+    color: red;
+    /* don't change cursor */
 }
 
-.show_hide_image {
-  display: inline;
-  font-size: 13px;
+button {
+    padding: 5px;
+    border-radius: 6px;
+    background-color: #dddddd;
 }
 
-.show_hide_image:hover {
-  display: inline;
-  font-size: 13px;
+button,
+input,
+textarea,
+select {
+    border: 1px solid #cccccc;
 }
 
-table {
-  border-collapse: collapse;
+div {
+    margin-bottom: 15px;
 }
 
-td {
-  border: 1px solid lightgrey;
-  padding: 3px;
-  text-align: left;
-  vertical-align: top;
+/* done with tags */
+
+/* top part of page */
+
+.menu_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.menu_table>tbody>tr>td {
+    background-color: #eeeeee;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.menu_table>tbody>tr>td.logo {
+    font-size: 20px;
+    letter-spacing: 2px;
+    background-color: lightgreen;
+    height: 40px;
 
 }
 
-th {
-  border: 1px solid lightgrey;
-  background-color: #eeeeee;
-  padding: 3px;
-  text-align: left;
-  vertical-align: top;
+.goto_input {
+    width: 50px;
+}
+
+.menu_table>tbody>tr>td.just_right {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.menu_table>tbody>tr>td.just_right>a {
+    margin-left: 20px;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+/* end top part of page */
+
+/* 
+
+page content
+
+https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-width 
+
+*/
+
+.content_parent {
+    /* ...and this is its parent container. */
+    text-align: center;
+}
+
+.content_child {
+    /* This is the item to center... */
+    display: inline-block;
+    text-align: left;
+}
+
+/* FORMS */
+
+form {
+    margin-top: 15px;
+    background-color: #eeeeee;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.form_table,
+.form_table>tr,
+.form_table>td {
+    border-collapse: collapse;
+}
+
+.form_table>tbody>tr>td {
+    padding: 5px;
 }
 
 
 .flash_msg {
-  background-color: #ccffcc;
-  border: 1px solid black;
-  border-radius: 6px;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 900px;
+    background-color: #ccffcc;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 900px;
 }
 
 .flash_err {
-  border: 1px solid black;
-  border-radius: 6px;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 900px;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 900px;
 
-  background-color: #ffaaaa;
-  font-weight: bold;
-}
-
-.gray {
-  color: #dddddd;
-}
-
-th {
-  font-weight: normal;
-}
-
-.unsorted {
-  background-color: #eeeeee;
-  font-weight: normal;
-}
-
-.sorted {
-  background-color: yellow;
-  font-weight: normal;
-
+    background-color: #ffaaaa;
+    font-weight: bold;
 }
 
 
-
-.navbar {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #eeeeee;
-  margin-bottom: 10px;
-}
-
-.nav-item {
-  float: left;
-}
-
-.nav-item a {
-  display: block;
-  text-align: center;
-  padding: 10px;
-}
-
-.goto_button {
-  margin-top: 8px;
-  margin-left: 20px;
-}
-
-.goto_input {
-
-  margin-left: 0px;
-  margin-right: 20px;
-  width: 50px;
-}
-
-/* Firefox */
-.goto input[type=number] {
-  -moz-appearance: textfield;
-}
-
-.logo {
-  background-color: #bbffbb;
-  margin-right: 20px;
-}
-
-form {
-  border: 1px solid #cccccc;
-  border-radius: 6px;
-  background: #f4f4ff;
-  padding: 5px;
-  display: inline-block;
-
-}
-
-.form_div {
-  display: inline-block;
-}
-
-form>div {
-  margin-left: 10px;
-  padding-top: 4px;
-}
-
-form>div>button {
-  margin-top: 10px;
-}
-
-button {
-  background-color: #cceecc;
-  border-radius: 3px;
-  border: 1px solid gray;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.login_register {
-  margin-top: 20px;
-  padding: 10px;
-  background: #eeffee;
-  border-radius: 6px;
-  width: 400px;
-  border: 1px solid gray;
-}
-
-form>div>label {
-  min-width: 140px;
-  display: inline-block;
-  white-space: nowrap;
-}
-
-p {
-  margin-bottom: 20px;
-  font-weight: normal;
-}
-
-.about {
-  width: 800px;
-}
-
-.about>p>b {
-  font-size: 18px;
-  font-style: italic;
-  color: red;
-}
-
-
-.sql_editor {
-  width: 900px;
-  height: 300px;
-}
-
-input:disabled {
-  /* same color as form */
-  background: transparent;
-  border: none;
-  color: black;
-}
-
-input:read-only {
-  /* same color as form */
-  background: transparent;
-  border: 1px solid gray;
-}
-
-.issue_form>div>input:read-only {
-  width: 200px;
-}
-
-input:read-only:focus {
-  outline: none;
-}
-
-.post {
-  border: 1px solid gray;
-  padding: 5px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  background: #fafffa;
-  width: 900px;
-  border-radius: 6px;
-}
-
-.post_text {
-  padding: 0px;
-  margin: 0px;
-  width: 900px;
-}
-
-.post_form>div>textarea {
-  width: 890px;
-  height: 80px;
-}
-
-.info_text {
-  font-size: 12px;
-  color: green;
-}
-
-pre {
-  overflow-x: auto;
-  font-family: "Lucida Console", "Courier New", Courier, monospace;
-  font-size: 14px;
-  margin: 0px;
-  padding: 5px;
-}
-
-/*
-input[type=file] {
-  display: none;
-}
-*/
-
-/* "Attach file */
-.file_name_label {
-  width: auto;
-  margin-right: 0px;
-  display: inline;
-}
-
-.post_form>div>button {
-  margin-top: 0px;
-  margin-left: 10px;
-  margin-bottom: 6px;
-  margin-right: 12px;
-}
-
-.post_form {
-  padding-top: 0px;
-  padding-left: 0px;
-  padding-bottom: 0px;
-  padding-right: 6px;
-}
-
-.post_form_footer {
-  margin: 0px;
-  padding: 0px;
-}
-
-
-.search_context>b {
-  color: red;
-}
-
-.post_img {
-  max-width: 800px;
-}
-
-.post_hide {
-  font-size: 12px;
-}
-
-
-.span_as_div {
-  display: inline
-}
-
-.search_form>div>#search_terms {
-  width: 500px;
-}
-
-.issue_form {
-  width: 900px;
-}
-
-.issue_form>div>#description {
-  width: 775px;
-}
-
-.issue_form>div>textarea {
-  width: 775px;
-  height: 80px;
-  margin-left: 0px;
-}
-
-textarea {
-  width: 800px;
-  height: 180px;
-}
-
-#post_email_to_label {
-  min-width: unset;
-}
-
-#post_email_to {
-  width: 865px;
-}
-
-.issue_form>div>label {
-  min-width: 95px;
-  margin-right: 0px;
-}
-
-.issue_dropdown_group>label {
-  display: inline-block;
-  width: 95px;
-  margin-right: 0px;
-
-}
-
-.issue_dropdown_container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.issue_dropdown_group {
-  position: relative;
-  width: 430px;
-  white-space: nowrap;
-}
-
-.issue_dropdown_group>select {
-  width: 290px;
-  padding: 2px;
-}
-
-.issue_dropdown_group>select>option {
-  font-size: 16px;
-
-}
-
-/* controls the order of the dropdowns 
-going left to right, then down, then left to right, etc */
-
-#category_elements {
-  order: 1;
-}
-
-#assigned_to_user_elements {
-  order: 2;
-}
-
-#organization_elements {
-  order: 3;
-}
-
-#priority_elements {
-  order: 4;
-}
-
-#project_elements {
-  order: 5;
+.issue_select {
+    width: 290px;
 }
 
 #status_elements {
-  order: 6;
+    order: 6;
+}
+
+.issue_description {
+    width: 800px;
+}
+
+.issue_textarea {
+    width: 800px;
+    height: 80px;
+}
+
+/* prove I can hide things on the issue form */
+/*
+.issue_organization {
+    display: none;
+}
+
+.issue_project {
+    display: none;
+}
+
+.issue_category {
+    display: none;
+}
+
+.issue_priority {
+    display: none;
+}
+
+.issue_status {
+    display: none;
+}
+
+.issue_assigned_to {
+    display: none;
+}
+
+*/
+
+/* data tables */
+table.dt {
+    border-collapse: collapse;
+    border: 1px color red;
+}
+
+table.dt>tbody>tr>th {
+    border: 1px solid #cccccc;
+    padding: 3px;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+table.dt>tbody>tr>td {
+    border: 1px solid #cccccc;
+    padding: 3px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.unsorted {
+    background-color: #eeeeee;
+    font-weight: normal;
+}
+
+.sorted {
+    background-color: yellow;
+    font-weight: normal;
+
+}
+
+.gray {
+    color: #dddddd;
+}
+
+#search_terms {
+    width: 700px;
+}
+
+
+.info_text {
+    font-size: 13px;
+    color: green;
 }

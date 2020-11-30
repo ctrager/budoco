@@ -34,8 +34,8 @@
     }
 </div>
 
-<div class="form_div">
     <form class="issue_form" method="post">
+
         <input type="hidden" asp-for="force_create" value=""/>
         @{
             
@@ -56,66 +56,80 @@
             
             }
         }
+        <table class="form_table">
         
-        <div>
-            <label>Description</label>
-            <input asp-for="description" value="@Model.description" disabled="@Model.null_or_disabled"></input>
-        </div>
+        <tr>
+            <td><label>Description</label>
+            <td colspan=3><input class="issue_description" asp-for="description" value="@Model.description" disabled="@Model.null_or_disabled"></input>
+        </tr>
 
-        <div>
-            <label>Details</label>
-            <textarea asp-for="details" value="@Model.details" disabled="@Model.null_or_disabled"></textarea>
-        </div>
+        <tr>
+            <td><label>Details</label>
+            <td colspan=3><textarea class="issue_textarea" asp-for="details" value="@Model.details" disabled="@Model.null_or_disabled"></textarea>
+        </tr>
         
-        <div><div class="issue_dropdown_container">
 
-        <div id="category_elements" class="issue_dropdown_group">
-            <label>Category</label>
-            <select asp-for="category_id" asp-items="@Model.category_list" disabled="@Model.null_or_disabled">
-                <option value="0">[None]</option>
-            </select>
-        </div>
+        </table>
+        <table class="form_table">
+            
+            <td><!--left-->
+                <table class="form-table"><!--left-->
+                
+                <tr class="issue_category">
+                    <td><label class="issue_select_label">Category</label>
+                    <td><select class="issue_select" asp-for="category_id" asp-items="@Model.category_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                    </select> 
+                </tr>
 
+                <tr class="issue_organization">
+                    <td><label class="issue_select_label">Organization</label>
+                    <td><select  class="issue_select" asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                    </select>
+                </tr>
+        
+                <tr class="issue_project">
+                    <td><label class="issue_select_label">Project</label>
+                    <td><select  class="issue_select" asp-for="project_id" asp-items="@Model.project_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                     </select>
+                </tr>
 
-        <div id="status_elements" class="issue_dropdown_group">
-            <label>Status</label>
-            <select asp-for="status_id" asp-items="@Model.status_list" disabled="@Model.null_or_disabled">
-                <option value="0">[None]</option>
-            </select>
-        </div>
+                <tr class="issue_priority">
+                    <td><label class="issue_select_label">Priority</label>
+                    <td><select  class="issue_select" asp-for="priority_id" asp-items="@Model.priority_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                     </select>
+                </tr>
+        
+                </table> <!--left-->
+            </td><!--left-->
+            
+            
+            <td><!--right-->
 
-  
+                <table class="form_table"><!--right-->
+                <tr class="issue_status">
+                    <td><label class="issue_select_label">Status</label>
+                    <td><select  class="issue_select" asp-for="status_id" asp-items="@Model.status_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                    </select>
+                  
+                </tr>
 
-        <div id="project_elements" class="issue_dropdown_group">
-            <label>Project</label>
-            <select asp-for="project_id" asp-items="@Model.project_list" disabled="@Model.null_or_disabled">
-                <option value="0">[None]</option>
-            </select>
-        </div>
-
-
-        <div id="organization_elements" class="issue_dropdown_group">
-            <label>Organization</label>
-            <select asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.null_or_disabled">
-                <option value="0">[None]</option>
-            </select>
-        </div>
-
-
-        <div id="priority_elements" class="issue_dropdown_group">
-            <label>Priority</label>
-            <select asp-for="priority_id" asp-items="@Model.priority_list" disabled="@Model.null_or_disabled">
-                <option value="0">[None]</option>
-            </select>
-        </div>
-
-        <div id="assigned_to_user_elements" class="issue_dropdown_group">
-            <label>Assigned To</label>
-            <select asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_user_list" disabled="@Model.null_or_disabled">
-                <option value="0">[None]</option>
-            </select>
-        </div>
-        </flex></div>
+                <tr class="issue_assigned_to">
+                    <td><label class="issue_select_label">Assigned To</label>
+                    <td><select  class="issue_select" asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_user_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                    </select>
+                 
+                </tr>
+                </table><!--right-->
+            </td><!--right-->
+        </tr>
+          
+        </table>
   
 
         @{
@@ -130,7 +144,7 @@
 
 
     </form>
-</div>
+
 
 <div>
     <div class="fake_link" onclick="prep_for_another()">Use this issue as a starting point for new issue</div>

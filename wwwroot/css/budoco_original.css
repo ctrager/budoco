@@ -1,0 +1,363 @@
+﻿body,
+div,
+input,
+button,
+select {
+  font-family: arial;
+  font-size: 15px;
+}
+
+body {
+  padding-left: 5px;
+}
+
+h1 {
+  font-size: 18px;
+  font-weight: normal;
+  letter-spacing: 1px
+}
+
+div {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+a,
+button,
+.fake_link,
+a:visited {
+  color: blue;
+  text-decoration: none;
+}
+
+
+a:hover,
+button:hover,
+.fake_link:hover {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover {
+  color: red;
+  /* don't change cursor */
+}
+
+.show_hide_image {
+  display: inline;
+  font-size: 13px;
+}
+
+.show_hide_image:hover {
+  display: inline;
+  font-size: 13px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid lightgrey;
+  padding: 3px;
+  text-align: left;
+  vertical-align: top;
+
+}
+
+th {
+  border: 1px solid lightgrey;
+  background-color: #eeeeee;
+  padding: 3px;
+  text-align: left;
+  vertical-align: top;
+}
+
+
+.flash_msg {
+  background-color: #ccffcc;
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 900px;
+}
+
+.flash_err {
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 900px;
+
+  background-color: #ffaaaa;
+  font-weight: bold;
+}
+
+.gray {
+  color: #dddddd;
+}
+
+th {
+  font-weight: normal;
+}
+
+.unsorted {
+  background-color: #eeeeee;
+  font-weight: normal;
+}
+
+.sorted {
+  background-color: yellow;
+  font-weight: normal;
+
+}
+
+
+
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #eeeeee;
+  margin-bottom: 10px;
+}
+
+.nav-item {
+  float: left;
+}
+
+.nav-item a {
+  display: block;
+  text-align: center;
+  padding: 10px;
+}
+
+.goto_button {
+  margin-top: 8px;
+  margin-left: 20px;
+}
+
+.goto_input {
+
+  margin-left: 0px;
+  margin-right: 20px;
+  width: 50px;
+}
+
+/* Firefox */
+.goto input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.logo {
+  background-color: #bbffbb;
+  margin-right: 20px;
+}
+
+form {
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  background: #f4f4ff;
+  padding: 5px;
+  display: inline-block;
+
+}
+
+.form_div {
+  display: inline-block;
+}
+
+form>div {
+  margin-left: 10px;
+  padding-top: 4px;
+}
+
+form>div>button {
+  margin-top: 10px;
+}
+
+button {
+  background-color: #cceecc;
+  border-radius: 3px;
+  border: 1px solid gray;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.login_register {
+  margin-top: 20px;
+  padding: 10px;
+  background: #eeffee;
+  border-radius: 6px;
+  width: 400px;
+  border: 1px solid gray;
+}
+
+form>div>label {
+  min-width: 140px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+p {
+  margin-bottom: 20px;
+  font-weight: normal;
+}
+
+.about {
+  width: 800px;
+}
+
+.about>p>b {
+  font-size: 18px;
+  font-style: italic;
+  color: red;
+}
+
+
+.sql_editor {
+  width: 900px;
+  height: 300px;
+}
+
+input:disabled {
+  /* same color as form */
+  background: transparent;
+  border: none;
+  color: black;
+}
+
+input:read-only {
+  /* same color as form */
+  background: transparent;
+  border: 1px solid gray;
+}
+
+.issue_form>div>input:read-only {
+  width: 200px;
+}
+
+input:read-only:focus {
+  outline: none;
+}
+
+.post {
+  border: 1px solid gray;
+  padding: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: #fafffa;
+  width: 900px;
+  border-radius: 6px;
+}
+
+.post_text {
+  padding: 0px;
+  margin: 0px;
+  width: 900px;
+}
+
+.post_form>div>textarea {
+  width: 890px;
+  height: 80px;
+}
+
+
+pre {
+  overflow-x: auto;
+  font-family: "Lucida Console", "Courier New", Courier, monospace;
+  font-size: 14px;
+  margin: 0px;
+  padding: 5px;
+}
+
+/*
+input[type=file] {
+  display: none;
+}
+*/
+
+/* "Attach file */
+.file_name_label {
+  width: auto;
+  margin-right: 0px;
+  display: inline;
+}
+
+.post_form>div>button {
+  margin-top: 0px;
+  margin-left: 10px;
+  margin-bottom: 6px;
+  margin-right: 12px;
+}
+
+.post_form {
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  padding-right: 6px;
+}
+
+.post_form_footer {
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.search_context>b {
+  color: red;
+}
+
+.post_img {
+  max-width: 800px;
+}
+
+.post_hide {
+  font-size: 12px;
+}
+
+
+.span_as_div {
+  display: inline
+}
+
+.search_form>div>#search_terms {
+  width: 500px;
+}
+
+.issue_form {
+  width: 900px;
+}
+
+.issue_form>div>#description {
+  width: 775px;
+}
+
+.issue_form>div>textarea {
+  width: 775px;
+  height: 80px;
+  margin-left: 0px;
+}
+
+textarea {
+  width: 800px;
+  height: 180px;
+}
+
+#post_email_to_label {
+  min-width: unset;
+}
+
+#post_email_to {
+  width: 865px;
+}
+
+.issue_form>div>label {
+  min-width: 95px;
+  margin-right: 0px;
+}

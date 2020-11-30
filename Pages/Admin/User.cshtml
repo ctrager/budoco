@@ -11,44 +11,45 @@
 </div>
 <partial name="_FlashPartial" />
 
-<div class="form_div"></div>
-<form method="post">
 
-    <div>
-        <label>Id</label>
-        <input asp-for="id" value="@Model.id" disabled></input>
-    </div>
-    <div>
-        <label>Username</label>
-        <input asp-for="username" value="@Model.username"></input>
-    </div>
-    <div>
-        <label>Email</label>
-        <input asp-for="email" value="@Model.email"></input>
-    </div>
-    <div>
-        <label>Admin</label>
-        <input asp-for="is_admin" value="true" />
-    </div>
-    <div>
-        <label>Active</label>
-        <input asp-for="is_active" value="true" />
-    </div>
-    <div>
-        <label>Report Only</label>
-        <input asp-for="is_report_only" value="true" />
-    </div>
-    <div>
-        <label>Organization</label>
-        <select asp-for="organization_id" asp-items="@Model.organizations">
+<form method="post">
+    <table class="form_table">
+    <tr>
+        <td><label>Id</label>
+        <td><input asp-for="id" value="@Model.id" disabled></input>
+    </tr>
+    <tr>
+        <td><label>Username</label>
+        <td><input asp-for="username" value="@Model.username"></input>
+    </tr>
+    <tr>
+        <td><label>Email</label>
+        <td><input asp-for="email" value="@Model.email"></input>
+    </tr>
+    <tr>
+        <td><label>Admin</label>
+        <td><input asp-for="is_admin" value="true" />
+    </tr>
+    <tr>
+        <td><label>Active</label>
+        <td><input asp-for="is_active" value="true" />
+    </tr>
+    <tr>
+        <td><label>Report Only</label>
+        <td><input asp-for="is_report_only" value="true" />
+    </tr>
+    <tr>
+        <td><label>Organization</label>
+        <td><select asp-for="organization_id" asp-items="@Model.organizations">
             <option value=0>None</option>
         </select>
-    </div>    
-    <div>
-        <button type="submit">Update</button>
-    </div>
+    </tr>    
+    <tr>
+        <td><button type="submit">Update</button>
+    <tr>
+    </table>
 </form>
-</div>
+
 
 @section Scripts {
     

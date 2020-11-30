@@ -41,63 +41,49 @@
     {
 
         <body>
+            <table class="menu_table">
+                <tr>
+                    <td class="logo"><a class="logo" asp-page="/Index">@bd_config.get("AppName")</a></td>
 
-            <div>
 
-                <ul class="navbar">
-                    <li class="nav-item logo">
-                        <a class="nav-link" asp-page="/Index">@bd_config.get("AppName")</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Issues">Issues</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Search">Search</a>
-                    </li>
+                    <td><a asp-page="/Issues">View Issues</a></td>
+                    <td><a asp-page="/Issue">Create Issue</a></td>
+                    <td><a asp-page="/Search">Search</a></td>
                     @{
                         if (is_admin)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-page="/Admin/Admin">Admin</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-page="/Admin/Users">Users</a>
-                            </li>
+                            <td><a asp-page="/Admin/Admin">Admin</a></td>
+                            <td><a asp-page="/Admin/Users">Users</a></td>
                             if (bd_config.get("DebugEnableRunSql") == 1)
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/RunSql">Run Sql</a>
-                                </li>
+                                <td><a asp-page="/Admin/RunSql">Run Sql</a></td>
                             }
                         }
                     }
 
-                    <li class="nav-item">
+                    <td>
                         <button class="goto_button" onclick="goto()">Go To Issue:</button>
                         <input type="number" class="goto_input" id="goto_id" placeholder="ID#" />
+                    </td>
 
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Login?action=signout">Sign Out</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/About">About</a>
-                    </li>
-                </ul>
-            </div>
+                    <td class="just_right">
+                        <a href="/Login?action=signout">Sign Out</a>
+                        <a href="/About">About</a>
+                    </td>
+                </tr>
+            </table>
 
 
-            <div class="render_body">
-                @RenderBody()
+            <div class="content_parent">
+                <div class="content_child">
+                    @RenderBody()
+                </div>
             </div>
 
             <script src="~/lib/jquery/dist/jquery.min.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
 
             @await RenderSectionAsync("Scripts", required: false)
-
 
         </body>
     }
