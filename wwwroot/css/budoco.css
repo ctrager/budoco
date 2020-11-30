@@ -131,10 +131,12 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
 /* FORMS */
 
 form {
-    margin-top: 15px;
     background-color: #eeeeee;
     border-radius: 8px;
-    padding: 15px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 3px;
+    padding-right: 10px;
 }
 
 .form_table,
@@ -179,7 +181,7 @@ form {
     order: 6;
 }
 
-.issue_description {
+.issue_description_input {
     width: 800px;
 }
 
@@ -187,6 +189,16 @@ form {
     width: 800px;
     height: 80px;
 }
+
+.post_form_textarea {
+    width: 890px;
+    height: 80px;
+}
+
+.post_form_to_input {
+    width: 860px;
+}
+
 
 /* prove I can hide things on the issue form */
 /*
@@ -227,6 +239,7 @@ table.dt>tbody>tr>th {
     padding: 3px;
     text-align: left;
     vertical-align: bottom;
+    font-size: 11pt;
 }
 
 table.dt>tbody>tr>td {
@@ -234,6 +247,7 @@ table.dt>tbody>tr>td {
     padding: 3px;
     text-align: left;
     vertical-align: top;
+    font-size: 11pt;
 }
 
 .unsorted {
@@ -255,8 +269,42 @@ table.dt>tbody>tr>td {
     width: 700px;
 }
 
-
 .info_text {
     font-size: 13px;
     color: green;
+}
+
+.post {
+    border: 1px solid gray;
+    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #fafffa;
+    width: 900px;
+    border-radius: 6px;
+}
+
+
+pre {
+    overflow-x: auto;
+    font-family: "Lucida Console", "Courier New", Courier, monospace;
+    font-size: 14px;
+    margin: 0px;
+    padding: 5px;
+}
+
+
+.show_hide_image {
+    display: inline;
+    font-size: 13px;
+}
+
+.show_hide_image:hover {
+    display: inline;
+    font-size: 13px;
+}
+
+textarea#sql {
+    width: 900px;
+    height: 120px;
 }

@@ -12,42 +12,50 @@
 </div>
 <partial name="_FlashPartial" />
 
-<div class="form_div">
 <form id="sql_form" method="post">
-    @{
-        if (Model.id != 0)
-        {
-    <div>
-        <label>Id</label>
-        <input asp-for="id" value="@Model.id" disabled></input>
-    </div>
+    <table class="form_table">
+        @{
+            if (Model.id != 0)
+            {
+        <tr>
+            <td><label>Id</label>
+            <td><input asp-for="id" value="@Model.id" disabled></input>
+        </tr>
+            }
         }
-    }
-    <div>
-        <label>Name</label>
-        <input asp-for="name" value="@Model.name"></input>
-    </div>
-    <div>
-        <label>Active</label>
-        <input asp-for="is_active" value="true" />
-    </div>
-    <div>
-        <label>Default</label>
-        <input asp-for="is_default" value="true" />
-    </div>
-    <div>
- 
-    <div>
-        <textarea onchange="mark_sql_dirty()" class="pre" asp-for="sql"></textarea>
-    </div>
-    <div class="info_text">
-        Your query has to work before you can save it.
-    </div>
-    <button type="button" onclick="run_sql()">Run SQL - Don't Save</button>
-    <button type="button" onclick="maybe_save()">Save in Database</button>
-                
+        <tr>
+            <td><label>Name</label>
+            <td><input asp-for="name" value="@Model.name"></input>
+        </tr>
+        <tr>
+            <td><label>Active</label>
+            <td><input asp-for="is_active" value="true" />
+        </tr>
+        <tr>
+            <td><label>Default</label>
+            <td><input asp-for="is_default" value="true" />
+        </tr>
+        <tr>
+    </table>
+
+    <table class="form_table">
+        <tr><td>
+            <label>SQL:</label>
+            <br>
+            <textarea onchange="mark_sql_dirty()" class="pre" asp-for="sql"></textarea>
+            <div class="info_text">
+                Your query has to work before you can save it.
+            </div>
+        </td></tr>
+
+        <tr><td>
+            <button type="button" onclick="run_sql()">Run SQL - Don't Save</button>
+            <button type="button" onclick="maybe_save()">Save in Database</button>
+        </td></tr>
+    </table>
+
 </form>
-</div>
+
 
 <div id="results">
 </div>

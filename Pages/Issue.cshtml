@@ -60,7 +60,7 @@
         
         <tr>
             <td><label>Description</label>
-            <td colspan=3><input class="issue_description" asp-for="description" value="@Model.description" disabled="@Model.null_or_disabled"></input>
+            <td colspan=3><input class="issue_description_input" asp-for="description" value="@Model.description" disabled="@Model.null_or_disabled"></input>
         </tr>
 
         <tr>
@@ -155,55 +155,60 @@
     {
         <div id="posts"></div>
 
-        <div class="form_div">
             <form class="post_form" id="post_form" method="post" enctype="multipart/form-data">
-                <div>
-                    <input onchange="comment_or_email(this)" type="radio" id="comment" name="post_type" value="comment" checked>
-                    <label for="comment">Comment</label>
-                    <input onchange="comment_or_email(this)" type="radio" id="email" name="post_type" value="email">
-                    <label for="email">Email</label><br>
-                </div>
-                <div id="email_fields" style="display:none">
-                    <label id="post_email_to_label">To:</label>
-                    <input asp-for="post_email_to" value="">
-                </div>
-                <div>
-                    <textarea name="post_text" id="post_text"></textarea>
-                </div>
+                <table class="form_table">
+                    
+                    <tr><td>
+                        <input onchange="comment_or_email(this)" type="radio" id="comment" name="post_type" value="comment" checked>
+                        <label for="comment">Comment</label>
+                        <input onchange="comment_or_email(this)" type="radio" id="email" name="post_type" value="email">
+                        <label for="email">Email</label><br>
+                    </td></tr>
 
-                <div id="file_div1">
-                    <span class="fake_link" style="display:none" id="remove_file1" onclick="remove_attachment(1)">Remove</span>
-                    <label class="file_name_label fake_link">
-                        <span class="fake_link" id="attach_file1">Attach File</span>
-                        <input style="display:none" onchange="on_change_file_name(1)" type="file" asp-for="uploaded_file1" />
-                    </label>
-                    <span class="file_name" id="file_name1"></span>
-                </div>
-                
-                <div id="file_div2" style="display:none">
-                    <span class="fake_link" style="display:none" id="remove_file2" onclick="remove_attachment(2)">Remove</span>
-                    <label class="file_name_label fake_link">
-                        <span class="fake_link" id="attach_file2">Attach File</span>
-                        <input style="display:none" onchange="on_change_file_name(2)" type="file" asp-for="uploaded_file2" />
-                    </label>
-                    <span class="file_name" id="file_name2"></span>
-                </div>
+                    
+                    <tr id="email_fields" style="display:none"><td>
+                        <label id="post_email_to_label">To:</label>
+                        <input class="post_form_to_input" asp-for="post_email_to" value="">
+                    </td></tr>
 
-                <div id="file_div3" style="display:none">
-                    <span class="fake_link" style="display:none" id="remove_file3" onclick="remove_attachment(3)">Remove</span>
-                    <label class="file_name_label ">
-                        <span class="fake_link" id="attach_file3">Attach File</span>
-                        <input style="display:none" onchange="on_change_file_name(3)" type="file" asp-for="uploaded_file3" />
-                       </label>
-                    <span class="file_name" id="file_name3"></span>
-                </div>
+                    <tr><td>
+                        <textarea class="post_form_textarea" name="post_text" id="post_text"></textarea>
+                    </td></tr>
+                    
+                    <tr><td>
+                        <div id="file_div1">
+                            <span class="fake_link" style="display:none" id="remove_file1" onclick="remove_attachment(1)">Remove</span>
+                            <label class="file_name_label fake_link">
+                                <span class="fake_link" id="attach_file1">Attach File</span>
+                                <input style="display:none" onchange="on_change_file_name(1)" type="file" asp-for="uploaded_file1" />
+                            </label>
+                            <span class="file_name" id="file_name1"></span>
+                        </div>               
+                        
+                        <div id="file_div2" style="display:none">
+                            <span class="fake_link" style="display:none" id="remove_file2" onclick="remove_attachment(2)">Remove</span>
+                            <label class="file_name_label fake_link">
+                                <span class="fake_link" id="attach_file2">Attach File</span>
+                                <input style="display:none" onchange="on_change_file_name(2)" type="file" asp-for="uploaded_file2" />
+                            </label>
+                            <span class="file_name" id="file_name2"></span>
+                        </div>
 
-                <div class="post_form_footer">
-                    <button type="button" onclick="submit_post()">Submit</button>
-                </div>
-            
+                        <div id="file_div3" style="display:none">
+                            <span class="fake_link" style="display:none" id="remove_file3" onclick="remove_attachment(3)">Remove</span>
+                            <label class="file_name_label ">
+                                <span class="fake_link" id="attach_file3">Attach File</span>
+                                <input style="display:none" onchange="on_change_file_name(3)" type="file" asp-for="uploaded_file3" />
+                            </label>
+                            <span class="file_name" id="file_name3"></span>
+                        </div>
+                    </td></tr>
+
+                    <tr><td>
+                        <button type="button" onclick="submit_post()">Submit</button>
+                    </td></tr>
+                </table>
             </form>
-        </div>
      }
 }
 
@@ -238,6 +243,7 @@
         });
     }
     function blank_out_post_form () {
+   
         // blank out the form we just posted
         $("#post_email_to").val("");
         $("#post_text").val("");
@@ -263,9 +269,11 @@
     }
 
     function submit_post() {
-       
-        if ($('#post_text').val().trim() == "" 
-        && $("#uploaded_file1").val() == "") {
+        no_file = $("#uploaded_file1").val() == ""
+        && $("#uploaded_file2").val() == ""
+        && $("#uploaded_file3").val() == "";
+
+        if ($('#post_text').val().trim() == "" && no_file) {
             alert("Some text or a file is required");
             return;
         }
@@ -278,7 +286,7 @@
             type: 'post',
             
             success: function (posts_as_html) {
-                console.log(posts_as_html)
+              
                 if (!posts_as_html.startsWith("<!--error-->")) {
                     blank_out_post_form();
                 }
@@ -327,11 +335,16 @@
         $("#file_name" + suffix).html(filename);
         $("#attach_file" + suffix).hide();
         $("#remove_file" + suffix).show();
-        
-        if (suffix == 1)
+
+        if (suffix == "1") {
+         
             $("#file_div2").show();
-        else if (suffix == 2)
+            $("#attach_file2").show();
+        }
+        else if (suffix == "2") {
             $("#file_div3").show();
+            $("#attach_file3").show();
+        }
 
     }  
          

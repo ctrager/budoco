@@ -364,6 +364,10 @@ namespace budoco.Pages
             {
                 post_text = "";
             }
+            if (string.IsNullOrWhiteSpace(post_email_to))
+            {
+                post_email_to = "";
+            }
             dict["@p_issue"] = id;
             dict["@p_post_type"] = post_type;
             dict["@p_email_to"] = post_email_to;
