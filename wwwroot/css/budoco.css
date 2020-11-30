@@ -26,10 +26,6 @@ th {
     font-weight: normal;
 }
 
-input {
-    width: 240px;
-}
-
 a,
 button,
 .fake_link,
@@ -212,7 +208,7 @@ form {
     height: 80px;
 }
 
-.post_form_to_input {
+.post_form_email_to_input {
     width: 860px;
 }
 
