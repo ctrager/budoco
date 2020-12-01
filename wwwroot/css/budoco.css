@@ -128,23 +128,41 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
     position: relative;
 }
 
-.content_child {
+.centered_and_left_just {
     display: inline-block;
     text-align: left;
 }
 
-.content_just_left {
-    position: absolute;
-    left: 10px;
+.flash {
+    display: inline-block;
+    text-align: left;
+}
+
+.posts_inner {
+    display: inline-block;
+    text-align: left;
+}
+
+.admin_inner {
+    display: inline-block;
+    text-align: left;
+}
+
+.just_left {
+    text-align: left;
 }
 
 .flash_parent {
     text-align: center;
 }
 
-.flash {
-    display: inline-block;
-    text-align: left;
+
+.posts_outer {
+    text-align: center;
+}
+
+.login_register_parent {
+    text-align: center;
 }
 
 /* FORMS */
@@ -233,18 +251,7 @@ form {
     width: 600px;
 }
 
-.just_left {
-    text-align: left;
-}
 
-.posts_outer {
-    text-align: center;
-}
-
-.posts_inner {
-    display: inline-block;
-    text-align: left;
-}
 
 /* prove I can hide things on the issue form */
 /*
@@ -353,10 +360,6 @@ pre {
 textarea#sql {
     width: 900px;
     height: 120px;
-}
-
-.login_register_parent {
-    text-align: center;
 }
 
 .login_register {

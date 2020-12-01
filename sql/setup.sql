@@ -94,6 +94,7 @@ create table queries
 qu_id serial,
 qu_name varchar(60) not null,
 qu_sql text not null,
+qu_description text not null default '',
 qu_is_active boolean default true,
 qu_is_default boolean default false
 );

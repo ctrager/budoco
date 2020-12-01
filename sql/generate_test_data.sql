@@ -1,4 +1,8 @@
-/* Do not run this script against data you care about */
+/* 
+This generates random data for test.
+It's only designed to run after running setup.sql because it depends on postgres sequences to be in their initial state.
+*/
+
 
 insert into users 
 (us_username, us_email, us_is_active, us_password) 
@@ -29,7 +33,8 @@ loop
    i_description, 
    i_created_by_user, 
    i_assigned_to_user,
-   i_category, i_project, i_organization, i_status, i_priority)
+   i_organization,
+   i_category, i_project, i_status, i_priority)
    values (
    
    /* a random string for the description */
@@ -38,15 +43,15 @@ loop
    /* created by,. random users from 1 to 4 */
    floor(random() * 4 + 1)::int,
 
-   /* assigned to, random users from 1 to 4 */
-   floor(random() * 4 + 1)::int,
-
-   /* random numbers from 1 to 3 for the category, org, project, etc */
-   floor(random() * 3 + 1)::int,
-   floor(random() * 3 + 1)::int,
-   floor(random() * 3 + 1)::int,
-   floor(random() * 3 + 1)::int,
-   floor(random() * 3 + 1)::int
+   /* assigned to, random users from 0 to 4 */
+   floor(random() * 5 )::int,
+   
+   /* random numbers from 0 to 3 for the category, project, etc */
+   floor(random() * 4)::int,
+   floor(random() * 4 )::int,
+   floor(random() * 4 )::int,
+   floor(random() * 4 )::int,
+   floor(random() * 4 )::int
    );
 
    if my_int = number_of_issues then

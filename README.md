@@ -143,6 +143,7 @@ However there isn't any per-issue permission system yet. Although your query lim
 * most recently posted to
 * with biggest attachments
 
+* clean up just left, center css again
 
 * linkify http stuff in comments
 * linkify id#123 in comments

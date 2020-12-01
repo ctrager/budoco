@@ -63,12 +63,15 @@
 
 @section Scripts {
 <script>
+
     var sql_is_dirty = false;
     function mark_sql_dirty() {
         sql_is_dirty = true;
     }
 
     function maybe_save() {
+        $(".flash_parent").remove(); // remove previous flash message
+        
         rows = $("#results_table").length;
         if (sql_is_dirty || rows == 0) {
             if (confirm("You don't seem to have tested your latest sql change yet.\n\n" +
@@ -84,7 +87,7 @@
     }
 
     function run_sql() {
-
+        $(".flash_parent").remove(); // remove previous flash message
         $.ajax({
             url: 'RunSql?handler=Run',
             data: $('#sql_form').serialize(),
@@ -92,6 +95,7 @@
             
             success: function (html_from_server) {
                 $("#results").html(html_from_server);
+                sql_is_dirty = false;
             },
             
             failure: function(response) {

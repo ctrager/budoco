@@ -114,8 +114,8 @@ namespace budoco.Pages
 
             string password_in_db = (string)dr_user["us_password"];
 
-            // admin user's first time
-            if ((string)dr_user["us_username"] == "admin" && password_in_db.Length < 48)
+            // For users we added with sql to to db, the first time they log in
+            if (password_in_db.Length < 48)
             {
 
                 // force password reset
