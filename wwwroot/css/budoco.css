@@ -105,10 +105,12 @@ div {
 }
 
 h1 {
+    text-align: left;
     font-size: 18px;
     font-weight: normal;
     letter-spacing: 1px;
 }
+
 
 /* end top part of page */
 
@@ -120,28 +122,38 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
 
 */
 
+
 .content_parent {
-    /* ...and this is its parent container. */
     text-align: center;
     position: relative;
 }
 
 .content_child {
-    /* This is the item to center... */
     display: inline-block;
     text-align: left;
 }
 
 .content_just_left {
-
     position: absolute;
     left: 10px;
+}
 
+.flash_parent {
+    text-align: center;
+}
+
+.flash {
+    display: inline-block;
+    text-align: left;
 }
 
 /* FORMS */
+.form_div {
+    display: inline-block;
+}
 
 form {
+    text-align: left;
     background-color: #eeeeee;
     border-radius: 8px;
     padding-top: 10px;
@@ -213,6 +225,26 @@ form {
     width: 860px;
 }
 
+.name_input {
+    width: 300px;
+}
+
+.issue_query_name_input {
+    width: 600px;
+}
+
+.just_left {
+    text-align: left;
+}
+
+.posts_outer {
+    text-align: center;
+}
+
+.posts_inner {
+    display: inline-block;
+    text-align: left;
+}
 
 /* prove I can hide things on the issue form */
 /*
@@ -323,12 +355,16 @@ textarea#sql {
     height: 120px;
 }
 
+.login_register_parent {
+    text-align: center;
+}
 
 .login_register {
+    display: inline-block;
     margin-top: 20px;
     padding: 10px;
     background: #eeffee;
     border-radius: 6px;
-    width: 400px;
+    width: 300px;
     border: 1px solid gray;
 }

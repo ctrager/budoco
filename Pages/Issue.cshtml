@@ -4,9 +4,8 @@
 @{
     ViewData["Title"] = "Issue";
 }
-<partial name="_FlashPartial" />
 
-<div>
+<div class="just_left">
   
     <a href="Issues">Back to Issues</a>
     &nbsp;&nbsp;&nbsp;
@@ -33,7 +32,9 @@
 
     }
 </div>
+<partial name="_FlashPartial" />
 
+    <div class="form_div">
     <form class="issue_form" method="post">
 
         <input type="hidden" asp-for="force_create" value=""/>
@@ -144,17 +145,17 @@
 
 
     </form>
-
-
-<div>
     <div class="fake_link" onclick="prep_for_another()">Use this issue as a starting point for new issue</div>
-</div>
+    </div> <!--form_div-->
+
+
 
 @{
     if (Model.id != 0)
     {
-        <div id="posts"></div>
+        <div id="posts" class="posts_outer"></div>
 
+        <div class="form_div">
             <form class="post_form" id="post_form" method="post" enctype="multipart/form-data">
                 <table class="form_table">
                     
@@ -209,6 +210,7 @@
                     </td></tr>
                 </table>
             </form>
+        </div><!--form_div-->
      }
 }
 

@@ -1,53 +1,58 @@
 @{
     if (Model.dt_posts is not null)
     {
-        foreach (DataRow dr in Model.dt_posts.Rows)
-        {
-            int p_id = (int)dr[0];
+        <div class="posts_inner">
+            @{
+                foreach (DataRow dr in Model.dt_posts.Rows)
+                {
+                    int p_id = (int)dr[0];
 
-            <div class="post">
-                <div class="post_text">
-                    <pre>@dr["p_text"]</pre>
-                </div>
-                <div class="info_text">
-                    Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
-                </div>
+                    <div class="post">
+                        <div class="post_text">
+                            <pre>@dr["p_text"]</pre>
+                        </div>
+                        <div class="info_text">
+                            Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                        </div>
 
-                @{
-                    DataTable dt_files = Model.GetPostAttachments(p_id);
-                    foreach (DataRow file_row in dt_files.Rows)
-                    {
-                        int pa_id = (int)file_row[0];
-                        string content_type = (string)file_row["pa_file_content_type"];
-                        if (content_type != "")
-                        {
-                            <div class="info_text">
-                                File: @file_row["pa_file_name"], Size: @file_row["pa_file_length"],
-                                Type: @file_row["pa_file_content_type"]]
-                                &nbsp;&nbsp;
-                                <a href="/File?handler=File&pa_id=@pa_id" download="@file_row["pa_file_name"]">Download</a>
-                                &nbsp;&nbsp;
+                        @{
+                            DataTable dt_files = Model.GetPostAttachments(p_id);
+                            foreach (DataRow file_row in dt_files.Rows)
+                            {
+                                int pa_id = (int)file_row[0];
+                                string content_type = (string)file_row["pa_file_content_type"];
+                                if (content_type != "")
+                                {
+                                    <div class="info_text">
+                                        File: @file_row["pa_file_name"], Size: @file_row["pa_file_length"],
+                                        Type: @file_row["pa_file_content_type"]]
+                                        &nbsp;&nbsp;
+                                        <a href="/File?handler=File&pa_id=@pa_id" download="@file_row["pa_file_name"]">Download</a>
+                                        &nbsp;&nbsp;
 
-                                @{
+                                        @{
+                                            if (content_type.Contains("image"))
+                                            {
+                                                <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@pa_id', this)">View</div>
+                                            }
+                                        }
+
+                                    </div>
                                     if (content_type.Contains("image"))
                                     {
-                                        <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@pa_id', this)">View</div>
+                                        <div style="display:none" class="post_image" id="image_div_@pa_id">
+                                            <img class="post_img" src="/File?handler=File&pa_id=@pa_id" />
+                                        </div>
                                     }
                                 }
-
-                            </div>
-                            if (content_type.Contains("image"))
-                            {
-                                <div style="display:none" class="post_image" id="image_div_@pa_id">
-                                    <img class="post_img" src="/File?handler=File&pa_id=@pa_id" />
-                                </div>
                             }
                         }
-                    }
-                }
 
-            </div>
-        }
+                    </div>
+                }
+            }
+        </div>
+        <!--posts inner-->
     }
 
     if (!string.IsNullOrEmpty(Model.post_error))

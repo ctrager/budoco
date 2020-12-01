@@ -24,6 +24,13 @@ namespace budoco.Pages
 
         public void OnPost()
         {
+
+            if (string.IsNullOrWhiteSpace(search_terms))
+            {
+                bd_util.set_flash_err(HttpContext, "Please enter word(s) to search");
+                return;
+            }
+
             string sql_template = @"
 select i_id as ""ID"", i_description as ""Description"", context as ""Context"", max(rank) as score from (
 select i_id, i_description, ts_headline('english', i_description, websearch_to_tsquery('english', '$')) as Context, rank from 

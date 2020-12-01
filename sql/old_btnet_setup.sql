@@ -1,5 +1,8 @@
---Copyright 2002-2009 Corey Trager
---Distributed under the terms of the GNU General Public License
+/* Corey says... 
+This script isn't for Budoco. It's for the old BugTracker.NET app.
+It's here for my reference
+*/
+
 
 if exists (select * from dbo.sysobjects where id = object_id(N'[bug_posts]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
 drop table [bug_posts]

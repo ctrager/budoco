@@ -9,11 +9,13 @@
     ViewData["Title"] = "Login";
 }
 
+
 <h1>Login</h1>
+
 <partial name="_FlashPartial" />
 
-
-<form class="login_form" method="post">
+<div class="form_div">
+<form method="post">
     <table class="form_table">
         <tr>
             <td><label>Username or Email</label>
@@ -27,13 +29,15 @@
         </tr>
     </table>
 </form>
-
+</div>
 
 <div><a href="ResetPasswordRequest">Forgot Password?</a></div>
 
+<div class="login_register_parent">
 <div class="login_register">
     <div>Is this your first time?</div>
     <div><a href="Register">Register</a></div>
+</div>
 </div>
 
 @section Scripts {

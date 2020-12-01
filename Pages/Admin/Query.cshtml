@@ -7,11 +7,12 @@
 }
 
 <h1>Issue Query</h1>
-<div>
+<div class="just_left">
     <a href="Queries">Back to Queries</a>
 </div>
 <partial name="_FlashPartial" />
 
+<div class="form_div">
 <form id="sql_form" method="post">
     <table class="form_table">
         @{
@@ -25,7 +26,7 @@
         }
         <tr>
             <td><label>Name</label>
-            <td><input asp-for="name" value="@Model.name"></input>
+            <td><input class="issue_query_name_input" asp-for="name" value="@Model.name"></input>
         </tr>
         <tr>
             <td><label>Active</label>
@@ -53,8 +54,8 @@
             <button type="button" onclick="maybe_save()">Save in Database</button>
         </td></tr>
     </table>
-
 </form>
+</div>
 
 
 <div id="results">

@@ -170,7 +170,7 @@ uses an inactive option
   
 * Integration with version control. If you want that, just use Github, etc.
 
-* Email/Slack notifications about changes, or reminders that a issue is growing stale. I don't like to enable nagging.
+* Email/Slack notifications about changes, or reminders that a issue is growing stale. 
 
 url parser
 https://mathiasbynens.be/demo/url-regex

@@ -159,9 +159,8 @@ el_password varchar(48) null
 
 create unique index el_guid_index on emailed_links (el_guid);
 
-
 insert into users (us_username, us_email, us_is_admin, us_password) 
-values('admin', '', true, 'admin');
+values('admin', '', true, 'anything');
 
 insert into projects (pj_name) values ('proj 1');
 insert into projects (pj_name) values ('proj 2');
