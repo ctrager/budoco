@@ -60,6 +60,13 @@ select {
     border: 1px solid #cccccc;
 }
 
+input:disabled {
+    /* same color as form */
+    background: transparent;
+    border: none;
+    color: black;
+}
+
 div {
     margin-bottom: 15px;
 }
@@ -239,6 +246,7 @@ form {
     height: 80px;
 }
 
+
 .post_form_email_to_input {
     width: 860px;
 }
@@ -360,6 +368,11 @@ pre {
 textarea#sql {
     width: 900px;
     height: 120px;
+}
+
+.issue_query_description_textarea {
+    width: 805px;
+    height: 30px;
 }
 
 .login_register {

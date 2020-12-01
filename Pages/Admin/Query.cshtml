@@ -29,14 +29,16 @@
             <td><input class="issue_query_name_input" asp-for="name" value="@Model.name"></input>
         </tr>
         <tr>
-            <td><label>Active</label>
-            <td><input asp-for="is_active" value="true" />
+            <td colspan="99"><label>Active</label>
+            <input asp-for="is_active" value="true" />
+            <label>Default</label>
+            <input asp-for="is_default" value="true" />
         </tr>
+        
         <tr>
-            <td><label>Default</label>
-            <td><input asp-for="is_default" value="true" />
+            <td><label>Description</label>
+            <td><textarea class="issue_query_description_textarea pre" asp-for="description"></textarea>
         </tr>
-        <tr>
     </table>
 
     <table class="form_table">
@@ -44,9 +46,6 @@
             <label>SQL:</label>
             <br>
             <textarea onchange="mark_sql_dirty()" class="pre" asp-for="sql"></textarea>
-            <div class="info_text">
-                Your query has to work before you can save it.
-            </div>
         </td></tr>
 
         <tr><td>
@@ -71,7 +70,8 @@
 
     function maybe_save() {
         $(".flash_parent").remove(); // remove previous flash message
-        
+     
+          
         rows = $("#results_table").length;
         if (sql_is_dirty || rows == 0) {
             if (confirm("You don't seem to have tested your latest sql change yet.\n\n" +
@@ -84,6 +84,7 @@
             $("#sql_form").submit();
             sql_is_dirty = false;
         }
+        
     }
 
     function run_sql() {

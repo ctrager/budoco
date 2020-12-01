@@ -20,6 +20,8 @@ namespace budoco.Pages
         [BindProperty]
         public string name { get; set; }
         [BindProperty]
+        public string description { get; set; }
+        [BindProperty]
         public string sql { get; set; }
 
         [BindProperty]
@@ -49,6 +51,7 @@ namespace budoco.Pages
 
                 sql = (string)dr["qu_sql"];
                 name = (string)dr["qu_name"];
+                description = (string)dr["qu_description"];
                 is_active = (bool)dr["qu_is_active"];
                 is_default = (bool)dr["qu_is_default"];
             }
@@ -65,11 +68,16 @@ namespace budoco.Pages
                 return;
             }
 
+            if (description is null)
+            {
+                description = "";
+            }
+
             if (id == 0)
             {
                 var insert_sql = @"insert into queries 
-                (qu_name, qu_sql, qu_is_default, qu_is_active)
-                values(@qu_name, @qu_sql, @qu_is_default, @qu_is_active)
+                (qu_name, qu_description, qu_sql, qu_is_default, qu_is_active)
+                values(@qu_name, @qu_description, @qu_sql, @qu_is_default, @qu_is_active)
                 returning qu_id";
 
                 id = (int)bd_db.exec_scalar(insert_sql, GetValuesDict());
@@ -80,6 +88,7 @@ namespace budoco.Pages
             {
                 var update_sql = @"update queries set 
                 qu_name = @qu_name,
+                qu_description = @qu_description,
                 qu_sql = @qu_sql,
                 qu_is_default = @qu_is_default,
                 qu_is_active = @qu_is_active
@@ -99,6 +108,7 @@ namespace budoco.Pages
 
             dict["@qu_id"] = id;
             dict["@qu_name"] = name;
+            dict["@qu_description"] = description;
             dict["@qu_sql"] = sql;
             dict["@qu_is_default"] = is_default;
             dict["@qu_is_active"] = is_active;
