@@ -139,16 +139,15 @@
                 string button_text = (Model.id == 0) ? "Create" : "Update";
                 <div>
                     <button id="create_or_update_button" type="submit">@button_text</button>
+                    <span class="prep_for_another fake_link" onclick="prep_for_another()">Use this issue as a starting point for new issue</span>
+  
                 </div>
             }
         }
 
 
     </form>
-    <div class="fake_link" onclick="prep_for_another()">Use this issue as a starting point for new issue</div>
     </div> <!--form_div-->
-
-
 
 @{
     if (Model.id != 0)
@@ -167,8 +166,21 @@
                     </td></tr>
 
                     
-                    <tr id="email_fields" style="display:none"><td>
-                        <label id="post_email_to_label">To:</label>
+                    <tr id="email_fields" style="display:none;"><td>
+                        <button type="button" onclick="open_post_email_to_select()" id="post_email_to_label" placeholder="user@example.com">To:</button>
+                        <div id="post_email_to_select" style="visibility: hidden;" 
+                            class="post_email_to_select dont_flash_when_selected" tabindex="999"><!--tabindex is for onblur-->
+                            <div class="post_email_to_select_close">
+                                <span onclick="close_post_email_to_select()">Close</span>
+                            </div>
+                            @{
+                                foreach (DataRow dr in Model.dt_post_email_to.Rows)
+                                {
+                                    <div class="post_email_to_select_row">@dr[0]</div>
+                                }
+                            }
+                        </div> 
+                        <span id="hidden_row_count" style="display:none;">@Model.dt_post_email_to.Rows.Count</span>                        
                         <input class="post_form_email_to_input" asp-for="post_email_to" value="">
                     </td></tr>
 
@@ -219,7 +231,8 @@
     <script>
         
     $(document).ready(function() {
-        get_posts()
+        get_posts();
+        prepare_post_email_to_select();
      });
  
     function get_posts() {
@@ -358,7 +371,63 @@
         else {
             $("#email_fields").hide();
         }
+
+
+
     }
+
+    /* for when you hit the "To:" button */
+    function prepare_post_email_to_select() {
+        $select = $(".post_email_to_select");
+        $select.on("blur", function () {
+            close_post_email_to_select();
+        })
+        $(".post_email_to_select_row").on("click", function () {
+            append_selected_address_to_to($(this).text())
+        })
+    }
+
+    function append_selected_address_to_to(address) {
+        $input = $("#post_email_to");
+        to = $input.val()
+        if (to == "") {
+            to = address
+        }
+        else {
+            if (to.endsWith(",") || to.endsWith(", ")) {
+                to += address
+            }
+            else {
+                to += "," + address
+            }
+        }
+        $input.val(to)
+    }
+    
+    function open_post_email_to_select() {
+        $select = $(".post_email_to_select");
+        $select.css("visibility", "visible");
+        $select.css("width", "400px");
+        
+        // calc height so there isn't a lot of blank space
+        row_count = $("#hidden_row_count").text()
+
+        if (row_count == 0) {
+            row_count = 2
+        }
+        if (row_count > 6) {
+            row_count = 6
+        }
+        // the "Close" row plus
+        height = 18 + (row_count * 27)
+        $select.css("height", height);
+   
+    }
+
+    function close_post_email_to_select() {
+        $(".post_email_to_select").css("visibility", "hidden");
+    }
+
     </script>
 
 }

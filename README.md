@@ -133,30 +133,15 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* More query examples in queries.sql.
-
-* everything 
-* open
-* everything assigned to me
-* everything in my org
-* most recently changed
-* most recently posted to
-* with biggest attachments
-
-* clean up just left, center css again
-
-* linkify http stuff in comments
-* linkify id#123 in comments
-* and info text about id#123
- 
-
-* User settins page. Favorite query. 
-
-* Send emails from the Issue page, that become part of the Issue posts.
+* make the email "to" better, with dropdown, and maybe limited
 
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 
 * Turn emails from trusted senders into issues.
+
+
+* linkify urls in issue/post description
+
 
 * Handle inactive options, add to dropdowns if issue being viewed
 uses an inactive option

@@ -129,28 +129,14 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
 
 */
 
-
+/* in the layouts, the container for the individual pages */
 .content_parent {
     text-align: center;
     position: relative;
 }
 
+
 .centered_and_left_just {
-    display: inline-block;
-    text-align: left;
-}
-
-.flash {
-    display: inline-block;
-    text-align: left;
-}
-
-.posts_inner {
-    display: inline-block;
-    text-align: left;
-}
-
-.admin_inner {
     display: inline-block;
     text-align: left;
 }
@@ -159,17 +145,22 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
     text-align: left;
 }
 
-.flash_parent {
-    text-align: center;
-}
-
-
 .posts_outer {
     text-align: center;
 }
 
-.login_register_parent {
+.posts_inner {
+    display: inline-block;
+    text-align: left;
+}
+
+.flash_parent {
     text-align: center;
+}
+
+.flash {
+    display: inline-block;
+    text-align: left;
 }
 
 /* FORMS */
@@ -248,8 +239,14 @@ form {
 
 
 .post_form_email_to_input {
-    width: 860px;
+    width: 850px;
 }
+
+/*
+#post_email_to_select {
+    width: 300px;
+}
+*/
 
 .name_input {
     width: 300px;
@@ -259,7 +256,9 @@ form {
     width: 600px;
 }
 
-
+.prep_for_another {
+    margin-left: 40px;
+}
 
 /* prove I can hide things on the issue form */
 /*
@@ -384,3 +383,50 @@ textarea#sql {
     width: 300px;
     border: 1px solid gray;
 }
+
+.about {
+    width: 900px;
+}
+
+/* these styles for the thing you see when you hit the "To:" button in post email */
+.post_email_to_select {
+    position: absolute;
+    border: 4px solid lightgray;
+    height: 2px;
+    width: 2px;
+    resize: both;
+    overflow: auto;
+    z-index: 99;
+    visibility: hidden;
+    cursor: pointer;
+    background: white;
+    opacity: 100%;
+    border-radius: 6px;
+}
+
+.dont_flash_when_selected {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.post_email_to_select_row {
+    color: blue;
+    border-bottom: 1px solid lightgray;
+    margin: 0;
+    padding: 4px;
+}
+
+.post_email_to_select_close {
+    text-align: right;
+    background: lightgray;
+    padding-right: 10px;
+    margin: 0px;
+}
+
+
+/* end of post_email_to_select styles */

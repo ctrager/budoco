@@ -37,13 +37,11 @@ namespace budoco.Pages
         [BindProperty]
         public string details { get; set; }
 
-
         // dropdown 
         [BindProperty]
         public IEnumerable<SelectListItem> category_list { get; set; }
         [BindProperty]
         public int category_id { get; set; }
-
 
         // dropdown
         [BindProperty]
@@ -96,6 +94,7 @@ namespace budoco.Pages
         //https://stackoverflow.com/questions/56172036/razor-view-disabled-html-attribute-based-on-viewmodel-property
         public string null_or_disabled = null;
         public DataTable dt_posts;
+        public DataTable dt_post_email_to;
         public string created_by_username;
         public string created_date;
         public string last_updated_username;
@@ -110,7 +109,6 @@ namespace budoco.Pages
                 return;
 
             GetIssue();
-
         }
 
         public void OnPost()
@@ -186,8 +184,13 @@ namespace budoco.Pages
                     null_or_disabled = "disabled";
                 }
 
+                // TODO:
                 // if this issue uses an option where is_active == false,
                 // we still want to show it
+
+                // only user without email is "admin"
+                dt_post_email_to = bd_db.get_datatable(
+                    "select us_email from users where us_is_active = true and us_email != '' order by us_email");
 
             }
             else
