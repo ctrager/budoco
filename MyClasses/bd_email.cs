@@ -39,6 +39,8 @@ namespace budoco
             thread.Start();
         }
 
+        // read the table outgoing_email_queue, try to send an email for each row
+        // and if good, delete the row
         public static void threadproc_send_emails()
         {
             var sql = "select * from outgoing_email_queue order by oq_id desc";
@@ -50,21 +52,23 @@ namespace budoco
                 int oq_id = (int)dr[0];
                 bd_util.console_write_line("trying to send " + oq_id.ToString());
 
-                string result = send_email(
-                    (string)dr["oq_email_to"],
-                    (string)dr["oq_email_subject"],
-                    (string)dr["oq_email_body"],
-                    (int)dr["oq_post_id"]);
+                try
+                {
+                    send_email(
+                        (string)dr["oq_email_to"],
+                        (string)dr["oq_email_subject"],
+                        (string)dr["oq_email_body"],
+                        (int)dr["oq_post_id"]);
 
-                if (result != "")
-                {
-                    increment_retry_count(oq_id, result);
-                }
-                else
-                {
                     // Done, good, so delete from queue
                     sql = "delete from outgoing_email_queue where oq_id = " + oq_id.ToString();
                     bd_db.exec(sql);
+                }
+                catch (Exception exception)
+                {
+                    bd_util.console_write_line(exception.Message);
+                    bd_util.console_write_line(exception.StackTrace);
+                    increment_retry_count(oq_id, exception.Message);
                 }
             }
         }
@@ -84,12 +88,16 @@ namespace budoco
         }
 
 
-        public static string send_email(string to, string subject, string body_text, int post_id = 0)
+        public static void send_email(string to, string subject, string body_text, int post_id = 0)
         {
 
             var message = new MimeMessage();
 
-            message.To.Add(new MailboxAddress("", to));
+            string[] addresses = to.Split(",");
+            for (int i = 0; i < addresses.Length; i++)
+            {
+                message.To.Add(new MailboxAddress("", addresses[i].Trim()));
+            }
             message.Subject = subject;
             bd_util.console_write_line("send_email to: " + to);
             bd_util.console_write_line("email subject: " + subject);
@@ -109,8 +117,7 @@ namespace budoco
             }
 
             message.Body = multipart;
-            string result = smtp_send(message);
-            return result;
+            smtp_send(message);
         }
 
 
@@ -147,9 +154,8 @@ namespace budoco
         }
 
 
-        static string smtp_send(MimeMessage message)
+        static void smtp_send(MimeMessage message)
         {
-            string result = "";
 
             // all our outgoing emails get sent from what's
             // configured in config file
@@ -163,28 +169,19 @@ namespace budoco
             {
                 using (var client = new MailKit.Net.Smtp.SmtpClient())
                 {
-                    try
-                    {
-                        client.Connect(
-                            bd_config.get(bd_config.SmtpHost),
-                            bd_config.get(bd_config.SmtpPort),
-                            MailKit.Security.SecureSocketOptions.Auto);
+                    client.Connect(
+                        bd_config.get(bd_config.SmtpHost),
+                        bd_config.get(bd_config.SmtpPort),
+                        MailKit.Security.SecureSocketOptions.Auto);
 
-                        string smtp_user = bd_config.get(bd_config.SmtpUser);
-                        string smtp_password = bd_config.get(bd_config.SmtpPassword);
-                        client.Authenticate(smtp_user, smtp_password);
-                        client.Send(message);
-                        client.Disconnect(true);
-                    }
-                    catch (Exception e)
-                    {
-                        result = e.Message;
-                        bd_util.console_write_line(e.Message);
-                        bd_util.console_write_line(e.StackTrace);
-                    }
+                    string smtp_user = bd_config.get(bd_config.SmtpUser);
+                    string smtp_password = bd_config.get(bd_config.SmtpPassword);
+                    client.Authenticate(smtp_user, smtp_password);
+                    client.Send(message);
+                    client.Disconnect(true);
                 }
             }
-            return result;
+
         }
     }
 }
