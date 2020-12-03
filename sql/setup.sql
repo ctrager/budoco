@@ -1,18 +1,21 @@
 
 drop table if exists users;
 drop table if exists sessions;
+drop table if exists registration_requests;
+drop table if exists reset_password_requests;
+drop table if exists outgoing_email_queue;
+
 drop table if exists issues;
+drop table if exists posts;
+drop table if exists post_attachments;
+
 drop table if exists projects;
 drop table if exists categories;
 drop table if exists priorities;
 drop table if exists statuses;
 drop table if exists organizations;
 drop table if exists queries;
-drop table if exists posts;
-drop table if exists post_attachments;
-drop table if exists registration_requests;
-drop table if exists reset_password_requests;
-drop table if exists outgoing_email_queue;
+
 
 create table users
 (

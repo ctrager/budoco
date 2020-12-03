@@ -133,6 +133,10 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
+* What's the "fakepath" thing in file picker, jquery, with attachments?
+
+* Handle restart when user page is up, which cases session cached stuff to be lost
+
 * when we are forcing admin to change password, also need email, in case forgets password
 so need a new form
 

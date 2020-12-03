@@ -45,8 +45,7 @@ namespace budoco.Pages
                         + "/ResetPassword?guid="
                         + guid;
 
-                    bd_email.queue_email(
-                        "reset",
+                    bd_email.queue_email("reset",
                         email, // to
                         bd_config.get(bd_config.AppName) + ": Reset Password", // subject
                         body);

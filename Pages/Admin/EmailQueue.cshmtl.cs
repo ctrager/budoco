@@ -20,7 +20,7 @@ namespace budoco.Pages
                 return;
 
             string sql = @"select oq_id, oq_date_created, oq_email_type, 
-            oq_post_id, oq_sending_attempt_count, oq_last_sending_attempt_date	oq_last_exception,
+            oq_post_id, oq_sending_attempt_count, oq_last_sending_attempt_date, oq_last_exception,
             oq_email_to, oq_email_subject
             from outgoing_email_queue order by oq_date_created desc";
 

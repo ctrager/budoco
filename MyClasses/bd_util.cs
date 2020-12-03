@@ -1,17 +1,10 @@
 using System;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using System.Collections.Generic;
 using System.Data;
 using System.Security.Cryptography;
-using MailKit;
-using MimeKit;
 using Serilog;
 using System.IO;
-using Microsoft.AspNetCore;
-using System.Web;
-using Microsoft.AspNetCore.Razor.Language;
-using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace budoco
 {
@@ -100,7 +93,7 @@ namespace budoco
                 return false;
             }
 
-            string sql = @"select * from sessions 
+            string sql = @"/*check_user_permissions*/ select * from sessions 
                 inner join users on se_user = us_id
                 where se_id = '" + session_id + "'; /*check_user_permissions */";
 

@@ -73,8 +73,6 @@ namespace budoco
         {
             bd_util.console_write_line("Configure");
 
-
-
             // https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-5.0
             // for nginx
             app.UseForwardedHeaders(new ForwardedHeadersOptions

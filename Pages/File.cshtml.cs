@@ -20,7 +20,7 @@ namespace budoco.Pages
                 return null;
             }
 
-            var sql = @"select pa_file_content_type 
+            var sql = @"/*File*/select pa_file_content_type, pa_content
                 from post_attachments where pa_id = " + pa_id.ToString();
 
             DataRow dr = bd_db.get_datarow(sql);
@@ -32,7 +32,7 @@ namespace budoco.Pages
             }
 
             // can i do this in one step?
-            sql = "select pa_content from post_attachments where pa_id = " + pa_id.ToString();
+            sql = "/*File*/select pa_content from post_attachments where pa_id = " + pa_id.ToString();
             byte[] bytea = bd_db.get_bytea(sql);
 
             return File(bytea, (string)dr["pa_file_content_type"]);
