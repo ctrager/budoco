@@ -480,7 +480,7 @@ namespace budoco.Pages
 
             // now set the multipart/mixed as the message body
             message.Body = multipart;
-            bd_util.send_email(message);
+            bd_email.send_email(message);
 
         }
 

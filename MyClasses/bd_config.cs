@@ -63,7 +63,7 @@ namespace budoco
         public const string NewUserStartsReportOnly = "NewUserStartsReportOnly";
         public const string DebugAutoConfirmRegistration = "DebugAutoConfirmRegistration";
         public const string DebugEnableRunSql = "DebugEnableRunSql";
-
+        public const string MaxNumberOfSendingRetries = "MaxNumberOfSendingRetries";
 
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 

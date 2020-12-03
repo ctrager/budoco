@@ -173,8 +173,8 @@ oq_id serial,
 oq_date_created timestamptz default CURRENT_TIMESTAMP,
 oq_email_type varchar(10) not null, /* post, registration, forgot password */
 oq_post_id int null, /* if related to post - get the attachments from it, don't store twice */
-oq_retry_count int not null default 0,
-oq_last_retry_date timestamptz null,
+oq_sending_attempt_count int not null default 0,
+oq_last_sending_attempt_date timestamptz null,
 oq_last_exception text not null default '',
 oq_email_to text not null,
 oq_email_subject text not null,

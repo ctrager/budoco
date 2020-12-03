@@ -32,65 +32,6 @@ namespace budoco
         public const string NAME_ALREADY_USED = "Name is already being used";
         public const string NAME_IS_REQUIRED = "Name is required";
 
-        public static string send_email(string to, string subject, string body)
-        {
-
-            var message = new MimeMessage();
-
-
-            message.To.Add(new MailboxAddress("", to));
-            message.Subject = subject;
-            bd_util.console_write_line("email to: " + to);
-            bd_util.console_write_line("email body: " + body);
-            message.Body = new TextPart("plain")
-            {
-                Text = body
-            };
-
-            bd_util.console_write_line("sending email -to: " + to + ", subject: " + subject);
-            bd_util.console_write_line("body : " + body);
-            string result = send_email(message);
-            return result;
-        }
-
-        public static string send_email(MimeMessage message)
-        {
-            string result = "";
-
-            var from_address = new MailboxAddress(
-                bd_config.get(bd_config.OutgoingEmailDisplayName),
-                bd_config.get(bd_config.SmtpUser));
-
-            message.From.Add(from_address);
-
-            if (bd_config.get(bd_config.DebugSkipSendingEmails) == 0)
-            {
-                using (var client = new MailKit.Net.Smtp.SmtpClient())
-                {
-                    try
-                    {
-                        client.Connect(
-                            bd_config.get(bd_config.SmtpHost),
-                            bd_config.get(bd_config.SmtpPort),
-                            MailKit.Security.SecureSocketOptions.Auto);
-
-                        string smtp_user = bd_config.get(bd_config.SmtpUser);
-                        string smtp_password = bd_config.get(bd_config.SmtpPassword);
-                        client.Authenticate(smtp_user, smtp_password);
-                        client.Send(message);
-                        client.Disconnect(true);
-                    }
-                    catch (Exception e)
-                    {
-                        result = e.Message;
-                        bd_util.console_write_line(e.Message);
-                        bd_util.console_write_line(e.StackTrace);
-
-                    }
-                }
-            }
-            return result;
-        }
 
         public static void console_write_line(string msg)
         {

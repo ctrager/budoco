@@ -26,6 +26,9 @@ namespace budoco
             Configuration = configuration;
 
             bd_util.console_write_line(Configuration["Budoco:DebugWhatEnvIsThis"]);
+
+            // If there are pending outgoing emails try to send them.
+            bd_email.spawn_sending_thread();
         }
 
         public IConfiguration Configuration { get; }

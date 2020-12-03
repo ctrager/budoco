@@ -1,0 +1,51 @@
+﻿@page
+@model EmailQueueModel
+
+@{
+    ViewData["Title"] = "Email Queue";
+}
+
+<h1>@ViewData["Title"]</h1>
+<partial name="_FlashPartial" />
+
+<span class="just_left fake_link" onclick="document.location.reload()">
+Refresh this page
+</div>
+
+<div class="just_left fake_link" onclick="reset_counts()">
+Reset retry counts
+</div>
+
+<div class="just_left fake_link" onclick="retry()">
+Retry sending
+</div>
+
+<div class="just_left fake_link" onclick="delete_all()">
+Delete all entries
+</div>
+
+<partial name="_CrudDataTablePartial" />
+
+<form id="post_action_form" style="display:none;" method="post">
+    <input asp-for="queue_action" value=""/>
+</form>
+
+@section Scripts {
+
+<script>
+    function reset_counts() {
+        $("#queue_action").val("reset_counts");
+        $("#post_action_form").submit();
+    }
+    function delete_all() {
+        if (confirm("Are you sure you want to delete all entries?")) {
+            $("#queue_action").val("delete");
+            $("#post_action_form").submit();
+        }
+    }
+    function retry() {
+        $("#queue_action").val("retry");
+        $("#post_action_form").submit();
+    }
+</script>
+}

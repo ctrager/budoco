@@ -45,19 +45,13 @@ namespace budoco.Pages
                         + "/ResetPassword?guid="
                         + guid;
 
-                    string email_result = bd_util.send_email(
+                    bd_email.queue_email(
+                        "reset",
                         email, // to
                         bd_config.get(bd_config.AppName) + ": Reset Password", // subject
                         body);
 
-                    if (email_result != "")
-                    {
-                        errs.Add("Unable to send password reset email. Please try again.");
-                    }
-                    else
-                    {
-                        bd_util.set_flash_msg(HttpContext, "An email with password reset instructions was sent to " + email);
-                    }
+                    bd_util.set_flash_msg(HttpContext, "An email with password reset instructions was sent to " + email);
 
                 }
                 else

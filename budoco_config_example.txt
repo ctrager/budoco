@@ -54,6 +54,11 @@ WebsiteUrlRootWithoutSlash: https://YOURDOMAIN.COM
 # End of important settings
 ###############################################################################
 
+# The app sends emails by putting them in an outgoing queue and then trying to
+# send them. This setting controls how many attempts the app makes before
+# giving up. See the Admin/Outgoing Email Queue page for more info.
+MaxNumberOfSendingRetries: 3
+
 # When this is 1, you see the stack trace in the web page, but it might
 # be too much info for production. When this is 0, you just see that there
 # was an error and you have to look in the logs for the details.

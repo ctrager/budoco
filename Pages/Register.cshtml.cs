@@ -68,22 +68,14 @@ namespace budoco.Pages
                     + "/RegisterConfirmation?guid="
                     + guid;
 
-                string email_result = bd_util.send_email(
+                bd_email.queue_email("register",
                     email_address, // to
                     bd_config.get(bd_config.AppName) + ": Confirm registration", // subject
                     body);
 
-                if (email_result != "")
-                {
-                    errs.Add("Error sending email.");
-                    errs.Add(email_result);
-                    bd_util.set_flash_errs(HttpContext, errs);
-                }
-                else
-                {
-                    bd_util.set_flash_msg(HttpContext, "Please check your email to confirm registration.");
-                    Response.Redirect("RegisterPleaseConfirm");
-                }
+                bd_util.set_flash_msg(HttpContext, "Please check your email to confirm registration.");
+                Response.Redirect("RegisterPleaseConfirm");
+
             }
         }
 
