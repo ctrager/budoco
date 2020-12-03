@@ -190,7 +190,9 @@ namespace budoco.Pages
 
                 // only user without email is "admin"
                 dt_post_email_to = bd_db.get_datatable(
-                    "select us_email_address from users where us_is_active = true and us_email_address != '' order by us_email_address");
+                    @"select us_email_address from users 
+                    where us_is_active = true 
+                    and us_email_address != '' order by us_email_address");
 
             }
             else
@@ -351,14 +353,16 @@ namespace budoco.Pages
 
         public Task<ContentResult> OnPostAddPostAsync()
         {
+            bd_util.check_user_permissions(HttpContext);
+
             if (!IsValidPost())
             {
                 return OnGetPostsAsync();
             }
 
             var sql = @"insert into posts
-                (p_issue, p_post_type, p_text, p_created_by_user)
-                values(@p_issue, @p_post_type, @p_text, @p_created_by_user)
+                (p_issue, p_post_type, p_text, p_created_by_user, p_email_to)
+                values(@p_issue, @p_post_type, @p_text, @p_created_by_user, @p_email_to)
                 returning p_id";
 
             var dict = new Dictionary<string, dynamic>();
@@ -413,8 +417,18 @@ namespace budoco.Pages
                     // post_error instead of set_flash_err because user is at the bottom
                     // of the page, can't see the error at the top
                     post_error = @"Email ""To"" is required.";
-
                     return false;
+                }
+
+                string[] addresses = post_email_to.Split(",");
+                for (int i = 0; i < addresses.Length; i++)
+                {
+                    string address = addresses[i].Trim();
+                    if (!EmailValidation.EmailValidator.Validate(address))
+                    {
+                        post_error = "Email address is invalid: " + address;
+                        return false;
+                    }
                 }
             }
             return true;

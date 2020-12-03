@@ -8,14 +8,26 @@
                     int p_id = (int)dr[0];
 
                     <div class="post">
-                        <div class="post_text">
-                            <pre>@dr["p_text"]</pre>
-                        </div>
-                        <div class="info_text">
-                            Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
-                        </div>
-
                         @{
+                            string post_type = (string)dr["p_post_type"];
+                            if (post_type == "email")
+                            {
+                                <div class="info_text">
+                                    Sent by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                                </div>
+                                <div>
+                                    <span>To: @dr["p_email_to"]</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="info_text">
+                                    Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                                </div>
+                            }
+                            <div class="post_text">
+                                <pre>@dr["p_text"]</pre>
+                            </div>
                             DataTable dt_files = Model.GetPostAttachments(p_id);
                             foreach (DataRow file_row in dt_files.Rows)
                             {

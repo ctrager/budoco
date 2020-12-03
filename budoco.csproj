@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EmailValidation" Version="1.0.4" />
     <PackageReference Include="mailkit" Version="2.9.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
     <PackageReference Include="npgsql" Version="5.0.0" />
