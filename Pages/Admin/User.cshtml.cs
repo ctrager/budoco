@@ -46,7 +46,7 @@ namespace budoco.Pages
             DataRow dr = bd_db.get_datarow(sql);
 
             username = (string)dr["us_username"];
-            email = (string)dr["us_email"];
+            email = (string)dr["us_email_address"];
             is_admin = (bool)dr["us_is_admin"];
             is_active = (bool)dr["us_is_active"];
             is_report_only = (bool)dr["us_is_report_only"];
@@ -71,7 +71,7 @@ namespace budoco.Pages
 
             sql = @"update users set 
                 us_username = @us_username,
-                us_email = @us_email,
+                us_email_address = @us_email_address,
                 us_is_admin = @us_is_admin,
                 us_is_active = @us_is_active,
                 us_is_report_only = @us_is_report_only,
@@ -88,7 +88,7 @@ namespace budoco.Pages
 
             dict["@us_id"] = id;
             dict["@us_username"] = username;
-            dict["@us_email"] = email;
+            dict["@us_email_address"] = email;
             dict["@us_is_admin"] = is_admin;
             dict["@us_is_active"] = is_active;
             dict["@us_is_report_only"] = is_report_only;

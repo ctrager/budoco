@@ -192,7 +192,7 @@ namespace budoco.Pages
 
                 // only user without email is "admin"
                 dt_post_email_to = bd_db.get_datatable(
-                    "select us_email from users where us_is_active = true and us_email != '' order by us_email");
+                    "select us_email_address from users where us_is_active = true and us_email_address != '' order by us_email_address");
 
             }
             else

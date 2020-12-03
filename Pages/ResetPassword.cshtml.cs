@@ -73,9 +73,9 @@ namespace budoco.Pages
 
         int GetUserIdUsingGuid()
         {
-            string sql = "select * from emailed_links where el_guid = @el_guid";
+            string sql = "select * from reset_password_requests where rp_guid = @rp_guid";
 
-            dict["@el_guid"] = guid;
+            dict["@rp_guid"] = guid;
             DataRow dr_reset = bd_db.get_datarow(sql, dict);
 
             if (dr_reset is null)
@@ -87,7 +87,7 @@ namespace budoco.Pages
             }
             else
             {
-                return (int)dr_reset["el_user_id"];
+                return (int)dr_reset["rp_user_id"];
             }
 
         }

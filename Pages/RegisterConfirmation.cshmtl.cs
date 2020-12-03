@@ -21,9 +21,9 @@ namespace budoco.Pages
         public void OnGet()
         {
             var errs = new List<string>();
-            string sql = "select * from emailed_links where el_guid = @el_guid";
+            string sql = "select * from registration_requests where rr_guid = @rr_guid";
             var dict = new Dictionary<string, dynamic>();
-            dict["@el_guid"] = guid;
+            dict["@rr_guid"] = guid;
             DataRow dr_registration = bd_db.get_datarow(sql, dict);
 
             if (dr_registration is null)
@@ -34,9 +34,9 @@ namespace budoco.Pages
             }
             else
             {
-                dict["@us_username"] = (string)dr_registration["el_username"];
-                dict["@us_email"] = (string)dr_registration["el_email"];
-                dict["@us_password"] = (string)dr_registration["el_password"];
+                dict["@us_username"] = (string)dr_registration["rr_username"];
+                dict["@us_email_address"] = (string)dr_registration["rr_email_address"];
+                dict["@us_password"] = (string)dr_registration["rr_password"];
 
                 sql = "select 1 from users where us_username = @us_username";
 
@@ -56,15 +56,15 @@ namespace budoco.Pages
                     if (bd_config.get(bd_config.NewUserStartsReportOnly) == 1)
                         is_report_only = true;
 
-                    dict["@us_username"] = (string)dr_registration["el_username"];
-                    dict["@us_email"] = (string)dr_registration["el_email"];
-                    dict["@us_password"] = (string)dr_registration["el_password"];
+                    dict["@us_username"] = (string)dr_registration["rr_username"];
+                    dict["@us_email_address"] = (string)dr_registration["rr_email_address"];
+                    dict["@us_password"] = (string)dr_registration["rr_password"];
                     dict["@us_is_active"] = is_active;
                     dict["@us_is_report_only"] = is_report_only;
 
                     // create user
-                    sql = @"insert into users (us_username, us_email, us_password, us_is_active, us_is_report_only) 
-                    values(@us_username, @us_email, @us_password, @us_is_active, @us_is_report_only) 
+                    sql = @"insert into users (us_username, us_email_address, us_password, us_is_active, us_is_report_only) 
+                    values(@us_username, @us_email_address, @us_password, @us_is_active, @us_is_report_only) 
                     returning us_id";
 
                     bd_db.exec_scalar(sql, dict);

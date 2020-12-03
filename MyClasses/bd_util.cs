@@ -177,7 +177,7 @@ namespace budoco
             // save in session so that downstream pages don't have to reread
             context.Session.SetInt32("us_id", (int)dr["us_id"]);
             context.Session.SetString("us_username", (string)dr["us_username"]);
-            context.Session.SetString("us_email", (string)dr["us_email"]);
+            context.Session.SetString("us_email_address", (string)dr["us_email_address"]);
             context.Session.SetInt32("us_is_admin", Convert.ToInt32((bool)dr["us_is_admin"]));
             context.Session.SetInt32("us_is_active", Convert.ToInt32((bool)dr["us_is_active"]));
             context.Session.SetInt32("us_is_report_only", Convert.ToInt32((bool)dr["us_is_report_only"]));
@@ -251,21 +251,23 @@ namespace budoco
             return true;
         }
 
-        public static string insert_change_password_request_link(string email, int user_id)
+
+
+        public static string insert_change_password_request_link(string email_address, int user_id)
 
         {
             // insert unguessable bytes into db for user to confirm registration
-            string sql = @"insert into emailed_links 
-                     (el_guid, el_email, el_user_id, el_action)
-                    values(@el_guid, @el_email, @el_user_id, @el_action)";
+            string sql = @"insert into reset_password_requests 
+                     (rp_guid, rp_email_address, rp_user_id)
+                    values(@rp_guid, @rp_email_address, @rp_user_id)";
 
             var guid = Guid.NewGuid();
             Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 
-            dict["@el_guid"] = guid;
-            dict["@el_email"] = email;
-            dict["@el_action"] = "reset";
-            dict["@el_user_id"] = user_id;
+            dict["@rp_guid"] = guid;
+            dict["@rp_email_address"] = email_address;
+            dict["@rp_action"] = "reset";
+            dict["@rp_user_id"] = user_id;
 
             bd_db.exec(sql, dict);
 

@@ -5,15 +5,15 @@ It's only designed to run after running setup.sql because it depends on postgres
 
 
 insert into users 
-(us_username, us_email, us_is_active, us_password) 
+(us_username, us_email_address, us_is_active, us_password) 
 values('inactive', 'inactive@example.com', false, 'anything');
 
 insert into users 
-(us_username, us_email, us_is_report_only, us_password) 
+(us_username, us_email_address, us_is_report_only, us_password) 
 values('report', 'report_only@example.com', false, 'anything');
 
 insert into users 
-(us_username, us_email, us_organization, us_password) 
+(us_username, us_email_address, us_organization, us_password) 
 values('org', 'belongs_to_organization@example.com', 2, 'anything');
 
 /* create issues */

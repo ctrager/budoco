@@ -89,12 +89,12 @@ namespace budoco.Pages
 
             // check user and password
             string sql = @"select * from users where 
-            (us_username = @us_username or us_email = @us_email)";
+            (us_username = @us_username or us_email_address = @us_email_address)";
 
             var dict = new Dictionary<string, dynamic>();
 
             dict["@us_username"] = username;
-            dict["@us_email"] = username; // on purpose, user can login typing either
+            dict["@us_email_address"] = username; // on purpose, user can login typing either
 
             DataRow dr_user = bd_db.get_datarow(sql, dict);
 

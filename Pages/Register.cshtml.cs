@@ -14,7 +14,7 @@ namespace budoco.Pages
 
         // bindings start 
         [BindProperty]
-        public string email { get; set; }
+        public string email_address { get; set; }
 
         [BindProperty]
         public string username { get; set; }
@@ -38,19 +38,19 @@ namespace budoco.Pages
             }
 
             // insert unguessable bytes into db for user to confirm registration
-            string sql = @"insert into emailed_links 
-            (el_guid, el_email, el_action, el_username, el_password)
-            values(@el_guid, @el_email, @el_action, @el_username, @el_password)";
+            string sql = @"insert into registration_requests 
+            (rr_guid, rr_email_address, rr_username, rr_password)
+            values(@rr_guid, @rr_email_address, @rr_username, @rr_password)";
 
             var dict = new Dictionary<string, dynamic>();
 
             var guid = Guid.NewGuid();
-            dict["@el_guid"] = guid;
-            dict["@el_username"] = username; // on purpose, user can login typing either
-            dict["@el_email"] = email;
+            dict["@rr_guid"] = guid;
+            dict["@rr_username"] = username; // on purpose, user can login typing either
+            dict["@rr_reset_password_email_address"] = email_address;
             string hashed_password = bd_util.compute_password_hash(password);
-            dict["@el_password"] = hashed_password;
-            dict["@el_action"] = "register";
+            dict["@rr_password"] = hashed_password;
+            dict["@rr_action"] = "register";
 
             bd_db.exec(sql, dict);
 
@@ -69,7 +69,7 @@ namespace budoco.Pages
                     + guid;
 
                 string email_result = bd_util.send_email(
-                    email, // to
+                    email_address, // to
                     bd_config.get(bd_config.AppName) + ": Confirm registration", // subject
                     body);
 
@@ -107,14 +107,14 @@ namespace budoco.Pages
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(email_address))
             {
                 errs.Add("Email is required.");
             }
             else
             {
-                sql = "select 1 from users where us_email = @us_email";
-                dict["@us_email"] = email;
+                sql = "select 1 from users where us_email_address = @us_email_address";
+                dict["@us_email_address"] = email_address;
                 if (bd_db.exists(sql, dict))
                 {
                     errs.Add("Email already registered.");

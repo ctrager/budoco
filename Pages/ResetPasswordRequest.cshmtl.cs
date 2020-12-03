@@ -30,9 +30,9 @@ namespace budoco.Pages
             {
 
                 // is email in our db?
-                var sql = "select * from users where us_email = @us_email";
+                var sql = "select * from users where us_email_address = @us_email_address";
                 var dict = new Dictionary<string, dynamic>();
-                dict["@us_email"] = email;
+                dict["@us_email_address"] = email;
                 DataRow dr_user = bd_db.get_datarow(sql, dict);
 
                 if (dr_user is not null)

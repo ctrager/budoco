@@ -23,7 +23,7 @@ namespace budoco.Pages
             string sql = @"select 
             us_id as ""ID"",
             us_username as ""Username"",
-            us_email as ""Email"",
+            us_email_address as ""Email"",
             us_is_admin as ""Admin"",
             us_is_active as ""Active"",
             us_is_report_only as ""Report Only"",
