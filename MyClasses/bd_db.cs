@@ -18,18 +18,17 @@ namespace budoco
         static string date_format;
 
         // "static constructor"
-        static bd_db()
-        {
-            date_format = bd_config.get("DateFormat");
-        }
         public static string get_connection_string()
         {
+            // don't just get it once, because we don't want to force restart for new config vals
+            date_format = bd_config.get(bd_config.DateFormat);
+
             //"server=127.0.0.1;database=budoco;user id='postgres';password='password';"
 
-            string connection_string = "server=" + bd_config.get("DbServer");
-            connection_string += ";database=" + bd_config.get("DbDatabase");
-            connection_string += ";user id=" + bd_config.get("DbUser");
-            connection_string += ";password='" + bd_config.get("DbPassword");
+            string connection_string = "server=" + bd_config.get(bd_config.DbServer);
+            connection_string += ";database=" + bd_config.get(bd_config.DbDatabase);
+            connection_string += ";user id=" + bd_config.get(bd_config.DbUser);
+            connection_string += ";password='" + bd_config.get(bd_config.DbPassword);
             connection_string += "'";
             return connection_string;
         }

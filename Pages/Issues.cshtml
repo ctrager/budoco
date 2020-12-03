@@ -10,6 +10,7 @@
 <div class="just_left"> 
 
 @{
+    int rows_per_page = bd_config.get(bd_config.RowsPerPage);
     if (HttpContext.Response.StatusCode == 200)
     {
         <div>
@@ -20,8 +21,8 @@
 
         <div>
             @{
-                int number_of_pages = Model.dt.Rows.Count / bd_config.get("RowsPerPage");
-                if (Model.dt.Rows.Count % bd_config.get("RowsPerPage") > 0)
+                int number_of_pages = Model.dt.Rows.Count / rows_per_page;
+                if (Model.dt.Rows.Count % rows_per_page > 0)
                 {
                     number_of_pages++;
                 }
@@ -68,7 +69,7 @@
                         }
                         <th class="unsorted">Action</th>
                     </tr>
-                    int start_row = (Model.page - 1) * bd_config.get("RowsPerPage");
+                    int start_row = (Model.page - 1) * rows_per_page;
                     int row_count = 0;
 
                     for (int row = start_row; row < Model.dt.Rows.Count; row++)
@@ -96,7 +97,7 @@
                             </td>
                         </tr>
                         row_count++;
-                        if (row_count == bd_config.get("RowsPerPage"))
+                        if (row_count == rows_per_page)
                         {
                             break;
                         }

@@ -40,6 +40,31 @@ namespace budoco
 
     public static class bd_config
     {
+
+        public const string DbServer = "DbServer";
+        public const string DbDatabase = "DbDatabase";
+        public const string DbUser = "DbUser";
+        public const string DbPassword = "DbPassword";
+        public const string DebugSkipSendingEmails = "DebugSkipSendingEmails";
+        public const string SmtpHost = "SmtpHost";
+        public const string SmtpPort = "SmtpPort";
+        public const string SmtpUser = "SmtpUser";
+        public const string SmtpPassword = "SmtpPassword";
+        public const string OutgoingEmailDisplayName = "OutgoingEmailDisplayName";
+        public const string UseDeveloperExceptionPage = "UseDeveloperExceptionPage";
+        public const string WebsiteUrlRootWithoutSlash = "WebsiteUrlRootWithoutSlash";
+        public const string AppName = "AppName";
+        public const string UseCustomCss = "UseCustomCss";
+        public const string CustomCssFilename = "CustomCssFilename";
+        public const string RowsPerPage = "RowsPerPage";
+        public const string LogLocation = "LogLocation";
+        public const string DateFormat = "DateFormat";
+        public const string NewUserStartsInactive = "NewUserStartsInactive";
+        public const string NewUserStartsReportOnly = "NewUserStartsReportOnly";
+        public const string DebugAutoConfirmRegistration = "DebugAutoConfirmRegistration";
+        public const string DebugEnableRunSql = "DebugEnableRunSql";
+
+
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 
         // This reads "budoco_config.txt" and loads it into a key/value pair
@@ -104,6 +129,10 @@ namespace budoco
                 }
             }
 
+        }
+
+        public static void log_config()
+        {
             bd_util.console_write_line("config:");
             foreach (var k in dict.Keys)
             {

@@ -11,6 +11,7 @@ using RazorPartialToString.Services;
 using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
+using MimeKit;
 
 namespace budoco.Pages
 {
@@ -88,6 +89,7 @@ namespace budoco.Pages
         public string post_text { get; set; }
 
         // bindings end        
+
         public string dropdown_partial_prefix;
         public string dropdown_partial_label;
 
@@ -420,7 +422,66 @@ namespace budoco.Pages
         }
         void SendIssueEmail()
         {
-            post_error = "Email isn't being sent yet. This feature is under construction";
+
+            // get fields from issue
+            var sql = @"select 
+                cast(i_id as text) as ""id"",
+                cast(i_created_date as text) as ""date"", 
+                i_description from issues where i_id = " + id.ToString();
+            DataRow dr_issue = bd_db.get_datarow(sql);
+
+            //post_error = "Email isn't being sent yet. This feature is under construction";
+
+            var message = new MimeMessage();
+            message.To.Add(new MailboxAddress("", "ctrager@yahoo.com"));
+
+            string identifier1 = "[#" + (string)dr_issue["id"] + "] ";
+            string identifier2 = "          [" + (string)dr_issue["date"] + "]";
+
+            // We use the id and very precise create date as like a GUID to tie the
+            // incoming emails back to this issue
+            // [Issue:123] My computer won't turn on [2020-01-01 11:59:59.233242]
+            message.Subject = identifier1 + (string)dr_issue["i_description"] + identifier2;
+
+            // create our message text, just like before (except don't set it as the message.Body)
+            var body = new TextPart("plain")
+            {
+                Text = post_text
+            };
+
+            var multipart = new Multipart("mixed");
+            multipart.Add(body);
+
+            if (uploaded_file1 != null)
+            {
+                MemoryStream memory_stream = new MemoryStream();
+                uploaded_file1.CopyTo(memory_stream);
+
+
+                // create an image attachment for the file located at path
+                //var pair = uploaded_file1.ContentType().Split("image","jpeg");
+                var attachment = new MimePart("image", "jpeg")
+                {
+                    Content = new MimeContent(memory_stream, ContentEncoding.Default),
+                    ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                    ContentTransferEncoding = ContentEncoding.Base64,
+                    FileName = uploaded_file1.FileName
+                };
+                multipart.Add(attachment);
+            }
+
+
+
+            // now create the multipart/mixed container to hold the message text and the
+            // image attachment
+            //var multipart = new Multipart("mixed");
+            //multipart.Add(body);
+            //multipart.Add(attachment);
+
+            // now set the multipart/mixed as the message body
+            message.Body = multipart;
+            bd_util.send_email(message);
+
         }
 
         void InsertPostAttachment(int post_id, int issue_id, IFormFile uploaded_file)

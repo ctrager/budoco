@@ -18,6 +18,7 @@ namespace budoco
         {
             Console.WriteLine("Main"); // here on purpose
             bd_config.load_config();
+            bd_config.log_config();
 
             Log.Logger = new LoggerConfiguration()
 
@@ -25,7 +26,7 @@ namespace budoco
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
                 .MinimumLevel.Override("budoco", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File((string)bd_config.get("LogLocation"),
+                .WriteTo.File((string)bd_config.get(bd_config.LogLocation),
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 

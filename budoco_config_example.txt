@@ -36,6 +36,7 @@ SmtpHost: smtp.gmail.com
 SmtpPort: 465
 SmtpUser: YOUR_GMAIL@gmail.com
 SmtpPassword: YOUR_PASSWORD
+OutgoingEmailDisplayName: YOUR FRIENDLY NAME
 
 # I still use yahoo mail:
 # SmtpHost: smtp.mail.yahoo.com

@@ -26,13 +26,6 @@ namespace budoco
             Configuration = configuration;
 
             bd_util.console_write_line(Configuration["Budoco:DebugWhatEnvIsThis"]);
-
-            // test cache
-            // object o = new object();
-            // int i = 0;
-            // o = i;
-            // MyCache.Set("my_int", o);
-
         }
 
         public IConfiguration Configuration { get; }
@@ -88,7 +81,7 @@ namespace budoco
 
             //if (env.IsDevelopment())
             //{
-            if (bd_config.get("UseDeveloperExceptionPage") == 1)
+            if (bd_config.get(bd_config.UseDeveloperExceptionPage) == 1)
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -115,15 +108,7 @@ namespace budoco
             // corey added a step in the pipeline
             app.Use(async (context, next) =>
             {
-                // int my_int = (int)MyCache.Get("my_int");
-                // object o = new object();
-                // o = ++my_int;
-                // MyCache.Set("my_int", o);
 
-                // Corey says: use our own guid for authentication so that when we 
-                // restart we don't have to log in again.
-                // Framework generates a new guid each restart. We don't.
-                // 
                 string budoco_session_id = null;
                 if (context.Request.Cookies.ContainsKey(bd_util.BUDOCO_SESSION_ID))
                 {
@@ -138,6 +123,8 @@ namespace budoco
                     + ", "
                     + budoco_session_id);
 
+                // let's do it every url, so that we don't have to restart
+                bd_config.load_config();
                 await next.Invoke();
             });
 

@@ -50,10 +50,10 @@ namespace budoco.Pages
                     bool is_active = true;
                     bool is_report_only = false;
 
-                    if (bd_config.get("NewUserStartsInactive") == 1)
+                    if (bd_config.get(bd_config.NewUserStartsInactive) == 1)
                         is_active = false;
 
-                    if (bd_config.get("NewUserStartsReportOnly") == 1)
+                    if (bd_config.get(bd_config.NewUserStartsReportOnly) == 1)
                         is_report_only = true;
 
                     dict["@us_username"] = (string)dr_registration["el_username"];

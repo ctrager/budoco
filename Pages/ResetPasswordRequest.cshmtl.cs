@@ -41,14 +41,13 @@ namespace budoco.Pages
                     string guid = bd_util.insert_change_password_request_link(email, (int)dr_user["us_id"]);
 
                     string body = "Follow or browse to this link to reset password:\n"
-                        + bd_config.get("WebsiteUrlRootWithoutSlash")
+                        + bd_config.get(bd_config.WebsiteUrlRootWithoutSlash)
                         + "/ResetPassword?guid="
                         + guid;
 
                     string email_result = bd_util.send_email(
                         email, // to
-                        bd_config.get("SmtpUser"),  // from
-                        bd_config.get("AppName") + ": Reset Password", // subject
+                        bd_config.get(bd_config.AppName) + ": Reset Password", // subject
                         body);
 
                     if (email_result != "")

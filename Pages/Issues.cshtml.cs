@@ -109,7 +109,7 @@ namespace budoco.Pages
             var sql = qu_sql;
 
             // trim order by clause and replace with ours  
-            if (sort > 0)
+            if (sort > -1)
             {
                 if (dir != "asc" && dir != "desc")
                 {
@@ -145,7 +145,7 @@ namespace budoco.Pages
                 where qu_is_active
                 order by qu_is_default desc, qu_name asc limit 1");
             query_id = (int)query_row["qu_id"];
-            sort = 0;
+            sort = -1;
             page = 1;
             dir = "";
             qu_sql = (string)query_row["qu_sql"];

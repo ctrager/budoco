@@ -13,13 +13,13 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>@ViewData["Title"] - @bd_config.get("AppName")</title>
+    <title>@ViewData["Title"] - @bd_config.get(bd_config.AppName)</title>
     <link rel="stylesheet" href="~/css/budoco.css" />
 
     @{
-        if (bd_config.get("UseCustomCss") == 1)
+        if (bd_config.get(bd_config.UseCustomCss) == 1)
         {
-            string custom_css_filename = bd_config.get("CustomCssFilename");
+            string custom_css_filename = bd_config.get(bd_config.CustomCssFilename);
             <link rel="stylesheet" href="/@custom_css_filename" />
         }
     }
@@ -52,7 +52,7 @@
         <body>
             <table class="menu_table">
                 <tr>
-                    <td class="logo"><a asp-page="/Index">@bd_config.get("AppName")</a></td>
+                    <td class="logo"><a asp-page="/Index">@bd_config.get(bd_config.AppName)</a></td>
 
                     <td class="just_right">
 

@@ -54,7 +54,7 @@ namespace budoco.Pages
 
             bd_db.exec(sql, dict);
 
-            if (bd_config.get("DebugAutoConfirmRegistration") == 1)
+            if (bd_config.get(bd_config.DebugAutoConfirmRegistration) == 1)
             {
                 Response.Redirect("/RegisterConfirmation?guid=" + guid);
             }
@@ -64,14 +64,13 @@ namespace budoco.Pages
                 // and tell user to check it
 
                 string body = "Follow or browse to this link to confirm registration:\n"
-                    + bd_config.get("WebsiteUrlRootWithoutSlash")
+                    + bd_config.get(bd_config.WebsiteUrlRootWithoutSlash)
                     + "/RegisterConfirmation?guid="
                     + guid;
 
                 string email_result = bd_util.send_email(
                     email, // to
-                    bd_config.get("SmtpUser"),  // from
-                    bd_config.get("AppName") + ": Confirm registration", // subject
+                    bd_config.get(bd_config.AppName) + ": Confirm registration", // subject
                     body);
 
                 if (email_result != "")

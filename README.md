@@ -133,7 +133,8 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* make the email "to" better, with dropdown, and maybe limited
+* when we are forcing admin to change password, also need email, in case forgets password
+so need a new form
 
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 

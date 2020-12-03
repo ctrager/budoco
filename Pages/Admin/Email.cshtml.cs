@@ -33,7 +33,7 @@ namespace budoco.Pages
         public string email_result;
         public void OnPost(string to, string from, string subject, string body)
         {
-            email_result = bd_util.send_email(to, from, subject, body);
+            email_result = bd_util.send_email(to, subject, body);
         }
     }
 }
