@@ -47,7 +47,7 @@ namespace budoco.Pages
             var guid = Guid.NewGuid();
             dict["@rr_guid"] = guid;
             dict["@rr_username"] = username; // on purpose, user can login typing either
-            dict["@rr_reset_password_email_address"] = email_address;
+            dict["@rr_email_address"] = email_address;
             string hashed_password = bd_util.compute_password_hash(password);
             dict["@rr_password"] = hashed_password;
             dict["@rr_action"] = "register";

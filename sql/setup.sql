@@ -150,9 +150,9 @@ create table registration_requests
 (
 rr_guid varchar(36) not null,
 rr_created_date timestamptz default CURRENT_TIMESTAMP,
-rr_registration_email_address varchar(64) not null,
-rr_registration_username varchar(20) not null,
-rr_registration_password varchar(48) not null
+rr_email_address varchar(64) not null,
+rr_username varchar(20) not null,
+rr_password varchar(48) not null
 );
 
 create unique index rr_guid_index on registration_requests (rr_guid);
