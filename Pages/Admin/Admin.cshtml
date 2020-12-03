@@ -11,9 +11,13 @@
 <partial name="_FlashPartial" />
 
 
-<div><a href="/Admin/Users">Users</a></div>
+<div>
+    <a href="/Admin/Users">Users</a>
+    - Mark users as admin or not, inactive or not, assign them to organizations.
+</div>
 <br>
 
+<div>Set up your own lists of Categories, Statuses, etc - UNDER CONSTRUCTION</div>
 <div><a href="/Admin/Categories">Categories</a></div>
 <div><a href="/Admin/Priorities">Priorities</a></div>
 <div><a href="/Admin/Projects">Projects</a></div>
@@ -21,16 +25,28 @@
 <div><a href="/Admin/Statuses">Statuses</a></div>
 <br>
 
-<div><a href="/Admin/Queries">Issue Queries</a></div>
+<div>
+    <a href="/Admin/Queries">Issue Queries</a> 
+    - Customize the different "Views" of issues you see on the "Issues" page.
+</div>
 <br>
 
-<h1>Under Construction</h1>
-<div><a href="/Admin/EmailQueue">Outgoing Email Queue</a></div>
+<div>
+    <a href="/Admin/EmailQueue">Outgoing Email Queue</a>
+    - Troubleshoot problems with outgoing email messages for registration, forgotten passwords, and posts.
+
+</div>
 @{if (bd_config.get(bd_config.DebugEnableRunSql) == 1) 
 {                            
-<div><a href="/Admin/RunSql">RunSql</a></div>
+    <div>
+        <a href="/Admin/RunSql">RunSql</a> 
+        - Run any SQL. Like psql, but with a web interface.
+    </div>
 }}
-<div><a href="/Admin/Logs">Logs</a></div>
+
+<div>
+    <a href="/Admin/Logs">Logs</a> - Under construction
+</div>
 
 @section Scripts {
     
