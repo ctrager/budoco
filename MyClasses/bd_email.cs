@@ -28,17 +28,26 @@ namespace budoco
 
             bd_db.exec(sql, dict);
 
-            spawn_sending_thread();
+            spawn_email_sending_thread();
 
 
         }
 
-        public static void spawn_sending_thread()
+
+        public static void spawn_email_sending_thread()
         {
             // Spawn sending thread
             // The thread doesn't loop. It sends and then dies.
             // But we spawn it every time we send an email and at startup.
             System.Threading.Thread thread = new System.Threading.Thread(threadproc_send_emails);
+            thread.Start();
+        }
+
+        public static void spawn_email_receiving_thread()
+        {
+            // Spawn sending thread
+            // loops, sleeps
+            System.Threading.Thread thread = new System.Threading.Thread(threadproc_fetch_incoming_messages);
             thread.Start();
         }
 
@@ -190,7 +199,7 @@ namespace budoco
 
         }
 
-        public static void fetch_incoming_messages()
+        public static void threadproc_fetch_incoming_messages()
         {
             using (var client = new ImapClient())
             {
@@ -248,23 +257,20 @@ namespace budoco
 
             InternetAddress from = message.From[0];
             bd_util.log("email from:" + from.ToString());
-
-            string text_body = message.TextBody;
-            if (text_body is null)
-            {
-                var html_body = message.HtmlBody;
-                if (html_body is not null)
-                {
-                    text_body = bd_util.strip_html_tags(html_body);
-                }
-            }
+            bd_util.log(message.TextBody);
+            string text_body = message.TextBody.Trim();
+            string html_body = message.HtmlBody.Trim();
 
             if (text_body is null)
             {
                 text_body = "";
             }
+            if (html_body is null)
+            {
+                html_body = "";
+            }
 
-            int post_id = create_post_from_email(issue_id, from.ToString(), text_body);
+            int post_id = create_post_from_email(issue_id, from.ToString(), text_body, html_body);
 
             int text_part_count = 0;
 
@@ -288,28 +294,27 @@ namespace budoco
                                 // this is almost certainly the "TextBody" that we already got
                                 continue;
                             }
-                            insert_attachment_as_post(post_id, issue_id, part);
 
                         }
-
-                        bd_util.log(part.ContentType);
+                        insert_attachment_as_post(post_id, issue_id, part);
                     }
                 }
             }
             return true;
         }
 
-        static int create_post_from_email(int issue_id, string from, string body)
+        static int create_post_from_email(int issue_id, string from, string text_body, string html_body)
         {
             var sql = @"insert into posts
-                (p_issue, p_post_type, p_text, p_created_by_user, p_email_from)
-                values(@p_issue, @p_post_type, @p_text, @p_created_by_user, @p_email_from)
+                (p_issue, p_post_type, p_text, p_created_by_user, p_email_from, p_email_from_html_part)
+                values(@p_issue, @p_post_type, @p_text, @p_created_by_user, @p_email_from, @p_email_from_html_part)
                 returning p_id";
 
             var dict = new Dictionary<string, dynamic>();
             dict["@p_issue"] = issue_id;
             dict["@p_post_type"] = "reply";
-            dict["@p_text"] = body;
+            dict["@p_text"] = text_body;
+            dict["@p_email_from_html_part"] = html_body;
             dict["@p_created_by_user"] = 1; // system
             dict["@p_email_from"] = from;
 
@@ -317,22 +322,37 @@ namespace budoco
             return post_id;
         }
 
-        static void insert_attachment_as_post(int post_id, int issue_id, MimePart mimepart)
+        static void insert_attachment_as_post(int post_id, int issue_id, MimePart part)
         {
+            bd_util.log(part.ContentType + "," + part.FileName);
+
             var sql = @"insert into post_attachments
                 (pa_post, pa_issue, pa_file_name, pa_file_length, pa_file_content_type, pa_content)
                 values(@pa_post, @pa_issue, @pa_file_name, @pa_file_length, @pa_file_content_type, @pa_content)";
 
             var dict = new Dictionary<string, dynamic>();
 
+            string filename = "";
+
+            if (part.FileName is not null)
+            {
+                filename = part.FileName;
+
+            }
+            else if (part.ContentType.MediaType == "text"
+            && part.ContentType.MediaSubtype == "html")
+            {
+                filename = "html body";
+            }
+
             dict["@pa_post"] = post_id;
             dict["@pa_issue"] = issue_id;
-            dict["@pa_file_name"] = mimepart.FileName;
+            dict["@pa_file_name"] = filename;
             dict["@pa_file_content_type"]
-                = mimepart.ContentType.MediaType + "/" + mimepart.ContentType.MediaSubtype;
+                = part.ContentType.MediaType + "/" + part.ContentType.MediaSubtype;
 
             MemoryStream memory_stream = new MemoryStream();
-            mimepart.Content.DecodeTo(memory_stream);
+            part.Content.DecodeTo(memory_stream);
             dict["@pa_file_length"] = memory_stream.Length;
             dict["@pa_content"] = memory_stream.ToArray();
 

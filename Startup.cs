@@ -28,11 +28,11 @@ namespace budoco
             bd_util.log(Configuration["Budoco:DebugWhatEnvIsThis"]);
 
             // If there are pending outgoing emails try to send them.
-            bd_email.spawn_sending_thread();
+            bd_email.spawn_email_sending_thread();
 
             if (bd_config.get(bd_config.EnableIncomingEmail) == 1)
             {
-                bd_email.fetch_incoming_messages();
+                bd_email.spawn_email_receiving_thread();
             }
         }
 

@@ -133,6 +133,13 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
+* do i respect retry count?
+* get html body as attachment
+* add enable/dispable
+* add post's sent and received email addresses to dropdown
+* add "reply" link
+* make it easy for javascript to get email address to fill in reply
+* have some solution for quoted text
 * test leaving outgoing email display name blank in settings
 
 * test sending with display name, receiving with and without display name

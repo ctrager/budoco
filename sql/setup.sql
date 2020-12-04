@@ -131,6 +131,7 @@ p_post_type varchar(8) not null,
 p_text text not null default '',
 p_email_to text not null default '',
 p_email_from text not null default '',
+p_email_from_html_part text not null default '',
 p_created_by_user int not null,
 p_created_date timestamptz default CURRENT_TIMESTAMP
 );

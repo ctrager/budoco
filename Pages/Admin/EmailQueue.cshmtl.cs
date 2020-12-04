@@ -50,7 +50,7 @@ namespace budoco.Pages
             else
             if (queue_action == "retry")
             {
-                bd_email.spawn_sending_thread();
+                bd_email.spawn_email_sending_thread();
             }
 
             OnGet();

@@ -330,7 +330,7 @@ table.dt>tbody>tr>td {
 }
 
 .info_text {
-    font-size: 13px;
+    font-size: 14px;
     color: green;
 }
 
@@ -350,7 +350,10 @@ pre {
     font-family: "Lucida Console", "Courier New", Courier, monospace;
     font-size: 14px;
     margin: 0px;
-    padding: 5px;
+    padding-top: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
 }
 
 
@@ -428,5 +431,11 @@ textarea#sql {
     margin: 0px;
 }
 
+.html_part_iframe {
+    border: 1px dashed gray;
+    xwidth: 50px;
+    xheight: 50px;
+    xresize: both;
+}
 
 /* end of post_email_to_select styles */
