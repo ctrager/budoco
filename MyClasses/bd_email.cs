@@ -34,6 +34,7 @@ namespace budoco
         }
 
 
+
         public static void spawn_email_sending_thread()
         {
             // Spawn sending thread
@@ -206,11 +207,27 @@ namespace budoco
 
         public static void threadproc_fetch_incoming_messages()
         {
+            while (true)
+            {
+                if (bd_config.get(bd_config.EnableIncomingEmail) == 1)
+                {
+                    fetch_incoming_messages();
+                }
+
+                // config in seconds, func expects milliseconds
+                int milliseconds = 1000 * bd_config.get(bd_config.SecondsToSleepAfterCheckingIncomingEmail);
+                System.Threading.Thread.Sleep(milliseconds);
+            }
+        }
+
+        public static void fetch_incoming_messages()
+        {
+
             using (var client = new ImapClient())
             {
                 try
                 {
-                    bd_util.log("Connecting to Imap");
+                    bd_util.log("fetch_incoming_messages Connecting to Imap");
                     client.Connect(
                         bd_config.get(bd_config.ImapHost),
                         bd_config.get(bd_config.ImapPort),
@@ -222,19 +239,25 @@ namespace budoco
                     );
 
                     // The Inbox folder is always available on all IMAP servers...
-                    var inbox = client.Inbox;
-                    inbox.Open(FolderAccess.ReadOnly);
+                    IMailFolder inbox = client.Inbox;
+                    inbox.Open(FolderAccess.ReadWrite);
 
                     bd_util.log("Total messages: " + inbox.Count.ToString());
                     bd_util.log("Recent messages: " + inbox.Recent.ToString());
 
-                    for (int i = 0; i < inbox.Count; i++)
+                    for (int index = 0; index < inbox.Count; index++)
                     {
-                        var message = inbox.GetMessage(i);
+                        var message = inbox.GetMessage(index);
                         bool processed = process_incoming_message(message);
                         if (processed)
                         {
                             // delete it
+                            if (bd_config.get(bd_config.DebugSkipDeleteOfIncomingEmails) == 0)
+                            {
+                                bd_util.log("Actually deleting: " + message.Subject);
+                                inbox.AddFlags(index, MessageFlags.Deleted, true);
+                                client.Inbox.Expunge();
+                            }
                         }
                     }
 
@@ -277,8 +300,6 @@ namespace budoco
 
             int post_id = create_post_from_email(issue_id, from.ToString(), text_body, html_body);
 
-            int text_part_count = 0;
-
             using (var iter = new MimeIterator(message))
             {
                 // collect our list of attachments and their parent multiparts
@@ -292,11 +313,11 @@ namespace budoco
                         {
                             insert_attachment_as_post(post_id, issue_id, part);
                         }
-                       
+
                     }
                 }
             }
-            return true;
+            return true; // delete this message
         }
 
         static int create_post_from_email(int issue_id, string from, string text_body, string html_body)

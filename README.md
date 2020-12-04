@@ -133,9 +133,6 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* make receiving thread loop, sleep
-
-* respect enable disable
 
 * delete msgs from server
 
