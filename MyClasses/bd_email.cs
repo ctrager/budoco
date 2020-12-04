@@ -55,9 +55,14 @@ namespace budoco
         // and if good, delete the row
         public static void threadproc_send_emails()
         {
-            var sql = "select * from outgoing_email_queue order by oq_id desc";
+            var sql = @"select * from outgoing_email_queue 
+                where oq_sending_attempt_count < @max_retries
+                order by oq_id desc";
 
-            DataTable dt = bd_db.get_datatable(sql);
+            var dict = new Dictionary<string, dynamic>();
+            dict["@max_retries"] = bd_config.get(bd_config.MaxNumberOfSendingRetries);
+
+            DataTable dt = bd_db.get_datatable(sql, dict);
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -283,20 +288,11 @@ namespace budoco
                     var part = iter.Current as MimePart;
                     if (part is not null)
                     {
-                        if (part.ContentType.MediaType == "text"
-                        && part.ContentType.MediaSubtype == "plain"
-                        && part.FileName is null)
+                        if (part.FileName is not null)
                         {
-                            text_part_count++;
-
-                            if (text_part_count == 1)
-                            {
-                                // this is almost certainly the "TextBody" that we already got
-                                continue;
-                            }
-
+                            insert_attachment_as_post(post_id, issue_id, part);
                         }
-                        insert_attachment_as_post(post_id, issue_id, part);
+                       
                     }
                 }
             }
@@ -332,22 +328,9 @@ namespace budoco
 
             var dict = new Dictionary<string, dynamic>();
 
-            string filename = "";
-
-            if (part.FileName is not null)
-            {
-                filename = part.FileName;
-
-            }
-            else if (part.ContentType.MediaType == "text"
-            && part.ContentType.MediaSubtype == "html")
-            {
-                filename = "html body";
-            }
-
             dict["@pa_post"] = post_id;
             dict["@pa_issue"] = issue_id;
-            dict["@pa_file_name"] = filename;
+            dict["@pa_file_name"] = part.FileName;
             dict["@pa_file_content_type"]
                 = part.ContentType.MediaType + "/" + part.ContentType.MediaSubtype;
 

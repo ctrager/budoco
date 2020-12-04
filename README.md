@@ -133,18 +133,19 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* do i respect retry count?
-* get html body as attachment
-* add enable/dispable
+* make receiving thread loop, sleep
+
+* respect enable disable
+
+* delete msgs from server
+
 * add post's sent and received email addresses to dropdown
 * add "reply" link
-* make it easy for javascript to get email address to fill in reply
-* have some solution for quoted text
+
 * test leaving outgoing email display name blank in settings
 
-* test sending with display name, receiving with and without display name
 
-* is there a way to get file input into mime
+* is there a way to get file input into mime for debugging, read from file rather than from network?
 
 * some attempt to check for dangers words in run sql
 
