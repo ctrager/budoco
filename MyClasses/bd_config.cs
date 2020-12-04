@@ -50,6 +50,10 @@ namespace budoco
         public const string SmtpPort = "SmtpPort";
         public const string SmtpUser = "SmtpUser";
         public const string SmtpPassword = "SmtpPassword";
+        public const string ImapHost = "ImapHost";
+        public const string ImapPort = "ImapPort";
+        public const string ImapUser = "ImapUser";
+        public const string ImapPassword = "ImapPassword";
         public const string OutgoingEmailDisplayName = "OutgoingEmailDisplayName";
         public const string UseDeveloperExceptionPage = "UseDeveloperExceptionPage";
         public const string WebsiteUrlRootWithoutSlash = "WebsiteUrlRootWithoutSlash";
@@ -64,6 +68,10 @@ namespace budoco
         public const string DebugAutoConfirmRegistration = "DebugAutoConfirmRegistration";
         public const string DebugEnableRunSql = "DebugEnableRunSql";
         public const string MaxNumberOfSendingRetries = "MaxNumberOfSendingRetries";
+        public const string EnableIncomingEmail = "EnableIncomingEmail";
+        public const string SecondsToSleepAfterCheckingIncomingEmail = "SecondsToSleepAfterCheckingIncomingEmail";
+        public const string DebugSkipDeleteOfIncomingEmails = "DebugSkipDeleteOfIncomingEmails";
+
 
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 
@@ -76,10 +84,11 @@ namespace budoco
         // or
         // blank
 
+        static object my_lock = new Object(); // for multiple threads
+
         public static void load_config()
         {
-            bd_util.console_write_line("bd_config.load_config()");
-            dict.Clear();
+            bd_util.log("bd_config.load_config()");
 
             var lines = File.ReadLines("budoco_config_active.txt");
 
@@ -121,28 +130,40 @@ namespace budoco
 
                 if (Int32.TryParse(string_value, out int_value))
                 {
-                    dict[key] = int_value;
+                    lock (my_lock)
+                    {
+                        dict[key] = int_value;
+                    }
                 }
                 else
                 {
-                    dict[key] = string_value;
+                    lock (my_lock)
+                    {
+                        dict[key] = string_value;
+                    }
                 }
+
             }
 
         }
 
         public static void log_config()
         {
-            bd_util.console_write_line("config:");
+            bd_util.log("config:");
             foreach (var k in dict.Keys)
             {
-                bd_util.console_write_line(k + "=" + dict[k].ToString());
+                bd_util.log(k + "=" + dict[k].ToString());
             }
         }
 
         public static dynamic get(string key)
         {
-            return dict[key];
+            // we want to prevent somebody fetching
+            // the val when it's in the middle of being changed (see above)
+            lock (my_lock)
+            {
+                return dict[key];
+            }
         }
 
 

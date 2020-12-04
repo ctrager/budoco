@@ -142,12 +142,12 @@ namespace budoco
 
         static void log_sql(string sql, Dictionary<string, dynamic> sql_parameters = null)
         {
-            bd_util.console_write_line(sql);
+            bd_util.log(sql);
             if (sql_parameters is not null)
             {
                 foreach (string key in sql_parameters.Keys)
                 {
-                    bd_util.console_write_line(
+                    bd_util.log(
                         key + "=" + sql_parameters[key].ToString());
                 }
             }

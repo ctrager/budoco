@@ -133,20 +133,31 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* What's the "fakepath" thing in file picker, jquery, with attachments?
+* test leaving outgoing email display name blank in settings
 
-* Handle restart when user page is up, which cases session cached stuff to be lost
+* test sending with display name, receiving with and without display name
+
+* is there a way to get file input into mime
+
+* some attempt to check for dangers words in run sql
+
+* file upload progress?
+https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
 
 * when we are forcing admin to change password, also need email, in case forgets password
 so need a new form
 
+* validate email on register, unless auto register is working
+
+* allow user to reset own email, username, plus some other settings
+
 * *RECEIVE* emails into the app that get posted to the relevant Issue.
 
-* Turn emails from trusted senders into issues.
+* Make org meaningful
 
+* Turn emails from trusted senders into issues, not just replies
 
 * linkify urls in issue/post description
-
 
 * Handle inactive options, add to dropdowns if issue being viewed
 uses an inactive option

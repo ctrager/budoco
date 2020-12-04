@@ -19,7 +19,6 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return;
 
-            //DataSet ds = new DataSet();
             string sql = @"select 
             us_id as ""ID"",
             us_username as ""Username"",
@@ -30,7 +29,9 @@ namespace budoco.Pages
             coalesce(og_name, '') as ""Organization"",
             us_created_date as ""Created""
             from users
-            left outer join organizations on og_id = us_organization";
+            left outer join organizations on og_id = us_organization
+            where us_username != 'system'";
+
             dt = bd_db.get_datatable(sql);
         }
     }

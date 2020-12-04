@@ -21,7 +21,7 @@
         if (bd_config.get(bd_config.UseCustomCss) == 1)
         {
             string custom_css_filename = bd_config.get(bd_config.UseCustomCss);
-            <link rel="stylesheet" href="/@custom_css_filename" />
+                    <link rel="stylesheet" href="/@custom_css_filename" />
         }
     }
 
@@ -37,8 +37,8 @@
 </head>
 
 @{
-    bd_util.console_write_line("layout_simple http status: " +
-            HttpContextAccessor.HttpContext.Response.StatusCode.ToString());
+    bd_util.log("layout_simple http status: " +
+                    HttpContextAccessor.HttpContext.Response.StatusCode.ToString());
     if (HttpContextAccessor.HttpContext.Response.StatusCode == 302)
     {
 
@@ -50,47 +50,47 @@
     {
 
         <body>
-            <table class="menu_table">
-                <tr>
-                    <td class="logo"><a asp-page="/Index">@bd_config.get(bd_config.AppName)</a></td>
+                    <table class="menu_table">
+                        <tr>
+                            <td class="logo"><a asp-page="/Index">@bd_config.get(bd_config.AppName)</a></td>
 
-                    <td><a asp-page="/Issues">View Issues</a></td>
-                    <td><a asp-page="/Issue">Create Issue</a></td>
-                    <td><a asp-page="/Search">Search</a></td>
-                    @{
+                            <td><a asp-page="/Issues">View Issues</a></td>
+                            <td><a asp-page="/Issue">Create Issue</a></td>
+                            <td><a asp-page="/Search">Search</a></td>
+                            @{
                         if (is_admin)
                         {
-                            <td><a asp-page="/Admin/Admin">Admin</a></td>
-                            <td><a asp-page="/Admin/Users">Users</a></td>
+                                            <td><a asp-page="/Admin/Admin">Admin</a></td>
+                                            <td><a asp-page="/Admin/Users">Users</a></td>
                             if (bd_config.get(bd_config.DebugEnableRunSql) == 1)
                             {
-                                <td><a asp-page="/Admin/RunSql">Run Sql</a></td>
+                                                    <td><a asp-page="/Admin/RunSql">Run Sql</a></td>
                             }
                         }
-                    }
+                            }
 
-                    <td>
-                        <button class="goto_button" onclick="goto()">Go To Issue:</button>
-                        <input type="number" class="goto_input" id="goto_id" placeholder="ID#" />
-                    </td>
+                            <td>
+                                <button class="goto_button" onclick="goto()">Go To Issue:</button>
+                                <input type="number" class="goto_input" id="goto_id" placeholder="ID#" />
+                            </td>
 
-                    <td class="just_right">
-                        <a href="/Login?action=signout">Sign Out</a>
-                        <a href="/About">About</a>
-                    </td>
-                </tr>
-            </table>
+                            <td class="just_right">
+                                <a href="/Login?action=signout">Sign Out</a>
+                                <a href="/About">About</a>
+                            </td>
+                        </tr>
+                    </table>
 
 
-            <div class="content_parent">
-                @RenderBody()
-            </div>
+                    <div class="content_parent">
+                        @RenderBody()
+                    </div>
 
-            <script src="~/lib/jquery/dist/jquery.min.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+                    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+                    <script src="~/js/site.js" asp-append-version="true"></script>
+                    <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 
-            @await RenderSectionAsync("Scripts", required: false)
+                    @await RenderSectionAsync("Scripts", required: false)
 
         </body>
     }

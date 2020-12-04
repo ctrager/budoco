@@ -22,13 +22,18 @@ namespace budoco
     {
         public Startup(IConfiguration configuration)
         {
-            bd_util.console_write_line("Startup");
+            bd_util.log("Startup");
             Configuration = configuration;
 
-            bd_util.console_write_line(Configuration["Budoco:DebugWhatEnvIsThis"]);
+            bd_util.log(Configuration["Budoco:DebugWhatEnvIsThis"]);
 
             // If there are pending outgoing emails try to send them.
             bd_email.spawn_sending_thread();
+
+            if (bd_config.get(bd_config.EnableIncomingEmail) == 1)
+            {
+                bd_email.fetch_incoming_messages();
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -36,7 +41,7 @@ namespace budoco
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            bd_util.console_write_line("ConfigureServices");
+            bd_util.log("ConfigureServices");
 
             // services.AddDistributedMemoryCache();
 
@@ -71,7 +76,7 @@ namespace budoco
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            bd_util.console_write_line("Configure");
+            bd_util.log("Configure");
 
             // https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-5.0
             // for nginx
@@ -117,7 +122,7 @@ namespace budoco
                     context.Session.SetString(bd_util.BUDOCO_SESSION_ID, budoco_session_id);
                 }
 
-                bd_util.console_write_line(
+                bd_util.log(
                     DateTime.Now.ToString("hh:mm:ss")
                     + " "
                     + context.Request.GetDisplayUrl()
@@ -126,6 +131,7 @@ namespace budoco
 
                 // let's do it every url, so that we don't have to restart
                 bd_config.load_config();
+
                 await next.Invoke();
             });
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Security.Cryptography;
 using Serilog;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace budoco
 {
@@ -26,10 +27,10 @@ namespace budoco
         public const string NAME_IS_REQUIRED = "Name is required";
 
 
-        public static void console_write_line(string msg)
+        public static void log(object msg)
         {
-            Console.WriteLine(msg); // here on purpose
-            Log.Information(msg);
+            Console.WriteLine(msg.ToString()); // here on purpose
+            Log.Information(msg.ToString());
         }
 
         public static string get_flash_msg(HttpContext context)
@@ -207,6 +208,11 @@ namespace budoco
 
             return guid.ToString();
 
+        }
+
+        public static string strip_html_tags(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
         }
 
     }

@@ -1,13 +1,8 @@
+##############################################################################
 # Save this, but make a copy and rename that copy to budoco_config_active.txt
 # Edit the values in the copy. 
-# 
-
-
 ###############################################################################
 # Start of important settings
-###############################################################################
-
-
 ###############################################################################
 # Database 
 ###############################################################################
@@ -18,7 +13,7 @@ DbUser: postgres
 DbPassword: YOUR_PASSWORD
 
 ###############################################################################
-# Smtp 
+# SMTP - Outgoing email
 #
 # I tested with my usual email accounts, not a special service.
 # For both Gmail and Yahoo, sending emails won't work until you go
@@ -28,17 +23,13 @@ DbPassword: YOUR_PASSWORD
 # usual. 
 ###############################################################################
 
-# For development/test, you can set to true to not send email
-# 0 = DO send emails, 1 = do NOT send emails
-DebugSkipSendingEmails: 0
-
+# Using gmail as an example
 SmtpHost: smtp.gmail.com
 SmtpPort: 465
-SmtpUser: YOUR_GMAIL@gmail.com
+SmtpUser: YOUR_ACCOUNT@gmail.com
 SmtpPassword: YOUR_PASSWORD
-OutgoingEmailDisplayName: YOUR FRIENDLY NAME
 
-# I still use yahoo mail:
+# I used yahoo mail:
 # SmtpHost: smtp.mail.yahoo.com
 # SmtpPort: 587
 
@@ -49,15 +40,41 @@ WebsiteUrlRootWithoutSlash: https://YOURDOMAIN.COM
 # or
 # WebsiteUrlRootWithoutSlash: http://localhost:5000
 
+###############################################################################
+# IMAP - Incoming email 
+#
+# Budoco has this feature: If you send an email related to an issue, the
+# recipient can reply and that reply email will be posted as a comment to 
+# the issue.
+################################################################################
+
+# 1 = turn the feature on, 0 = turn it off
+
+EnableIncomingEmail: 1
+# This example uses Gmail
+ImapHost: imap.gmail.com
+ImapPort: 993
+ImapUser: YOUR_ACCOUNT@gmail.com
+ImapPassword: YOUR_PASSWORD
 
 ###############################################################################
-# End of important settings
+# End of important settings, but you should read through the rest of this file
+# to see what your choices are.
 ###############################################################################
+
+OutgoingEmailDisplayName: Budoco
+
+# For development/test, you can set to true to not send email
+# 0 = DO send emails, 1 = do NOT send emails
+DebugSkipSendingEmails: 0
 
 # The app sends emails by putting them in an outgoing queue and then trying to
 # send them. This setting controls how many attempts the app makes before
 # giving up. See the Admin/Outgoing Email Queue page for more info.
 MaxNumberOfSendingRetries: 3
+
+# How frequently the app checks for incoming email. 
+SecondsToSleepAfterCheckingIncomingEmail: 300
 
 # When this is 1, you see the stack trace in the web page, but it might
 # be too much info for production. When this is 0, you just see that there
@@ -77,7 +94,7 @@ RowsPerPage: 30
 LogLocation: budoco_logs/budoco.txt
 
 #https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
-DateFormat=yyyy-MM-dd HH:mm
+DateFormat: yyyy-MM-dd HH:mm
 
 # if 1, newly registered users start as inactive until admin sets to active
 NewUserStartsInactive: 0
@@ -90,4 +107,8 @@ DebugAutoConfirmRegistration: 0
 
 # Run any sql query - this page is dangerous
 DebugEnableRunSql: 0
+
+# For testing, don't delete incoming emails - process them over and over
+DebugSkipDeleteOfIncomingEmails: 0
+
 

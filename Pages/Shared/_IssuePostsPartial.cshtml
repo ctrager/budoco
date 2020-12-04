@@ -10,19 +10,25 @@
                     <div class="post">
                         @{
                             string post_type = (string)dr["p_post_type"];
-                            if (post_type == "email")
+                            if (post_type == "comment")
                             {
                                 <div class="info_text">
-                                    Sent by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                                    Comment by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                                </div>
+                            }
+                            else if (post_type == "email")
+                            {
+                                <div class="info_text">
+                                    Email sent by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
                                 </div>
                                 <div>
                                     <span>To: @dr["p_email_to"]</span>
                                 </div>
                             }
-                            else
+                            else if (post_type == "reply")
                             {
                                 <div class="info_text">
-                                    Posted by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                                    Email received from @dr["p_email_from"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
                                 </div>
                             }
                             <div class="post_text">

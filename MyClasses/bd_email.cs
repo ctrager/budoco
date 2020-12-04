@@ -1,10 +1,13 @@
 using System;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using System.Collections.Generic;
 using System.Data;
 using MimeKit;
 using System.IO;
+using MailKit.Net.Imap;
+using MailKit;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Composition.Convention;
 
 namespace budoco
 {
@@ -50,7 +53,7 @@ namespace budoco
             foreach (DataRow dr in dt.Rows)
             {
                 int oq_id = (int)dr[0];
-                bd_util.console_write_line("trying to send " + oq_id.ToString());
+                bd_util.log("trying to send " + oq_id.ToString());
 
                 try
                 {
@@ -66,8 +69,8 @@ namespace budoco
                 }
                 catch (Exception exception)
                 {
-                    bd_util.console_write_line(exception.Message);
-                    bd_util.console_write_line(exception.StackTrace);
+                    bd_util.log(exception.Message);
+                    bd_util.log(exception.StackTrace);
                     increment_retry_count(oq_id, exception.Message);
                 }
             }
@@ -96,11 +99,14 @@ namespace budoco
             string[] addresses = to.Split(",");
             for (int i = 0; i < addresses.Length; i++)
             {
-                message.To.Add(new MailboxAddress("", addresses[i].Trim()));
+                var parsed_address = new System.Net.Mail.MailAddress(addresses[i]);
+                message.To.Add(new MailboxAddress(
+                    parsed_address.DisplayName,
+                    parsed_address.Address));
             }
             message.Subject = subject;
-            bd_util.console_write_line("send_email to: " + to);
-            bd_util.console_write_line("email subject: " + subject);
+            bd_util.log("send_email to: " + to);
+            bd_util.log("email subject: " + subject);
 
             var multipart = new Multipart("mixed");
 
@@ -183,71 +189,221 @@ namespace budoco
             }
 
         }
+
+        public static void fetch_incoming_messages()
+        {
+            using (var client = new ImapClient())
+            {
+                try
+                {
+                    bd_util.log("Connecting to Imap");
+                    client.Connect(
+                        bd_config.get(bd_config.ImapHost),
+                        bd_config.get(bd_config.ImapPort),
+                        true); // ssl
+
+                    client.Authenticate(
+                         bd_config.get(bd_config.ImapUser),
+                         bd_config.get(bd_config.ImapPassword)
+                    );
+
+                    // The Inbox folder is always available on all IMAP servers...
+                    var inbox = client.Inbox;
+                    inbox.Open(FolderAccess.ReadOnly);
+
+                    bd_util.log("Total messages: " + inbox.Count.ToString());
+                    bd_util.log("Recent messages: " + inbox.Recent.ToString());
+
+                    for (int i = 0; i < inbox.Count; i++)
+                    {
+                        var message = inbox.GetMessage(i);
+                        bool processed = process_incoming_message(message);
+                        if (processed)
+                        {
+                            // delete it
+                        }
+                    }
+
+                    client.Disconnect(true);
+                    bd_util.log("Disconnecting from Imap");
+                }
+                catch (Exception exception)
+                {
+                    bd_util.log(exception.Message);
+                    bd_util.log(exception.StackTrace);
+
+                }
+            }
+        }
+
+        static bool process_incoming_message(MimeMessage message)
+        {
+            bd_util.log("email subject:" + message.Subject);
+            int issue_id = get_incoming_issue_id_from_subject(message.Subject);
+
+            if (issue_id == 0)
+            {
+                return false; // we don't recognize this email as one of ours
+            }
+
+            InternetAddress from = message.From[0];
+            bd_util.log("email from:" + from.ToString());
+
+            string text_body = message.TextBody;
+            if (text_body is null)
+            {
+                var html_body = message.HtmlBody;
+                if (html_body is not null)
+                {
+                    text_body = bd_util.strip_html_tags(html_body);
+                }
+            }
+
+            if (text_body is null)
+            {
+                text_body = "";
+            }
+
+            int post_id = create_post_from_email(issue_id, from.ToString(), text_body);
+
+            int text_part_count = 0;
+
+            using (var iter = new MimeIterator(message))
+            {
+                // collect our list of attachments and their parent multiparts
+                while (iter.MoveNext())
+                {
+                    var multipart = iter.Parent as Multipart;
+                    var part = iter.Current as MimePart;
+                    if (part is not null)
+                    {
+                        if (part.ContentType.MediaType == "text"
+                        && part.ContentType.MediaSubtype == "plain"
+                        && part.FileName is null)
+                        {
+                            text_part_count++;
+
+                            if (text_part_count == 1)
+                            {
+                                // this is almost certainly the "TextBody" that we already got
+                                continue;
+                            }
+                            insert_attachment_as_post(post_id, issue_id, part);
+
+                        }
+
+                        bd_util.log(part.ContentType);
+                    }
+                }
+            }
+            return true;
+        }
+
+        static int create_post_from_email(int issue_id, string from, string body)
+        {
+            var sql = @"insert into posts
+                (p_issue, p_post_type, p_text, p_created_by_user, p_email_from)
+                values(@p_issue, @p_post_type, @p_text, @p_created_by_user, @p_email_from)
+                returning p_id";
+
+            var dict = new Dictionary<string, dynamic>();
+            dict["@p_issue"] = issue_id;
+            dict["@p_post_type"] = "reply";
+            dict["@p_text"] = body;
+            dict["@p_created_by_user"] = 1; // system
+            dict["@p_email_from"] = from;
+
+            int post_id = (int)bd_db.exec_scalar(sql, dict);
+            return post_id;
+        }
+
+        static void insert_attachment_as_post(int post_id, int issue_id, MimePart mimepart)
+        {
+            var sql = @"insert into post_attachments
+                (pa_post, pa_issue, pa_file_name, pa_file_length, pa_file_content_type, pa_content)
+                values(@pa_post, @pa_issue, @pa_file_name, @pa_file_length, @pa_file_content_type, @pa_content)";
+
+            var dict = new Dictionary<string, dynamic>();
+
+            dict["@pa_post"] = post_id;
+            dict["@pa_issue"] = issue_id;
+            dict["@pa_file_name"] = mimepart.FileName;
+            dict["@pa_file_content_type"]
+                = mimepart.ContentType.MediaType + "/" + mimepart.ContentType.MediaSubtype;
+
+            MemoryStream memory_stream = new MemoryStream();
+            mimepart.Content.DecodeTo(memory_stream);
+            dict["@pa_file_length"] = memory_stream.Length;
+            dict["@pa_content"] = memory_stream.ToArray();
+
+            bd_db.exec(sql, dict);
+
+        }
+
+        static int get_incoming_issue_id_from_subject(string subject)
+        {
+            int issue_id = 0;
+            int microseconds = 0;
+
+            // parse the "[#123-456] Computer won't turn on"
+            // the 123 is the issue_id
+            // the 456 is the microseconds part, "US" format specifier, of the i_created_date
+            int start_of_id = subject.IndexOf("[#") + 2;
+
+            if (start_of_id > 0)
+            {
+                int end_of_id = subject.IndexOf("]");
+                if (end_of_id > start_of_id)
+                {
+                    int length = end_of_id - start_of_id;
+                    string issue_and_microseconds = subject.Substring(start_of_id, length);
+                    string[] pair = issue_and_microseconds.Split("-");
+                    if (pair.Length == 2)
+                    {
+                        bool is_int = int.TryParse(pair[0], out issue_id);
+                        if (is_int)
+                        {
+                            int.TryParse(pair[1], out microseconds);
+                        }
+                    }
+                }
+            }
+
+            if (issue_id == 0)
+                return 0;
+
+            // Fetch the issue. 
+            // Don't just use the id, because we don't want people to just guess issues.
+            // Also use the microseconds part of the creation timestamp.
+            var sql = @"select i_id from issues where i_id = @i_id 
+                and to_char(i_created_date, 'US') = @microseconds";
+
+            var dict = new Dictionary<string, dynamic>();
+            dict["@i_id"] = issue_id;
+            dict["@microseconds"] = microseconds.ToString();
+
+            object obj = bd_db.exec_scalar(sql, dict);
+
+            if (obj is not null)
+                return issue_id;
+            else
+                return 0;
+
+        }
+
+        public static bool validate_email_address(string address)
+        {
+            //if (!EmailValidation.EmailValidator.Validate(address))
+            try
+            {
+                System.Net.Mail.MailAddress ma = new System.Net.Mail.MailAddress(address);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
     }
 }
-
-/*
-         void SendIssueEmail()
-         {
-
-             // get fields from issue
-             var sql = @"select 
-                 cast(i_id as text) as ""id"",
-                 cast(i_created_date as text) as ""date"", 
-                 i_description from issues where i_id = " + id.ToString();
-             DataRow dr_issue = bd_db.get_datarow(sql);
-
-             //post_error = "Email isn't being sent yet. This feature is under construction";
-
-             var message = new MimeMessage();
-             message.To.Add(new MailboxAddress("", "ctrager@yahoo.com"));
-
-             string identifier1 = "[#" + (string)dr_issue["id"] + "] ";
-             string identifier2 = "          [" + (string)dr_issue["date"] + "]";
-
-             // We use the id and very precise create date as like a GUID to tie the
-             // incoming emails back to this issue
-             // [Issue:123] My computer won't turn on [2020-01-01 11:59:59.233242]
-             message.Subject = identifier1 + (string)dr_issue["i_description"] + identifier2;
-
-             // create our message text, just like before (except don't set it as the message.Body)
-             var body = new TextPart("plain")
-             {
-                 Text = post_text
-             };
-
-             var multipart = new Multipart("mixed");
-             multipart.Add(body);
-
-             if (uploaded_file1 != null)
-             {
-                 MemoryStream memory_stream = new MemoryStream();
-                 uploaded_file1.CopyTo(memory_stream);
-
-
-                 // create an image attachment for the file located at path
-                 //var pair = uploaded_file1.ContentType().Split("image","jpeg");
-                 var attachment = new MimePart("image", "jpeg")
-                 {
-                     Content = new MimeContent(memory_stream, ContentEncoding.Default),
-                     ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
-                     ContentTransferEncoding = ContentEncoding.Base64,
-                     FileName = uploaded_file1.FileName
-                 };
-                 multipart.Add(attachment);
-             }
-
-
-
-             // now create the multipart/mixed container to hold the message text and the
-             // image attachment
-             //var multipart = new Multipart("mixed");
-             //multipart.Add(body);
-             //multipart.Add(attachment);
-
-             // now set the multipart/mixed as the message body
-             message.Body = multipart;
-             bd_email.send_email(message);
-
-         }
- */

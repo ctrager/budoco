@@ -355,6 +355,14 @@ namespace budoco.Pages
         {
             bd_util.check_user_permissions(HttpContext);
 
+            // trim leading/trailing spaces
+            string[] addresses = post_email_to.Split(",");
+            for (int i = 0; i < addresses.Length; i++)
+            {
+                string address = addresses[i].Trim();
+            }
+            post_email_to = string.Join(",", addresses);
+
             if (!IsValidPost())
             {
                 return OnGetPostsAsync();
@@ -423,10 +431,9 @@ namespace budoco.Pages
                 string[] addresses = post_email_to.Split(",");
                 for (int i = 0; i < addresses.Length; i++)
                 {
-                    string address = addresses[i].Trim();
-                    if (!EmailValidation.EmailValidator.Validate(address))
+                    if (!bd_email.validate_email_address(addresses[i]))
                     {
-                        post_error = "Email address is invalid: " + address;
+                        post_error = "Email address is invalid: " + addresses[i];
                         return false;
                     }
                 }
@@ -441,17 +448,19 @@ namespace budoco.Pages
             // get fields from issue
             var sql = @"select 
                 cast(i_id as text) as ""id"",
-                cast(i_created_date as text) as ""date"", 
+                to_char(i_created_date, 'US') as ""microseconds"", 
                 i_description from issues where i_id = " + id.ToString();
             DataRow dr_issue = bd_db.get_datarow(sql);
 
-            string identifier1 = "[#" + (string)dr_issue["id"] + "] ";
-            string identifier2 = "          [" + (string)dr_issue["date"] + "]";
+            string identifier = "[#"
+                + (string)dr_issue["id"]
+                + "-" + (string)dr_issue["microseconds"]
+                + "] ";
 
             // We use the id and very precise create date as like a GUID to tie the
             // incoming emails back to this issue
-            // [Issue:123] My computer won't turn on [2020-01-01 11:59:59.233242]
-            string subject = identifier1 + (string)dr_issue["i_description"] + identifier2;
+            // [#123-76767] My computer won't turn on
+            string subject = identifier + (string)dr_issue["i_description"];
 
             bd_email.queue_email("post",
                 post_email_to,

@@ -130,6 +130,7 @@ p_issue int not null,
 p_post_type varchar(8) not null,
 p_text text not null default '',
 p_email_to text not null default '',
+p_email_from text not null default '',
 p_created_by_user int not null,
 p_created_date timestamptz default CURRENT_TIMESTAMP
 );
@@ -186,9 +187,14 @@ oq_email_body text not null
 
 create index oq_id_index on outgoing_email_queue (oq_date_created);
 
+/* built in user, for when the system adds issues and posts */
+insert into users (us_username, us_email_address, us_is_active) 
+values('system', 'dummy', false);
 
-insert into users (us_username, us_email_address, us_is_admin, us_password) 
-values('admin', '', true, 'anything');
+/* you start of with this user, but you can add other admins 
+and deactiviate this */
+insert into users (us_username, us_email_address, us_is_admin) 
+values('admin', 'admin@example.com', true);
 
 insert into projects (pj_name) values ('proj 1');
 insert into projects (pj_name) values ('proj 2');
