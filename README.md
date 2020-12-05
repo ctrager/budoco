@@ -134,13 +134,7 @@ However there isn't any per-issue permission system yet. Although your query lim
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
 
-* delete msgs from server
-
-* add post's sent and received email addresses to dropdown
 * add "reply" link
-
-* test leaving outgoing email display name blank in settings
-
 
 * is there a way to get file input into mime for debugging, read from file rather than from network?
 
@@ -150,17 +144,13 @@ However there isn't any per-issue permission system yet. Although your query lim
 https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
 
 * when we are forcing admin to change password, also need email, in case forgets password
-so need a new form
+so need a new form. Other install improvements.
 
 * validate email on register, unless auto register is working
 
 * allow user to reset own email, username, plus some other settings
 
-* *RECEIVE* emails into the app that get posted to the relevant Issue.
-
-* Make org meaningful
-
-* Turn emails from trusted senders into issues, not just replies
+* Make org meaningful. enable receiving new issues per org, or globally.
 
 * linkify urls in issue/post description
 

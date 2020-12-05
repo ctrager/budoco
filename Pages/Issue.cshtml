@@ -429,10 +429,16 @@
     }
 
     function resizeIframe(obj) {
-        console.log(obj)
-        obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+        
+        var height = obj.contentWindow.document.documentElement.scrollHeight; 
+       
+        if (height > 600) {
+            height = 600
+        }
+ 
+        obj.style.height = height + "px"
     }
-
+ 
     </script>
 
 }

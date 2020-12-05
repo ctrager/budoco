@@ -46,6 +46,13 @@ namespace budoco
 
         public static void spawn_email_receiving_thread()
         {
+            string path = bd_config.get(bd_config.DebugPathToEmailFile);
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                debug_read_message_from_file(path);
+                return;
+            }
+
             // Spawn sending thread
             // loops, sleeps
             System.Threading.Thread thread = new System.Threading.Thread(threadproc_fetch_incoming_messages);
@@ -273,6 +280,15 @@ namespace budoco
             }
         }
 
+        static void debug_read_message_from_file(string path)
+        {
+            bd_util.log("fake email input:" + path);
+            FileStream stream = File.OpenRead(path);
+            var parser = new MimeParser(stream);
+            MimeMessage message = parser.ParseMessage();
+            process_incoming_message(message);
+        }
+
         static bool process_incoming_message(MimeMessage message)
         {
             bd_util.log("email subject:" + message.Subject);
@@ -427,7 +443,8 @@ namespace budoco
             {
                 return false;
             }
-
         }
+
+
     }
 }

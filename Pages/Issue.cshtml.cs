@@ -190,9 +190,9 @@ namespace budoco.Pages
 
                 // only user without email is "admin"
                 dt_post_email_to = bd_db.get_datatable(
-                    @"select us_email_address from users 
-                    where us_is_active = true 
-                    and us_email_address != '' order by us_email_address");
+                    @"select p_email_to from posts where p_email_to != '' and p_issue = " + id.ToString()
+                    + " union select p_email_from from posts where p_email_from != '' and p_issue = " + id.ToString()
+                    + " union select us_email_address from users where us_username != 'system' and us_is_active = true order by 1");
 
             }
             else

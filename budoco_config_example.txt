@@ -111,4 +111,8 @@ DebugEnableRunSql: 0
 # For testing, don't delete incoming emails - process them over and over
 DebugSkipDeleteOfIncomingEmails: 0
 
-
+# This is for testing incoming emails.
+# if this is set to a file path, the app won't get emails from a server
+# but instead will one email file.
+# DebugPathToEmailFile: budoco_logs/corey_email_1.txt
+DebugPathToEmailFile:

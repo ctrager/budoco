@@ -350,10 +350,10 @@ pre {
     font-family: "Lucida Console", "Courier New", Courier, monospace;
     font-size: 14px;
     margin: 0px;
-    padding-top: 0px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 10px;
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
 }
 
 
@@ -431,11 +431,23 @@ textarea#sql {
     margin: 0px;
 }
 
-.html_part_iframe {
+.html_part_iframe,
+.post_text
+ {
     border: 1px dashed gray;
-    xwidth: 50px;
-    xheight: 50px;
-    xresize: both;
+    background-color: #fafafa;
+    margin-bottom: 8px;
+    width: 890px;
+}
+
+
+.html_part_iframe {
+    resize: both;
+    overflow: auto;
+}
+
+.iframe_body {
+    background-color: yellow;
 }
 
 /* end of post_email_to_select styles */
