@@ -3,6 +3,10 @@
     {
         <div class="flash_err">@Model.error</div>
     }
+    if (Model.success is not null)
+    {
+        <div class="flash_msg">@Model.success</div>
+    }
 }
 
 @{

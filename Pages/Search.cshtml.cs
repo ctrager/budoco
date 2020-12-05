@@ -27,7 +27,7 @@ namespace budoco.Pages
 
             if (string.IsNullOrWhiteSpace(search_terms))
             {
-                bd_util.set_flash_err(HttpContext, "Please enter word(s) to search");
+                bd_util.set_flash_err(HttpContext, "Please enter word(s) to search.");
                 return;
             }
 

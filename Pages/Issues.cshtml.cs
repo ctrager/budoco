@@ -116,9 +116,16 @@ namespace budoco.Pages
                     dir = "asc";
                 }
                 int start_of_order_by = sql.IndexOf("order by");
-                sql = sql.Substring(0, start_of_order_by);
-                // sort is 0 based everywhere but the sql
-                sql += "order by " + (sort + 1).ToString() + " " + dir;
+                if (start_of_order_by > 0)
+                {
+                    sql = sql.Substring(0, start_of_order_by);
+                    // sort is 0 based everywhere but the sql
+                    sql += "order by " + (sort + 1).ToString() + " " + dir;
+                }
+                else
+                {
+                    sql += " order by " + (sort + 1).ToString() + " " + dir;
+                }
             }
 
             sql = sql.Replace("$ME", HttpContext.Session.GetInt32("us_id").ToString());

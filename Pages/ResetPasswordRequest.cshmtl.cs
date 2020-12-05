@@ -50,7 +50,7 @@ namespace budoco.Pages
                         bd_config.get(bd_config.AppName) + ": Reset Password", // subject
                         body);
 
-                    bd_util.set_flash_msg(HttpContext, "An email with password reset instructions was sent to " + email);
+                    bd_util.set_flash_msg(HttpContext, "An email with password reset instructions was sent to " + email + ".");
 
                 }
                 else

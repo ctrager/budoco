@@ -105,8 +105,12 @@ NewUserStartsReportOnly: 0
 # the user having to confirm by clicking the email
 DebugAutoConfirmRegistration: 0
 
-# Run any sql query - this page is dangerous
-DebugEnableRunSql: 0
+# In Query page, check for keywords in the sql that relate to changing data 
+CheckForDangerousSqlKeywords: 1
+DangerousSqlKeywords: alter,copy,create,createdb,createrole,createuser,delete,drop,exec,execute,grant,insert,update
+
+# Run any sql query - this page is dangerous. You can do anything.
+DebugEnableRunSql: 1
 
 # For testing, don't delete incoming emails - process them over and over
 DebugSkipDeleteOfIncomingEmails: 0
@@ -116,3 +120,8 @@ DebugSkipDeleteOfIncomingEmails: 0
 # but instead will one email file.
 # DebugPathToEmailFile: budoco_logs/corey_email_1.txt
 DebugPathToEmailFile:
+
+# This is for writing incoming emails to disk. 
+# Write the folder without trailing slash
+# DebugFolderToSaveEmails: budoco_logs
+DebugFolderToSaveEmails: 

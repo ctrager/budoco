@@ -38,14 +38,14 @@ namespace budoco.Pages
             {
                 string sql = "update outgoing_email_queue set oq_retry_count = 0";
                 bd_db.exec(sql);
-                bd_util.set_flash_msg(HttpContext, "Reset was successful");
+                bd_util.set_flash_msg(HttpContext, "Reset was successful.");
             }
             else
             if (queue_action == "delete")
             {
                 string sql = "delete from outgoing_email_queue";
                 bd_db.exec(sql);
-                bd_util.set_flash_msg(HttpContext, "Delete was successful");
+                bd_util.set_flash_msg(HttpContext, "Delete was successful.");
             }
             else
             if (queue_action == "retry")

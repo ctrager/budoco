@@ -69,7 +69,7 @@ namespace budoco.Pages
 
                     bd_db.exec_scalar(sql, dict);
 
-                    bd_util.set_flash_msg(HttpContext, "Registration was succesful");
+                    bd_util.set_flash_msg(HttpContext, "Registration was succesful.");
 
                     is_success = true;
                 }

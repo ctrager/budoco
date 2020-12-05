@@ -25,6 +25,7 @@ namespace budoco.Pages
         public DataTable dt;
 
         public string error;
+        public string success;
 
         public void OnGet()
         {
@@ -54,6 +55,7 @@ namespace budoco.Pages
                 {
                     // suppress this - this is just what happens when we run a query that does't SELECT 
                     // like an update   
+                    success = "Success";
                 }
                 else
                 {

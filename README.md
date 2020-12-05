@@ -133,15 +133,7 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-
 * add "reply" link
-
-* is there a way to get file input into mime for debugging, read from file rather than from network?
-
-* some attempt to check for dangers words in run sql
-
-* file upload progress?
-https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
 
 * when we are forcing admin to change password, also need email, in case forgets password
 so need a new form. Other install improvements.
@@ -158,6 +150,12 @@ so need a new form. Other install improvements.
 uses an inactive option
 
 * make sure registration doesn't collide with user - need inactive user placeholder
+
+
+* file upload progress?
+https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
+
+
 
 ### Features that I'll only get to if there are users out there willing to donate some money for them.
 

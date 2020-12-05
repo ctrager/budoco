@@ -72,6 +72,9 @@ namespace budoco
         public const string SecondsToSleepAfterCheckingIncomingEmail = "SecondsToSleepAfterCheckingIncomingEmail";
         public const string DebugSkipDeleteOfIncomingEmails = "DebugSkipDeleteOfIncomingEmails";
         public const string DebugPathToEmailFile = "DebugPathToEmailFile";
+        public const string CheckForDangerousSqlKeywords = "CheckForDangerousSqlKeywords";
+        public const string DangerousSqlKeywords = "DangerousSqlKeywords";
+        public const string DebugFolderToSaveEmails = "DebugFolderToSaveEmails";
 
 
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();

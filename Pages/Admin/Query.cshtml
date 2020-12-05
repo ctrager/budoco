@@ -90,7 +90,7 @@
     function run_sql() {
         $(".flash_parent").remove(); // remove previous flash message
         $.ajax({
-            url: 'RunSql?handler=Run',
+            url: 'Query?handler=Run',
             data: $('#sql_form').serialize(),
             type: 'post',
             

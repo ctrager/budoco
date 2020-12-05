@@ -21,10 +21,10 @@ namespace budoco
     {
         public const string BUDOCO_SESSION_ID = "budoco_session_id";
         public const bool MUST_BE_ADMIN = true;
-        public const string CREATE_WAS_SUCCESSFUL = "Create was successful";
-        public const string UPDATE_WAS_SUCCESSFUL = "Update was successful";
-        public const string NAME_ALREADY_USED = "Name is already being used";
-        public const string NAME_IS_REQUIRED = "Name is required";
+        public const string CREATE_WAS_SUCCESSFUL = "Create was successful.";
+        public const string UPDATE_WAS_SUCCESSFUL = "Update was successful.";
+        public const string NAME_ALREADY_USED = "Name is already being used.";
+        public const string NAME_IS_REQUIRED = "Name is required.";
 
 
         public static void log(object msg)

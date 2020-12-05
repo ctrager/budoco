@@ -13,6 +13,8 @@ namespace budoco
 {
     public static class bd_email
     {
+        static int filename_suffix_count = 0;
+
         public static void queue_email(string type, string to, string subject, string body, int post_id = 0)
         {
             string sql = @"insert into outgoing_email_queue
@@ -291,7 +293,18 @@ namespace budoco
 
         static bool process_incoming_message(MimeMessage message)
         {
+
             bd_util.log("email subject:" + message.Subject);
+            string debug_folder = bd_config.get(bd_config.DebugFolderToSaveEmails);
+
+            if (debug_folder != "")
+            {
+                filename_suffix_count++;
+                var stream = File.Create(debug_folder + "/budoco_email_" + filename_suffix_count.ToString() + ".txt");
+                message.WriteTo(stream);
+                stream.Close();
+            }
+
             int issue_id = get_incoming_issue_id_from_subject(message.Subject);
 
             if (issue_id == 0)
