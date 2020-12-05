@@ -133,14 +133,15 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* add "reply" link
-
 * when we are forcing admin to change password, also need email, in case forgets password
 so need a new form. Other install improvements.
 
-* validate email on register, unless auto register is working
-
 * allow user to reset own email, username, plus some other settings
+
+* remove redunandt stuff
+<input value="@Model
+
+* add "reply" link
 
 * Make org meaningful. enable receiving new issues per org, or globally.
 
@@ -150,7 +151,6 @@ so need a new form. Other install improvements.
 uses an inactive option
 
 * make sure registration doesn't collide with user - need inactive user placeholder
-
 
 * file upload progress?
 https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery

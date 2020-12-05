@@ -3,3 +3,4 @@ bin/
 logs/
 budoco_logs/
 budoco_config_active.txt
+budoco_config_active.txt.PROD

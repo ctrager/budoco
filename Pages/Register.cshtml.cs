@@ -103,6 +103,10 @@ namespace budoco.Pages
             {
                 errs.Add("Email is required.");
             }
+            else if (!bd_email.validate_email_address(email_address))
+            {
+                errs.Add("Email is invalid.");
+            }
             else
             {
                 sql = "select 1 from users where us_email_address = @us_email_address";
