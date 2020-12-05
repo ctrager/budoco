@@ -213,6 +213,10 @@ form {
     font-weight: bold;
 }
 
+.flash_line {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 .issue_select {
     width: 290px;

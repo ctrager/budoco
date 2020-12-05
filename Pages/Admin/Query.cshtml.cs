@@ -141,17 +141,19 @@ namespace budoco.Pages
             {
                 errs.Add("Sql is required.");
             }
-
-            if (!sql.ToLower().Contains(" issues"))
+            else
             {
-                errs.Add(@"Sql must reference the table ""issues"".");
-            }
+                if (!sql.ToLower().Contains(" issues"))
+                {
+                    errs.Add(@"Sql must reference the table ""issues"".");
+                }
 
-            string dangerous_word = FindDangerousWordInSql(sql);
+                string dangerous_word = FindDangerousWordInSql(sql);
 
-            if (dangerous_word is not null)
-            {
-                errs.Add("Dangerous keyword not allowed (see Budoco DangerousSqlKeywords setting): " + dangerous_word);
+                if (dangerous_word is not null)
+                {
+                    errs.Add("Dangerous keyword not allowed (see Budoco DangerousSqlKeywords setting): " + dangerous_word);
+                }
             }
 
             if (errs.Count == 0)
@@ -175,34 +177,42 @@ namespace budoco.Pages
             dt = null;
             error = null;
 
-            string dangerous_word = FindDangerousWordInSql(sql);
-
-            if (dangerous_word is not null)
+            if (string.IsNullOrWhiteSpace(sql))
             {
-                error = "Dangerous keyword not allowed (see Budoco DangerousSqlKeywords setting): " + dangerous_word;
+                error = "Sql is required.";
             }
             else
             {
-                try
-                {
-                    dt = bd_db.get_datatable(sql);
-                }
-                catch (Exception e)
-                {
+                // sql is not blank
+                string dangerous_word = FindDangerousWordInSql(sql);
 
-                    if (e.Message == "Cannot find table 0.")
+                if (dangerous_word is not null)
+                {
+                    error = "Dangerous keyword not allowed (see Budoco DangerousSqlKeywords setting): " + dangerous_word;
+                }
+                else
+                {
+                    // sql has no dangerous words, so try to run
+                    try
                     {
-                        // suppress this - this is just what happens when we run a query that does't SELECT 
-                        // like an update   
-                        success = "Success";
+                        dt = bd_db.get_datatable(sql);
                     }
-                    else
+                    catch (Exception e)
                     {
-                        error = e.Message;
+
+                        if (e.Message == "Cannot find table 0.")
+                        {
+                            // suppress this - this is just what happens when we run a query that does't SELECT 
+                            // like an update   
+                            success = "Success";
+                        }
+                        else
+                        {
+                            error = e.Message;
+                        }
                     }
                 }
             }
-
             String html = await _renderer.RenderPartialToStringAsync("_PlainDataTablePartial", this);
             return Content(html);
         }

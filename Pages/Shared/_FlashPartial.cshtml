@@ -6,31 +6,31 @@
         string msg = bd_util.get_flash_msg(Model.HttpContext);
         var errs = bd_util.get_flash_errs(Model.HttpContext);
         if (!string.IsNullOrEmpty(msg) || errs.Count > 0)
-        {  
-        <div class="flash_parent">
-            <div class="flash">
-                @{
-                    if (!string.IsNullOrEmpty(msg))
-                    {
-                        <div class="flash_msg">@msg</div>
-                    }
+        {
+            <div class="flash_parent">
+                <div class="flash">
+                    @{
+                        if (!string.IsNullOrEmpty(msg))
+                        {
+                            <div class="flash_msg">@msg</div>
+                        }
 
-                   
-                    if (errs.Count > 0)
-                    {
 
-                        <div class="flash_err">
-                            @{
-                                foreach (string err in errs)
-                                {
-                                    <div>@err</div>
+                        if (errs.Count > 0)
+                        {
+
+                            <div class="flash_err">
+                                @{
+                                    foreach (string err in errs)
+                                    {
+                                        <div class="flash_line">@err</div>
+                                    }
                                 }
-                            }
-                        </div>
+                            </div>
+                        }
                     }
-                }
+                </div>
             </div>
-        </div>
         }
     }
 }

@@ -133,13 +133,9 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* when we are forcing admin to change password, also need email, in case forgets password
-so need a new form. Other install improvements.
+* user settings - allow user to reset own email, username, plus some other settings
 
-* allow user to reset own email, username, plus some other settings
-
-* remove redunandt stuff
-<input value="@Model
+* make installation nicer?
 
 * add "reply" link
 
