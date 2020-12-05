@@ -188,7 +188,7 @@ namespace budoco.Pages
                 // if this issue uses an option where is_active == false,
                 // we still want to show it
 
-                // only user without email is "admin"
+                // only user without email is "system"
                 dt_post_email_to = bd_db.get_datatable(
                     @"select p_email_to from posts where p_email_to != '' and p_issue = " + id.ToString()
                     + " union select p_email_from from posts where p_email_from != '' and p_issue = " + id.ToString()

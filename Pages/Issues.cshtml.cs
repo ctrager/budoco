@@ -1,19 +1,9 @@
 using System.Collections.Generic;
 using System.Data;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http;
-using Serilog;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Reflection;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System;
 
 namespace budoco.Pages
 {

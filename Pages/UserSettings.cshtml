@@ -1,0 +1,38 @@
+﻿@page
+@model UserSettingsModel
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "User Settings";
+}
+
+<h1>Your User Settings</h1>
+
+<partial name="_FlashPartial" />
+
+<div class="form_div">
+    Update your user information
+<form method="post">
+    <table class="form_table">
+    <tr>
+        <td><label>Username</label>
+        <td><input asp-for="username"/>
+    </tr>
+    <tr>
+        <td><label>Email</label>
+        <td><input type="email" asp-for="email_address"/>
+    </tr>
+        <tr>
+        <td><label>Organization</label>
+        <td>@Model.organization</td>
+    </tr>
+    <tr>
+        <td><button type="submit">Update</button>
+    <tr>
+    </table>
+</form>
+</div>
+
+@section Scripts {
+    
+}
+

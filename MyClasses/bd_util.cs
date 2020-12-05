@@ -139,6 +139,25 @@ namespace budoco
 
         }
 
+        public static string get_username_from_session(HttpContext context)
+        {
+            return context.Session.GetString("us_username");
+        }
+
+        public static int get_user_id_from_session(HttpContext context)
+        {
+            object id = context.Session.GetInt32("us_id");
+
+            if (id is null)
+            {
+                return 0;
+            }
+            else
+            {
+                return (int)id;
+            }
+        }
+
         public static bool is_user_admin(HttpContext context)
         {
             object us_is_admin = context.Session.GetInt32("us_is_admin");
@@ -210,10 +229,12 @@ namespace budoco
 
         }
 
-        public static string strip_html_tags(string input)
-        {
-            return Regex.Replace(input, "<.*?>", String.Empty);
-        }
+        // public static string strip_html_tags(string input)
+        // {
+        //     return Regex.Replace(input, "<.*?>", String.Empty);
+        // }
+
+
 
     }
 }

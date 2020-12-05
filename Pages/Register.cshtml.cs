@@ -82,6 +82,10 @@ namespace budoco.Pages
 
         bool IsValid()
         {
+            // DRY up this code 
+            // Identica; in User and UserSettings
+            // and similar in Register
+
             string sql;
             var dict = new Dictionary<string, dynamic>();
 
