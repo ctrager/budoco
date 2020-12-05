@@ -134,14 +134,27 @@ However there isn't any per-issue permission system yet. Although your query lim
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
 * user settings - allow user to reset own email, username, plus some other settings
+check that username/email isn't taken. 
 
-* make installation nicer?
+* finish admin stuff as is.
+
+* make installation nicer - be prompted to init "active" file, create db, run sql.
+
+* editing/deleting own comments
+
+* Make org meaningful. enable receiving new issues per org, or globally.
+org queries. default org query. So, hierarchy would be:
+user default query too:
+1) last used query in session  2) user default query 3) org query, 4) default query.
 
 * add "reply" link
 
-* Make org meaningful. enable receiving new issues per org, or globally.
-
 * linkify urls in issue/post description
+
+url parser
+https://mathiasbynens.be/demo/url-regex
+https://gist.github.com/dperini/729294
+Copyright (c) 2010-2018 Diego Perini (http://www.iport.it)
 
 * Handle inactive options, add to dropdowns if issue being viewed
 uses an inactive option
@@ -152,8 +165,18 @@ uses an inactive option
 https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
 
 
-
 ### Features that I'll only get to if there are users out there willing to donate some money for them.
+
+* another post type, for change history
+
+* Email/Slack notifications about changes 
+
+* if I create issue-user table, then I can do:
+-- notifications with watch/mute
+-- seen, unseen
+-- voting
+
+* Reminders that an issue is stale - has been in same status n days
 
 * More permissions/restrictions/workflow logic. It's fun to write code that allows the user to do something. It's less fun to write code to STOP the user from doing something. With the old BugTracker.NET, this kind of code became the hardest for me to work with and to be sure it was right.
  
@@ -161,9 +184,4 @@ https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquer
   
 * Integration with version control. If you want that, just use Github, etc.
 
-* Email/Slack notifications about changes, or reminders that a issue is growing stale. 
-
-url parser
-https://mathiasbynens.be/demo/url-regex
-https://gist.github.com/dperini/729294
-Copyright (c) 2010-2018 Diego Perini (http://www.iport.it)
+* support physically deleting stuff

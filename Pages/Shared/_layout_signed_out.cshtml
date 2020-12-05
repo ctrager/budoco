@@ -15,30 +15,22 @@
     <meta http-equiv="Expires" content="0">
     <title>@ViewData["Title"] - @bd_config.get(bd_config.AppName)</title>
     <link rel="stylesheet" href="~/css/budoco.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
 
     @{
         if (bd_config.get(bd_config.UseCustomCss) == 1)
         {
             string custom_css_filename = bd_config.get(bd_config.CustomCssFilename);
-                    <link rel="stylesheet" href="/@custom_css_filename" />
+            <link rel="stylesheet" href="/@custom_css_filename" />
         }
     }
-
-
-    <script>
-        function goto() {
-            var issue_id = $("#goto_id").val();
-            if (issue_id == 0)
-                alert("Enter issue ID#")
-            else
-                location.href = "/Issue?id=" + issue_id
-        }
-    </script>
 </head>
 
 @{
     bd_util.log("layout_simple http status: " +
-                    HttpContextAccessor.HttpContext.Response.StatusCode.ToString());
+            HttpContextAccessor.HttpContext.Response.StatusCode.ToString());
     if (HttpContextAccessor.HttpContext.Response.StatusCode == 302)
     {
 
@@ -50,25 +42,22 @@
     {
 
         <body>
-                    <table class="menu_table">
-                        <tr>
-                            <td class="logo"><a asp-page="/Index">@bd_config.get(bd_config.AppName)</a></td>
+            <table class="menu_table">
+                <tr>
+                    <td class="logo"><a asp-page="/Index">@bd_config.get(bd_config.AppName)</a></td>
 
-                            <td class="just_right">
+                    <td class="just_right">
 
-                                <a href="/About">About</a>
-                            </td>
-                        </tr>
-                    </table>
+                        <a href="/About">About</a>
+                    </td>
+                </tr>
+            </table>
 
-                    <div class="content_parent">
-                        @RenderBody()
-                    </div>
+            <div class="content_parent">
+                @RenderBody()
+            </div>
 
-                    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-                    <script src="~/js/site.js" asp-append-version="true"></script>
-
-                    @await RenderSectionAsync("Scripts", required: false)
+            @await RenderSectionAsync("Scripts", required: false)
 
         </body>
     }

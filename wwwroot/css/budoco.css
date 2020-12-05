@@ -101,6 +101,19 @@ div {
 .goto_input {
     width: 50px;
 }
+/* supress spinner */
+
+/* Chrome, Safari, Edge, Opera */
+.goto_input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.goto_input[type=number] {
+  -moz-appearance: textfield;
+}
 
 .menu_table>tbody>tr>td.just_right {
     text-align: right;
