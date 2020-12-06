@@ -1,0 +1,43 @@
+﻿@page
+@model DetailModel
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Model.singular_label";
+}
+
+<h1>Update @Model.singular_label</h1>
+<div class="just_left">
+    <a href="List?field=@Model.field">Back to @Model.plural_label</a>
+</div>
+<partial name="_FlashPartial" />
+
+<div class="form_div">
+<form method="post">
+    <table class="form_table">
+    <tr>
+        <td><label>Id</label>
+        <td><input asp-for="id" disabled></input>
+    </tr>
+    <tr>
+        <td><label>ame</label>
+        <td><input asp-for="name"/>
+    </tr>
+    <tr>
+        <td><label>Active</label>
+        <td><input asp-for="is_active" value="true" />
+    </tr>
+    <tr>
+        <td><label>Default</label>
+        <td><input asp-for="is_default" value="true" />
+    </tr>
+    <tr>
+        <td><button type="submit">Update</button>
+    <tr>
+    </table>
+</form>
+</div>
+
+@section Scripts {
+    
+}
+

@@ -73,6 +73,16 @@ namespace budoco.Pages
         public int status_id { get; set; }
 
         [BindProperty]
+        public IEnumerable<SelectListItem> custom_1_list { get; set; }
+        [BindProperty]
+        public int custom_1_id { get; set; }
+
+        [BindProperty]
+        public IEnumerable<SelectListItem> custom_2_list { get; set; }
+        [BindProperty]
+        public int custom_2_id { get; set; }
+
+        [BindProperty]
         public IFormFile uploaded_file1 { get; set; }
         [BindProperty]
         public IFormFile uploaded_file2 { get; set; }
@@ -87,6 +97,9 @@ namespace budoco.Pages
         public string post_text { get; set; }
 
         // bindings end        
+
+        public string custom_1_label = bd_config.get(bd_config.CustomFieldLabelSingular1);
+        public string custom_2_label = bd_config.get(bd_config.CustomFieldLabelSingular2);
 
         public string dropdown_partial_prefix;
         public string dropdown_partial_label;
@@ -247,10 +260,29 @@ namespace budoco.Pages
             {
                 priority_id = (int)dr[0];
             }
+
             dr = bd_db.get_datarow("select * from categories where ca_is_default is true order by ca_name limit 1");
             if (dr is not null)
             {
                 category_id = (int)dr[0];
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled1) == 1)
+            {
+                dr = bd_db.get_datarow("select * from custom_1 where c1_is_default is true order by c1_name limit 1");
+                if (dr is not null)
+                {
+                    custom_1_id = (int)dr[0];
+                }
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled2) == 1)
+            {
+                dr = bd_db.get_datarow("select * from custom_2 where c2_is_default is true order by c2_name limit 1");
+                if (dr is not null)
+                {
+                    custom_2_id = (int)dr[0];
+                }
             }
         }
 
@@ -328,6 +360,16 @@ namespace budoco.Pages
             organization_list = bd_db.prepare_select_list("select og_id, og_name from organizations where og_is_active = true order by og_name");
             priority_list = bd_db.prepare_select_list("select pr_id, pr_name from priorities where pr_is_active = true order by pr_name");
             status_list = bd_db.prepare_select_list("select st_id, st_name from statuses where st_is_active = true order by st_name");
+
+            if (bd_config.get(bd_config.CustomFieldEnabled1) == 1)
+            {
+                custom_1_list = bd_db.prepare_select_list("select c1_id, c1_name from custom_1 where c1_is_active = true order by c1_name");
+            }
+            if (bd_config.get(bd_config.CustomFieldEnabled2) == 1)
+            {
+                custom_2_list = bd_db.prepare_select_list("select c2_id, c2_name from custom_2 where c2_is_active = true order by c2_name");
+            }
+
         }
 
         bool IsValid()

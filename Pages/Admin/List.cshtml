@@ -1,0 +1,13 @@
+﻿@page
+@model ListModel
+
+@{
+    ViewData["Title"] = Model.plural_label;
+}
+
+<h1>@ViewData["Title"]</h1>
+<partial name="_CrudDataTableCustomPartial" />
+
+@section Scripts {
+    
+}

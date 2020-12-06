@@ -1,0 +1,43 @@
+<partial name="_FlashPartial" />
+
+<div class="data_table_div">
+
+    <table class="dt">
+        @{
+            <tr>
+                @{
+                    for (int i = 0; i < Model.dt.Columns.Count; i++)
+                    {
+
+                        <th>@Model.dt.Columns[i].ColumnName</th>
+                    }
+                }
+                <th>Action</th>
+            </tr>
+            for (int row = 0; row < Model.dt.Rows.Count; row++)
+            {
+                DataRow dr = Model.dt.Rows[row];
+                <tr>
+                    @{
+                        for (int col = 0; col < Model.dt.Columns.Count; col++)
+                        {
+                            if (col == 0)
+                            {
+                                <td><a href="Detail?id=@(dr[0])&field=@(Model.field)">@dr[col]</a></td>
+                            }
+                            else
+                            {
+                                <td>@bd_db.format(dr[col])</td>
+                            }
+                        }
+                    }
+
+                    <td>
+                    <td>
+                        <a href="Detail?id=@(dr[0])&field=@(Model.field)">Update</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

@@ -104,6 +104,24 @@
                      </select>
                 </tr>
         
+        if (bd_config.get(bd_config.CustomFieldEnabled1) == 1) 
+    {
+                <tr class="issue_custom_1">
+                    <td><label class="issue_select_label">@Model.custom_1_label</label>
+                    <td><select  class="issue_select" asp-for="custom_1_id" asp-items="@Model.custom_1_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                     </select>
+                </tr>
+    }
+    if (bd_config.get(bd_config.CustomFieldEnabled2) == 1) 
+    {
+               <tr class="issue_custom_2">
+                    <td><label class="issue_select_label">@Model.custom_2_label</label>
+                    <td><select  class="issue_select" asp-for="custom_2_id" asp-items="@Model.custom_2_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                     </select>
+                </tr>
+    }
                 </table> <!--left-->
             </td><!--left-->
             

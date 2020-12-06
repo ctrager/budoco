@@ -17,12 +17,34 @@
 </div>
 <br>
 
-<div>Set up your own lists of Categories, Statuses, etc - UNDER CONSTRUCTION</div>
-<div><a href="/Admin/Categories">Categories</a></div>
-<div><a href="/Admin/Priorities">Priorities</a></div>
-<div><a href="/Admin/Projects">Projects</a></div>
+<div>Set up your own lists of Issue Attribues - UNDER CONSTRUCTION</div>
 <div><a href="/Admin/Organizations">Organizations</a></div>
-<div><a href="/Admin/Statuses">Statuses</a></div>
+<br>
+@{
+    if (bd_config.get(bd_config.CustomFieldEnabled1) == 1) 
+    {
+        <div>
+            <a href="/Admin/List?field=1">@bd_config.get(bd_config.CustomFieldLabelPlural1)</a>
+            - See budoco_settings_active.txt, CustomFieldEnabled1 and related settings
+        </div>
+    }
+    if (bd_config.get(bd_config.CustomFieldEnabled2) == 1) 
+    {
+        <div>
+            <a href="/Admin/List?field=2">@bd_config.get(bd_config.CustomFieldLabelPlural2)</a>
+            - See budoco_settings_active.txt, CustomFieldEnabled2 and related settings
+        </div>
+    }
+    if (bd_config.get(bd_config.CustomFieldEnabled3) == 1) 
+    {
+        <div>
+            <a href="/Admin/List?field=3">@bd_config.get(bd_config.CustomFieldLabelPlural3)</a>
+            - See budoco_settings_active.txt, CustomFieldEnabled3 and related settings
+         </div>
+    }
+
+}
+
 <br>
 
 <div>

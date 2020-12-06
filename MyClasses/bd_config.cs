@@ -76,6 +76,17 @@ namespace budoco
         public const string DangerousSqlKeywords = "DangerousSqlKeywords";
         public const string DebugFolderToSaveEmails = "DebugFolderToSaveEmails";
 
+        public const string CustomFieldEnabled1 = "CustomFieldEnabled1";
+        public const string CustomFieldLabelSingular1 = "CustomFieldLabelSingular1";
+        public const string CustomFieldLabelPlural1 = "CustomFieldLabelPlural1";
+
+        public const string CustomFieldEnabled2 = "CustomFieldEnabled2";
+        public const string CustomFieldLabelSingular2 = "CustomFieldLabelSingular2";
+        public const string CustomFieldLabelPlural2 = "CustomFieldLabelPlural2";
+
+        public const string CustomFieldEnabled3 = "CustomFieldEnabled3";
+        public const string CustomFieldLabelSingular3 = "CustomFieldLabelSingular3";
+        public const string CustomFieldLabelPlural3 = "CustomFieldLabelPlural3";
 
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 

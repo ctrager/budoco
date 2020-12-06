@@ -15,11 +15,13 @@ drop table if exists priorities;
 drop table if exists statuses;
 drop table if exists organizations;
 drop table if exists queries;
-
+drop table if exists custom_1;
+drop table if exists custom_2;
+drop table if exists custom_3;
 
 create table users
 (
-us_id serial,
+us_id serial primary key,
 us_username varchar(20) not null,
 us_email_address varchar(64) not null,
 us_password varchar(48) not null default '',
@@ -44,7 +46,7 @@ CREATE UNIQUE INDEX se_id_index ON sessions (se_id);
 
 create table projects
 (
-pj_id serial,
+pj_id serial primary key,
 pj_name varchar(30) not null,
 pj_is_active boolean default true,
 pj_is_default boolean default false
@@ -54,7 +56,7 @@ CREATE UNIQUE INDEX pj_name_index ON projects (pj_name);
 
 create table categories
 (
-ca_id serial,
+ca_id serial primary key,
 ca_name varchar(30) not null,
 ca_is_active boolean default true,
 ca_is_default boolean default false
@@ -64,7 +66,7 @@ CREATE UNIQUE INDEX ca_name_index ON categories (ca_name);
 
 create table statuses
 (
-st_id serial,
+st_id serial primary key,
 st_name varchar(30) not null,
 st_is_active boolean default true,
 st_is_default boolean default false
@@ -74,7 +76,7 @@ CREATE UNIQUE INDEX st_name_index ON statuses (st_name);
 
 create table priorities
 (
-pr_id serial,
+pr_id serial primary key,
 pr_name varchar(30) not null,
 pr_is_active boolean default true,
 pr_is_default boolean default false
@@ -84,7 +86,7 @@ CREATE UNIQUE INDEX pr_name_index ON priorities (pr_name);
 
 create table organizations
 (
-og_id serial,
+og_id serial primary key,
 og_name varchar(30) not null,
 og_is_active boolean default true,
 og_is_default boolean default false
@@ -92,9 +94,39 @@ og_is_default boolean default false
 
 CREATE UNIQUE INDEX og_name_index ON organizations (og_name);
 
+create table custom_1
+(
+c1_id serial primary key,
+c1_name varchar(30) not null,
+c1_is_active boolean default true,
+c1_is_default boolean default false
+);
+
+CREATE UNIQUE INDEX c1_name_index ON custom_1 (c1_name);
+
+create table custom_2
+(
+c2_id serial primary key,
+c2_name varchar(30) not null,
+c2_is_active boolean default true,
+c2_is_default boolean default false
+);
+
+CREATE UNIQUE INDEX c2_name_index ON custom_2 (c2_name);
+
+create table custom_3
+(
+c3_id serial primary key,
+c3_name varchar(30) not null,
+c3_is_active boolean default true,
+c3_is_default boolean default false
+);
+
+CREATE UNIQUE INDEX c3_name_index ON custom_3 (c3_name);
+
 create table queries
 (
-qu_id serial,
+qu_id serial primary key,
 qu_name varchar(60) not null,
 qu_sql text not null,
 qu_description text not null default '',
@@ -106,7 +138,7 @@ create unique index qu_name_index on queries (qu_name);
 
 create table issues 
 (
-i_id serial,
+i_id serial primary key,
 i_description varchar(200) not null,
 i_details text not null default '',
 i_created_by_user int not null default 0,
@@ -120,12 +152,15 @@ i_assigned_to_user int null default 0,
 i_last_updated_user int null default 0,
 i_last_updated_date timestamptz null,
 i_last_post_user int null default 0,
-i_last_post_date timestamptz null
+i_last_post_date timestamptz null,
+i_custom_1 int null default 0,
+i_custom_2 int null default 0,
+i_custom_3 int null default 0
 );
 
 create table posts 
 (
-p_id serial,
+p_id serial primary key,
 p_issue int not null,
 p_post_type varchar(8) not null,
 p_text text not null default '',
@@ -140,7 +175,7 @@ create index p_issue_index on posts (p_issue);
 
 create table post_attachments
 (
-pa_id serial,
+pa_id serial primary key,
 pa_post int not null,
 pa_issue int not null, 
 pa_file_name text not null default '',
@@ -174,7 +209,7 @@ create unique index rp_guid_index on reset_password_requests (rp_guid);
 
 create table outgoing_email_queue 
 (
-oq_id serial,
+oq_id serial primary key,
 oq_date_created timestamptz default CURRENT_TIMESTAMP,
 oq_email_type varchar(10) not null, /* post, registration, forgot password */
 oq_post_id int null, /* if related to post - get the attachments from it, don't store twice */
@@ -216,6 +251,18 @@ insert into statuses (st_name) values ('done');
 insert into organizations (og_name) values ('org 1');
 insert into organizations (og_name) values ('org 2');
 insert into organizations (og_name) values ('org 3');
+
+insert into custom_1 (c1_name) values ('red');
+insert into custom_1 (c1_name) values ('green');
+insert into custom_1 (c1_name) values ('blue');
+
+insert into custom_2 (c2_name) values ('English');
+insert into custom_2 (c2_name) values ('Japanese');
+insert into custom_2 (c2_name) values ('Hebrew');
+
+insert into custom_3 (c3_name) values ('Bach');
+insert into custom_3 (c3_name) values ('Beethoven');
+insert into custom_3 (c3_name) values ('Haydn');
 
 insert into queries (qu_name, qu_sql) values (
 'Raw "select * from issues" Please run queries.sql',
