@@ -6,20 +6,27 @@
 }
 
 <h1>Update @Model.singular_label</h1>
-<div class="just_left">
-    <a href="List?field=@Model.field">Back to @Model.plural_label</a>
-</div>
+
+<div><a href="List?field=@Model.field">Back to @Model.plural_label</a></div>
+
+<div class="centered_and_left_just">
+
 <partial name="_FlashPartial" />
 
 <div class="form_div">
 <form method="post">
     <table class="form_table">
+    @{
+        if (Model.id != 0)
+        {
     <tr>
         <td><label>Id</label>
         <td><input asp-for="id" disabled></input>
     </tr>
+        }
+    }
     <tr>
-        <td><label>ame</label>
+        <td><label>Name</label>
         <td><input asp-for="name"/>
     </tr>
     <tr>
@@ -31,10 +38,11 @@
         <td><input asp-for="is_default" value="true" />
     </tr>
     <tr>
-        <td><button type="submit">Update</button>
-    <tr>
+        <td><button type="submit">Save</button>
+    </tr>
     </table>
 </form>
+</div>
 </div>
 
 @section Scripts {

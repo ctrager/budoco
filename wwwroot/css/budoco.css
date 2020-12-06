@@ -125,12 +125,22 @@ input::-webkit-inner-spin-button {
 }
 
 h1 {
+    display: inline;
     text-align: left;
     font-size: 18px;
     font-weight: normal;
     letter-spacing: 1px;
 }
 
+h1::after {
+    content: "\a\a";
+    white-space: pre;
+}
+
+.crud_table {
+    display: inline-block;
+    background-color: yellow;
+}
 
 /* end top part of page */
 

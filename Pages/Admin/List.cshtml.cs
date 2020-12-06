@@ -17,6 +17,7 @@ namespace budoco.Pages
 
         public DataTable dt;
         public string plural_label;
+        public string singular_label;
         public string singular_table_name = "Detail";
 
         public void OnGet()
@@ -25,6 +26,7 @@ namespace budoco.Pages
                 return;
 
             plural_label = bd_config.get("CustomFieldLabelPlural" + field.ToString());
+            singular_label = bd_config.get("CustomFieldLabelSingular" + field.ToString());
 
             string sql = @"select 
             c$_id as ""ID"",

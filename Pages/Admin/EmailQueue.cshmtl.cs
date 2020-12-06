@@ -36,7 +36,7 @@ namespace budoco.Pages
 
             if (queue_action == "reset_counts")
             {
-                string sql = "update outgoing_email_queue set oq_retry_count = 0";
+                string sql = "update outgoing_email_queue set oq_sending_attempt_count = 0";
                 bd_db.exec(sql);
                 bd_util.set_flash_msg(HttpContext, "Reset was successful.");
             }
