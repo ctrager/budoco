@@ -7,13 +7,14 @@
                 {
                     int p_id = (int)dr[0];
 
-                    <div class="post">
+                    <div class="post" id="post_@p_id">
+
                         @{
                             string post_type = (string)dr["p_post_type"];
                             if (post_type == "comment")
                             {
                                 <div class="info_text">
-                                    Comment by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                                    Comment by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
                                 </div>
                                 <pre class="post_text">@dr["p_text"]</pre>
                             }
@@ -21,7 +22,7 @@
                             else if (post_type == "email")
                             {
                                 <div class="info_text">
-                                    Email sent by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                                    Email sent by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
                                 </div>
                                 <div>
                                     <span>To: @dr["p_email_to"]</span>
@@ -33,7 +34,7 @@
                             else if (post_type == "reply")
                             {
                                 <div class="info_text">
-                                    Email received from @dr["p_email_from"] on @dr["p_created_date"]&nbsp;&nbsp;post id#@p_id
+                                    Email received from @dr["p_email_from"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
                                 </div>
                                 string html_part = (string)dr["p_email_from_html_part"];
                                 if (html_part != "")

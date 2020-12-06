@@ -10,7 +10,7 @@
 <partial name="_FlashPartial" />
 
 <div class="form_div">
-<form method="post">
+<form method="get" action="Search">
     <table class="form_table">
         
     <tr>
@@ -45,21 +45,18 @@
     @{
         <tr>
             @{
-                for (int i = 0; i < 3; i++)
-                {
-
-                    <th>@Model.dt.Columns[i].ColumnName</th>
-                }
+                <th>@Model.dt.Columns[0].ColumnName</th>
+                <th>@Model.dt.Columns[1].ColumnName</th>
+                <th>@Model.dt.Columns[2].ColumnName</th>
             }
         </tr>
         for (int row = 0; row < Model.dt.Rows.Count; row++)
         {
             DataRow dr = Model.dt.Rows[row];
             <tr>
-                        <td><a href="/Issue?id=@dr[0]">@dr[0]</a></td>
-                        <td><a href="/Issue?id=@dr[0]">@dr[1]</a></td>
-                        
-                        <td><span class="search_context">@Html.Raw(@dr[2])</span></td>
+                <td><a href="/Issue?id=@dr[0]">@dr[0]</a></td>
+                <td><a href="/Issue?id=@dr[1]">@dr[1]</a></td>
+                <td><span class="search_context">@Html.Raw(@dr[2])</span></td>
             </tr>
         }
     }

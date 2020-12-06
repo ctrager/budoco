@@ -6,11 +6,19 @@
 }
 
 <div class="just_left">
-  
-    <a href="Issues">Back to Issues</a>
-    &nbsp;&nbsp;&nbsp;
+    
     @{
-        
+        string referer = HttpContext.Request.Headers["Referer"].ToString();
+        if (HttpContext.Request.Headers["Referer"].ToString().Contains("Search"))
+        {
+            <a href="@referer">Back to Search</a>
+        }
+        else
+        {
+            <a href="Issues">Back to Issues</a>
+        }
+        <span>&nbsp;&nbsp;&nbsp;</span>
+
         if (Model.prev_issue_id_in_list != 0)
         {
             <a href="Issue?id=@Model.prev_issue_id_in_list">Prev</a>

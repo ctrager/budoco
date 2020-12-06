@@ -6,7 +6,7 @@ namespace budoco.Pages
 {
     public class SearchModel : PageModel
     {
-        [BindProperty]
+        [FromQuery]
         public string search_terms { get; set; }
 
         public DataTable dt;
@@ -14,16 +14,9 @@ namespace budoco.Pages
         public void OnGet()
         {
 
-            // if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-            //     return;
-        }
-
-        public void OnPost()
-        {
-
             if (string.IsNullOrWhiteSpace(search_terms))
             {
-                bd_util.set_flash_err(HttpContext, "Please enter word(s) to search.");
+                //bd_util.set_flash_err(HttpContext, "Please enter word(s) to search.");
                 return;
             }
 
@@ -32,21 +25,24 @@ namespace budoco.Pages
                     i_id as ""ID"",
                     i_description as ""Description"",
                     context as ""Context"", 
+                    p_id,
                     max(rank) as score 
                 from
                 (
                     select
                         i_id,
                         i_description,
-                        ts_headline('english', i_description, websearch_to_tsquery('english', '$')) as Context,
+                        p_id,
+                        ts_headline('english', search_text, websearch_to_tsquery('english', '$')) as Context,
                         rank 
                     from 
                     (
+                        /* i_description */
                         select
                             i_id,
                             i_description,
                             0 as p_id,
-                            '' as p_text, 
+                            i_description as search_text,
                             ts_rank_cd(to_tsvector('english', i_description), websearch_to_tsquery('english', '$')) as rank
                         from
                             issues
@@ -54,13 +50,13 @@ namespace budoco.Pages
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', i_description)
 
                         union 
-
+                        /* p_text */
                         select
                             i_id,
                             i_description,
                             p_id,
-                            p_text, 
-                            ts_rank_cd(to_tsvector('english', p_text), websearch_to_tsquery('english', '$')) 
+                            p_text as search_text,
+                            ts_rank_cd(to_tsvector('english', p_text), websearch_to_tsquery('english', '$')) as rank
                         from
                             posts
                             
@@ -77,10 +73,13 @@ namespace budoco.Pages
                 group by
                     i_id,
                     i_description,
+                    p_id,
                     context
                 order by
                     score,
+                    p_id,
                     i_id desc";
+
 
             string escaped_single_quotes = search_terms.Replace("'", "''");
             string sql = sql_template.Replace("$", escaped_single_quotes);
