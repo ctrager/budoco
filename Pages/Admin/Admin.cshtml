@@ -10,89 +10,96 @@
 <h1>Admin</h1>
 <partial name="_FlashPartial" />
 
+<table class="admin_page">
+<tr>
+    <td><a href="/Admin/Users">Users</a>
+    <td>Mark users as admin or not, inactive or not, assign them to organizations.
+</tr>
 
-<div>
-    <a href="/Admin/Users">Users</a>
-    - Mark users as admin or not, inactive or not, assign them to organizations.
-</div>
-<br>
+<tr>
+    <td><a href="/Admin/Organizations">Organizations</a>
+    <td>Create and update organizations.
+</tr>
 
-<div><a href="/Admin/Organizations">Organizations</a> - Under Construction </div>
-
-<br>
 @{
     if (bd_config.get(bd_config.CustomFieldEnabled1) == 1) 
     {
-        <div>
-            <a href="/Admin/List?field=1">@bd_config.get(bd_config.CustomFieldLabelPlural1)</a>
-            - See budoco_settings_active.txt, CustomFieldEnabled1 and related settings
-        </div>
+        <tr>
+            <td><a href="/Admin/List?field=1">@bd_config.get(bd_config.CustomFieldLabelPlural1)</a>
+            <td>See budoco_settings_active.txt, CustomFieldEnabled1 and related settings.
+        </tr>
     }
     
     if (bd_config.get(bd_config.CustomFieldEnabled2) == 1) 
     {
-        <div>
-            <a href="/Admin/List?field=2">@bd_config.get(bd_config.CustomFieldLabelPlural2)</a>
-            - See budoco_settings_active.txt, CustomFieldEnabled2 and related settings
-        </div>
+        <tr>
+            <td><a href="/Admin/List?field=2">@bd_config.get(bd_config.CustomFieldLabelPlural2)</a>
+            <td>See budoco_settings_active.txt, CustomFieldEnabled2 and related settings.
+        </tr>
     }
     
     if (bd_config.get(bd_config.CustomFieldEnabled3) == 1) 
     {
-        <div>
-            <a href="/Admin/List?field=3">@bd_config.get(bd_config.CustomFieldLabelPlural3)</a>
-            - See budoco_settings_active.txt, CustomFieldEnabled3 and related settings
-         </div>
+        <tr>
+            <td><a href="/Admin/List?field=3">@bd_config.get(bd_config.CustomFieldLabelPlural3)</a>
+            <td>See budoco_settings_active.txt, CustomFieldEnabled3 and related settings.
+         </tr>
     }
     
     if (bd_config.get(bd_config.CustomFieldEnabled4) == 1) 
     {
-        <div>
-            <a href="/Admin/List?field=4">@bd_config.get(bd_config.CustomFieldLabelPlural4)</a>
-            - See budoco_settings_active.txt, CustomFieldEnabled4 and related settings
-         </div>
+        <tr>
+            <td><a href="/Admin/List?field=4">@bd_config.get(bd_config.CustomFieldLabelPlural4)</a>
+            <td>See budoco_settings_active.txt, CustomFieldEnabled4 and related settings.
+        </tr>
     }    
     
     if (bd_config.get(bd_config.CustomFieldEnabled5) == 1) 
     {
-        <div>
-            <a href="/Admin/List?field=5">@bd_config.get(bd_config.CustomFieldLabelPlural5)</a>
-            - See budoco_settings_active.txt, CustomFieldEnabled5 and related settings
-         </div>
+        <tr>
+            <td><a href="/Admin/List?field=5">@bd_config.get(bd_config.CustomFieldLabelPlural5)</a>
+            <td>See budoco_settings_active.txt, CustomFieldEnabled5 and related settings.
+         </tr>
     }    
     
     if (bd_config.get(bd_config.CustomFieldEnabled5) == 1) 
     {
-        <div>
-            <a href="/Admin/List?field=6">@bd_config.get(bd_config.CustomFieldLabelPlural6)</a>
-            - See budoco_settings_active.txt, CustomFieldEnabled6 and related settings
-         </div>
+        <tr>
+            <td><a href="/Admin/List?field=6">@bd_config.get(bd_config.CustomFieldLabelPlural6)</a>
+            <td>See budoco_settings_active.txt, CustomFieldEnabled6 and related settings.
+         </tr>
     }
 }
 
-<br>
 
-<div>
-    <a href="/Admin/Queries">Issue Queries</a> 
-    - Customize the different "Views" of issues you see on the Issues page.
-</div>
-<br>
+<tr><td>&nbsp;<td>&nbsp;</tr><!--hacky line break-->
 
-<div>
-    <a href="/Admin/EmailQueue">Outgoing Email Queue</a>
-    - Troubleshoot problems with outgoing email messages for registration, forgotten passwords, and posts.
+<tr>
+    <td><a href="/Admin/Queries">Issue Queries</a> 
+    <td>Customize the different "Views" of issues you see on the Issues page.
+</tr>
 
-</div>
+<tr><td>&nbsp;<td>&nbsp;</tr><!--hacky line break-->
+
+<tr>
+    <td><a href="/Admin/EmailQueue">Outgoing Email Queue</a>
+    <td>Troubleshoot problems with outgoing email messages for registration, forgotten passwords, and posts.
+
+</tr>
 @{if (bd_config.get(bd_config.DebugEnableRunSql) == 1) 
 {                            
-    <div>
-        <a href="/Admin/RunSql">RunSql</a> 
-        - Run any SQL. Like psql, but with a web interface.
-    </div>
+    <tr>
+        <td><a href="/Admin/RunSql">RunSql</a> 
+        <td>Run any SQL. Like psql, but with a web interface.
+    </tr>
 }}
 
-<div>
-    <a href="/Admin/Logs">Logs</a> - View and download log files.
+<tr>
+    <td><a href="/Admin/Logs">Logs</a>
+    <td>View and download log files.
+</tr>
+</table>
+
 </div>
 
 @section Scripts {

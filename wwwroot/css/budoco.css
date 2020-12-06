@@ -462,3 +462,11 @@ textarea#sql {
 }
 
 /* end of post_email_to_select styles */
+
+.admin_page>tbody>tr>td {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 6px;
+}
+
+.admin

@@ -1,13 +1,13 @@
 ﻿@page
-@model DetailModel
+@model OrganizationModel
 @using Microsoft.AspNetCore.Http
 @{
-    ViewData["Title"] = Model.singular_label;
+    ViewData["Title"] = "Organziation";
 }
 
 <h1>Create/Update @ViewData["Title"]</h1>
 
-<div><a href="List?field=@Model.field">Back to @Model.plural_label</a></div>
+<div><a href="Organizations">Back to Organizations</a></div>
 
 <partial name="_FlashPartial" />
 
@@ -41,7 +41,6 @@
     </table>
 </form>
 </div>
-
 
 @section Scripts {
     

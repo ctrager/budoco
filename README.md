@@ -139,6 +139,7 @@ user default query too:
 1) last used query in session  2) user default query 3) org query, 4) default query.
 
 * make installation nicer - be prompted to init "active" file, create db, run sql.
+include automatic migration
 
 * editing/deleting own comments
 
