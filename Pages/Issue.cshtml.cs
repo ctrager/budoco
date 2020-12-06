@@ -355,13 +355,16 @@ namespace budoco.Pages
         {
             bd_util.check_user_permissions(HttpContext);
 
-            // trim leading/trailing spaces
-            string[] addresses = post_email_to.Split(",");
-            for (int i = 0; i < addresses.Length; i++)
+            if (post_email_to is not null)
             {
-                string address = addresses[i].Trim();
+                // trim leading/trailing spaces
+                string[] addresses = post_email_to.Split(",");
+                for (int i = 0; i < addresses.Length; i++)
+                {
+                    string address = addresses[i].Trim();
+                }
+                post_email_to = string.Join(",", addresses);
             }
-            post_email_to = string.Join(",", addresses);
 
             if (!IsValidPost())
             {
