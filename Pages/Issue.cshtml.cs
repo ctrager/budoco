@@ -150,6 +150,8 @@ namespace budoco.Pages
                 coalesce(og_is_active, true) as ""og_is_active"",
                 coalesce(pr_is_active, true) as ""pr_is_active"",
                 coalesce(st_is_active, true) as ""st_is_active"",
+                coalesce(c1_is_active, true) as ""c1_is_active"",
+                coalesce(c2_is_active, true) as ""c2_is_active"",
          
                 created_by.us_username as ""created_by_username""
   
@@ -162,6 +164,8 @@ namespace budoco.Pages
                 left outer join organizations on og_id = i_organization
                 left outer join priorities on pr_id = i_priority
                 left outer join statuses on st_id = i_status
+                left outer join custom_1 on c1_id = i_custom_1
+                left outer join custom_2 on c2_id = i_custom_2
                 
                 where i_id = " + id.ToString();
 
@@ -186,6 +190,8 @@ namespace budoco.Pages
                 details = (string)dr["i_details"];
 
                 category_id = (int)dr["i_category"];
+                custom_1_id = (int)dr["i_custom_1"];
+                custom_2_id = (int)dr["i_custom_2"];
                 project_id = (int)dr["i_project"];
                 organization_id = (int)dr["i_organization"];
                 priority_id = (int)dr["i_priority"];
@@ -303,9 +309,13 @@ namespace budoco.Pages
 
                 sql = @"insert into issues 
                 (i_description, i_details, i_created_by_user, 
-                i_category, i_project, i_organization, i_priority, i_status, i_assigned_to_user) 
+                i_category, i_project, i_organization, i_priority, i_status, 
+                i_custom_1, i_custom_2,
+                i_assigned_to_user) 
                 values(@i_description, @i_details, @i_created_by_user, 
-                @i_category, @i_project, @i_organization, @i_priority, @i_status, @i_assigned_to_user) 
+                @i_category, @i_project, @i_organization, @i_priority, @i_status, 
+                @i_custom_1, @i_custom_2,
+                @i_assigned_to_user) 
                 returning i_id";
 
                 this.id = (int)bd_db.exec_scalar(sql, GetValuesDict());
@@ -320,6 +330,9 @@ namespace budoco.Pages
                 i_details = @i_details,
                 i_last_updated_user = @i_last_updated_user,
                 i_category = @i_category,
+                i_custom_1 = @i_custom_1,
+                i_custom_2 = @i_custom_2,
+                
                 i_project = @i_project,
                 i_organization = @i_organization,
                 i_priority = @i_priority,
@@ -343,6 +356,11 @@ namespace budoco.Pages
             dict["@i_created_by_user"] = HttpContext.Session.GetInt32("us_id");
             dict["@i_last_updated_user"] = HttpContext.Session.GetInt32("us_id");
             dict["@i_category"] = category_id;
+            dict["@i_custom_1"] = custom_1_id;
+            dict["@i_custom_2"] = custom_2_id;
+
+
+
             dict["@i_assigned_to_user"] = assigned_to_user_id;
             dict["@i_project"] = project_id;
             dict["@i_organization"] = organization_id;
