@@ -15,7 +15,17 @@ namespace budoco.Pages
                 return;
 
 
-            string sql = @"select * from organizations order by og_name";
+            string sql = @"select 
+            og_id as ""ID"",
+            og_name as ""Name"",
+            og_is_active as ""Active"",
+            og_is_default as ""Default"",
+            count as ""Number of Users""
+            from organizations 
+            left outer join (select us_organization, count(*) as count from users 
+            group by us_organization) count_subquery on og_id = us_organization
+            order by og_name";
+
             dt = bd_db.get_datatable(sql);
         }
     }

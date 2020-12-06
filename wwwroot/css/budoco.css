@@ -469,4 +469,12 @@ textarea#sql {
     padding-right: 6px;
 }
 
-.admin
+.user_page_info_text {
+    display: inline-block;
+    padding-top: 12px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: green;
+    width: 800px;
+}

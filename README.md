@@ -118,20 +118,22 @@ Here we are in the year 2020 and Microsoft adopted a format for configuration fi
 dotnet run
 ```
 
-Login as admin/admin. You will be redirected to a reset password page. If you are just playing around and want to create more users, set "DebugAutoConfirmRegistration" to 1 in budoco_config_active.txt.
+Login as admin/admin. You will be redirected to a reset password page. If you are just playing around and want to create more users, set "DebugAutoConfirmRegistration" to 1 in budoco_config_active.txt to SKIP the step where a user would have to confirm registration by clicking on a link in an email.
 
 ## Using Budoco
 
-The philosophy of both old BugTracker.NET and new Budoco is that they are easy to get started with but highly customizable. Note the different views in the Issues page. Visit the Admin/Queries page. Try creating your own SQL views.  
+The philosophy of both old BugTracker.NET and new Budoco is that they are easy to get started with but highly customizable. Note the different views in the Issues page. Visit the Admin/Queries page. Try creating your own SQL views. Also note the CustomField settings in budoco_settings_active.txt.
 
 Note the little variable $ME in some of the queries, which you can use like this to limit rows to just that user's issues:
 ```
 where i_created_by_user = $ME
 ```
 
+A key feature of Budoco is that it lets you send out emails related to the issue that get tracked with the issue. When somebody responds to the email, that response is tracked with the issue too.
+
 However there isn't any per-issue permission system yet. Although your query limits what the user can see in the list, any user can see any issue by just typing in the issue number into the "Go To" box at the top. The only permission system so far is that you can designate a user as report-only or view-only.
 
-## Corey's Roadmap/TODO for winter 2020/2021:
+## Corey's TODO for winter 2020/2021:
 
 * Finish org admin. Make org meaningful. enable receiving new issues per org, or globally.
 org queries. default org query. So, hierarchy would be:
@@ -161,24 +163,4 @@ uses an inactive option
 * file upload progress?
 https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
 
-
-### Features that I'll only get to if there are users out there willing to donate some money for them.
-
 * another post type, for change history
-
-* Email/Slack notifications about changes 
-
-* if I create issue-user table, then I can do:
--- notifications with watch/mute
--- seen, unseen
--- voting
-
-* Reminders that an issue is stale - has been in same status n days
-
-* More permissions/restrictions/workflow logic. It's fun to write code that allows the user to do something. It's less fun to write code to STOP the user from doing something. With the old BugTracker.NET, this kind of code became the hardest for me to work with and to be sure it was right.
- 
-* Custom fields. Do you **really** need them? 
-  
-* Integration with version control. If you want that, just use Github, etc.
-
-* support physically deleting stuff

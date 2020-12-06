@@ -11,6 +11,48 @@
 <div class="just_left">
     <a href="Queries">Back to Queries</a>
 </div>
+
+<div class="fake_link" id="show_hide_link" onclick="show_hide_help()">Show Help</div>
+<div id="help" style="display:none"><pre class="info_text centered_and_left_just">
+            
+            $ME:
+
+            You can use the pseudo-variable "$ME" to represent the logged on user. For 
+            example, query issues created by the logged on user:
+            select ... from issues where i_created_by_user = $ME
+
+            Budoco will replace the $ME with the us_id of the logged on user.
+            
+            ORGANIZATIONS:
+            
+            Budoco injects a where clause into queries when the logged on user belongs to an
+            organization and so is restricted to only issues associated with that organization.
+            The injection logic works like this:
+            
+            First look for "hints" $AND_ORG or $WHERE_ORG.
+            You will probably want to use these hints if your queries are complex, for example,
+            if they use subquiries. Here are examples of using the hints:
+            select ... where .... $AND_ORG ... order by...
+            or
+            select ... $WHERE_ORG... order by...
+            
+            If you don't put in the hints, then Budoco will usually make a good guess where to
+            put the org clause. It will look for the FIRST occurence of "where" 
+            and the FIRST occurence of "order" and use these rules:
+            
+            if yes where and yes order, then inject before order WITH AND
+                select ... where foo AND (org = N) order by bar
+            
+            if yes where and no  order, then inject at the end WITH AND
+                select ... where foo AND (org = N) 
+            
+            if no  where and yes order, then inject before order WITH WHERE instead of AND
+                select ... WHERE (org = N) order by bar
+            
+            if no  where and no  order, then inject at the end WITH WHERE instead of AND
+                select ... WHERE (org = N)
+</pre></div>
+
 <partial name="_FlashPartial" />
 
 <div class="form_div">
@@ -111,5 +153,19 @@
             }
         }) // end submit post
     } // end func
+
+    function show_hide_help() {
+        text = $("#show_hide_link").text();
+        console.log(text)
+        if (text == "Show Help") {
+            $("#show_hide_link").text("Hide Help")
+            $("#help").show()
+        }
+        else {
+            $("#show_hide_link").text("Show Help")
+            $("#help").hide()
+        }
+    }
+   
 </script>
 }

@@ -1,6 +1,6 @@
 ﻿@page
 @model UserModel
-@using Microsoft.AspNetCore.Http
+
 @{
     ViewData["Title"] = "User";
 }
@@ -31,13 +31,40 @@
         <td><label>Admin</label>
         <td><input asp-for="is_admin" value="true" />
     </tr>
+
+
+    <tr>
+        <td colspan="2">
+            <div  class="user_page_info_text">
+            Inactive users can't log in.
+            </div>
+        </td>
+    </tr>
     <tr>
         <td><label>Active</label>
         <td><input asp-for="is_active" value="true" />
     </tr>
+    
+    <tr>
+        <td colspan="2">
+            <div  class="user_page_info_text">
+            Report Only means that a user can post comments to the issue but can't change the issue description, details, assignment, etc, or send emails.
+            </div>
+        </td>
+    </tr>
     <tr>
         <td><label>Report Only</label>
         <td><input asp-for="is_report_only" value="true" />
+    </tr>
+        
+    <tr>
+        <td colspan="2">
+            <div  class="user_page_info_text">
+            UNDER CONSTRUCTION: DO NOT TRUST THIS YET.<br>
+            When you assign a user to an organization, then that user can only view and update issues associated with that organization. 
+            Budoco automatically modifies your Issue Queries adding a SQL "WHERE" clause that limits the view to issues belonging to the same organization.
+            </div>
+        </td>
     </tr>
     <tr>
         <td><label>Organization</label>
@@ -45,6 +72,8 @@
             <option value=0>None</option>
         </select>
     </tr>    
+    
+    
     <tr>
         <td><button type="submit">Update</button>
     <tr>

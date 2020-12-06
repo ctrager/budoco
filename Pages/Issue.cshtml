@@ -1,6 +1,6 @@
 @page
 @model IssueModel
-@using Microsoft.AspNetCore.Http
+
 @{
     ViewData["Title"] = "Issue";
 }
@@ -191,17 +191,27 @@
     {
         <div id="posts" class="posts_outer"></div>
 
+        int us_user_is_report_only = (int) HttpContext.Session.GetInt32("us_is_report_only");
+           
         <div class="form_div">
             <form class="post_form" id="post_form" method="post" enctype="multipart/form-data">
                 <table class="form_table">
-                    
+
+                    @{
+                    if (us_user_is_report_only == 1)
+                    {
+                        <input type="hidden" id="comment" name="post_type" value="comment">
+                    } 
+                    else
+                    {
                     <tr><td>
                         <input onchange="comment_or_email(this)" type="radio" id="comment" name="post_type" value="comment" checked>
                         <label for="comment">Comment</label>
                         <input onchange="comment_or_email(this)" type="radio" id="email" name="post_type" value="email">
                         <label for="email">Email</label><br>
                     </td></tr>
-
+                    }
+                    }
                     
                     <tr id="email_fields" style="display:none;"><td>
                         <button type="button" onclick="open_post_email_to_select()" id="post_email_to_label" placeholder="user@example.com">To:</button>
@@ -260,6 +270,7 @@
                 </table>
             </form>
         </div><!--form_div-->
+        
      }
 }
 
