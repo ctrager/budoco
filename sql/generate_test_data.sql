@@ -21,7 +21,7 @@ DO $$
 DECLARE
    my_int int := 0;
    my_s varchar(30);
-   number_of_issues int := 100; /* how many issues to generate */
+   number_of_issues int := 2000; /* how many issues to generate */
 BEGIN
 
 /* create issues */
@@ -34,7 +34,7 @@ loop
    i_created_by_user, 
    i_assigned_to_user,
    i_organization,
-   i_category, i_project, i_status, i_priority)
+   i_custom_1, i_custom_2, i_custom_3, i_custom_4)
    values (
    
    /* a random string for the description */
@@ -46,12 +46,12 @@ loop
    /* assigned to, random users from 0 to 4 */
    floor(random() * 5 )::int,
    
-   /* random numbers from 0 to 3 for the category, project, etc */
-   floor(random() * 4)::int,
-   floor(random() * 4 )::int,
-   floor(random() * 4 )::int,
-   floor(random() * 4 )::int,
-   floor(random() * 4 )::int
+   /* random numbers from 0 to 3 for the atributre, etc */
+   floor(random() * 4)::int, -- org
+   floor(random() * 4 )::int, -- custom 1
+   floor(random() * 4 )::int, -- 2
+   floor(random() * 4 )::int, -- 3
+   floor(random() * 4 )::int  -- 4
    );
 
    if my_int = number_of_issues then

@@ -88,6 +88,18 @@ namespace budoco
         public const string CustomFieldLabelSingular3 = "CustomFieldLabelSingular3";
         public const string CustomFieldLabelPlural3 = "CustomFieldLabelPlural3";
 
+        public const string CustomFieldEnabled4 = "CustomFieldEnabled4";
+        public const string CustomFieldLabelSingular4 = "CustomFieldLabelSingular4";
+        public const string CustomFieldLabelPlural4 = "CustomFieldLabelPlural4";
+
+        public const string CustomFieldEnabled5 = "CustomFieldEnabled5";
+        public const string CustomFieldLabelSingular5 = "CustomFieldLabelSingular5";
+        public const string CustomFieldLabelPlural5 = "CustomFieldLabelPlural5";
+
+        public const string CustomFieldEnabled6 = "CustomFieldEnabled6";
+        public const string CustomFieldLabelSingular6 = "CustomFieldLabelSingular6";
+        public const string CustomFieldLabelPlural6 = "CustomFieldLabelPlural6";
+
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 
         // This reads "budoco_config.txt" and loads it into a key/value pair

@@ -278,24 +278,9 @@ form {
 }
 
 /* prove I can hide things on the issue form */
+
 /*
 .issue_organization {
-    display: none;
-}
-
-.issue_project {
-    display: none;
-}
-
-.issue_category {
-    display: none;
-}
-
-.issue_priority {
-    display: none;
-}
-
-.issue_status {
     display: none;
 }
 

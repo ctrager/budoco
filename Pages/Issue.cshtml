@@ -75,14 +75,7 @@
             
             <td><!--left-->
                 <table class="form-table"><!--left-->
-                
-                <tr class="issue_category">
-                    <td><label class="issue_select_label">Category</label>
-                    <td><select class="issue_select" asp-for="category_id" asp-items="@Model.category_list" disabled="@Model.null_or_disabled">
-                        <option value="0">[None]</option>
-                    </select> 
-                </tr>
-
+            
                 <tr class="issue_organization">
                     <td><label class="issue_select_label">Organization</label>
                     <td><select  class="issue_select" asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.null_or_disabled">
@@ -90,53 +83,71 @@
                     </select>
                 </tr>
         
-                <tr class="issue_project">
-                    <td><label class="issue_select_label">Project</label>
-                    <td><select  class="issue_select" asp-for="project_id" asp-items="@Model.project_list" disabled="@Model.null_or_disabled">
-                        <option value="0">[None]</option>
-                     </select>
-                </tr>
-
-                <tr class="issue_priority">
-                    <td><label class="issue_select_label">Priority</label>
-                    <td><select  class="issue_select" asp-for="priority_id" asp-items="@Model.priority_list" disabled="@Model.null_or_disabled">
-                        <option value="0">[None]</option>
-                     </select>
-                </tr>
-        
-        if (bd_config.get(bd_config.CustomFieldEnabled1) == 1) 
-    {
+                @{    
+                if (bd_config.get(bd_config.CustomFieldEnabled1) == 1) 
+                {
                 <tr class="issue_custom_1">
                     <td><label class="issue_select_label">@Model.custom_1_label</label>
                     <td><select  class="issue_select" asp-for="custom_1_id" asp-items="@Model.custom_1_list" disabled="@Model.null_or_disabled">
                         <option value="0">[None]</option>
                      </select>
                 </tr>
-    }
-    if (bd_config.get(bd_config.CustomFieldEnabled2) == 1) 
-    {
-               <tr class="issue_custom_2">
+                }
+    
+                if (bd_config.get(bd_config.CustomFieldEnabled2) == 1) 
+                {
+                <tr class="issue_custom_2">
                     <td><label class="issue_select_label">@Model.custom_2_label</label>
                     <td><select  class="issue_select" asp-for="custom_2_id" asp-items="@Model.custom_2_list" disabled="@Model.null_or_disabled">
                         <option value="0">[None]</option>
                      </select>
                 </tr>
-    }
+                }
+                
+                if (bd_config.get(bd_config.CustomFieldEnabled3) == 1) 
+                {
+                <tr class="issue_custom_3">
+                    <td><label class="issue_select_label">@Model.custom_3_label</label>
+                    <td><select  class="issue_select" asp-for="custom_3_id" asp-items="@Model.custom_3_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                     </select>
+                </tr>
+                }
+                if (bd_config.get(bd_config.CustomFieldEnabled4) == 1) 
+                {
+                <tr class="issue_custom_4">
+                    <td><label class="issue_select_label">@Model.custom_4_label</label>
+                    <td><select  class="issue_select" asp-for="custom_4_id" asp-items="@Model.custom_4_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                     </select>
+                </tr>
+                }
+                if (bd_config.get(bd_config.CustomFieldEnabled5) == 1) 
+                {
+                <tr class="issue_custom_5">
+                    <td><label class="issue_select_label">@Model.custom_5_label</label>
+                    <td><select  class="issue_select" asp-for="custom_5_id" asp-items="@Model.custom_5_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                     </select>
+                </tr>
+                }
+                if (bd_config.get(bd_config.CustomFieldEnabled6) == 1) 
+                {
+                <tr class="issue_custom_6">
+                    <td><label class="issue_select_label">@Model.custom_6_label</label>
+                    <td><select  class="issue_select" asp-for="custom_6_id" asp-items="@Model.custom_6_list" disabled="@Model.null_or_disabled">
+                        <option value="0">[None]</option>
+                     </select>
+                </tr>
+                }
+                }
                 </table> <!--left-->
             </td><!--left-->
             
             
             <td><!--right-->
-
-                <table class="form_table"><!--right-->
-                <tr class="issue_status">
-                    <td><label class="issue_select_label">Status</label>
-                    <td><select  class="issue_select" asp-for="status_id" asp-items="@Model.status_list" disabled="@Model.null_or_disabled">
-                        <option value="0">[None]</option>
-                    </select>
-                  
-                </tr>
-
+                <table>
+            
                 <tr class="issue_assigned_to">
                     <td><label class="issue_select_label">Assigned To</label>
                     <td><select  class="issue_select" asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_user_list" disabled="@Model.null_or_disabled">

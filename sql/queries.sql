@@ -12,15 +12,15 @@ insert into queries (qu_name, qu_is_default, qu_description, qu_sql) values (
 true, 
 
 'All the issue table columns, all the joins. '
-|| chr(10) || ' If this causses the Issue page to be too crowded, edit the SQL to delete to delete the columns '
+|| chr(10) || ' If this causes the Issue page to be too crowded, edit the SQL to delete to delete the columns '
 || chr(10) || ' (and maybe the joins) you don''t want. Notice that this is the default query. You control that. ',
 
-'select i_id as "ID", i_description as "DESC", st_name as "Status", asg.us_username as "Assigned To",' 
+'select i_id as "ID", i_description as "DESC", asg.us_username as "Assigned To",' 
 || chr(10) || ' cr8.us_username as "Created by",'
-|| chr(10) || ' pr_name as "Priority",'
-|| chr(10) || ' pj_name as "Organization ",'
-|| chr(10) || ' pj_name as "Project",'
-|| chr(10) || ' ca_name as "Category",'
+|| chr(10) || ' og_name as "Organization ",'
+|| chr(10) || ' c1_name as "Status ",'
+|| chr(10) || ' c2_name as "Priority ",'
+|| chr(10) || ' c4_name as "Category ",'
 || chr(10) || ' lu.us_username as "Last Updated By",'
 || chr(10) || ' i_last_updated_date as "Last Update",'
 || chr(10) || ' lp.us_username as "Last Post By",'
@@ -30,12 +30,14 @@ true,
 || chr(10) || ' left outer join users asg on asg.us_id = i_assigned_to_user'
 || chr(10) || ' left outer join users lu on lu.us_id = i_last_updated_user'
 || chr(10) || ' left outer join users lp on lp.us_id = i_last_post_user'
-|| chr(10) || ' left outer join projects on pj_id = i_project'
-|| chr(10) || ' left outer join categories on ca_id = i_category'
-|| chr(10) || ' left outer join priorities on pr_id = i_priority'
-|| chr(10) || ' left outer join statuses on st_id = i_status'
+|| chr(10) || ' left outer join organizations on og_id = i_organization'
+|| chr(10) || ' left outer join custom_1 on c1_id = i_custom_1'
+|| chr(10) || ' left outer join custom_2 on c2_id = i_custom_2'
+|| chr(10) || ' left outer join custom_3 on c3_id = i_custom_3'
+|| chr(10) || ' left outer join custom_4 on c4_id = i_custom_4'
+|| chr(10) || ' left outer join custom_5 on c5_id = i_custom_5'
+|| chr(10) || ' left outer join custom_6 on c6_id = i_custom_6'
 || chr(10) || ' order by i_id desc');
-
 
 
 /* open */
@@ -48,12 +50,9 @@ insert into queries (qu_name, qu_description, qu_sql) values (
 || chr(10) || ' the status "new" with an id of 1.  There is also a status "done" with an id of 3. This query '
 || chr(10) || ' omits the 3''s. Make up whatever statuses you want and name them whatever you want.',
 
-'select i_id as "ID", i_description as "DESC", st_name as "Status", asg.us_username as "Assigned To",' 
+'select i_id as "ID", i_description as "DESC", c1_name as "Status", asg.us_username as "Assigned To",' 
 || chr(10) || ' cr8.us_username as "Created by",'
-|| chr(10) || ' pr_name as "Priority",'
-|| chr(10) || ' pj_name as "Organization ",'
-|| chr(10) || ' pj_name as "Project",'
-|| chr(10) || ' ca_name as "Category",'
+|| chr(10) || ' og_name as "Organization ",'
 || chr(10) || ' lu.us_username as "Last Updated By",'
 || chr(10) || ' i_last_updated_date as "Last Update",'
 || chr(10) || ' lp.us_username as "Last Post By",'
@@ -63,11 +62,9 @@ insert into queries (qu_name, qu_description, qu_sql) values (
 || chr(10) || ' left outer join users asg on asg.us_id = i_assigned_to_user'
 || chr(10) || ' left outer join users lu on lu.us_id = i_last_updated_user'
 || chr(10) || ' left outer join users lp on lp.us_id = i_last_post_user'
-|| chr(10) || ' left outer join projects on pj_id = i_project'
-|| chr(10) || ' left outer join categories on ca_id = i_category'
-|| chr(10) || ' left outer join priorities on pr_id = i_priority'
-|| chr(10) || ' left outer join statuses on st_id = i_status'
-|| chr(10) || ' where i_status != 3'
+|| chr(10) || ' left outer join organizations on og_id = i_organization'
+|| chr(10) || ' left outer join custom_1 on c1_id = i_custom_1'
+|| chr(10) || ' where i_custom_1 != 3'
 || chr(10) || ' order by i_id desc');
 
 
@@ -78,16 +75,16 @@ insert into queries (qu_name, qu_description, qu_sql) values (
 'Notice the "$ME" in the query. The app replaces that with the id of the logged in user.'
 || chr(10) || ' Here we are using it to show only the issues assigned to the logged in user.',
 
-'select i_id as "ID", i_description as "DESC", st_name as "Status", ' 
+'select i_id as "ID", i_description as "DESC", c1_name as "Status", ' 
 || chr(10) || ' cr8.us_username as "Created by",'
-|| chr(10) || ' pr_name as "Priority",'
-|| chr(10) || ' ca_name as "Category"'
+|| chr(10) || ' c2_name as "Priority",'
+|| chr(10) || ' c4_name as "Category"'
 || chr(10) || ' from issues'
 || chr(10) || ' left outer join users cr8 on cr8.us_id = i_created_by_user'
-|| chr(10) || ' left outer join categories on ca_id = i_category'
-|| chr(10) || ' left outer join priorities on pr_id = i_priority'
-|| chr(10) || ' left outer join statuses on st_id = i_status'
-|| chr(10) || ' where i_assigned_to_user = $ME and i_status != 3'
+|| chr(10) || ' left outer join custom_1 on c1_id = i_custom_1'
+|| chr(10) || ' left outer join custom_2 on c2_id = i_custom_2'
+|| chr(10) || ' left outer join custom_4 on c4_id = i_custom_4'
+|| chr(10) || ' where i_assigned_to_user = $ME and i_custom_1 != 3'
 || chr(10) || ' order by i_id desc');
 
 
@@ -100,8 +97,8 @@ insert into queries (qu_name, qu_description, qu_sql) values (
 'Notice the "$ME" in the query. The app replaces that with the id of the logged in user.'
 || chr(10) || ' Here we are using it to show only the issues created by the logged in user.',
 
-'select i_id as "ID", i_description as "DESC", st_name as "Status", asg.us_username as "Assigned To",' 
-|| chr(10) || ' pr_name as "Priority",'
+'select i_id as "ID", i_description as "DESC", c1_name as "Status", asg.us_username as "Assigned To",' 
+|| chr(10) || ' c2_name as "Priority",'
 || chr(10) || ' lu.us_username as "Last Updated By",'
 || chr(10) || ' i_last_updated_date as "Last Update",'
 || chr(10) || ' lp.us_username as "Last Post By",'
@@ -110,43 +107,42 @@ insert into queries (qu_name, qu_description, qu_sql) values (
 || chr(10) || ' left outer join users asg on asg.us_id = i_assigned_to_user'
 || chr(10) || ' left outer join users lu on lu.us_id = i_last_updated_user'
 || chr(10) || ' left outer join users lp on lp.us_id = i_last_post_user'
-|| chr(10) || ' left outer join priorities on pr_id = i_priority'
-|| chr(10) || ' left outer join statuses on st_id = i_status'
-|| chr(10) || ' where i_created_by_user = $ME and i_status != 3'
+|| chr(10) || ' left outer join custom_1 on c1_id = i_custom_1'
+|| chr(10) || ' left outer join custom_2 on c2_id = i_custom_2'
+|| chr(10) || ' where i_created_by_user = $ME and i_custom_1 != 3'
 || chr(10) || ' order by i_id desc');
 
 
 /* my org */
+
 insert into queries (qu_name, qu_description, qu_sql) values (
 'My Organization''s issues',
 
 'Notice the "$ME" in the query. The app replaces that with the id of the logged in user.'
 || chr(10) || ' Here we are using it to show only the issues associated with the logged in user''s org.',
 
-'select i_id as "ID", i_description as "DESC", st_name as "Status", asg.us_username as "Assigned To",' 
-|| chr(10) || ' pr_name as "Priority",'
-|| chr(10) || ' pj_name as "Project",'
-|| chr(10) || ' ca_name as "Category"'
+'select i_id as "ID", i_description as "DESC", c1_name as "Status", asg.us_username as "Assigned To",' 
+|| chr(10) || ' c2_name as "Priority",'
+|| chr(10) || ' c4_name as "Category"'
 || chr(10) || ' from issues'
 || chr(10) || ' inner join organizations on og_id = i_organization'
 || chr(10) || ' inner join users me on me.us_id = $ME'
 || chr(10) || ' left outer join users asg on asg.us_id = i_assigned_to_user'
-|| chr(10) || ' left outer join priorities on pr_id = i_priority'
-|| chr(10) || ' left outer join statuses on st_id = i_status'
-|| chr(10) || ' left outer join projects on pj_id = i_project'
-|| chr(10) || ' left outer join categories on ca_id = i_category'
+|| chr(10) || ' left outer join custom_1 on c1_id = i_custom_1'
+|| chr(10) || ' left outer join custom_2 on c2_id = i_custom_2'
+|| chr(10) || ' left outer join custom_4 on c4_id = i_custom_4'
 || chr(10) || ' where i_organization = me.us_organization'
 || chr(10) || ' order by i_id desc');
 
 
-
 /* latest activity */
+
 insert into queries (qu_name, qu_description, qu_sql) values (
 'Most recently active issues',
 
 'Compare which is the most recent date, created, updated, or post',
 
-'select i_id as "ID", i_description as "DESC", st_name as "Status", asg.us_username as "Assigned To",' 
+'select i_id as "ID", i_description as "DESC", c1_name as "Status", asg.us_username as "Assigned To",' 
 || chr(10) || ' case'
 || chr(10) || ' when i_last_post_date    > i_created_date and i_last_post_date    > coalesce(i_last_updated_date, ''1999-01-01'') then i_last_post_date' 
 || chr(10) || ' when i_last_updated_date > i_created_date and i_last_updated_date > coalesce(i_last_post_date,    ''1999-01-01'') then i_last_updated_date' 
@@ -165,7 +161,7 @@ insert into queries (qu_name, qu_description, qu_sql) values (
 || chr(10) || ' from issues'
 || chr(10) || ' inner join users created on created.us_id = i_created_by_user'
 || chr(10) || ' left outer join users asg on asg.us_id = i_assigned_to_user'
-|| chr(10) || ' left outer join statuses on st_id = i_status'
+|| chr(10) || ' left outer join custom_1 on c1_id = i_custom_1'
 || chr(10) || ' left outer join users updated on updated.us_id = i_last_updated_user'
 || chr(10) || ' left outer join users posted on posted.us_id = i_last_post_user'
 || chr(10) || ' order by "Latest Activity Date" desc');

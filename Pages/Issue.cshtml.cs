@@ -36,12 +36,6 @@ namespace budoco.Pages
         [BindProperty]
         public string details { get; set; }
 
-        // dropdown 
-        [BindProperty]
-        public IEnumerable<SelectListItem> category_list { get; set; }
-        [BindProperty]
-        public int category_id { get; set; }
-
         // dropdown
         [BindProperty]
         public IEnumerable<SelectListItem> assigned_to_user_list { get; set; }
@@ -50,27 +44,9 @@ namespace budoco.Pages
 
         // dropdown
         [BindProperty]
-        public IEnumerable<SelectListItem> project_list { get; set; }
-        [BindProperty]
-        public int project_id { get; set; }
-
-        // dropdown
-        [BindProperty]
-        public IEnumerable<SelectListItem> priority_list { get; set; }
-        [BindProperty]
-        public int priority_id { get; set; }
-
-        // dropdown
-        [BindProperty]
         public IEnumerable<SelectListItem> organization_list { get; set; }
         [BindProperty]
         public int organization_id { get; set; }
-
-        // dropdown
-        [BindProperty]
-        public IEnumerable<SelectListItem> status_list { get; set; }
-        [BindProperty]
-        public int status_id { get; set; }
 
         [BindProperty]
         public IEnumerable<SelectListItem> custom_1_list { get; set; }
@@ -81,6 +57,26 @@ namespace budoco.Pages
         public IEnumerable<SelectListItem> custom_2_list { get; set; }
         [BindProperty]
         public int custom_2_id { get; set; }
+
+        [BindProperty]
+        public IEnumerable<SelectListItem> custom_3_list { get; set; }
+        [BindProperty]
+        public int custom_3_id { get; set; }
+
+        [BindProperty]
+        public IEnumerable<SelectListItem> custom_4_list { get; set; }
+        [BindProperty]
+        public int custom_4_id { get; set; }
+
+        [BindProperty]
+        public IEnumerable<SelectListItem> custom_5_list { get; set; }
+        [BindProperty]
+        public int custom_5_id { get; set; }
+
+        [BindProperty]
+        public IEnumerable<SelectListItem> custom_6_list { get; set; }
+        [BindProperty]
+        public int custom_6_id { get; set; }
 
         [BindProperty]
         public IFormFile uploaded_file1 { get; set; }
@@ -100,6 +96,10 @@ namespace budoco.Pages
 
         public string custom_1_label = bd_config.get(bd_config.CustomFieldLabelSingular1);
         public string custom_2_label = bd_config.get(bd_config.CustomFieldLabelSingular2);
+        public string custom_3_label = bd_config.get(bd_config.CustomFieldLabelSingular3);
+        public string custom_4_label = bd_config.get(bd_config.CustomFieldLabelSingular4);
+        public string custom_5_label = bd_config.get(bd_config.CustomFieldLabelSingular5);
+        public string custom_6_label = bd_config.get(bd_config.CustomFieldLabelSingular6);
 
         public string dropdown_partial_prefix;
         public string dropdown_partial_label;
@@ -145,13 +145,13 @@ namespace budoco.Pages
                 coalesce(assigned_to.us_username, '') as ""assigned_to_username"",
                 coalesce(assigned_to.us_is_active, true) as ""assigned_to_is_active"",
                 
-                coalesce(ca_is_active, true) as ""ca_is_active"",
-                coalesce(pj_is_active, true) as ""pj_is_active"",
                 coalesce(og_is_active, true) as ""og_is_active"",
-                coalesce(pr_is_active, true) as ""pr_is_active"",
-                coalesce(st_is_active, true) as ""st_is_active"",
                 coalesce(c1_is_active, true) as ""c1_is_active"",
                 coalesce(c2_is_active, true) as ""c2_is_active"",
+                coalesce(c3_is_active, true) as ""c3_is_active"",
+                coalesce(c4_is_active, true) as ""c4_is_active"",
+                coalesce(c5_is_active, true) as ""c5_is_active"",
+                coalesce(c6_is_active, true) as ""c6_is_active"",
          
                 created_by.us_username as ""created_by_username""
   
@@ -159,13 +159,13 @@ namespace budoco.Pages
                 inner join users created_by on created_by.us_id = i_created_by_user
                 left outer join users last_updated on last_updated.us_id = i_last_updated_user
                 left outer join users assigned_to on assigned_to.us_id = i_assigned_to_user
-                left outer join categories on ca_id = i_category
-                left outer join projects on pj_id = i_project
-                left outer join organizations on og_id = i_organization
-                left outer join priorities on pr_id = i_priority
-                left outer join statuses on st_id = i_status
+                 left outer join organizations on og_id = i_organization
                 left outer join custom_1 on c1_id = i_custom_1
                 left outer join custom_2 on c2_id = i_custom_2
+                left outer join custom_3 on c3_id = i_custom_3
+                left outer join custom_4 on c4_id = i_custom_4
+                left outer join custom_5 on c5_id = i_custom_5
+                left outer join custom_6 on c6_id = i_custom_6
                 
                 where i_id = " + id.ToString();
 
@@ -184,18 +184,16 @@ namespace budoco.Pages
 
                 last_updated_username = (string)dr["last_updated_username"];
                 last_updated_date = dr["i_last_updated_date"].ToString();
-
                 description = (string)dr["i_description"];
-
                 details = (string)dr["i_details"];
-
-                category_id = (int)dr["i_category"];
+                organization_id = (int)dr["i_organization"];
                 custom_1_id = (int)dr["i_custom_1"];
                 custom_2_id = (int)dr["i_custom_2"];
-                project_id = (int)dr["i_project"];
-                organization_id = (int)dr["i_organization"];
-                priority_id = (int)dr["i_priority"];
-                status_id = (int)dr["i_status"];
+                custom_3_id = (int)dr["i_custom_3"];
+                custom_4_id = (int)dr["i_custom_4"];
+                custom_5_id = (int)dr["i_custom_5"];
+                custom_6_id = (int)dr["i_custom_6"];
+
                 assigned_to_user_id = (int)dr["i_assigned_to_user"];
 
                 if (HttpContext.Session.GetInt32("us_is_report_only") == 1)
@@ -246,31 +244,12 @@ namespace budoco.Pages
         {
             //Defaults values for dropdowns
 
-            DataRow dr = bd_db.get_datarow("select * from statuses where st_is_default is true order by st_name limit 1");
-            if (dr is not null)
-            {
-                status_id = (int)dr[0];
-            }
-            dr = bd_db.get_datarow("select * from projects where pj_is_default is true order by pj_name limit 1");
-            if (dr is not null)
-            {
-                project_id = (int)dr[0];
-            }
+            DataRow dr;
+
             dr = bd_db.get_datarow("select * from organizations where og_is_default is true order by og_name limit 1");
             if (dr is not null)
             {
                 organization_id = (int)dr[0];
-            }
-            dr = bd_db.get_datarow("select * from priorities where pr_is_default is true order by pr_name limit 1");
-            if (dr is not null)
-            {
-                priority_id = (int)dr[0];
-            }
-
-            dr = bd_db.get_datarow("select * from categories where ca_is_default is true order by ca_name limit 1");
-            if (dr is not null)
-            {
-                category_id = (int)dr[0];
             }
 
             if (bd_config.get(bd_config.CustomFieldEnabled1) == 1)
@@ -288,6 +267,40 @@ namespace budoco.Pages
                 if (dr is not null)
                 {
                     custom_2_id = (int)dr[0];
+                }
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled3) == 1)
+            {
+                dr = bd_db.get_datarow("select * from custom_3 where c3_is_default is true order by c3_name limit 1");
+                if (dr is not null)
+                {
+                    custom_3_id = (int)dr[0];
+                }
+            }
+            if (bd_config.get(bd_config.CustomFieldEnabled4) == 1)
+            {
+                dr = bd_db.get_datarow("select * from custom_4 where c4_is_default is true order by c4_name limit 1");
+                if (dr is not null)
+                {
+                    custom_4_id = (int)dr[0];
+                }
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled5) == 1)
+            {
+                dr = bd_db.get_datarow("select * from custom_5 where c5_is_default is true order by c5_name limit 1");
+                if (dr is not null)
+                {
+                    custom_5_id = (int)dr[0];
+                }
+            }
+            if (bd_config.get(bd_config.CustomFieldEnabled6) == 1)
+            {
+                dr = bd_db.get_datarow("select * from custom_6 where c6_is_default is true order by c6_name limit 1");
+                if (dr is not null)
+                {
+                    custom_6_id = (int)dr[0];
                 }
             }
         }
@@ -309,12 +322,12 @@ namespace budoco.Pages
 
                 sql = @"insert into issues 
                 (i_description, i_details, i_created_by_user, 
-                i_category, i_project, i_organization, i_priority, i_status, 
-                i_custom_1, i_custom_2,
+                i_organization,
+                i_custom_1, i_custom_2,i_custom_3,i_custom_4,i_custom_5,i_custom_6,
                 i_assigned_to_user) 
                 values(@i_description, @i_details, @i_created_by_user, 
-                @i_category, @i_project, @i_organization, @i_priority, @i_status, 
-                @i_custom_1, @i_custom_2,
+                @i_organization, 
+                @i_custom_1, @i_custom_2, @i_custom_3, @i_custom_4, @i_custom_5, @i_custom_6,
                 @i_assigned_to_user) 
                 returning i_id";
 
@@ -329,14 +342,15 @@ namespace budoco.Pages
                 i_description = @i_description, 
                 i_details = @i_details,
                 i_last_updated_user = @i_last_updated_user,
-                i_category = @i_category,
+             
                 i_custom_1 = @i_custom_1,
                 i_custom_2 = @i_custom_2,
+                i_custom_3 = @i_custom_3,
+                i_custom_4 = @i_custom_4,
+                i_custom_5 = @i_custom_5,
+                i_custom_6 = @i_custom_6,
                 
-                i_project = @i_project,
                 i_organization = @i_organization,
-                i_priority = @i_priority,
-                i_status = @i_status,
                 i_assigned_to_user = @i_assigned_to_user,
                 i_last_updated_date = CURRENT_TIMESTAMP
                 where i_id = @i_id;";
@@ -355,17 +369,15 @@ namespace budoco.Pages
             dict["@i_details"] = details;
             dict["@i_created_by_user"] = HttpContext.Session.GetInt32("us_id");
             dict["@i_last_updated_user"] = HttpContext.Session.GetInt32("us_id");
-            dict["@i_category"] = category_id;
             dict["@i_custom_1"] = custom_1_id;
             dict["@i_custom_2"] = custom_2_id;
-
-
+            dict["@i_custom_3"] = custom_3_id;
+            dict["@i_custom_4"] = custom_4_id;
+            dict["@i_custom_5"] = custom_5_id;
+            dict["@i_custom_6"] = custom_6_id;
 
             dict["@i_assigned_to_user"] = assigned_to_user_id;
-            dict["@i_project"] = project_id;
             dict["@i_organization"] = organization_id;
-            dict["@i_priority"] = priority_id;
-            dict["@i_status"] = status_id;
 
             return dict;
         }
@@ -373,19 +385,36 @@ namespace budoco.Pages
         void PrepareDropdowns()
         {
             assigned_to_user_list = bd_db.prepare_select_list("select us_id, us_username from users where us_is_active = true order by us_username");
-            category_list = bd_db.prepare_select_list("select ca_id, ca_name from categories where ca_is_active = true order by ca_name");
-            project_list = bd_db.prepare_select_list("select pj_id, pj_name from projects where pj_is_active = true order by pj_name");
             organization_list = bd_db.prepare_select_list("select og_id, og_name from organizations where og_is_active = true order by og_name");
-            priority_list = bd_db.prepare_select_list("select pr_id, pr_name from priorities where pr_is_active = true order by pr_name");
-            status_list = bd_db.prepare_select_list("select st_id, st_name from statuses where st_is_active = true order by st_name");
 
             if (bd_config.get(bd_config.CustomFieldEnabled1) == 1)
             {
                 custom_1_list = bd_db.prepare_select_list("select c1_id, c1_name from custom_1 where c1_is_active = true order by c1_name");
             }
+
             if (bd_config.get(bd_config.CustomFieldEnabled2) == 1)
             {
                 custom_2_list = bd_db.prepare_select_list("select c2_id, c2_name from custom_2 where c2_is_active = true order by c2_name");
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled3) == 1)
+            {
+                custom_3_list = bd_db.prepare_select_list("select c3_id, c3_name from custom_3 where c3_is_active = true order by c3_name");
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled4) == 1)
+            {
+                custom_4_list = bd_db.prepare_select_list("select c4_id, c4_name from custom_4 where c4_is_active = true order by c4_name");
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled5) == 1)
+            {
+                custom_5_list = bd_db.prepare_select_list("select c5_id, c5_name from custom_5 where c5_is_active = true order by c5_name");
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled6) == 1)
+            {
+                custom_6_list = bd_db.prepare_select_list("select c6_id, c6_name from custom_6 where c6_is_active = true order by c6_name");
             }
 
         }

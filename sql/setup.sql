@@ -9,15 +9,15 @@ drop table if exists issues;
 drop table if exists posts;
 drop table if exists post_attachments;
 
-drop table if exists projects;
-drop table if exists categories;
-drop table if exists priorities;
-drop table if exists statuses;
 drop table if exists organizations;
 drop table if exists queries;
 drop table if exists custom_1;
 drop table if exists custom_2;
 drop table if exists custom_3;
+drop table if exists custom_4;
+drop table if exists custom_5;
+drop table if exists custom_6;
+
 
 create table users
 (
@@ -44,45 +44,6 @@ create table sessions
 
 CREATE UNIQUE INDEX se_id_index ON sessions (se_id);
 
-create table projects
-(
-pj_id serial primary key,
-pj_name varchar(30) not null,
-pj_is_active boolean default true,
-pj_is_default boolean default false
-);
-
-CREATE UNIQUE INDEX pj_name_index ON projects (pj_name);
-
-create table categories
-(
-ca_id serial primary key,
-ca_name varchar(30) not null,
-ca_is_active boolean default true,
-ca_is_default boolean default false
-);
-
-CREATE UNIQUE INDEX ca_name_index ON categories (ca_name);
-
-create table statuses
-(
-st_id serial primary key,
-st_name varchar(30) not null,
-st_is_active boolean default true,
-st_is_default boolean default false
-);
-
-CREATE UNIQUE INDEX st_name_index ON statuses (st_name);
-
-create table priorities
-(
-pr_id serial primary key,
-pr_name varchar(30) not null,
-pr_is_active boolean default true,
-pr_is_default boolean default false
-);
-
-CREATE UNIQUE INDEX pr_name_index ON priorities (pr_name);
 
 create table organizations
 (
@@ -124,6 +85,36 @@ c3_is_default boolean default false
 
 CREATE UNIQUE INDEX c3_name_index ON custom_3 (c3_name);
 
+create table custom_4
+(
+c4_id serial primary key,
+c4_name varchar(30) not null,
+c4_is_active boolean default true,
+c4_is_default boolean default false
+);
+
+CREATE UNIQUE INDEX c4_name_index ON custom_4 (c4_name);
+
+create table custom_5
+(
+c5_id serial primary key,
+c5_name varchar(30) not null,
+c5_is_active boolean default true,
+c5_is_default boolean default false
+);
+
+CREATE UNIQUE INDEX c5_name_index ON custom_5 (c5_name);
+
+create table custom_6
+(
+c6_id serial primary key,
+c6_name varchar(30) not null,
+c6_is_active boolean default true,
+c6_is_default boolean default false
+);
+
+CREATE UNIQUE INDEX c6_name_index ON custom_6 (c6_name);
+
 create table queries
 (
 qu_id serial primary key,
@@ -143,19 +134,19 @@ i_description varchar(200) not null,
 i_details text not null default '',
 i_created_by_user int not null default 0,
 i_created_date timestamptz default CURRENT_TIMESTAMP,
-i_status int not null default 0,
-i_priority int not null default 0,
-i_category int not null default 0,
-i_project int not null default 0,
 i_organization int not null default 0,
+i_custom_1 int null default 0,
+i_custom_2 int null default 0,
+i_custom_3 int null default 0,
+i_custom_4 int null default 0,
+i_custom_5 int null default 0,
+i_custom_6 int null default 0,
 i_assigned_to_user int null default 0,
 i_last_updated_user int null default 0,
 i_last_updated_date timestamptz null,
 i_last_post_user int null default 0,
-i_last_post_date timestamptz null,
-i_custom_1 int null default 0,
-i_custom_2 int null default 0,
-i_custom_3 int null default 0
+i_last_post_date timestamptz null
+
 );
 
 create table posts 
@@ -232,37 +223,25 @@ and deactiviate this */
 insert into users (us_username, us_email_address, us_is_admin) 
 values('admin', 'admin@example.com', true);
 
-insert into projects (pj_name) values ('proj 1');
-insert into projects (pj_name) values ('proj 2');
-insert into projects (pj_name) values ('proj 3');
-
-insert into categories (ca_name) values ('bug');
-insert into categories (ca_name) values ('task');
-insert into categories (ca_name) values ('question');
-
-insert into priorities (pr_name) values ('1-high');
-insert into priorities (pr_name) values ('2-medium');
-insert into priorities (pr_name) values ('3-low');
-
-insert into statuses (st_name, st_is_default) values ('new', true);
-insert into statuses (st_name) values ('in progress');
-insert into statuses (st_name) values ('done');
-
 insert into organizations (og_name) values ('org 1');
 insert into organizations (og_name) values ('org 2');
 insert into organizations (og_name) values ('org 3');
 
-insert into custom_1 (c1_name) values ('red');
-insert into custom_1 (c1_name) values ('green');
-insert into custom_1 (c1_name) values ('blue');
+insert into custom_1 (c1_name, c1_is_default) values ('New', true);
+insert into custom_1 (c1_name) values ('In Progress');
+insert into custom_1 (c1_name) values ('Done');
 
-insert into custom_2 (c2_name) values ('English');
-insert into custom_2 (c2_name) values ('Japanese');
-insert into custom_2 (c2_name) values ('Hebrew');
+insert into custom_2 (c2_name) values ('1 High');
+insert into custom_2 (c2_name, c2_is_default) values ('2 Medium', true);
+insert into custom_2 (c2_name) values ('3 Low');
 
-insert into custom_3 (c3_name) values ('Bach');
-insert into custom_3 (c3_name) values ('Beethoven');
-insert into custom_3 (c3_name) values ('Haydn');
+insert into custom_3 (c3_name) values ('Red');
+insert into custom_3 (c3_name) values ('Blue');
+insert into custom_3 (c3_name) values ('Green');
+
+insert into custom_4 (c4_name) values ('Bug');
+insert into custom_4 (c4_name) values ('Task');
+insert into custom_4 (c4_name) values ('Question');
 
 insert into queries (qu_name, qu_sql) values (
 'Raw "select * from issues" Please run queries.sql',

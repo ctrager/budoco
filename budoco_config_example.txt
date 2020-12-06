@@ -125,3 +125,32 @@ DebugPathToEmailFile:
 # Write the folder without trailing slash
 # DebugFolderToSaveEmails: budoco_logs
 DebugFolderToSaveEmails: 
+
+# There are six issue attributes that you label here.
+# The labels and settings below are just examples. 
+# You can enable/disable them, rename them, whatever.
+# Youl would also want to adjust your Issue Queries to name
+# in sync with the names here. 
+CustomFieldEnabled1: 1
+CustomFieldLabelSingular1: Status
+CustomFieldLabelPlural1: Statuses
+
+CustomFieldEnabled2: 1
+CustomFieldLabelSingular2: Priority
+CustomFieldLabelPlural2: Priorities
+
+CustomFieldEnabled3: 0
+CustomFieldLabelSingular3: Color
+CustomFieldLabelPlural3: Colors
+
+CustomFieldEnabled4: 1
+CustomFieldLabelSingular4: Category
+CustomFieldLabelPlural4: Categories
+
+CustomFieldEnabled5: 0
+CustomFieldLabelSingular5: Five
+CustomFieldLabelPlural5: Fives
+
+CustomFieldEnabled6: 0
+CustomFieldLabelSingular6: Six
+CustomFieldLabelPlural6: Sixes
