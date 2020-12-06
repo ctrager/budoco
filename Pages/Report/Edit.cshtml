@@ -1,0 +1,109 @@
+﻿@page
+@model EditModel
+
+@{
+    ViewData["Title"] = "Report";
+}
+
+<h1>@(Model.id == 0 ? "Create" : "Update") @ViewData["Title"]</h1>
+
+<div>
+    <a asp-page="Index">Back to Reports</a>
+</div>
+
+<partial name="_FlashPartial" />
+
+<div class="form_div">
+    <form method="post">
+        <table class="form_table">
+            <tbody>
+                <tr>
+                    <td>
+                        <label>Name</label>
+                    </td>
+
+                    <td>
+                        <input asp-for="name" maxlength='80' size='80' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Chart Type</label>
+                    </td>
+
+                    <td>
+                        <div>
+                            <span>
+                                @{
+                                    var id = Guid.NewGuid();
+                                }
+
+                                <input type="radio" asp-for="chartType" value="table" id="@id">
+                                <label asp-for="@id">Table</label>
+                            </span>
+
+                            <span>
+                                @{
+                                    id = Guid.NewGuid();
+                                }
+
+                                <input type="radio" asp-for="chartType" value="pie" id="@id">
+                                <label asp-for="@id">Pie</label>
+                            </span>
+
+                            <span>
+                                @{
+                                    id = Guid.NewGuid();
+                                }
+
+                                <input type="radio" asp-for="chartType" value="bar" id="@id">
+                                <label asp-for="@id">Bar</label>
+                            </span>
+
+                            <span>
+                                @{
+                                    id = Guid.NewGuid();
+                                }
+
+                                <input type="radio" asp-for="chartType" value="line" id="@id">
+                                <label asp-for="@id">Line</label>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>SQL</label>
+                    </td>
+
+                    <td>
+                        <textarea asp-for="sqlText" rows="10" , cols="70"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">@(Model.id == 0 ? "Create" : "Update")</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        To use "Pie", "Bar", or "Line", your SQL statement should have two columns <br>where the first column is the label and the second column contains the value.
+                        <br><br>
+                        You can use the pseudo-variable $ME in your report which will be replaced by your user ID.
+                        <br>
+                        For example:
+                        <div>select .... from ....</div>
+                        <div>where i_assigned_to_user = $ME</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+@section Scripts {
+}

@@ -1,0 +1,41 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Report";
+}
+
+<h1>Confirm delete of report</h1>
+
+<div>
+    <a asp-page="Index">Back to Reports</a>
+</div>
+
+<partial name="_FlashPartial" />
+
+<div class="form_div">
+    <form method="post">
+        <input type="hidden" asp-for="id" />
+
+        <table class="form_table">
+            <tbody>
+                <tr>
+                    <td>
+                        <label>Name</label>
+                    </td>
+
+                    <td>@Model.name</td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+@section Scripts {
+}
