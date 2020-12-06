@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using Serilog;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace budoco
 {
@@ -234,7 +235,69 @@ namespace budoco
         //     return Regex.Replace(input, "<.*?>", String.Empty);
         // }
 
+        // returns the first dangerous word encountered
+        public static string find_dangerous_words_in_sql(string sql)
+        {
+
+            if (bd_config.get(bd_config.CheckForDangerousSqlKeywords) == 0)
+                return null;
+
+            // build array of keywords
+            string[] dangerous_keywords = bd_config.get(bd_config.DangerousSqlKeywords).ToLower().Split(",");
+            string s = sql.Trim().ToLower();
+
+            // convert some chars to whitespace, like ,;=:
+
+            // [^ means not, so if th
+            Regex rgx = new Regex("[^a-z0-9\"\' _]");
+            s = rgx.Replace(s, " ");
+            string[] sql_words = s.Split(" ");
+
+            // find the first dangerous word
+            foreach (string word_in_query in sql_words)
+            {
+                if (dangerous_keywords.Contains(word_in_query))
+                {
+                    return word_in_query;
+                }
+            }
+
+            return null;
+        }
 
 
-    }
+        /*
+
+        Budoco injects a where clause into queries when the logged on user belongs to an
+        organization and so is restricted to only issues associated with that organization.
+        The injection logic works like this:
+
+        First look for "hints" $AND_ORG or $WHERE_ORG.
+        You will probably want to use these hints if your queries are complex, like, if they use subquiries.
+
+        if missing, look for first occurence of "where" and first occurence of "order"
+
+        if yes where and yes order, then inject before order WITH AND
+            select ... where foo AND (org = N) order by bar
+
+        if yes where and no  order, then inject at the end WITH AND
+            select ... where foo AND (org = N) 
+
+        if no  where and yes order, then inject before order WITH WHERE instead of AND
+            select ... WHERE (org = N) order by bar
+
+        if no  where and no  order, then inject at the end WITH WHERE instead of AND
+            select ... WHERE (org = N)
+        */
+
+        public static string enhance_sql_per_user(HttpContext context, string sql)
+        {
+            string modified_sql = sql.Replace("$ME", context.Session.GetInt32("us_id").ToString());
+
+
+            return modified_sql;
+        }
+
+
+    } // end class
 }

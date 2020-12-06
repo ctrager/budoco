@@ -135,7 +135,11 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's TODO for winter 2020/2021:
 
-* Finish org admin. Make org meaningful. enable receiving new issues per org, or globally.
+* Finish org admin. Make org meaningful. 
+
+inject at issues, search, issue, run query
+
+enable receiving new issues per org, or globally.
 org queries. default org query. So, hierarchy would be:
 user default query too:
 1) last used query in session  2) user default query 3) org query, 4) default query.

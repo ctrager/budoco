@@ -16,14 +16,12 @@ namespace budoco.Pages
 {
     public class QueryModel : PageModel
     {
-
         private readonly IRazorPartialToStringRenderer _renderer;
 
         public QueryModel(IRazorPartialToStringRenderer renderer)
         {
             _renderer = renderer;
         }
-
 
         [FromQuery]
         public int id { get; set; }
@@ -148,7 +146,7 @@ namespace budoco.Pages
                     errs.Add(@"Sql must reference the table ""issues"".");
                 }
 
-                string dangerous_word = FindDangerousWordInSql(sql);
+                string dangerous_word = bd_util.find_dangerous_words_in_sql(sql);
 
                 if (dangerous_word is not null)
                 {
@@ -183,8 +181,8 @@ namespace budoco.Pages
             }
             else
             {
-                // sql is not blank
-                string dangerous_word = FindDangerousWordInSql(sql);
+                // sql is not blandb
+                string dangerous_word = bd_util.find_dangerous_words_in_sql(sql);
 
                 if (dangerous_word is not null)
                 {
@@ -195,6 +193,7 @@ namespace budoco.Pages
                     // sql has no dangerous words, so try to run
                     try
                     {
+                        sql = bd_util.enhance_sql_per_user(HttpContext, sql);
                         dt = bd_db.get_datatable(sql);
                     }
                     catch (Exception e)
@@ -217,34 +216,6 @@ namespace budoco.Pages
             return Content(html);
         }
 
-        string FindDangerousWordInSql(string sql)
-        {
-
-            if (bd_config.get(bd_config.CheckForDangerousSqlKeywords) == 0)
-                return null;
-
-            // build array of keywords
-            string[] dangerous_keywords = bd_config.get(bd_config.DangerousSqlKeywords).ToLower().Split(",");
-            string s = sql.Trim().ToLower();
-
-            // convert some chars to whitespace, like ,;=:
-
-            // [^ means not, so if th
-            Regex rgx = new Regex("[^a-z0-9\"\' _]");
-            s = rgx.Replace(s, " ");
-            string[] sql_words = s.Split(" ");
-
-            // find the first dangerous word
-            foreach (string word_in_query in sql_words)
-            {
-                if (dangerous_keywords.Contains(word_in_query))
-                {
-                    return word_in_query;
-                }
-            }
-
-            return null;
-        }
 
     }
 }

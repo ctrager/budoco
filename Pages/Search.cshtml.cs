@@ -51,6 +51,7 @@ namespace budoco.Pages
                             issues
                         where
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', i_description)
+                            /* $AND_ORG  goes here */
                        
                         union
                         /* i_details */
@@ -65,6 +66,7 @@ namespace budoco.Pages
                             issues
                         where
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', i_details)
+                            /* $AND_ORG  goes here */
 
                         union 
                         /* p_text */
@@ -82,6 +84,7 @@ namespace budoco.Pages
                             on i_id = p_issue
                         where
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', p_text)
+                            /* $AND_ORG  goes here */
                         order by
                             rank desc limit 20
                     ) hits 

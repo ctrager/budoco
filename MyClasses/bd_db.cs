@@ -3,6 +3,9 @@ using System.Data;
 using Npgsql;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
+using System.Text.RegularExpressions;
+
 
 namespace budoco
 {
