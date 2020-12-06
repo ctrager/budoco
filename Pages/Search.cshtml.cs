@@ -25,6 +25,7 @@ namespace budoco.Pages
                     i_id as ""ID"",
                     i_description as ""Description"",
                     context as ""Context"", 
+                    context_location,
                     p_id,
                     max(rank) as score 
                 from
@@ -32,6 +33,7 @@ namespace budoco.Pages
                     select
                         i_id,
                         i_description,
+                        context_location,
                         p_id,
                         ts_headline('english', search_text, websearch_to_tsquery('english', '$'), 'StartSel=SSTART, StopSel=SSTOP') as Context,
                         rank 
@@ -41,6 +43,7 @@ namespace budoco.Pages
                         select
                             i_id,
                             i_description,
+                            'Description' as context_location,
                             0 as p_id,
                             i_description as search_text,
                             ts_rank_cd(to_tsvector('english', i_description), websearch_to_tsquery('english', '$')) as rank
@@ -48,12 +51,27 @@ namespace budoco.Pages
                             issues
                         where
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', i_description)
+                       
+                        union
+                        /* i_details */
+                        select
+                            i_id,
+                            i_details,
+                            'Details' as context_location,
+                            0 as p_id,
+                            i_details as search_text,
+                            ts_rank_cd(to_tsvector('english', i_details), websearch_to_tsquery('english', '$')) as rank
+                        from
+                            issues
+                        where
+                            websearch_to_tsquery('english', '$') @@ to_tsvector('english', i_details)
 
                         union 
                         /* p_text */
                         select
                             i_id,
                             i_description,
+                            'Post' as context_location,
                             p_id,
                             p_text as search_text,
                             ts_rank_cd(to_tsvector('english', p_text), websearch_to_tsquery('english', '$')) as rank
@@ -73,6 +91,7 @@ namespace budoco.Pages
                 group by
                     i_id,
                     i_description,
+                    context_location,
                     p_id,
                     context
                 order by

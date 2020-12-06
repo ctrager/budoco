@@ -61,13 +61,13 @@
                     &nbsp;
                     @{
                         int p_id = (int)@dr["p_id"];
-                        if (p_id == 0)
-                        {
-                            <span class="info_text">(in Description)</span>
-                        }
-                        else
+                        if (p_id != 0)
                         {
                             <span class="info_text">(in post #@p_id)</span>
+                        }
+                        else 
+                        {
+                            <span class="info_text">(in @dr["context_location"])</span>
                         }
                     }
                 </td>
@@ -92,8 +92,8 @@
         $(".search_context").each(function() {
             s = $(this).html()
             console.log(s)
-            s = s.replace("SSTART","<b>")
-            s = s.replace("SSTOP","</b>")
+            s = s.replaceAll("SSTART","<b>")
+            s = s.replaceAll("SSTOP","</b>")
             $(this).html(s)
         })
     }
