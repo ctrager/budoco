@@ -57,7 +57,7 @@
                 <td><a href="/Issue?id=@dr[0]">@dr[0]</a></td>
                 <td><a href="/Issue?id=@dr[0]">@dr[1]</a></td>
                 <td>
-                    <span class="search_context">@Html.Raw(@dr[2])</span>
+                    <span class="search_context">@dr[2]</span>
                     &nbsp;
                     @{
                         int p_id = (int)@dr["p_id"];
@@ -80,5 +80,22 @@
 
 
 @section Scripts {
+    <script>
+    $(document).ready(function() {
+
+        replace_headline_delimeters()
+    });
     
+    function replace_headline_delimeters()
+    {
+        // do it here to avoid Html.Raw, xss risk
+        $(".search_context").each(function() {
+            s = $(this).html()
+            console.log(s)
+            s = s.replace("SSTART","<b>")
+            s = s.replace("SSTOP","</b>")
+            $(this).html(s)
+        })
+    }
+    </script>
 }

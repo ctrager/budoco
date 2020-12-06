@@ -33,7 +33,7 @@ namespace budoco.Pages
                         i_id,
                         i_description,
                         p_id,
-                        ts_headline('english', search_text, websearch_to_tsquery('english', '$')) as Context,
+                        ts_headline('english', search_text, websearch_to_tsquery('english', '$'), 'StartSel=SSTART, StopSel=SSTOP') as Context,
                         rank 
                     from 
                     (
