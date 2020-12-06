@@ -55,8 +55,22 @@
             DataRow dr = Model.dt.Rows[row];
             <tr>
                 <td><a href="/Issue?id=@dr[0]">@dr[0]</a></td>
-                <td><a href="/Issue?id=@dr[1]">@dr[1]</a></td>
-                <td><span class="search_context">@Html.Raw(@dr[2])</span></td>
+                <td><a href="/Issue?id=@dr[0]">@dr[1]</a></td>
+                <td>
+                    <span class="search_context">@Html.Raw(@dr[2])</span>
+                    &nbsp;
+                    @{
+                        int p_id = (int)@dr["p_id"];
+                        if (p_id == 0)
+                        {
+                            <span class="info_text">(in Description)</span>
+                        }
+                        else
+                        {
+                            <span class="info_text">(in post #@p_id)</span>
+                        }
+                    }
+                </td>
             </tr>
         }
     }
