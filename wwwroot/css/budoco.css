@@ -24,6 +24,7 @@ td {
 th {
     vertical-align: bottom;
     font-weight: normal;
+    background-color: #eeeeee;
 }
 
 a,
@@ -302,7 +303,6 @@ form {
 /* data tables */
 table.dt {
     border-collapse: collapse;
-    border: 1px color red;
 }
 
 table.dt>tbody>tr>th {
