@@ -1,0 +1,39 @@
+@page
+@model LogsModel
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+    
+<h1>Logs</h1>
+<partial name="_FlashPartial" />
+
+<table class="dt">
+    <tr>
+        <th>File</th>
+        <th>Action</th>
+    </tr>
+    @{
+        foreach (string file in Model.files)
+        {
+            <tr>
+                <td>@file</td>
+                <td>
+                    <a href="Logs?handler=File&dl=0&filename=@file">View</a>
+                    &nbsp;
+                    &nbsp;
+                    <a href="Logs?handler=File&dl=1&filename=@file">Download</a>
+                </td>
+            </tr>
+        
+        }
+
+    }
+</table>
+    
+
+@section Scripts {
+    
+}
+</div>

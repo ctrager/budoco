@@ -133,9 +133,6 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's Roadmap/TODO for winter 2020/2021:
 
-* user settings - allow user to reset own email, username, plus some other settings
-check that username/email isn't taken. 
-
 * finish admin stuff as is.
 
 * make installation nicer - be prompted to init "active" file, create db, run sql.

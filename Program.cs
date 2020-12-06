@@ -19,14 +19,14 @@ namespace budoco
             Console.WriteLine("Main"); // here on purpose
             bd_config.load_config();
             bd_config.log_config();
-
+            string log_file_location = bd_config.get(bd_config.LogFileFolder) + "/budoco_log_.txt";
             Log.Logger = new LoggerConfiguration()
 
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
                 .MinimumLevel.Override("budoco", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File((string)bd_config.get(bd_config.LogLocation),
+                .WriteTo.File(log_file_location,
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 

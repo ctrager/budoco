@@ -91,7 +91,7 @@ CustomCssFilename: custom_css_example.css
 # Number of rows on the issues page
 RowsPerPage: 30
   
-LogLocation: budoco_logs/budoco.txt
+LogFileFolder: budoco_logs
 
 #https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
 DateFormat: yyyy-MM-dd HH:mm

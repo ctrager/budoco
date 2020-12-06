@@ -61,7 +61,7 @@ namespace budoco
         public const string UseCustomCss = "UseCustomCss";
         public const string CustomCssFilename = "CustomCssFilename";
         public const string RowsPerPage = "RowsPerPage";
-        public const string LogLocation = "LogLocation";
+        public const string LogFileFolder = "LogFileFolder";
         public const string DateFormat = "DateFormat";
         public const string NewUserStartsInactive = "NewUserStartsInactive";
         public const string NewUserStartsReportOnly = "NewUserStartsReportOnly";
