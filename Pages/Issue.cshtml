@@ -191,14 +191,14 @@
     {
         <div id="posts" class="posts_outer"></div>
 
-        int us_user_is_report_only = (int) HttpContext.Session.GetInt32("us_is_report_only");
+        bool us_user_is_report_only = bd_util.is_user_report_only(HttpContext);
            
         <div class="form_div">
             <form class="post_form" id="post_form" method="post" enctype="multipart/form-data">
                 <table class="form_table">
 
                     @{
-                    if (us_user_is_report_only == 1)
+                    if (us_user_is_report_only)
                     {
                         <input type="hidden" id="comment" name="post_type" value="comment">
                     } 

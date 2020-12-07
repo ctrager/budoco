@@ -16,7 +16,11 @@
                                 <div class="info_text">
                                     Comment by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
                                 </div>
-                                <pre class="post_text">@dr["p_text"]</pre>
+                                string p_text = (string)dr["p_text"];
+                                if (!string.IsNullOrWhiteSpace(p_text))
+                                {
+                                    <pre class="post_text">@p_text</pre>
+                                }
                             }
 
                             else if (post_type == "email")

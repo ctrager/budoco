@@ -122,7 +122,7 @@ namespace budoco
             if (!is_active)
             {
                 bd_util.set_flash_err(context, "Your user account is set to inactive.");
-                context.Response.Redirect("/Login");
+                context.Response.Redirect("/Stop");
                 return false;
             }
 
@@ -131,7 +131,7 @@ namespace budoco
                 if (!is_admin)
                 {
                     bd_util.set_flash_err(context, "Attempt to view admin only page.");
-                    context.Response.Redirect("/Index");
+                    context.Response.Redirect("/Stop");
                     return false;
                 }
             }
@@ -142,7 +142,34 @@ namespace budoco
 
         public static string get_username_from_session(HttpContext context)
         {
-            return context.Session.GetString("us_username");
+            string username = context.Session.GetString("us_username");
+
+            if (username is null)
+            {
+                set_flash_err(context, "Your session has expired (1)");
+                //context.Response.Redirect("/Login");
+                return null;
+            }
+            else
+            {
+                return username;
+            }
+        }
+
+        public static int get_user_organization_from_session(HttpContext context)
+        {
+            object org = context.Session.GetInt32("us_organization");
+
+            if (org is null)
+            {
+                set_flash_err(context, "Your session has expired (2)");
+                //context.Response.Redirect("/Login");
+                return 0;
+            }
+            else
+            {
+                return (int)org;
+            }
         }
 
         public static int get_user_id_from_session(HttpContext context)
@@ -151,6 +178,8 @@ namespace budoco
 
             if (id is null)
             {
+                set_flash_err(context, "Your session has expired (3)");
+                //context.Response.Redirect("/Login");
                 return 0;
             }
             else
@@ -163,9 +192,26 @@ namespace budoco
         {
             object us_is_admin = context.Session.GetInt32("us_is_admin");
             if (us_is_admin is null)
+            {
+                set_flash_err(context, "Your session has expired (4)");
+                //context.Response.Redirect("/Login");
                 return false;
+            }
 
             return (int)us_is_admin == 0 ? false : true;
+        }
+
+        public static bool is_user_report_only(HttpContext context)
+        {
+            object us_is_report_only = context.Session.GetInt32("us_is_report_only");
+            if (us_is_report_only is null)
+            {
+                set_flash_err(context, "Your session has expired (5)");
+                //context.Response.Redirect("/Login");
+                return false;
+            }
+
+            return (int)us_is_report_only == 0 ? false : true;
         }
 
         // https://stackoverflow.com/questions/4181198/how-to-hash-a-password/10402129#10402129
@@ -271,8 +317,8 @@ namespace budoco
 
         public static string enhance_sql_per_user(HttpContext context, string sql)
         {
-            int us_id = (int)context.Session.GetInt32("us_id");
-            int us_organization = (int)context.Session.GetInt32("us_organization");
+            int us_id = bd_util.get_user_id_from_session(context);
+            int us_organization = bd_util.get_user_organization_from_session(context); ;
 
             string modified_sql = sql.Replace("$ME", us_id.ToString());
 

@@ -179,6 +179,10 @@ namespace budoco.Pages
                     return;
                 }
 
+                organization_id = (int)dr["i_organization"];
+
+                CheckUserIssuePermission(organization_id);
+
                 created_by_username = (string)dr["created_by_username"];
                 created_date = (string)dr["i_created_date"].ToString();
 
@@ -186,7 +190,7 @@ namespace budoco.Pages
                 last_updated_date = dr["i_last_updated_date"].ToString();
                 description = (string)dr["i_description"];
                 details = (string)dr["i_details"];
-                organization_id = (int)dr["i_organization"];
+
                 custom_1_id = (int)dr["i_custom_1"];
                 custom_2_id = (int)dr["i_custom_2"];
                 custom_3_id = (int)dr["i_custom_3"];
@@ -196,7 +200,7 @@ namespace budoco.Pages
 
                 assigned_to_user_id = (int)dr["i_assigned_to_user"];
 
-                if (HttpContext.Session.GetInt32("us_is_report_only") == 1)
+                if (bd_util.is_user_report_only(HttpContext))
                 {
                     null_or_disabled = "disabled";
                 }
@@ -364,11 +368,13 @@ namespace budoco.Pages
         {
             var dict = new Dictionary<string, dynamic>();
 
+            int us_id = bd_util.get_user_id_from_session(HttpContext);
+
             dict["@i_id"] = id;
             dict["@i_description"] = description;
             dict["@i_details"] = details;
-            dict["@i_created_by_user"] = HttpContext.Session.GetInt32("us_id");
-            dict["@i_last_updated_user"] = HttpContext.Session.GetInt32("us_id");
+            dict["@i_created_by_user"] = us_id;
+            dict["@i_last_updated_user"] = us_id;
             dict["@i_custom_1"] = custom_1_id;
             dict["@i_custom_2"] = custom_2_id;
             dict["@i_custom_3"] = custom_3_id;
@@ -479,7 +485,7 @@ namespace budoco.Pages
             dict["@p_post_type"] = post_type;
             dict["@p_email_to"] = post_email_to;
             dict["@p_text"] = post_text;
-            dict["@p_created_by_user"] = HttpContext.Session.GetInt32("us_id");
+            dict["@p_created_by_user"] = bd_util.get_user_id_from_session(HttpContext);
 
             int post_id = (int)bd_db.exec_scalar(sql, dict);
 
@@ -495,8 +501,7 @@ namespace budoco.Pages
             i_last_post_user = @i_last_post_user,
             i_last_post_date = CURRENT_TIMESTAMP
             where i_id = " + id.ToString();
-            dict["@i_last_post_user"] = HttpContext.Session.GetInt32("us_id");
-
+            dict["@i_last_post_user"] = bd_util.get_user_id_from_session(HttpContext);
             bd_db.exec(sql, dict);
 
             if (post_type == "email")
@@ -588,10 +593,16 @@ namespace budoco.Pages
         public async Task<ContentResult> OnGetPostsAsync()
         {
 
+            // check permission
+            organization_id = (int)bd_db.exec_scalar(
+                "select i_organization from issues where i_id = " + id.ToString());
+
+            CheckUserIssuePermission(organization_id);
+
+            // get posts
             var sql = @"select posts.*, us_username
                     from posts 
                     inner join users on us_id = p_created_by_user
-
                     where p_issue = " + id.ToString()
                     + " order by p_id asc";
 
@@ -618,6 +629,20 @@ namespace budoco.Pages
 
             return bd_db.get_datatable(sql);
 
+        }
+
+        void CheckUserIssuePermission(int i_organization)
+        {
+            int us_org = bd_util.get_user_organization_from_session(HttpContext);
+            if (us_org != 0)
+            {
+                if (us_org != i_organization)
+                {
+                    bd_util.set_flash_err(HttpContext,
+                        "You don't have permission to view this issue because it does not belong to your organization.");
+                    Response.Redirect("/Stop");
+                }
+            }
         }
 
     }
