@@ -14,6 +14,9 @@ namespace budoco.Pages
         public void OnGet()
         {
 
+            if (!bd_util.check_user_permissions(HttpContext))
+                return;
+
             if (string.IsNullOrWhiteSpace(search_terms))
             {
                 //bd_util.set_flash_err(HttpContext, "Please enter word(s) to search.");
@@ -51,7 +54,7 @@ namespace budoco.Pages
                             issues
                         where
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', i_description)
-                            /* $AND_ORG  goes here */
+                            /*AND_ORG*/
                        
                         union
                         /* i_details */
@@ -66,7 +69,7 @@ namespace budoco.Pages
                             issues
                         where
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', i_details)
-                            /* $AND_ORG  goes here */
+                            /*AND_ORG*/
 
                         union 
                         /* p_text */
@@ -84,7 +87,7 @@ namespace budoco.Pages
                             on i_id = p_issue
                         where
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', p_text)
-                            /* $AND_ORG  goes here */
+                            /*AND_ORG*/
                         order by
                             rank desc limit 20
                     ) hits 
@@ -105,6 +108,7 @@ namespace budoco.Pages
 
             string escaped_single_quotes = search_terms.Replace("'", "''");
             string sql = sql_template.Replace("$", escaped_single_quotes);
+            sql = bd_util.enhance_sql_per_user(HttpContext, sql);
 
             dt = bd_db.get_datatable(sql);
 

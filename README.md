@@ -135,7 +135,10 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's TODO for winter 2020/2021:
 
-* Finish org admin. Make org meaningful. 
+* Finish org:
+modify search sql
+check bug on issues page
+make org read only 
 
 inject at issues, search, issue, run query
 
