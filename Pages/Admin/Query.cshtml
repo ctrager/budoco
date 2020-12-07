@@ -17,7 +17,7 @@
             
             $ME:
 
-            You can use the pseudo-variable "$ME" to represent the logged on user. For 
+            You can use the pseudo-variable "$ME" to represent the logged in user. For 
             example, query issues created by the logged on user:
             select ... from issues where i_created_by_user = $ME
 
@@ -29,28 +29,30 @@
             organization and so is restricted to only issues associated with that organization.
             The injection logic works like this:
             
-            First look for "hints" $AND_ORG or $WHERE_ORG.
-            You will probably want to use these hints if your queries are complex, for example,
-            if they use subquiries. Here are examples of using the hints:
-            select ... where .... $AND_ORG ... order by...
+            First it looks for markers you can place in your sql statements: /*AND_ORG*/ or /*WHERE_ORG*/.
+            You will probably want to use these markers if your queries are complex, for example,
+            if they use subquiries. Here are examples of using the markers.
+            
+            select * from issues where i_assigned_to_user != 0 /*AND_ORG*/ order by i_created_date desc
             or
-            select ... $WHERE_ORG... order by...
+            select * from issues /*WHERE_ORG*/ order by i_created_date desc
             
-            If you don't put in the hints, then Budoco will usually make a good guess where to
-            put the org clause. It will look for the FIRST occurence of "where" 
-            and the FIRST occurence of "order" and use these rules:
+            If you don't put in the markers, then Budoco will usually make a correct guess where to
+            put the org clause. It will look for the FIRST occurence of "where" and the FIRST 
+            occurence of "order" and use these rules:
             
-            if yes where and yes order, then inject before order WITH AND
-                select ... where foo AND (org = N) order by bar
+            if yes where and yes order, then inject before order with an "AND":
+                select * from issues where foo AND (i_organiztion = N) order by bar
             
-            if yes where and no  order, then inject at the end WITH AND
-                select ... where foo AND (org = N) 
+            if yes where and no order, then inject at the end with an "AND"
+                select * from issues where foo AND (i_organiztion = N) 
             
-            if no  where and yes order, then inject before order WITH WHERE instead of AND
-                select ... WHERE (org = N) order by bar
+            if no where and yes order, then inject before order with "WHERE" instead of "AND"
+                select * from issues WHERE (i_organiztion = N) order by bar
             
-            if no  where and no  order, then inject at the end WITH WHERE instead of AND
-                select ... WHERE (org = N)
+            if no where and no order, then inject at the end with "WHERE" instead of "AND"
+                select * from issues WHERE (i_organiztion = N)
+
 </pre></div>
 
 <partial name="_FlashPartial" />

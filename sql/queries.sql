@@ -173,7 +173,6 @@ insert into queries (qu_name, qu_description, qu_sql) values (
 
 'Note that if an issue has multiple attachments, it will show up in multiple rows.',
 
-
 'select i_id as "ID", i_description as "Description",'
 || chr(10) || ' us_username as "Uploaded By", p_created_date as "Upload Date",'
 || chr(10) || ' pa_file_name as "File Name", pa_file_content_type as "File Type", pa_file_length as "File Size"'
@@ -182,3 +181,30 @@ insert into queries (qu_name, qu_description, qu_sql) values (
 || chr(10) || ' inner join issues on pa_issue = i_id'
 || chr(10) || ' inner join users on us_id = p_created_by_user'
 || chr(10) || ' order by pa_file_length desc');
+
+/* for testing logic that inserts org permission into queries */
+insert into queries (qu_name, qu_sql) values('Test 1: /*AND_ORG*/',
+'/*TEST1*/ select i_id, i_description, i_organization, i_custom_1 from issues where i_custom_1 != 0 /*AND_ORG*/ order by i_id desc'
+);
+
+insert into queries (qu_name, qu_sql) values('Test 2: /*WHERE_ORG*/',
+'/*TEST2*/ select i_id, i_description, i_organization, i_custom_1 from issues /*WHERE_ORG*/ order by i_id desc'
+);
+
+insert into queries (qu_name, qu_sql) values('Test 3: where and order ',
+'/*TEST3*/ select i_id, i_description, i_organization, i_custom_1 from issues where i_custom_1 != 0 order by i_id desc'
+);
+
+insert into queries (qu_name, qu_sql) values('Test 4: where and no order',
+'/*TEST4*/ select i_id, i_description, i_organization, i_custom_1 from issues where i_custom_1 != 0'
+);
+
+insert into queries (qu_name, qu_sql) values('Test 5: no where and order',
+'/*TEST5*/ select i_id, i_description, i_organization, i_custom_1 from issues order by i_id desc'
+);
+
+insert into queries (qu_name, qu_sql) values('Test 6: no where and no order',
+'/*TEST6*/ select i_id, i_description, i_organization, i_custom_1 from issues'
+);
+
+       

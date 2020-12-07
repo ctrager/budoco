@@ -266,36 +266,94 @@ namespace budoco
         }
 
 
-        /*
-
-        Budoco injects a where clause into queries when the logged on user belongs to an
-        organization and so is restricted to only issues associated with that organization.
-        The injection logic works like this:
-
-        First look for "hints" $AND_ORG or $WHERE_ORG.
-        You will probably want to use these hints if your queries are complex, like, if they use subquiries.
-
-        if missing, look for first occurence of "where" and first occurence of "order"
-
-        if yes where and yes order, then inject before order WITH AND
-            select ... where foo AND (org = N) order by bar
-
-        if yes where and no  order, then inject at the end WITH AND
-            select ... where foo AND (org = N) 
-
-        if no  where and yes order, then inject before order WITH WHERE instead of AND
-            select ... WHERE (org = N) order by bar
-
-        if no  where and no  order, then inject at the end WITH WHERE instead of AND
-            select ... WHERE (org = N)
-        */
+        public const string AND_ORG = "/*AND_ORG*/";
+        public const string WHERE_ORG = "/*WHERE_ORG*/";
 
         public static string enhance_sql_per_user(HttpContext context, string sql)
         {
-            string modified_sql = sql.Replace("$ME", context.Session.GetInt32("us_id").ToString());
+            int us_id = (int)context.Session.GetInt32("us_id");
+            int us_organization = (int)context.Session.GetInt32("us_organization");
 
+            string modified_sql = sql.Replace("$ME", us_id.ToString());
+
+            if (us_organization == 0)
+            {
+                return modified_sql;
+            }
+
+            // Add the org restriction to the sql.
+            // Look for markers where to do the replace.
+            // The "/*ORG1*/" style comments that we are injecting back into 
+            // the sql is to help with debuging 
+
+            int pos = modified_sql.IndexOf(AND_ORG);
+            if (pos > 0)
+            {
+                modified_sql = modified_sql.Replace(
+                    AND_ORG, "/*ORG1*/ AND i_organization = " + us_organization.ToString());
+                return modified_sql;
+            }
+
+            pos = modified_sql.IndexOf(WHERE_ORG);
+            if (pos > 0)
+            {
+                modified_sql = modified_sql.Replace(
+                    WHERE_ORG, "/*ORG2*/ WHERE i_organization = " + us_organization.ToString());
+                return modified_sql;
+            }
+
+            /*
+             If we don't find the markers , then try to guess.
+             Look for the FIRST occurence of "where" and the FIRST occurence of "order".
+
+             if yes where and yes order, then inject before order with an "AND":
+                 select * from issues where foo AND (i_organiztion = N) order by bar
+
+             if yes where and no order, then inject at the end with an "AND"
+                 select * from issues where foo AND (i_organiztion = N) 
+
+             if no where and yes order, then inject before order with "WHERE" instead of "AND"
+                 select * from issues WHERE (i_organiztion = N) order by bar
+
+             if no where and no order, then inject at the end with "WHERE" instead of "AND"
+                 select * from issues WHERE (i_organiztion = N)
+             */
+
+            // we are just using the lowercase sql for the IndexOf calls
+            string lowercase_sql = modified_sql.ToLower();
+            int where_pos = lowercase_sql.IndexOf("where");
+            int order_pos = lowercase_sql.IndexOf("order by");
+
+            if (where_pos > 0 && order_pos > 0)
+            {
+                modified_sql = modified_sql.Insert(order_pos,
+                " /*ORG3*/ AND (i_organization = " + us_organization.ToString() + ") ");
+                return modified_sql;
+            }
+
+            if (where_pos > 0 && order_pos <= 0)
+            {
+                modified_sql +=
+                " /*ORG4*/ AND (i_organization = " + us_organization.ToString() + ") ";
+                return modified_sql;
+            }
+
+            if (where_pos <= 0 && order_pos > 0)
+            {
+                modified_sql = modified_sql.Insert(order_pos,
+                " /*ORG5*/ WHERE (i_organization = " + us_organization.ToString() + ") ");
+                return modified_sql;
+            }
+
+            if (where_pos <= 0 && order_pos <= 0)
+            {
+                modified_sql +=
+                "/*ORG6*/ WHERE (i_organization = " + us_organization.ToString() + ") ";
+                return modified_sql;
+            }
 
             return modified_sql;
+
         }
 
 
