@@ -135,10 +135,17 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's TODO for winter 2020/2021:
 
-* Finish org:
+* Finish org - NOT DONE
 modify search sql
 check bug on issues page
-make org read only 
+make org read only on issues page
+check if it's being updated in post?
+force org to user's org on create
+if org is inactive, all its users are inactive
+how to handle registration? should new user be inactive?
+should registrations be viewable?
+can admin create user registration for org user?
+default assigned to
 
 inject at issues, search, issue, run query
 
@@ -161,9 +168,6 @@ url parser
 https://mathiasbynens.be/demo/url-regex
 https://gist.github.com/dperini/729294
 Copyright (c) 2010-2018 Diego Perini (http://www.iport.it)
-
-* Handle inactive options, add to dropdowns if issue being viewed
-uses an inactive option
 
 * make sure registration doesn't collide with user - need inactive user placeholder
 

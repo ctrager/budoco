@@ -193,8 +193,6 @@ namespace budoco
             object us_is_admin = context.Session.GetInt32("us_is_admin");
             if (us_is_admin is null)
             {
-                set_flash_err(context, "Your session has expired (4)");
-                //context.Response.Redirect("/Login");
                 return false;
             }
 

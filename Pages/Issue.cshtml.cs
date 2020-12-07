@@ -9,7 +9,7 @@ using System.Linq;
 using RazorPartialToString.Services;
 using System.Threading.Tasks;
 using System.IO;
-
+using System.Security.Policy;
 
 namespace budoco.Pages
 {
@@ -105,7 +105,7 @@ namespace budoco.Pages
         public string dropdown_partial_label;
 
         //https://stackoverflow.com/questions/56172036/razor-view-disabled-html-attribute-based-on-viewmodel-property
-        public string null_or_disabled = null;
+        public string disable_dropdowns_when_not_null = null;
         public DataTable dt_posts;
         public DataTable dt_post_email_to;
         public string created_by_username;
@@ -115,6 +115,7 @@ namespace budoco.Pages
         public int prev_issue_id_in_list;
         public int next_issue_id_in_list;
         public string post_error = "";
+        public int user_org;
 
         public void OnGet()
         {
@@ -135,8 +136,18 @@ namespace budoco.Pages
 
         void GetIssue()
         {
-            PrepareDropdowns();
+            // There are 8 use cases
+            // 1 regular user create
+            // 2 regular user get existing
+            // 3 report only user create
+            // 4 report only user get existing
+            // 5 org user create
+            // 6 org user get existing
+            // 7 org user report only create
+            // 8 org user report only existing
 
+
+            // get existing to update
             if (id != 0)
             {
                 string sql = @"select issues.*, 
@@ -159,7 +170,7 @@ namespace budoco.Pages
                 inner join users created_by on created_by.us_id = i_created_by_user
                 left outer join users last_updated on last_updated.us_id = i_last_updated_user
                 left outer join users assigned_to on assigned_to.us_id = i_assigned_to_user
-                 left outer join organizations on og_id = i_organization
+                left outer join organizations on og_id = i_organization
                 left outer join custom_1 on c1_id = i_custom_1
                 left outer join custom_2 on c2_id = i_custom_2
                 left outer join custom_3 on c3_id = i_custom_3
@@ -171,6 +182,7 @@ namespace budoco.Pages
 
                 DataRow dr = bd_db.get_datarow(sql);
 
+                // not found
                 if (dr == null)
                 {
                     bd_util.set_flash_err(HttpContext, "Issue " + id.ToString() + " not found.");
@@ -181,7 +193,11 @@ namespace budoco.Pages
 
                 organization_id = (int)dr["i_organization"];
 
-                CheckUserIssuePermission(organization_id);
+                // no permission
+                if (!GetAndCheckUserOrg(organization_id))
+                {
+                    return;
+                }
 
                 created_by_username = (string)dr["created_by_username"];
                 created_date = (string)dr["i_created_date"].ToString();
@@ -200,15 +216,17 @@ namespace budoco.Pages
 
                 assigned_to_user_id = (int)dr["i_assigned_to_user"];
 
+                // This has to be here in the sequence because it uses the values 
+                // we just fetched from the db
+                PrepareDropdowns();
+
+                // don't let reporter change anything
                 if (bd_util.is_user_report_only(HttpContext))
                 {
-                    null_or_disabled = "disabled";
+                    disable_dropdowns_when_not_null = "disabled";
                 }
 
-                // TODO:
-                // if this issue uses an option where is_active == false,
-                // we still want to show it
-
+                // for the dropdown of email addresses in the post form
                 // only user without email is "system"
                 dt_post_email_to = bd_db.get_datatable(
                     @"select p_email_to from posts where p_email_to != '' and p_issue = " + id.ToString()
@@ -218,6 +236,11 @@ namespace budoco.Pages
             }
             else
             {
+                user_org = bd_util.get_user_organization_from_session(HttpContext);
+
+                PrepareDropdowns();
+
+                // prep for create 
                 SelectDefaultDropdownOptions();
             }
 
@@ -250,63 +273,57 @@ namespace budoco.Pages
 
             DataRow dr;
 
-            dr = bd_db.get_datarow("select * from organizations where og_is_default is true order by og_name limit 1");
-            if (dr is not null)
+            if (user_org != 0)
             {
-                organization_id = (int)dr[0];
+                // We ony put one option in the select, so it's selected
             }
-
-            if (bd_config.get(bd_config.CustomFieldEnabled1) == 1)
+            else
             {
-                dr = bd_db.get_datarow("select * from custom_1 where c1_is_default is true order by c1_name limit 1");
+                dr = bd_db.get_datarow("select og_id, og_name from organizations where og_is_default is true order by og_name limit 1");
                 if (dr is not null)
                 {
-                    custom_1_id = (int)dr[0];
+                    organization_id = (int)dr[0];
                 }
             }
 
-            if (bd_config.get(bd_config.CustomFieldEnabled2) == 1)
-            {
-                dr = bd_db.get_datarow("select * from custom_2 where c2_is_default is true order by c2_name limit 1");
-                if (dr is not null)
-                {
-                    custom_2_id = (int)dr[0];
-                }
-            }
+            int? default_id;
 
-            if (bd_config.get(bd_config.CustomFieldEnabled3) == 1)
-            {
-                dr = bd_db.get_datarow("select * from custom_3 where c3_is_default is true order by c3_name limit 1");
-                if (dr is not null)
-                {
-                    custom_3_id = (int)dr[0];
-                }
-            }
-            if (bd_config.get(bd_config.CustomFieldEnabled4) == 1)
-            {
-                dr = bd_db.get_datarow("select * from custom_4 where c4_is_default is true order by c4_name limit 1");
-                if (dr is not null)
-                {
-                    custom_4_id = (int)dr[0];
-                }
-            }
+            default_id = GetDefaultForCustomDropdown("1");
+            if (default_id is not null)
+                custom_1_id = (int)default_id;
+            default_id = GetDefaultForCustomDropdown("2");
+            if (default_id is not null)
+                custom_2_id = (int)default_id;
+            default_id = GetDefaultForCustomDropdown("3");
+            if (default_id is not null)
+                custom_3_id = (int)default_id;
+            default_id = GetDefaultForCustomDropdown("4");
+            if (default_id is not null)
+                custom_4_id = (int)default_id;
+            default_id = GetDefaultForCustomDropdown("5");
+            if (default_id is not null)
+                custom_5_id = (int)default_id;
+            default_id = GetDefaultForCustomDropdown("6");
+            if (default_id is not null)
+                custom_6_id = (int)default_id;
 
-            if (bd_config.get(bd_config.CustomFieldEnabled5) == 1)
-            {
-                dr = bd_db.get_datarow("select * from custom_5 where c5_is_default is true order by c5_name limit 1");
-                if (dr is not null)
-                {
-                    custom_5_id = (int)dr[0];
-                }
-            }
-            if (bd_config.get(bd_config.CustomFieldEnabled6) == 1)
-            {
-                dr = bd_db.get_datarow("select * from custom_6 where c6_is_default is true order by c6_name limit 1");
-                if (dr is not null)
-                {
-                    custom_6_id = (int)dr[0];
-                }
-            }
+        }
+
+        int? GetDefaultForCustomDropdown(string number)
+        {
+            if (bd_config.get("CustomFieldEnabled" + number) == 0)
+                return null;
+
+            string sql = "select c$_id from custom_$ where c$_is_default is true order by c$_name limit 1";
+            sql = sql.Replace("$", number);
+
+            DataRow dr = bd_db.get_datarow(sql);
+
+            if (dr is null)
+                return null;
+            else
+                return (int)dr[0];
+
         }
 
         void OnIssueFormPost()
@@ -341,6 +358,7 @@ namespace budoco.Pages
             }
             else
             {
+                ProcessNewVsOldValues();
 
                 sql = @"update issues set 
                 i_description = @i_description, 
@@ -390,39 +408,112 @@ namespace budoco.Pages
 
         void PrepareDropdowns()
         {
-            assigned_to_user_list = bd_db.prepare_select_list("select us_id, us_username from users where us_is_active = true order by us_username");
-            organization_list = bd_db.prepare_select_list("select og_id, og_name from organizations where og_is_active = true order by og_name");
 
-            if (bd_config.get(bd_config.CustomFieldEnabled1) == 1)
+            string sql;
+
+            // org dropdown - users in orgs can only see their own
+            if (user_org != 0)
             {
-                custom_1_list = bd_db.prepare_select_list("select c1_id, c1_name from custom_1 where c1_is_active = true order by c1_name");
+                // user belongs to org
+                // just one
+                sql = "select og_id, og_name from organizations where og_id = " + user_org.ToString();
             }
-
-            if (bd_config.get(bd_config.CustomFieldEnabled2) == 1)
+            else
             {
-                custom_2_list = bd_db.prepare_select_list("select c2_id, c2_name from custom_2 where c2_is_active = true order by c2_name");
-            }
+                // normal user
+                if (id == 0)
+                {
+                    // create, get only active
+                    sql = @"select og_id, og_name from organizations where og_is_active = true"
+                    + " union select 0, '[None]' order by og_name";
 
-            if (bd_config.get(bd_config.CustomFieldEnabled3) == 1)
+                }
+                else
+                {
+                    // update, so also includes current val even if inactive
+                    sql = @"select og_id, og_name from organizations where og_is_active = true
+                      union select 0, '[None]'
+                      union select og_id, og_name from organizations where og_id = " + organization_id.ToString()
+                        + " order by og_name";
+                }
+            }
+            organization_list = bd_db.prepare_select_list(sql);
+
+            // assigned to user dropdown - users in orgs can only see their own and the users not in ogs
+            if (user_org != 0)
             {
-                custom_3_list = bd_db.prepare_select_list("select c3_id, c3_name from custom_3 where c3_is_active = true order by c3_name");
-            }
+                // user belongs to org
+                if (id == 0)
+                {
+                    // only from own org and unassigned to org
+                    sql = @"select us_id, us_username from users 
+                    where us_is_active = true 
+                    and (us_organization = 0 or us_organization = " + user_org.ToString()
+                    + ") order by us_username";
+                }
+                else
+                {
+                    // same as above, but also including current val
+                    sql = @"select us_id, us_username from users 
+                    where us_is_active = true 
+                    and (us_organization = 0 or us_organization = " + user_org.ToString()
+                    + ") union select us_id, us_username from users where us_id = " + assigned_to_user_id.ToString()
+                    + " order by us_username";
 
-            if (bd_config.get(bd_config.CustomFieldEnabled4) == 1)
+                }
+            }
+            else
             {
-                custom_4_list = bd_db.prepare_select_list("select c4_id, c4_name from custom_4 where c4_is_active = true order by c4_name");
-            }
+                // normal user
+                if (id == 0)
+                {
+                    // all active
+                    sql = "select us_id, us_username from users where us_is_active = true order by us_username";
 
-            if (bd_config.get(bd_config.CustomFieldEnabled5) == 1)
+                }
+                else
+                {
+                    // all active plus current val
+                    sql = @"select us_id, us_username from users where us_is_active = true  
+                      union select us_id, us_username from users where us_id = " + assigned_to_user_id.ToString()
+                      + " order by us_username";
+
+
+                }
+            }
+            assigned_to_user_list = bd_db.prepare_select_list(sql);
+
+            // custom 1-6
+            custom_1_list = PrepareCustomDropdown("1", custom_1_id);
+            custom_2_list = PrepareCustomDropdown("2", custom_2_id);
+            custom_3_list = PrepareCustomDropdown("3", custom_3_id);
+            custom_4_list = PrepareCustomDropdown("4", custom_4_id);
+            custom_5_list = PrepareCustomDropdown("5", custom_5_id);
+            custom_6_list = PrepareCustomDropdown("6", custom_6_id);
+
+        }
+
+        SelectList PrepareCustomDropdown(string number, int current_val)
+        {
+            if (bd_config.get("CustomFieldEnabled" + number) == 0)
+                return null;
+
+            string sql;
+            if (id == 0)
             {
-                custom_5_list = bd_db.prepare_select_list("select c5_id, c5_name from custom_5 where c5_is_active = true order by c5_name");
+                // all active
+                sql = "select c$_id, c$_name from custom_$ where c$_is_active = true order by c$_name";
             }
-
-            if (bd_config.get(bd_config.CustomFieldEnabled6) == 1)
+            else
             {
-                custom_6_list = bd_db.prepare_select_list("select c6_id, c6_name from custom_6 where c6_is_active = true order by c6_name");
+                // all active and current val    
+                sql = @"select c$_id, c$_name from custom_$ where c$_is_active = true 
+                  union select c$_id, c$_name from custom_$ where c$_id = " + current_val.ToString()
+                  + " order by c$_name";
             }
+            sql = sql.Replace("$", number);
 
+            return bd_db.prepare_select_list(sql);
         }
 
         bool IsValid()
@@ -445,6 +536,27 @@ namespace budoco.Pages
             }
         }
 
+        void ProcessNewVsOldValues()
+        {
+            DataRow dr = bd_db.get_datarow(
+                "select * from issues where i_id = " + id.ToString());
+
+            if (user_org != 0)
+            {
+                if (organization_id != user_org)
+                {
+                    // This should never happen, but really, but let's really stop it, even if ugly
+                    throw new Exception("User asigned to org tried to change the org of an issue");
+                }
+            }
+
+            // just a placeholder for more audit trail tracking
+            if (custom_1_id != (int)dr["i_custom_1"])
+            {
+                Console.WriteLine("QQQQQQQQQQQQ custom 1 changed");
+            }
+
+        }
 
         public Task<ContentResult> OnPostAddPostAsync()
         {
@@ -592,12 +704,18 @@ namespace budoco.Pages
 
         public async Task<ContentResult> OnGetPostsAsync()
         {
+            // client fetches posts using ajax
 
-            // check permission
+            //check permission
             organization_id = (int)bd_db.exec_scalar(
-                "select i_organization from issues where i_id = " + id.ToString());
+               "select i_organization from issues where i_id = " + id.ToString());
 
-            CheckUserIssuePermission(organization_id);
+            // A user wouldn't normally get this far, to be able to post
+            // unless his permission was changed from under him or he was hacking
+            if (!GetAndCheckUserOrg(organization_id))
+            {
+                return Content("<!--error--><!--org permission-->");
+            }
 
             // get posts
             var sql = @"select posts.*, us_username
@@ -608,6 +726,7 @@ namespace budoco.Pages
 
             dt_posts = bd_db.get_datatable(sql);
 
+            // get the html as a string and return it to ajax client
             String html = await _renderer.RenderPartialToStringAsync("_IssuePostsPartial", this);
 
             if (post_error != "")
@@ -631,18 +750,20 @@ namespace budoco.Pages
 
         }
 
-        void CheckUserIssuePermission(int i_organization)
+        bool GetAndCheckUserOrg(int i_organization)
         {
-            int us_org = bd_util.get_user_organization_from_session(HttpContext);
-            if (us_org != 0)
+            user_org = bd_util.get_user_organization_from_session(HttpContext);
+            if (user_org != 0)
             {
-                if (us_org != i_organization)
+                if (user_org != i_organization)
                 {
                     bd_util.set_flash_err(HttpContext,
                         "You don't have permission to view this issue because it does not belong to your organization.");
                     Response.Redirect("/Stop");
+                    return false;
                 }
             }
+            return true; ;
         }
 
     }

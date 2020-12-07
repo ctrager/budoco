@@ -69,12 +69,12 @@
         
         <tr>
             <td><label>Description</label>
-            <td colspan=3><input class="issue_description_input" asp-for="description" disabled="@Model.null_or_disabled"></input>
+            <td colspan=3><input class="issue_description_input" asp-for="description" disabled="@Model.disable_dropdowns_when_not_null"></input>
         </tr>
 
         <tr>
             <td><label>Details</label>
-            <td colspan=3><textarea class="issue_textarea" asp-for="details" disabled="@Model.null_or_disabled"></textarea>
+            <td colspan=3><textarea class="issue_textarea" asp-for="details" disabled="@Model.disable_dropdowns_when_not_null"></textarea>
         </tr>
         
 
@@ -83,11 +83,10 @@
             
             <td><!--left-->
                 <table class="form-table"><!--left-->
-            
+                
                 <tr class="issue_organization">
                     <td><label class="issue_select_label">Organization</label>
-                    <td><select  class="issue_select" asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.null_or_disabled">
-                        <option value="0">[None]</option>
+                    <td><select  class="issue_select" asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.disable_dropdowns_when_not_null">
                     </select>
                 </tr>
         
@@ -96,7 +95,7 @@
                 {
                 <tr class="issue_custom_1">
                     <td><label class="issue_select_label">@Model.custom_1_label</label>
-                    <td><select  class="issue_select" asp-for="custom_1_id" asp-items="@Model.custom_1_list" disabled="@Model.null_or_disabled">
+                    <td><select  class="issue_select" asp-for="custom_1_id" asp-items="@Model.custom_1_list" disabled="@Model.disable_dropdowns_when_not_null">
                         <option value="0">[None]</option>
                      </select>
                 </tr>
@@ -106,7 +105,7 @@
                 {
                 <tr class="issue_custom_2">
                     <td><label class="issue_select_label">@Model.custom_2_label</label>
-                    <td><select  class="issue_select" asp-for="custom_2_id" asp-items="@Model.custom_2_list" disabled="@Model.null_or_disabled">
+                    <td><select  class="issue_select" asp-for="custom_2_id" asp-items="@Model.custom_2_list" disabled="@Model.disable_dropdowns_when_not_null">
                         <option value="0">[None]</option>
                      </select>
                 </tr>
@@ -116,7 +115,7 @@
                 {
                 <tr class="issue_custom_3">
                     <td><label class="issue_select_label">@Model.custom_3_label</label>
-                    <td><select  class="issue_select" asp-for="custom_3_id" asp-items="@Model.custom_3_list" disabled="@Model.null_or_disabled">
+                    <td><select  class="issue_select" asp-for="custom_3_id" asp-items="@Model.custom_3_list" disabled="@Model.disable_dropdowns_when_not_null">
                         <option value="0">[None]</option>
                      </select>
                 </tr>
@@ -125,7 +124,7 @@
                 {
                 <tr class="issue_custom_4">
                     <td><label class="issue_select_label">@Model.custom_4_label</label>
-                    <td><select  class="issue_select" asp-for="custom_4_id" asp-items="@Model.custom_4_list" disabled="@Model.null_or_disabled">
+                    <td><select  class="issue_select" asp-for="custom_4_id" asp-items="@Model.custom_4_list" disabled="@Model.disable_dropdowns_when_not_null">
                         <option value="0">[None]</option>
                      </select>
                 </tr>
@@ -134,7 +133,7 @@
                 {
                 <tr class="issue_custom_5">
                     <td><label class="issue_select_label">@Model.custom_5_label</label>
-                    <td><select  class="issue_select" asp-for="custom_5_id" asp-items="@Model.custom_5_list" disabled="@Model.null_or_disabled">
+                    <td><select  class="issue_select" asp-for="custom_5_id" asp-items="@Model.custom_5_list" disabled="@Model.disable_dropdowns_when_not_null">
                         <option value="0">[None]</option>
                      </select>
                 </tr>
@@ -143,7 +142,7 @@
                 {
                 <tr class="issue_custom_6">
                     <td><label class="issue_select_label">@Model.custom_6_label</label>
-                    <td><select  class="issue_select" asp-for="custom_6_id" asp-items="@Model.custom_6_list" disabled="@Model.null_or_disabled">
+                    <td><select  class="issue_select" asp-for="custom_6_id" asp-items="@Model.custom_6_list" disabled="@Model.disable_dropdowns_when_not_null">
                         <option value="0">[None]</option>
                      </select>
                 </tr>
@@ -155,10 +154,9 @@
             
             <td><!--right-->
                 <table>
-            
                 <tr class="issue_assigned_to">
                     <td><label class="issue_select_label">Assigned To</label>
-                    <td><select  class="issue_select" asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_user_list" disabled="@Model.null_or_disabled">
+                    <td><select  class="issue_select" asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_user_list" disabled="@Model.disable_dropdowns_when_not_null">
                         <option value="0">[None]</option>
                     </select>
                  
@@ -171,7 +169,7 @@
   
 
         @{
-            if (Model.null_or_disabled is null)
+            if (Model.disable_dropdowns_when_not_null is null)
             {
                 string button_text = (Model.id == 0) ? "Create" : "Update";
                 <div>
@@ -213,6 +211,8 @@
                     }
                     }
                     
+                    @{
+                        if (Model.dt_post_email_to is not null) {
                     <tr id="email_fields" style="display:none;"><td>
                         <button type="button" onclick="open_post_email_to_select()" id="post_email_to_label" placeholder="user@example.com">To:</button>
                         <div id="post_email_to_select" style="visibility: hidden;" 
@@ -221,7 +221,7 @@
                                 <span onclick="close_post_email_to_select()">Close</span>
                             </div>
                             @{
-                                foreach (DataRow dr in Model.dt_post_email_to.Rows)
+                                 foreach (DataRow dr in Model.dt_post_email_to.Rows)
                                 {
                                     <div class="post_email_to_select_row">@dr[0]</div>
                                 }
@@ -230,6 +230,8 @@
                         <span id="hidden_row_count" style="display:none;">@Model.dt_post_email_to.Rows.Count</span>                        
                         <input class="post_form_email_to_input" asp-for="post_email_to" value="">
                     </td></tr>
+                        }
+                    }
 
                     <tr><td>
                         <textarea class="post_form_textarea" name="post_text" id="post_text"></textarea>
@@ -279,8 +281,11 @@
     <script>
         
     $(document).ready(function() {
-        get_posts();
-        prepare_post_email_to_select();
+        if (@Model.id !=0)
+        {
+            get_posts();
+            prepare_post_email_to_select();
+        }
      });
  
     function get_posts() {
