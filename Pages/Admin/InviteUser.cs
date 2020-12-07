@@ -1,15 +1,12 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http;
-using System.Data;
-using Serilog;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 
 namespace budoco.Pages
 {
-    public class RegisterModel : PageModel
+    public class InviteUserModel : PageModel
     {
 
         // bindings start 
@@ -19,18 +16,27 @@ namespace budoco.Pages
         [BindProperty]
         public string username { get; set; }
 
+        // dropdown
         [BindProperty]
-        public string password { get; set; }
+        public IEnumerable<SelectListItem> organizations { get; set; }
+        [BindProperty]
+        public int organization_id { get; set; }
 
         // bindings end  
         List<string> errs = new List<string>();
 
         public void OnGet(string action)
         {
+            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
+                return;
+            organizations = bd_db.prepare_select_list("select og_id, og_name from organizations order by og_name");
         }
 
         public void OnPost()
         {
+
+            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
+                return;
 
             if (!IsValid())
             {
@@ -39,8 +45,8 @@ namespace budoco.Pages
 
             // insert unguessable bytes into db for user to confirm registration
             string sql = @"insert into registration_requests 
-            (rr_guid, rr_email_address, rr_username, rr_password)
-            values(@rr_guid, @rr_email_address, @rr_username, @rr_password)";
+            (rr_guid, rr_email_address, rr_username, rr_is_invitation, rr_organization)
+            values(@rr_guid, @rr_email_address, @rr_username, @rr_is_invitation, @rr_organization)";
 
             var dict = new Dictionary<string, dynamic>();
 
@@ -48,34 +54,32 @@ namespace budoco.Pages
             dict["@rr_guid"] = guid;
             dict["@rr_username"] = username; // on purpose, user can login typing either
             dict["@rr_email_address"] = email_address;
-            string hashed_password = bd_util.compute_password_hash(password);
-            dict["@rr_password"] = hashed_password;
+            dict["@rr_is_invitation"] = true;
+            dict["@rr_organization"] = organization_id;
 
             bd_db.exec(sql, dict);
 
-            if (bd_config.get(bd_config.DebugAutoConfirmRegistration) == 1)
-            {
-                Response.Redirect("/RegisterConfirmation?guid=" + guid);
-            }
-            else
-            {
-                // send an email
-                // and tell user to check it
+            // send an email
+            // and tell user to check it
 
-                string body = "Follow or browse to this link to confirm registration:\n"
-                    + bd_config.get(bd_config.WebsiteUrlRootWithoutSlash)
-                    + "/RegisterConfirmation?guid="
-                    + guid;
+            string body = "You have been invited to use "
+                + bd_config.get(bd_config.AppName)
+                + " at "
+                + bd_config.get(bd_config.WebsiteUrlRootWithoutSlash)
+                + ". Follow or browse to this link to accept invite:\n"
+                + bd_config.get(bd_config.WebsiteUrlRootWithoutSlash)
+                + "/AcceptInvite?guid="
+                + guid;
 
-                bd_email.queue_email("register",
-                    email_address, // to
-                    bd_config.get(bd_config.AppName) + ": Confirm registration", // subject
-                    body);
+            bd_email.queue_email("invite",
+                email_address, // to
+                bd_config.get(bd_config.AppName) + ": Accept invitation", // subject
+                body);
 
-                bd_util.set_flash_msg(HttpContext, "Please check your email to confirm registration.");
-                Response.Redirect("RegisterPleaseConfirm");
+            bd_util.set_flash_msg(HttpContext, "Invitation has been placed in outgoing mail queue.");
 
-            }
+            Response.Redirect("InviteUser");
+
         }
 
 
@@ -95,7 +99,7 @@ namespace budoco.Pages
             {
                 if (bd_util.is_username_already_taken(username))
                 {
-                    errs.Add("Username already registered.");
+                    errs.Add("Username is used by somebody else.");
                 }
             }
 
@@ -109,15 +113,10 @@ namespace budoco.Pages
             }
             else
             {
-                if (bd_util.is_email_already_taken(username))
+                if (bd_util.is_email_already_taken(email_address))
                 {
-                    errs.Add("Email already registered.");
+                    errs.Add("Email is used by somebody else.");
                 }
-            }
-
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                errs.Add("Password is required.");
             }
 
             if (errs.Count == 0)

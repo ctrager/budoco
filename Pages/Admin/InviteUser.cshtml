@@ -1,0 +1,48 @@
+@page
+@model InviteUserModel
+
+@{
+    ViewData["Title"] = "Invite User";
+}
+
+<h1>@ViewData["Title"]</h1>
+<partial name="_FlashPartial" />
+
+<div class="form_div">
+<form method="post">
+    <table class="form_table">
+    <tr>
+        <td><label>Username</label>
+        <td><input asp-for="username" />
+    </tr>
+    <tr>
+        <td><label>Email</label>
+        <td><input type="email" asp-for="email_address" />
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div  class="user_page_info_text">
+            When you assign a user to an organization, then that user can only view and update issues associated with that organization. 
+            Budoco automatically modifies your Issue Queries adding a SQL "WHERE" clause that limits the view to issues belonging to the same organization.
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><label>Organization</label>
+        <td><select asp-for="organization_id" asp-items="@Model.organizations">
+            <option value=0>None</option>
+        </select>
+    </tr>    
+   
+    <tr>
+        <td><button type="submit">Invite User</button>
+    </tr>
+    </table>
+</form>
+</div>
+
+
+@section Scripts {
+    
+}
+

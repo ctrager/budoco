@@ -265,7 +265,6 @@ namespace budoco
 
             dict["@rp_guid"] = guid;
             dict["@rp_email_address"] = email_address;
-            dict["@rp_action"] = "reset";
             dict["@rp_user_id"] = user_id;
 
             bd_db.exec(sql, dict);
@@ -397,6 +396,50 @@ namespace budoco
             }
 
             return modified_sql;
+
+        }
+
+        public static bool is_username_already_taken(string username)
+        {
+            string sql = @"select 1 from users                 where us_username = @username1
+                     union select 1 from registration_requests where rr_username = @username2";
+            var dict = new Dictionary<string, dynamic>();
+            dict["@username1"] = username;
+            dict["@username2"] = username;
+            return bd_db.exists(sql, dict);
+        }
+
+        public static bool is_email_already_taken(string email)
+        {
+            string sql = @"select 1 from users                 where us_email_address = @email1
+                     union select 1 from registration_requests where rr_email_address = @email2";
+            var dict = new Dictionary<string, dynamic>();
+            dict["@email1"] = email;
+            dict["@email2"] = email;
+            return bd_db.exists(sql, dict);
+
+        }
+
+        public static bool is_username_already_taken_not_by_me(string username, int user_id)
+        {
+            string sql = @"select 1 from users                 where us_username = @username1 and us_id != @us_id
+                     union select 1 from registration_requests where rr_username = @username2";
+            var dict = new Dictionary<string, dynamic>();
+            dict["@username1"] = username;
+            dict["@username2"] = username;
+            dict["@us_id"] = user_id;
+            return bd_db.exists(sql, dict);
+        }
+
+        public static bool is_email_already_taken_not_by_me(string email, int user_id)
+        {
+            string sql = @"select 1 from users                 where us_email_address = @email1 and us_id != @us_id
+                     union select 1 from registration_requests where rr_email_address = @email2";
+            var dict = new Dictionary<string, dynamic>();
+            dict["@email1"] = email;
+            dict["@email2"] = email;
+            dict["@us_id"] = user_id;
+            return bd_db.exists(sql, dict);
 
         }
 

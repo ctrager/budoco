@@ -95,7 +95,6 @@ namespace budoco.Pages
             // and similar in Register
             var errs = new List<string>();
 
-            string sql;
             var dict = new Dictionary<string, dynamic>();
 
             if (string.IsNullOrWhiteSpace(username))
@@ -104,12 +103,7 @@ namespace budoco.Pages
             }
             else
             {
-                sql = "select 1 from users where us_username = @us_username and us_id != @us_id";
-
-                dict["@us_username"] = username;
-                dict["@us_id"] = user_id;
-
-                if (bd_db.exists(sql, dict))
+                if (bd_util.is_username_already_taken_not_by_me(username, user_id))
                 {
                     errs.Add("Username is used by somebody else.");
                 }
@@ -125,12 +119,7 @@ namespace budoco.Pages
             }
             else
             {
-                sql = "select 1 from users where us_email_address = @us_email_address and us_id != @us_id";
-
-                dict["@us_email_address"] = email_address;
-                dict["@us_id"] = user_id;
-
-                if (bd_db.exists(sql, dict))
+                if (bd_util.is_email_already_taken_not_by_me(email_address, user_id))
                 {
                     errs.Add("Email is used by somebody else.");
                 }

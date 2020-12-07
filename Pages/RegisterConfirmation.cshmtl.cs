@@ -40,7 +40,7 @@ namespace budoco.Pages
 
                 sql = "select 1 from users where us_username = @us_username";
 
-                if (bd_db.exists(sql, dict))
+                if (bd_util.is_username_already_taken((string)dr_registration["rr_username"]))
                 {
                     errs.Add("Already registered. Did you click twice?");
                 }
