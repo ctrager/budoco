@@ -120,7 +120,7 @@ CREATE UNIQUE INDEX c6_name_index ON custom_6 (c6_name);
 create table queries
 (
 qu_id serial primary key,
-qu_name varchar(60) not null,
+qu_name varchar(80) not null,
 qu_sql text not null,
 qu_description text not null default '',
 qu_is_active boolean default true,
@@ -155,11 +155,15 @@ create table posts
 (
 p_id serial primary key,
 p_issue int not null,
+/* comment, email, reply, history */
 p_post_type varchar(8) not null,
 p_text text not null default '',
 p_email_to text not null default '',
 p_email_from text not null default '',
 p_email_from_html_part text not null default '',
+p_changed_field varchar(30) not null default '',
+p_before_val text not null default '',
+p_after_val text not null default '',
 p_created_by_user int not null,
 p_created_date timestamptz default CURRENT_TIMESTAMP
 );

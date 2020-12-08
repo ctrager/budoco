@@ -33,6 +33,9 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return;
 
+            if (bd_config.get(bd_config.DebugEnableRunSql) != 1)
+                return;
+
         }
 
         public async Task<ContentResult> OnPostRunAsync()

@@ -74,29 +74,48 @@ div {
 
 /* done with tags */
 
-/* top part of page */
+/* menu */
 
-.menu_table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+ul.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #eee;
+    margin-bottom: 16px;
+}
+  
+.menu>li {
+    float: left;
 }
 
-.menu_table>tbody>tr>td {
-    background-color: #eeeeee;
-    white-space: nowrap;
-    text-align: center;
-    vertical-align: middle;
+.menu>li.menu_right {
+    float:right;
 }
 
-.menu_table>tbody>tr>td.logo {
+.menu>li>a {
+    display: block;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 14px;
+    padding-bottom: 6px;
+}
 
-    font-size: 20px;
-    letter-spacing: 2px;
+.menu>li>button {
+    margin-left: 12px;
+    margin-top: 7px;
+}
+
+.menu>li>a.logo {
     background-color: lightgreen;
-    height: 40px;
-    width: 140px;
-
+    xfont-weight: bold;
+    letter-spacing: 2px;
+    margin-right: 10px;
+    font-size: 20px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .goto_input {
@@ -116,14 +135,8 @@ input::-webkit-inner-spin-button {
   -moz-appearance: textfield;
 }
 
-.menu_table>tbody>tr>td.just_right {
-    text-align: right;
-    padding-right: 20px;
-}
+/* menu end */
 
-.menu_table>tbody>tr>td.just_right>a {
-    margin-left: 20px;
-}
 
 h1 {
     display: inline;
@@ -137,6 +150,7 @@ h1::after {
     content: "\a\a";
     white-space: pre;
 }
+
 
 .crud_table {
     display: inline-block;
@@ -450,7 +464,10 @@ textarea#sql {
     margin-bottom: 8px;
     width: 890px;
 }
+.history {
+    width: 900px;
 
+}
 
 .html_part_iframe {
     resize: both;

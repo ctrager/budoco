@@ -341,6 +341,8 @@ namespace budoco.Pages
             if (id == 0 || force_create == "force_create")
             {
 
+                // create a new issue
+
                 sql = @"insert into issues 
                 (i_description, i_details, i_created_by_user, 
                 i_organization,
@@ -358,7 +360,20 @@ namespace budoco.Pages
             }
             else
             {
-                ProcessNewVsOldValues();
+                // update an existing issue
+
+                if (user_org != 0)
+                {
+                    if (organization_id != user_org)
+                    {
+                        // This should never happen, but really, but let's really stop it, even if ugly
+                        throw new Exception("User asigned to org tried to change the org of an issue");
+                    }
+                }
+
+
+                DataRow dr_before = bd_db.get_datarow(
+                    "select * from issues where i_id = " + id.ToString());
 
                 sql = @"update issues set 
                 i_description = @i_description, 
@@ -375,13 +390,62 @@ namespace budoco.Pages
                 i_organization = @i_organization,
                 i_assigned_to_user = @i_assigned_to_user,
                 i_last_updated_date = CURRENT_TIMESTAMP
-                where i_id = @i_id;";
+                where i_id = @i_id
+                returning i_last_updated_date";
 
-                bd_db.exec(sql, GetValuesDict());
+                DateTime last_updated_date = (DateTime) bd_db.exec_scalar(sql, GetValuesDict());
+                
+                CreateHistoryPosts(dr_before, last_updated_date);
+               
                 bd_util.set_flash_msg(HttpContext, bd_util.UPDATE_WAS_SUCCESSFUL);
             }
         }
 
+        void CreateHistoryPosts(DataRow dr_before, DateTime last_updated_date) 
+        {
+
+            string sql = @"insert into posts 
+                (p_issue, p_post_type, p_changed_field, p_before_val, p_after_val, p_created_by_user, p_created_date)
+                values(@p_issue, @p_post_type, @p_changed_field, @p_before_val, @p_after_val, @p_created_by_user, @p_created_date)";
+                
+            var dict = new Dictionary<string, dynamic>();
+            dict["@p_issue"] = id;
+            dict["@p_post_type"] = "history";
+            dict["@p_created_by_user"] = bd_util.get_user_id_from_session(HttpContext);
+            dict["@p_created_date"] = last_updated_date; // same date as issue
+   
+            if (custom_1_id != (int) dr_before["i_custom_1"]) 
+            {
+                dict["@p_changed_field"] = bd_config.get("CustomFieldLabelSingular1");
+                dict["@p_before_val"] = (string) bd_db.exec_scalar("select c1_name from custom_1 where c1_id = " + Convert.ToString(dr_before["i_custom_1"]));
+                dict["@p_after_val"] = (string) bd_db.exec_scalar("select c1_name from custom_1 where c1_id = " + custom_1_id.ToString());
+                bd_db.exec(sql, dict);
+            }
+    /*
+            WriteHistoryForCustom("1", (int) dr_before["i_custom_1"], custom_1_id, dict);
+            WriteHistoryForCustom("2", (int) dr_before["i_custom_2"], custom_2_id, dict);
+            WriteHistoryForCustom("3", (int) dr_before["i_custom_3"], custom_3_id, dict);
+            WriteHistoryForCustom("4", (int) dr_before["i_custom_4"], custom_4_id, dict);
+            WriteHistoryForCustom("5", (int) dr_before["i_custom_5"], custom_5_id, dict);
+            WriteHistoryForCustom("6", (int) dr_before["i_custom_6"], custom_6_id, dict);
+    */
+        }
+    /*
+        void WriteHistoryForCustom(string number, int before_val, int after_val, Dictionary<string, dynamic> dict) 
+        {
+            return; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            if (after_val != before_val) 
+            {
+                string sql = "select c$_name from custom_$ where c$_id = ";
+                sql = sql.Replace("$", number);
+                dict["@p_changed_field"] = bd_config.get("CustomFieldLabelSingular" + number);
+                dict["@p_before_val"] = (string) bd_db.exec_scalar(sql + before_val.ToString());
+                dict["@p_after_val"] = (string) bd_db.exec_scalar(sql + after_val.ToString());
+                bd_db.exec(sql, dict);
+            }       
+        }
+        
+    */
         Dictionary<string, dynamic> GetValuesDict()
         {
             var dict = new Dictionary<string, dynamic>();
@@ -534,28 +598,6 @@ namespace budoco.Pages
                 bd_util.set_flash_errs(HttpContext, errs);
                 return false;
             }
-        }
-
-        void ProcessNewVsOldValues()
-        {
-            DataRow dr = bd_db.get_datarow(
-                "select * from issues where i_id = " + id.ToString());
-
-            if (user_org != 0)
-            {
-                if (organization_id != user_org)
-                {
-                    // This should never happen, but really, but let's really stop it, even if ugly
-                    throw new Exception("User asigned to org tried to change the org of an issue");
-                }
-            }
-
-            // just a placeholder for more audit trail tracking
-            if (custom_1_id != (int)dr["i_custom_1"])
-            {
-                Console.WriteLine("QQQQQQQQQQQQ custom 1 changed");
-            }
-
         }
 
         public Task<ContentResult> OnPostAddPostAsync()

@@ -67,40 +67,37 @@
     {
 
         <body>
-            <table class="menu_table">
-                <tr>
-                    <td class="logo"><a asp-page="/Index">@bd_config.get(bd_config.AppName)</a></td>
+            <ul class="menu">
 
-                    <td><a asp-page="/Issues">View Issues</a></td>
-                    <td><a asp-page="/Issue">Create Issue</a></td>
-                    <td><a asp-page="/Search">Search</a></td>
+                <li><a class="logo" asp-page="/Index">@bd_config.get(bd_config.AppName)</a></li>
 
-                    @{
-                        if (is_admin)
+                <li><a asp-page="/Issues">View Issues</a></li>
+                <li><a asp-page="/Issue">Create Issue</a></li>
+                <li><a asp-page="/Search">Search</a></li>
+
+                @{
+                    if (is_admin)
+                    {
+                        <li><a asp-page="/Admin/Admin">Admin</a></li>
+                        if (bd_config.get(bd_config.DebugEnableRunSql) == 1)
                         {
-                            <td><a asp-page="/Admin/Admin">Admin</a></td>
-                            <td><a asp-page="/Admin/Users">Users</a></td>
-                            if (bd_config.get(bd_config.DebugEnableRunSql) == 1)
-                            {
-                                <td><a asp-page="/Admin/RunSql">Run Sql</a></td>
-                            }
-                            <td><a asp-page="/Report/Index">Reports</a></td>
+                            <li><a asp-page="/Admin/RunSql">Run Sql</a></li>
                         }
+                        <li><a asp-page="/Report/Index">Reports</a></li>
                     }
+                }
 
-                    <td>
-                        <button class="goto_button" id="goto_button">Go To Issue:</button>
-                        <input type="number" class="goto_input" id="goto_input" placeholder="ID#" />
-                    </td>
+                <li>
+                    <button class="goto_button" id="goto_button">Go To Issue:</button>
+                    <input type="number" class="goto_input" id="goto_input" placeholder="ID#" />
+                </li>
 
-                    <td class="just_right">
-                        <a href="/UserSettings">@bd_util.get_username_from_session(Context)</a>
-                        <a href="/Login?action=signout">Sign Out</a>
-                        <a href="/About">About</a>
-                    </td>
-                </tr>
-            </table>
+                <!-- from most to least right -->
+                <li class="menu_right"><a href="/About">About</a></li>
+                <li class="menu_right"><a href="/Login?action=signout">Sign Out</a></li>
+                <li class="menu_right"><a href="/UserSettings">@bd_util.get_username_from_session(Context)</a></li>
 
+            </ul>
 
             <div class="content_parent">
                 @RenderBody()

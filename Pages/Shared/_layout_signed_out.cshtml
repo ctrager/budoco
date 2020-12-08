@@ -1,9 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-@{
-    bool is_admin = bd_util.is_user_admin(HttpContextAccessor.HttpContext);
-}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,10 +18,11 @@
     @{
         if (bd_config.get(bd_config.UseCustomCss) == 1)
         {
-            string custom_css_filename = bd_config.get(bd_config.CustomCssFilename);
+            string custom_css_filename = bd_config.get(bd_config.UseCustomCss);
             <link rel="stylesheet" href="/@custom_css_filename" />
         }
     }
+
 </head>
 
 @{
@@ -42,16 +39,14 @@
     {
 
         <body>
-            <table class="menu_table">
-                <tr>
-                    <td class="logo"><a asp-page="/Index">@bd_config.get(bd_config.AppName)</a></td>
+            <ul class="menu">
 
-                    <td class="just_right">
+                <li><a class="logo" asp-page="/Index">@bd_config.get(bd_config.AppName)</a></li>
 
-                        <a href="/About">About</a>
-                    </td>
-                </tr>
-            </table>
+                <!-- from most to least right -->
+                <li class="menu_right"><a href="/About">About</a></li>
+
+            </ul>
 
             <div class="content_parent">
                 @RenderBody()
