@@ -135,18 +135,16 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 ## Corey's TODO for winter 2020/2021:
 
+* history of changes
 
-enable receiving new issues per org, or globally.
-org queries. default org query. So, hierarchy would be:
-user default query too:
-1) last used query in session  2) user default query 3) org query, 4) default query.
+* enable receiving new issues per org, or globally.
 
 * make installation nicer - be prompted to init "active" file, create db, run sql.
 include automatic migration
 
 * editing/deleting own comments
 
-* add "reply" link
+* "reply" link for posts
 
 * linkify urls in issue/post description
 
@@ -155,8 +153,6 @@ https://mathiasbynens.be/demo/url-regex
 https://gist.github.com/dperini/729294
 Copyright (c) 2010-2018 Diego Perini (http://www.iport.it)
 
-
 * file upload progress?
 https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
 
-* another post type, for change history
