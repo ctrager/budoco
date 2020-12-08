@@ -5,21 +5,6 @@
 
 @model RegisterConfirmationModel
 
-@{
-    ViewData["Title"] = "Registration Confirmation";
-}
-
-<h1>@ViewData["Title"]</h1>
-
-<partial name="_FlashPartial" />
-
-@{
-    if (Model.is_success)
-    {
-        <a href="/Login">Login</a>
-    }
-}
-
 @section Scripts {
     
 }

@@ -16,33 +16,23 @@
 <form method="post">
     <table class="form_table">
     <tr>
-        <td><label>Password</label>
+        <td><label>Username</label>
+        <td><input asp-for="username" readonly/>
+    </tr>
+    <tr>
+        <td><label>Email</label>
+        <td><input type="email" asp-for="email_address" readonly/>
+    </tr>
+    <tr>
+        <td><label>Create a password</label>
         <td><input type="password" asp-for="password" />
     </tr>
     <tr>
-        <td><label>Re-enter password</label>
-        <td><input type="password" asp-for="retyped_password" />
-    </tr>
-    @{
-        if (Model.username == "admin")
-        {
-    <tr>
-        
-        <td><label>Email</label>
-        <td>
-            <div>Set this to a your real email address.</div>
-            <input type="email" asp-for="email"/>
-    </tr>
-        }
-    }
-    <tr>
-        <td><button type="submit">Reset Password</button>
+        <td><button type="submit">Accept Invitation</button>
     </tr>
     </table>
 </form>
 </div>
-
-<div><a href="Login">Login</a></div>
 
 @section Scripts {
     

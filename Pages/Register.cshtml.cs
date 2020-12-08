@@ -85,8 +85,6 @@ namespace budoco.Pages
             // Identica; in User and UserSettings
             // and similar in Register
 
-            var dict = new Dictionary<string, dynamic>();
-
             if (string.IsNullOrWhiteSpace(username))
             {
                 errs.Add("Username required.");
@@ -95,7 +93,7 @@ namespace budoco.Pages
             {
                 if (bd_util.is_username_already_taken(username))
                 {
-                    errs.Add("Username already registered.");
+                    errs.Add("Username already taken.");
                 }
             }
 
@@ -111,7 +109,7 @@ namespace budoco.Pages
             {
                 if (bd_util.is_email_already_taken(username))
                 {
-                    errs.Add("Email already registered.");
+                    errs.Add("Email already taken.");
                 }
             }
 
