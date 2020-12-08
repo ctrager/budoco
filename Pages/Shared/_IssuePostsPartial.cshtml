@@ -52,7 +52,8 @@
                                     string html_part = (string)dr["p_email_from_html_part"];
                                     if (html_part != "")
                                     {
-                                        <iframe onload="resizeIframe(this)" class="html_part_iframe" src="HtmlPart?p_id=@p_id">
+                                        <!--sandbox prevents script-->
+                                        <iframe sandbox onload="resizeIframe(this)" class="html_part_iframe" src="HtmlPart?p_id=@p_id">
                                         </iframe>
                                     }
                                     else

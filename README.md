@@ -148,12 +148,6 @@ include automatic migration
 
 * "reply" link for posts
 
-* linkify urls in issue/post description
-
-url parser
-https://mathiasbynens.be/demo/url-regex
-https://gist.github.com/dperini/729294
-Copyright (c) 2010-2018 Diego Perini (http://www.iport.it)
 
 * file upload progress?
 https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
