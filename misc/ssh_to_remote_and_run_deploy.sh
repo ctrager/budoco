@@ -2,5 +2,6 @@
 
 # make sure budoco_active_config.txt is in remote budoco folder
 
-scp deploy_to_production.sh root@157.230.222.170:/
-ssh root@157.230.222.170  ./deploy_to_production.sh
+scp deploy_to_production.sh root@157.230.222.170:/root/budoco
+ssh root@157.230.222.170  'chmod +x budoco/deploy_to_production.sh'
+ssh root@157.230.222.170  budoco/deploy_to_production.sh
