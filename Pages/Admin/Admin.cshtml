@@ -81,11 +81,6 @@
 
 <tr><td>&nbsp;<td>&nbsp;</tr><!--hacky line break-->
 
-<tr>
-    <td><a href="/Admin/EmailQueue">Outgoing Email Queue</a>
-    <td>Troubleshoot problems with outgoing email messages for registration, forgotten passwords, and posts.
-
-</tr>
 @{if (bd_config.get(bd_config.DebugEnableRunSql) == 1) 
 {                            
     <tr>
@@ -98,6 +93,20 @@
     <td><a href="/Admin/Logs">Logs</a>
     <td>View and download log files.
 </tr>
+
+<tr>
+    <td><a href="/Admin/EmailQueue">Outgoing Email Queue</a>
+    <td>Troubleshoot problems with outgoing email messages for registration, forgotten passwords, and posts.
+
+</tr>
+
+<tr>
+    <td><a href="/Admin/PendingUsers">Pending Registrations and Invites</a>
+    <td>Troubleshoot problems with pending registration requests and user intvites.
+</tr>
+
+
+
 </table>
 
 </div>

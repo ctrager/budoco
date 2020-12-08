@@ -9,7 +9,10 @@ namespace budoco.Pages
     {
 
         [BindProperty]
-        public string queue_action { get; set; }
+        public string action { get; set; }
+
+        [BindProperty]
+        public string delete_id { get; set; }
 
         public string singular_table_name = "Entry";
         public DataTable dt;
@@ -32,28 +35,32 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return;
 
-            Console.WriteLine("queue action: " + queue_action);
+            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
+                return;
 
-            if (queue_action == "reset_counts")
+
+            if (action == "reset_counts")
             {
                 string sql = "update outgoing_email_queue set oq_sending_attempt_count = 0";
                 bd_db.exec(sql);
                 bd_util.set_flash_msg(HttpContext, "Reset was successful.");
             }
             else
-            if (queue_action == "delete")
-            {
-                string sql = "delete from outgoing_email_queue";
-                bd_db.exec(sql);
-                bd_util.set_flash_msg(HttpContext, "Delete was successful.");
-            }
-            else
-            if (queue_action == "retry")
+            if (action == "retry")
             {
                 bd_email.spawn_email_sending_thread();
+                bd_util.set_flash_msg(HttpContext, "Trying to resend now...");
+            }
+            else
+            if (action == "delete")
+            {
+                string sql = "delete from outgoing_email_queue where oq_id = " + delete_id.ToString();
+                bd_db.exec(sql);
+                bd_util.set_flash_msg(HttpContext, "Delete was successful");
             }
 
             OnGet();
         }
+
     }
 }

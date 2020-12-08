@@ -1,0 +1,22 @@
+﻿@page
+@model PendingUsersModel
+
+@{
+    ViewData["Title"] = "Pending Users";
+}
+
+<div class="just_left">
+<h1>@ViewData["Title"]</h1>
+
+<partial name="_FlashPartial" />
+
+<div class="fake_link" onclick="document.location.reload()">
+Refresh this page
+</div>
+
+<partial name="_CrudDataTableWithDeletePartial" />
+
+
+@section Scripts {
+
+}

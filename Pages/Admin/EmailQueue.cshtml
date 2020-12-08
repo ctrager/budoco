@@ -22,16 +22,12 @@ Reset retry counts
 Retry sending
 </div>
 
-<div class="fake_link" onclick="delete_all()">
-Delete all entries
-</div>
-
-<partial name="_CrudDataTablePartial" />
+<partial name="_CrudDataTableWithDeletePartial" />
 
 </div>
 
 <form id="post_action_form" style="display:none;" method="post">
-    <input asp-for="queue_action" value=""/>
+    <input asp-for="action" value=""/>
 </form>
 
 
@@ -39,17 +35,12 @@ Delete all entries
 
 <script>
     function reset_counts() {
-        $("#queue_action").val("reset_counts");
+        $("#action").val("reset_counts");
         $("#post_action_form").submit();
     }
-    function delete_all() {
-        if (confirm("Are you sure you want to delete all entries?")) {
-            $("#queue_action").val("delete");
-            $("#post_action_form").submit();
-        }
-    }
+
     function retry() {
-        $("#queue_action").val("retry");
+        $("#action").val("retry");
         $("#post_action_form").submit();
     }
 </script>

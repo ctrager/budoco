@@ -181,6 +181,7 @@ create index pa_post_index on post_attachments (pa_post);
 
 create table registration_requests
 (
+rr_id serial primary key,
 rr_guid varchar(36) not null,
 rr_created_date timestamptz default CURRENT_TIMESTAMP,
 rr_email_address varchar(64) not null,
