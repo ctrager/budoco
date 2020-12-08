@@ -100,6 +100,9 @@ namespace budoco
         public const string CustomFieldLabelSingular6 = "CustomFieldLabelSingular6";
         public const string CustomFieldLabelPlural6 = "CustomFieldLabelPlural6";
 
+        public const string RegistrationRequestExpirationInHours = "RegistrationRequestExpirationInHours";
+        public const string InviteUserExpirationInHours = "InviteUserExpirationInHours";
+
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 
         // This reads "budoco_config.txt" and loads it into a key/value pair
@@ -169,9 +172,7 @@ namespace budoco
                         dict[key] = string_value;
                     }
                 }
-
             }
-
         }
 
         public static void log_config()

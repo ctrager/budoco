@@ -10,7 +10,7 @@
 DbServer: 127.0.0.1
 DbDatabase: budoco
 DbUser: postgres
-DbPassword: YOUR_PASSWORD
+DbPassword: YOUR_PASSWORD   <<< CHANGE THIS
 
 ###############################################################################
 # SMTP - Outgoing email
@@ -26,8 +26,8 @@ DbPassword: YOUR_PASSWORD
 # Using gmail as an example
 SmtpHost: smtp.gmail.com
 SmtpPort: 465
-SmtpUser: YOUR_ACCOUNT@gmail.com
-SmtpPassword: YOUR_PASSWORD
+SmtpUser: YOUR_ACCOUNT@gmail.com   <<<  CHANGE THIS
+SmtpPassword: YOUR_PASSWORD    <<<  CHANGE THIS
 
 # I used yahoo mail:
 # SmtpHost: smtp.mail.yahoo.com
@@ -36,7 +36,7 @@ SmtpPassword: YOUR_PASSWORD
 # This is for the links in emails that the app sends.
 # For example, for new user registration, password reset.
 
-WebsiteUrlRootWithoutSlash: https://YOURDOMAIN.COM
+WebsiteUrlRootWithoutSlash: https://YOURDOMAIN.COM   <<< CHANGE THIS
 # or
 # WebsiteUrlRootWithoutSlash: http://localhost:5000
 
@@ -52,85 +52,27 @@ WebsiteUrlRootWithoutSlash: https://YOURDOMAIN.COM
 
 EnableIncomingEmail: 1
 # This example uses Gmail
-ImapHost: imap.gmail.com
+ImapHost: imap.gmail.com   <<<  CHANGE THIS
 ImapPort: 993
-ImapUser: YOUR_ACCOUNT@gmail.com
-ImapPassword: YOUR_PASSWORD
+ImapUser: YOUR_ACCOUNT@gmail.com   <<< CHANGE THIS
+ImapPassword: YOUR_PASSWORD   <<< CHANGE THIS
 
 ###############################################################################
 # End of important settings, but you should read through the rest of this file
 # to see what your choices are.
 ###############################################################################
 
-OutgoingEmailDisplayName: Budoco
-
-# For development/test, you can set to true to not send email
-# 0 = DO send emails, 1 = do NOT send emails
-DebugSkipSendingEmails: 0
-
-# The app sends emails by putting them in an outgoing queue and then trying to
-# send them. This setting controls how many attempts the app makes before
-# giving up. See the Admin/Outgoing Email Queue page for more info.
-MaxNumberOfSendingRetries: 3
-
-# How frequently the app checks for incoming email. 
-SecondsToSleepAfterCheckingIncomingEmail: 300
-
-# When this is 1, you see the stack trace in the web page, but it might
-# be too much info for production. When this is 0, you just see that there
-# was an error and you have to look in the logs for the details.
-UseDeveloperExceptionPage: 1
-
-# You can brand it your way. Change the name. Change the logo colors and font.
-# And if the issue form is too busy, you can hide some of the fields you don't use.
-# See "custom_css_example.css"
-AppName: Budoco
-UseCustomCss: 0
-CustomCssFilename: custom_css_example.css
-
-# Number of rows on the issues page
-RowsPerPage: 30
-  
-LogFileFolder: budoco_logs
-
-#https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
-DateFormat: yyyy-MM-dd HH:mm
-
-# if 1, newly registered users start as inactive until admin sets to active
-NewUserStartsInactive: 0
-NewUserStartsReportOnly: 0
-
-# For development, when a new user registers,
-# confirm that registration automatically without 
-# the user having to confirm by clicking the email
-DebugAutoConfirmRegistration: 0
-
-# In Query page, check for keywords in the sql that relate to changing data 
-CheckForDangerousSqlKeywords: 1
-DangerousSqlKeywords: alter,copy,create,createdb,createrole,createuser,delete,drop,exec,execute,grant,insert,update
-
-# Run any sql query - this page is dangerous. You can do anything.
-DebugEnableRunSql: 1
-
-# For testing, don't delete incoming emails - process them over and over
-DebugSkipDeleteOfIncomingEmails: 0
-
-# This is for testing incoming emails.
-# if this is set to a file path, the app won't get emails from a server
-# but instead will one email file.
-# DebugPathToEmailFile: budoco_logs/corey_email_1.txt
-DebugPathToEmailFile:
-
-# This is for writing incoming emails to disk. 
-# Write the folder without trailing slash
-# DebugFolderToSaveEmails: budoco_logs
-DebugFolderToSaveEmails: 
-
+###############################################################################
+#
+# Custom Issue Fields
+#
 # There are six issue attributes that you label here.
 # The labels and settings below are just examples. 
 # You can enable/disable them, rename them, whatever.
 # Youl would also want to adjust your Issue Queries to name
 # in sync with the names here. 
+###############################################################################
+
 CustomFieldEnabled1: 1
 CustomFieldLabelSingular1: Status
 CustomFieldLabelPlural1: Statuses
@@ -154,3 +96,96 @@ CustomFieldLabelPlural5: Fives
 CustomFieldEnabled6: 0
 CustomFieldLabelSingular6: Six
 CustomFieldLabelPlural6: Sixes
+
+###############################################################################
+# You can brand it your way. Change the name. Change the logo colors and font.
+###############################################################################
+
+AppName: Budoco
+
+# You could set this to "Your Company Customer Support"
+OutgoingEmailDisplayName: Budoco Team
+
+# Your css. To use this you would need to understand how to work with css
+# and then write css that overrides budoco.css
+UseCustomCss: 0
+CustomCssFilename: custom_css_example.css
+
+LogFileFolder: budoco_logs
+
+# Number of rows on the issues page
+RowsPerPage: 30
+
+# if 1, newly registered users start as inactive until admin sets to active
+NewUserStartsInactive: 0
+
+# if 1, a newly registered user can only report new issues and post comments,
+# but can't change existing issue fields like description, assinged_to, etc
+NewUserStartsReportOnly: 0
+
+# Date Format for display - the url explains the options
+#https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+DateFormat: yyyy-MM-dd HH:mm
+
+
+# When this is 1, you see the stack trace in the web page, but it might
+# be too much info for production. When this is 0, you just see that there
+# was an error and you have to look in the logs for the details.
+UseDeveloperExceptionPage: 1
+
+
+###############################################################################
+#
+# You can probably stop reading here.
+# The rest of the settings are mostly used for developing and debugging.
+# You probably won't use them unless you are working with the code.
+#
+###############################################################################
+
+
+# For development/test, you can set to true to not send email
+# 0 = DO send emails, 1 = do NOT send emails
+DebugSkipSendingEmails: 0
+
+# The app sends emails by putting them in an outgoing queue and then trying to
+# send them. This setting controls how many attempts the app makes before
+# giving up. See the Admin/Outgoing Email Queue page for more info.
+MaxNumberOfSendingRetries: 3
+
+# How frequently the app checks for incoming email. 
+SecondsToSleepAfterCheckingIncomingEmail: 300
+
+# When a new user registers he gets an email that refers to a row in the db.
+# That row reserves a username and password. If the user never completes
+# the registration, the username and password would be taken forever unless
+# we delete the stale registration. Invites are similar.
+RegistrationRequestExpirationInHours: 1
+InviteUserExpirationInHours: 48
+
+# For development, when a new user registers,
+# confirm that registration automatically without 
+# the user having to confirm by clicking the email
+DebugAutoConfirmRegistration: 0
+
+# In Query page, check for keywords in the sql that relate to changing data 
+CheckForDangerousSqlKeywords: 1
+DangerousSqlKeywords: alter,copy,create,createdb,createrole,createuser,delete,drop,exec,execute,grant,insert,update
+
+# Run any sql query, like psql but a web page.
+# It will let you do anything.
+DebugEnableRunSql: 0
+
+# For testing, don't delete incoming emails - process them over and over
+DebugSkipDeleteOfIncomingEmails: 0
+
+# This is for testing incoming emails.
+# if this is set to a file path, the app won't get emails from a server
+# but instead will one email file.
+# DebugPathToEmailFile: budoco_logs/budoco_email_1.txt
+DebugPathToEmailFile:
+
+# This is for writing incoming emails to disk. 
+# Write the folder without trailing slash
+# DebugFolderToSaveEmails: budoco_logs
+DebugFolderToSaveEmails: 
+

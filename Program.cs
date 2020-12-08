@@ -17,8 +17,9 @@ namespace budoco
         public static int Main(string[] args)
         {
             Console.WriteLine("Main"); // here on purpose
+
             bd_config.load_config();
-            bd_config.log_config();
+
             string log_file_location = bd_config.get(bd_config.LogFileFolder) + "/budoco_log_.txt";
             Log.Logger = new LoggerConfiguration()
 
@@ -29,6 +30,10 @@ namespace budoco
                 .WriteTo.File(log_file_location,
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
+
+            // Write config to log, even though budoco can pick up most changes without
+            // being restarted and we don't log the changed values.
+            bd_config.log_config();
 
             try
             {

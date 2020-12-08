@@ -29,8 +29,12 @@ namespace budoco
 
             // If there are pending outgoing emails try to send them.
             bd_email.spawn_email_sending_thread();
+
             bd_email.spawn_email_receiving_thread();
-            
+
+            bd_email.spawn_registration_request_expiration_thread();
+
+
         }
 
         public IConfiguration Configuration { get; }
@@ -97,7 +101,7 @@ namespace budoco
 
             app.UseSession();
 
-            // for redirecting https to http
+            // for redirecting https to http - commented out because nginx is doing this for us and it's annoying in dev
             // app.UseHttpsRedirection();
 
             app.UseStaticFiles();
@@ -111,7 +115,8 @@ namespace budoco
             // corey added a step in the pipeline
             app.Use(async (context, next) =>
             {
-
+                // The default behavior expires the session id every app restart which
+                // meant I had to re-log in every time I changed code    
                 string budoco_session_id = null;
                 if (context.Request.Cookies.ContainsKey(bd_util.BUDOCO_SESSION_ID))
                 {

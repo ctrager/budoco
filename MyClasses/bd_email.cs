@@ -5,6 +5,7 @@ using MimeKit;
 using System.IO;
 using MailKit.Net.Imap;
 using MailKit;
+using System.Threading;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Composition.Convention;
@@ -32,17 +33,14 @@ namespace budoco
 
             spawn_email_sending_thread();
 
-
         }
-
-
 
         public static void spawn_email_sending_thread()
         {
             // Spawn sending thread
             // The thread doesn't loop. It sends and then dies.
-            // But we spawn it every time we send an email and at startup.
-            System.Threading.Thread thread = new System.Threading.Thread(threadproc_send_emails);
+            // But we spawn it every time we put an email into the outgoing queue.
+            Thread thread = new Thread(threadproc_send_emails);
             thread.Start();
         }
 
@@ -55,11 +53,20 @@ namespace budoco
                 return;
             }
 
-            // Spawn sending thread
-            // loops, sleeps
-            System.Threading.Thread thread = new System.Threading.Thread(threadproc_fetch_incoming_messages);
+            // This thread loops
+            Thread thread = new Thread(threadproc_fetch_incoming_messages);
             thread.Start();
         }
+
+        public static void spawn_registration_request_expiration_thread()
+        {
+
+            // Spawn sending thread
+            // loops, sleeps
+            Thread thread = new Thread(threadproc_expire_registration_requests);
+            thread.Start();
+        }
+
 
         // read the table outgoing_email_queue, try to send an email for each row
         // and if good, delete the row
@@ -458,6 +465,44 @@ namespace budoco
             }
         }
 
+
+        public static void threadproc_expire_registration_requests()
+        {
+            while (true)
+            {
+
+                string sql;
+                int hours;
+                DateTime time_in_past;
+                var dict = new Dictionary<string, dynamic>();
+
+                // Regisgtrations
+                hours = bd_config.get(bd_config.RegistrationRequestExpirationInHours);
+                time_in_past = DateTime.Now.AddHours(-1 * hours);
+                bd_util.log(time_in_past);
+                dict["@date"] = time_in_past;
+
+                sql = @"delete from registration_requests 
+                where rr_is_invitation = false and rr_created_date < @date";
+
+                bd_db.exec(sql, dict);
+
+                // Invitations
+                hours = bd_config.get(bd_config.InviteUserExpirationInHours);
+                time_in_past = DateTime.Now.AddHours(-1 * hours);
+                bd_util.log(time_in_past);
+                dict["@date"] = time_in_past;
+
+                sql = @"delete from registration_requests 
+                where rr_is_invitation = true and rr_created_date < @date";
+
+                bd_db.exec(sql, dict);
+
+                // sleep for an hour
+                int milliseconds = 1000 * 60 * 60;
+                System.Threading.Thread.Sleep(milliseconds);
+            }
+        }
 
     }
 }
