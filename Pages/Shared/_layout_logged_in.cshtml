@@ -75,22 +75,24 @@
                 <li><a asp-page="/Issue">Create Issue</a></li>
                 <li><a asp-page="/Search">Search</a></li>
 
-                @{
-                    if (is_admin)
-                    {
-                        <li><a asp-page="/Admin/Admin">Admin</a></li>
-                        if (bd_config.get(bd_config.DebugEnableRunSql) == 1)
-                        {
-                            <li><a asp-page="/Admin/RunSql">Run Sql</a></li>
-                        }
-                        <li><a asp-page="/Report/Index">Reports</a></li>
-                    }
-                }
 
                 <li>
                     <button class="goto_button" id="goto_button">Go To Issue:</button>
                     <input type="number" class="goto_input" id="goto_input" placeholder="ID#" />
                 </li>
+
+
+                @{
+                    if (is_admin)
+                    {
+                        <li><a asp-page="/Report/Index">Reports</a></li>
+                        <li><a asp-page="/Admin/Admin">Admin</a></li>
+                        if (bd_config.get(bd_config.DebugEnableRunSql) == 1)
+                        {
+                            <li><a asp-page="/Admin/RunSql">Run Sql</a></li>
+                        }
+                    }
+                }
 
                 <!-- from most to least right -->
                 <li class="menu_right"><a href="/About">About</a></li>
