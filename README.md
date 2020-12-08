@@ -137,6 +137,8 @@ However there isn't any per-issue permission system yet. Although your query lim
 
 * history of changes
 
+* emails from issue need a url link back to the issue
+
 * enable receiving new issues per org, or globally.
 
 * make installation nicer - be prompted to init "active" file, create db, run sql.
