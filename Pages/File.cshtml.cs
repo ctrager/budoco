@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Data;
 using System;
+using System.Threading.Tasks;
 
 namespace budoco.Pages
 {
@@ -11,7 +12,7 @@ namespace budoco.Pages
         [FromQuery]
         public int pa_id { get; set; }
 
-        public ActionResult OnGetFile()
+        public async Task<FileContentResult> OnGetFileAsync()
         {
 
             if (!bd_util.check_user_permissions(HttpContext))
@@ -33,7 +34,7 @@ namespace budoco.Pages
 
             // can i do this in one step?
             sql = "/*File*/select pa_content from post_attachments where pa_id = " + pa_id.ToString();
-            byte[] bytea = bd_db.get_bytea(sql);
+            byte[] bytea = await bd_db.get_bytea_async(sql);
 
             return File(bytea, (string)dr["pa_file_content_type"]);
         }

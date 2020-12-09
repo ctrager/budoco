@@ -53,13 +53,27 @@ namespace budoco
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                // dotnet install package Serilog.AspNetCore
-                .UseSerilog()
+        Host.CreateDefaultBuilder(args)
+        .UseSerilog()
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+            webBuilder.UseKestrel(options =>
+            {
+                // Because we will control it with nginx,
+                // which gives good specific 413 status rather than vague 400 status
+                options.Limits.MaxRequestBodySize = null;
+            });
+        });
 
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        // public static IHostBuilder CreateHostBuilder(string[] args) =>
+        //     Host.CreateDefaultBuilder(args)
+        //         // dotnet install package Serilog.AspNetCore
+        //         .UseSerilog()
+
+        //         .ConfigureWebHostDefaults(webBuilder =>
+        //         {
+        //             webBuilder.UseStartup<Startup>();
+        //         });
     }
 }

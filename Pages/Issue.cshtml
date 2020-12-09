@@ -366,6 +366,9 @@
             },
 
             statusCode: {
+                413: function() {
+                    alert("The total size of the files you are uploading is too big. (http status 413)");
+                },
                 500: function() {
                     alert("post- server returned status code of 500");
                 }

@@ -3,8 +3,7 @@ using System.Data;
 using Npgsql;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 
 namespace budoco
@@ -156,6 +155,7 @@ namespace budoco
             }
         }
 
+        /*
         public static byte[] get_bytea(string sql)
         {
             log_sql(sql, null);
@@ -167,6 +167,22 @@ namespace budoco
                 reader.Read();
                 bytea = (byte[])reader[0];
                 reader.Close();
+                return bytea;
+            }
+        }
+        */
+
+        public static async Task<byte[]> get_bytea_async(string sql)
+        {
+            log_sql(sql, null);
+            byte[] bytea;
+            using (var conn = new NpgsqlConnection(get_connection_string()))
+            {
+                var cmd = create_command(conn, sql, null);
+                var reader = await cmd.ExecuteReaderAsync();
+                await reader.ReadAsync();
+                bytea = (byte[])reader[0];
+                await reader.CloseAsync();
                 return bytea;
             }
         }

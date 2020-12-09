@@ -158,7 +158,7 @@ namespace budoco
         }
 
 
-        static void add_file_attachments(int post_id, Multipart multipart)
+        static async void add_file_attachments(int post_id, Multipart multipart)
         {
             string sql = @"/*add_file_attachments p*/ select pa_id, pa_file_content_type, pa_file_name from post_attachments 
                         where pa_post = " + post_id.ToString() + " order by pa_id";
@@ -170,7 +170,7 @@ namespace budoco
                 // Here and elsewhere, can I combine the two queries?
                 int pa_id = (int)dr["pa_id"];
                 sql = "/*add_file_attachments pa*/ select pa_content from post_attachments where pa_id = " + pa_id.ToString();
-                byte[] bytea = bd_db.get_bytea(sql);
+                byte[] bytea = await bd_db.get_bytea_async(sql);
                 Console.WriteLine("bytea.Length");
                 Console.WriteLine(bytea.Length);
 

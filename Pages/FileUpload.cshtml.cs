@@ -38,19 +38,6 @@ namespace budoco.Pages
                 Console.WriteLine(s.Length);
                 s.Close();
                 Console.WriteLine(s.ToArray().Length);
-
-                /*
-                                if (formFile.Length > 0)
-                                {
-                                    var filePath = Path.GetTempFileName();
-
-
-                                    using (var stream = System.IO.File.Create(filePath))
-                                    {
-                                        await formFile.CopyToAsync(stream);
-                                    }
-                                }
-                                */
             }
         }
     }

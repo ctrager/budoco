@@ -1,20 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http.Extensions;
 using Serilog;
 using RazorPartialToString.Services;
 using Microsoft.AspNetCore.HttpOverrides;
-using System.Net;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace budoco
 {
