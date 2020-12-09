@@ -1,14 +1,33 @@
 ## Budoco
 
+Table of Contents
+
+* [What is Budoco?](#What-is-Budoco)
+* [Installation] (#Installation)
+* [Using Budoco] (#Using-Budoco)
+
 ## What is Budoco?
 
-Budoco is a Issue/Bug/Task tracking system.
+Budoco is a Issue (Bug/Task/Ticket) tracking system.
 
-Budoco is a rewrite of **BU**gtracker.NET, but this time on **DO**tnet **CO**re. 
+Budoco is built using .NET 5 ("dotnet core") and PostgreSQL.
 
-Budoco is cross platform and uses PostgreSQL. The old BugTracker.NET runs only on Windows and uses MS Sql Server.
+Budoco is a rewrite of **BU**gtracker.NET, but this time on **DO**tnet **CO**re, hence the name BU-DO-CO. Good things about Budoco which were also true of BugTracker.NET:
 
-More info about BugTracker.NET here: <a href="http://ifdefined.com/bugtrackernet.html">BugTracker.NET home page</a>
+* Budoco is easy to install and start using. 
+* It's fast and lightweight. It won't slow you down.
+* It is highly customizable if you are comfortable tweaking some SQL statements. It's not too hard because you will have some examples to follow.
+* It sends and receives email which gets tracked with the issue. So a good fit for a help desk, or company that works with multiple clients.
+* It has a lightweight permission system specifically specifically for keeping external organizations separate from each other.
+
+Differences from BugTracker.NET:
+* BugTracker.NET allows for more customization, at least for now.
+* BugTracker.NET has a more complicated permission system.
+* BugTracker.NET only runs on Windows. Budoco runs wherever .NET 5 runs. I've been using Linux (Ubuntu).
+* BugTracker.NET uses MS SQL Server. Budoco uses PostgreSQL.
+
+ More about BugTracker.NET here; <a href="http://ifdefined.com/bugtrackernet.html">BugTracker.NET home page</a>
+
 
 I first released BugTracker.NET in 2001, originally to learn the hot new language C#. Within a couple years BugTracker.NET was pretty solid. Probably thousands of organziations used it and maybe many are still using it. But, time moves on. I moved on to other technologies, and then retired and mostly stopped coding in 2016. Dev teams moved on too, to Github and Jira for their issue tracking needs. Microsoft moved on too, from Windows only .NET to cross-platform Dotnet Core. They are no longer developing the technologies BugTracker.NET depends on. So, why did I decide to do a rewrite of BugTracker.NET? Because it was November 2020 and I needed a distraction from the US presedential election and COVID-19, that's why. 
 
@@ -131,24 +150,4 @@ where i_created_by_user = $ME
 
 A key feature of Budoco is that it lets you send out emails related to the issue that get tracked with the issue. When somebody responds to the email, that response is tracked with the issue too.
 
-However there isn't any per-issue permission system yet. Although your query limits what the user can see in the list, any user can see any issue by just typing in the issue number into the "Go To" box at the top. The only permission system so far is that you can designate a user as report-only or view-only.
-
-## Corey's TODO for winter 2020/2021:
-
-* history of changes
-
-* emails from issue need a url link back to the issue
-
-* enable receiving new issues per org, or globally.
-
-* make installation nicer - be prompted to init "active" file, create db, run sql.
-include automatic migration
-
-* editing/deleting own comments
-
-* "reply" link for posts
-
-
-* file upload progress?
-https://stackoverflow.com/questions/15410265/file-upload-progress-bar-with-jquery
 
