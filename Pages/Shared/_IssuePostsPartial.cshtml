@@ -10,10 +10,24 @@
 
                     if (post_type == "history")
                     {
-                        <div class="info_text history">
-                            @dr["p_changed_field"] changed from "@dr["p_before_val"]" to "@dr["p_after_val"]" by @dr["us_username"] on
-                            @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
-                        </div>
+                        string changed_field = (string)@dr["p_changed_field"];
+                        string before_val = (string)dr["p_before_val"];
+                        string after_val = (string)dr["p_after_val"];
+                        if (changed_field == "Description" || changed_field == "Details")
+                        {
+                            <div class="info_text history">
+                                @changed_field changed from
+                                <span title="@before_val">[hover to view]</span> to <span class title="@after_val">[hover to view]</span>
+                                by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="info_text history">
+                                @changed_field changed from "@before_val" to "@after_val"
+                                by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
+                            </div>
+                        }
                     }
                     else
                     {

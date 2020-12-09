@@ -19,12 +19,14 @@ Budoco is a rewrite of **BU**gtracker.NET (aka "btnet"), but this time on **DO**
 * It is highly customizable if you are comfortable tweaking some SQL statements. It's not too hard because you will have some examples to follow.
 * It sends and receives email which gets tracked with the issue. So a good fit for a help desk, or company that works with multiple clients.
 * It has a lightweight permission system specifically specifically for keeping external organizations separate from each other.
+* If you decide to fork the code and change it, your learning curve will be short because I'm too impatient to learn fancy abstractions. Each page is pretty much get the input, read the database, throw up some HTML.
 
 Differences from btnet:
-* btnet allows for more customization, at least for now.
-* btnet has a more complicated permission system.
-* btnet only runs on Windows. Budoco runs wherever .NET 5 runs. I've been using Linux (Ubuntu).
-* btnet uses MS SQL Server. Budoco uses PostgreSQL.
+* Btnet allows for more customization, at least for now. 
+* Btnet has a more complicated permission system. Too comlicated to use without worry.
+* Just in general, btnet tried to please everybody, whereas Budoco is just trying to please about half of you.
+* Btnet only runs on Windows. Budoco runs wherever .NET 5 runs. I've been using Linux (Ubuntu).
+* Btnet uses MS SQL Server. Budoco uses PostgreSQL.
 
  More about btnet here; <a href="http://ifdefined.com/bugtrackernet.html">BugTracker.NET home page</a>
 
@@ -133,11 +135,15 @@ Here we are in the year 2020 and Microsoft adopted a format for configuration fi
 
 ## Running Budoco
 
+For testing:
+
 ```
 dotnet run
 ```
 
 Login as admin/admin. You will be redirected to a reset password page. If you are just playing around and want to create more users, set "DebugAutoConfirmRegistration" to 1 in budoco_config_active.txt to SKIP the step where a user would have to confirm registration by clicking on a link in an email. Change the setting back when you are running it for real.
+
+For production I recommend that you use budoco with nginx. (Corey TODO: explain this more)
 
 ## Using Budoco
 

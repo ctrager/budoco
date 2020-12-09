@@ -151,7 +151,6 @@ namespace budoco.Pages
             if (id != 0)
             {
                 string sql = @"select issues.*, 
-                coalesce(created_by.us_username, '') as ""created_by_username"",
                 coalesce(last_updated.us_username, '') as ""last_updated_username"",
                 coalesce(assigned_to.us_username, '') as ""assigned_to_username"",
                 coalesce(assigned_to.us_is_active, true) as ""assigned_to_is_active"",
@@ -395,16 +394,16 @@ namespace budoco.Pages
 
                 DateTime last_updated_date = (DateTime)bd_db.exec_scalar(sql, GetValuesDict());
 
-                CreateHistoryPosts(dr_before, last_updated_date);
+                WriteHistoryPosts(dr_before, last_updated_date);
 
                 bd_util.set_flash_msg(HttpContext, bd_util.UPDATE_WAS_SUCCESSFUL);
             }
         }
 
-        void CreateHistoryPosts(DataRow dr_before, DateTime last_updated_date)
+        void WriteHistoryPosts(DataRow dr_before, DateTime last_updated_date)
         {
 
-            string sql = @"insert into posts 
+            string sql_for_insert = @"insert into posts 
                 (p_issue, p_post_type, p_changed_field, p_before_val, p_after_val, p_created_by_user, p_created_date)
                 values(@p_issue, @p_post_type, @p_changed_field, @p_before_val, @p_after_val, @p_created_by_user, @p_created_date)";
 
@@ -412,40 +411,97 @@ namespace budoco.Pages
             dict["@p_issue"] = id;
             dict["@p_post_type"] = "history";
             dict["@p_created_by_user"] = bd_util.get_user_id_from_session(HttpContext);
-            dict["@p_created_date"] = last_updated_date; // same date as issue
+            dict["@p_created_date"] = last_updated_date; // same date as issue, sync the history
 
-            if (custom_1_id != (int)dr_before["i_custom_1"])
+            if ((string)dr_before["i_description"] != description)
             {
-                dict["@p_changed_field"] = bd_config.get("CustomFieldLabelSingular1");
-                dict["@p_before_val"] = (string)bd_db.exec_scalar("select c1_name from custom_1 where c1_id = " + Convert.ToString(dr_before["i_custom_1"]));
-                dict["@p_after_val"] = (string)bd_db.exec_scalar("select c1_name from custom_1 where c1_id = " + custom_1_id.ToString());
-                bd_db.exec(sql, dict);
+                dict["@p_changed_field"] = "Description";
+                dict["@p_before_val"] = (string)dr_before["i_description"];
+                dict["@p_after_val"] = description;
+                bd_db.exec(sql_for_insert, dict);
             }
-            /*
-                    WriteHistoryForCustom("1", (int) dr_before["i_custom_1"], custom_1_id, dict);
-                    WriteHistoryForCustom("2", (int) dr_before["i_custom_2"], custom_2_id, dict);
-                    WriteHistoryForCustom("3", (int) dr_before["i_custom_3"], custom_3_id, dict);
-                    WriteHistoryForCustom("4", (int) dr_before["i_custom_4"], custom_4_id, dict);
-                    WriteHistoryForCustom("5", (int) dr_before["i_custom_5"], custom_5_id, dict);
-                    WriteHistoryForCustom("6", (int) dr_before["i_custom_6"], custom_6_id, dict);
-            */
+
+            string before_details = (string)dr_before["i_details"];
+            if (before_details != details)
+            {
+                dict["@p_changed_field"] = "Details";
+                dict["@p_before_val"] = string.IsNullOrEmpty(before_details) ? "[None]" : before_details;
+                dict["@p_after_val"] = string.IsNullOrEmpty(details) ? "[None]" : details;
+                bd_db.exec(sql_for_insert, dict);
+            }
+
+            // Write posts for all the dropdowns
+            string sql_for_get_text = null;
+            string changed_field_name = null;
+
+            // org
+            changed_field_name = "Organization";
+            sql_for_get_text = "select og_name from organizations where og_id = ";
+            WriteHistoryPost(changed_field_name, (int)dr_before["i_organization"], organization_id, sql_for_get_text, sql_for_insert, dict);
+
+            // assigned
+            changed_field_name = "Assigned";
+            sql_for_get_text = "select us_username from users where us_id = ";
+            WriteHistoryPost(changed_field_name, (int)dr_before["i_assigned_to_user"], assigned_to_user_id, sql_for_get_text, sql_for_insert, dict);
+
+            // 1
+            changed_field_name = bd_config.get("CustomFieldLabelSingular1");
+            sql_for_get_text = "select c1_name from custom_1 where c1_id = ";
+            WriteHistoryPost(changed_field_name, (int)dr_before["i_custom_1"], custom_1_id, sql_for_get_text, sql_for_insert, dict);
+            // 2
+            changed_field_name = bd_config.get("CustomFieldLabelSingular2");
+            sql_for_get_text = "select c2_name from custom_2 where c2_id = ";
+            WriteHistoryPost(changed_field_name, (int)dr_before["i_custom_2"], custom_2_id, sql_for_get_text, sql_for_insert, dict);
+            // 3
+            changed_field_name = bd_config.get("CustomFieldLabelSingular3");
+            sql_for_get_text = "select c3_name from custom_3 where c3_id = ";
+            WriteHistoryPost(changed_field_name, (int)dr_before["i_custom_3"], custom_3_id, sql_for_get_text, sql_for_insert, dict);
+            // 4
+            changed_field_name = bd_config.get("CustomFieldLabelSingular4");
+            sql_for_get_text = "select c4_name from custom_4 where c4_id = ";
+            WriteHistoryPost(changed_field_name, (int)dr_before["i_custom_4"], custom_4_id, sql_for_get_text, sql_for_insert, dict);
+            // 5
+            changed_field_name = bd_config.get("CustomFieldLabelSingular5");
+            sql_for_get_text = "select c5_name from custom_5 where c5_id = ";
+            WriteHistoryPost(changed_field_name, (int)dr_before["i_custom_5"], custom_5_id, sql_for_get_text, sql_for_insert, dict);
+            // 6
+            changed_field_name = bd_config.get("CustomFieldLabelSingular6");
+            sql_for_get_text = "select c6_name from custom_6 where c6_id = ";
+            WriteHistoryPost(changed_field_name, (int)dr_before["i_custom_6"], custom_6_id, sql_for_get_text, sql_for_insert, dict);
         }
-        /*
-            void WriteHistoryForCustom(string number, int before_val, int after_val, Dictionary<string, dynamic> dict) 
+
+        void WriteHistoryPost(string changed_field_name, int before_val, int after_val, string sql_for_get_text, string sql_for_insert, Dictionary<string, dynamic> dict)
+        {
+            if (after_val == before_val)
+                return;
+
+            if (before_val == 0)
             {
-                return; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                if (after_val != before_val) 
-                {
-                    string sql = "select c$_name from custom_$ where c$_id = ";
-                    sql = sql.Replace("$", number);
-                    dict["@p_changed_field"] = bd_config.get("CustomFieldLabelSingular" + number);
-                    dict["@p_before_val"] = (string) bd_db.exec_scalar(sql + before_val.ToString());
-                    dict["@p_after_val"] = (string) bd_db.exec_scalar(sql + after_val.ToString());
-                    bd_db.exec(sql, dict);
-                }       
+                dict["@p_before_val"] = "[None]";
+            }
+            else
+            {
+                // get the text for this id
+                dict["@p_before_val"] = (string)bd_db.exec_scalar(sql_for_get_text + before_val.ToString());
             }
 
-        */
+            if (after_val == 0)
+            {
+                dict["@p_after_val"] = "[None]";
+            }
+            else
+            {
+                // get the text for this id
+                dict["@p_after_val"] = (string)bd_db.exec_scalar(sql_for_get_text + after_val.ToString());
+            }
+
+            // insert into posts
+            dict["@p_changed_field"] = changed_field_name;
+            bd_db.exec(sql_for_insert, dict);
+
+        }
+
+
         Dictionary<string, dynamic> GetValuesDict()
         {
             var dict = new Dictionary<string, dynamic>();
