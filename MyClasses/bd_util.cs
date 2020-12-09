@@ -7,6 +7,7 @@ using Serilog;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace budoco
 {
@@ -26,7 +27,7 @@ namespace budoco
         public const string UPDATE_WAS_SUCCESSFUL = "Update was successful.";
         public const string NAME_ALREADY_USED = "Name is already being used.";
         public const string NAME_IS_REQUIRED = "Name is required.";
-
+        public const string NEXT_URL = "next_url";
 
         public static void log(object msg)
         {
@@ -79,33 +80,50 @@ namespace budoco
             var options = new CookieOptions();
             options.Expires = DateTime.Now.AddHours(12);
             options.IsEssential = true;
-            options.SameSite = SameSiteMode.Strict;
+            options.SameSite = SameSiteMode.Lax; // so that when we click a link in email it works
             return options;
         }
-
 
         public static bool check_user_permissions(HttpContext context, bool must_be_admin = false)
         {
 
             string session_id = context.Request.Cookies[bd_util.BUDOCO_SESSION_ID];
+            bool redirect = false;
+            DataRow dr = null;
 
-            if (session_id is null)
+            if (string.IsNullOrEmpty(session_id))
             {
-                context.Response.Redirect("/Login");
-                return false;
+                redirect = true;
             }
-
-            string sql = @"/*check_user_permissions*/ select * from sessions 
+            else
+            {
+                string sql = @"/*check_user_permissions*/ select * from sessions 
                 inner join users on se_user = us_id
                 where se_id = '" + session_id + "'; /*check_user_permissions */";
 
-            DataRow dr = bd_db.get_datarow(sql);
+                dr = bd_db.get_datarow(sql);
 
-            if (dr is null)
+                if (dr is null)
+                {
+                    redirect = true;
+                }
+            }
+
+            if (redirect)
             {
+                // for user clicking on links in emails
+                string url = context.Request.GetDisplayUrl();
+                if (url.Contains("Issue?id="))
+                {
+                    context.Session.SetString(NEXT_URL, url);
+                }
+
                 context.Response.Redirect("/Login");
                 return false;
             }
+
+            // User is logged in, so stash details in session
+            // for downstream
 
             bool is_active = (bool)dr["us_is_active"];
             bool is_admin = (bool)dr["us_is_admin"];

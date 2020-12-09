@@ -713,10 +713,15 @@ namespace budoco.Pages
             // [#123-76767] My computer won't turn on
             string subject = identifier + (string)dr_issue["i_description"];
 
+            string issue_email_preamble = bd_config.get(bd_config.IssueEmailPreamble);
+            issue_email_preamble = issue_email_preamble.Replace("$URL",
+                bd_config.get(bd_config.WebsiteUrlRootWithoutSlash) + "/Issue?id=" + id.ToString());
+            string email_body = issue_email_preamble + "\n\n" + post_text;
+
             bd_email.queue_email("post",
                 post_email_to,
                 subject,
-                post_text,
+                email_body,
                 post_id);
 
         }

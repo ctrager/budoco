@@ -9,7 +9,8 @@
     
     @{
         string referer = HttpContext.Request.Headers["Referer"].ToString();
-        if (HttpContext.Request.Headers["Referer"].ToString().Contains("Search"))
+
+        if (referer.Contains("Search"))
         {
             <a href="@referer">Back to Search</a>
         }

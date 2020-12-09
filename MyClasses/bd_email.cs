@@ -171,9 +171,6 @@ namespace budoco
                 int pa_id = (int)dr["pa_id"];
                 sql = "/*add_file_attachments pa*/ select pa_content from post_attachments where pa_id = " + pa_id.ToString();
                 byte[] bytea = await bd_db.get_bytea_async(sql);
-                Console.WriteLine("bytea.Length");
-                Console.WriteLine(bytea.Length);
-
 
                 // for example "image", "jpeg"
                 string[] content_type_pair = ((string)dr["pa_file_content_type"]).Split("/");

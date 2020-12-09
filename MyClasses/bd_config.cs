@@ -102,6 +102,8 @@ namespace budoco
 
         public const string RegistrationRequestExpirationInHours = "RegistrationRequestExpirationInHours";
         public const string InviteUserExpirationInHours = "InviteUserExpirationInHours";
+        public const string IssueEmailPreamble = "IssueEmailPreamble";
+
 
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 

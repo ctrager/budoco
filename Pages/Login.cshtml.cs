@@ -36,7 +36,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-
             if (!IsValid())
             {
                 bd_util.set_flash_errs(HttpContext, errs);
@@ -57,13 +56,26 @@ namespace budoco.Pages
             dict["@se_user"] = user_id;
             bd_db.exec(sql, dict);
 
-            Response.Redirect("Issues");
+            string next_url = HttpContext.Session.GetString(bd_util.NEXT_URL);
+            Console.WriteLine(" qqqqqqqqqqqqqqq next_url " + next_url);
+            HttpContext.Session.SetString(bd_util.NEXT_URL, "");
+
+            if (!string.IsNullOrEmpty(next_url)
+            && next_url.Contains("Issue?id="))
+            {
+                Response.Redirect(next_url);
+            }
+            else
+            {
+                Response.Redirect("Issues");
+            }
 
         }
 
         public void Signout()
         {
             string session_id = HttpContext.Session.GetString(bd_util.BUDOCO_SESSION_ID);
+            HttpContext.Session.SetString(bd_util.BUDOCO_SESSION_ID, "");
             string sql = "delete from sessions where se_id = '" + session_id + "'";
             bd_db.exec(sql);
             Response.Redirect("/Login");

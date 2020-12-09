@@ -40,13 +40,14 @@ namespace budoco
 
             // services.AddDistributedMemoryCache();
 
-            // services.Configure<CookiePolicyOptions>(options =>
-            //         {
-            //             // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //             // options.CheckConsentNeeded = context => false; // Default is true, make it false
-            //             //options.CheckConsentNeeded = false;
-            //             options.
-            //         });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                // options.CheckConsentNeeded = context => false; // Default is true, make it false
+                //options.CheckConsentNeeded = false;
+                // So that if we click a budoco link in email, it works
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
             services.AddHttpContextAccessor();
 
@@ -54,6 +55,7 @@ namespace budoco
             {
                 options.IdleTimeout = TimeSpan.FromDays(1);
                 options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.Lax;
             });
 
             services.AddRazorPages();
