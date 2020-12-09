@@ -1,15 +1,19 @@
-﻿/* tags */
+﻿@import "reset.css";
+@import "variables.css";
+@import "new.css"; /* form now */
 
-body {
-    margin: 8px;
+:root {
+    font-size: var(--font-size);
 }
+
+/* tags */
 
 body,
 button,
 input,
 select {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
+    font-family: var(--font-family);
+    font-size: 1rem;
 }
 
 select {
@@ -68,9 +72,9 @@ input:disabled {
     color: black;
 }
 
-div {
+/*div {
     margin-bottom: 15px;
-}
+}*/
 
 /* done with tags */
 
@@ -168,7 +172,7 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
 
 /* in the layouts, the container for the individual pages */
 .content_parent {
-    text-align: center;
+    /*text-align: center;*/
     position: relative;
 }
 
@@ -182,14 +186,14 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
     text-align: left;
 }
 
-.posts_outer {
+/*.posts_outer {
     text-align: center;
-}
+}*/
 
-.posts_inner {
+/*.posts_inner {
     display: inline-block;
     text-align: left;
-}
+}*/
 
 .flash_parent {
     text-align: center;
@@ -201,11 +205,11 @@ https://stackoverflow.com/questions/283961/centering-a-div-block-without-the-wid
 }
 
 /* FORMS */
-.form_div {
+/*.form_div {
     display: inline-block;
-}
+}*/
 
-form {
+/*form {
     text-align: left;
     background-color: #eeeeee;
     border-radius: 8px;
@@ -215,16 +219,20 @@ form {
     padding-right: 10px;
     margin-bottom: 10px;
 
+}*/
+
+.form_table {
+    width: 100%;
 }
 
 .form_table,
-.form_table>tr,
-.form_table>td {
+.form_table > tr,
+.form_table > td {
     border-collapse: collapse;
 }
 
 .form_table>tbody>tr>td {
-    padding: 5px;
+    padding: 5px 0;
 }
 
 
@@ -354,12 +362,12 @@ table.dt>tbody>tr>td {
     width: 700px;
 }
 
-.info_text {
+/*.info_text {
     font-size: 14px;
     color: green;
-}
+}*/
 
-.post {
+/*.post {
     border: 1px solid gray;
     padding: 5px;
     margin-top: 20px;
@@ -367,7 +375,7 @@ table.dt>tbody>tr>td {
     background: #fafffa;
     width: 900px;
     border-radius: 6px;
-}
+}*/
 
 
 pre {
@@ -456,18 +464,18 @@ textarea#sql {
     margin: 0px;
 }
 
-.html_part_iframe,
-.post_text
+.html_part_iframe/*,*/
+/*.post_text*/
  {
     border: 1px dashed gray;
     background-color: #fafafa;
     margin-bottom: 8px;
     width: 890px;
 }
-.history {
+/*.history {
     width: 900px;
 
-}
+}*/
 
 .html_part_iframe {
     resize: both;

@@ -1,108 +1,105 @@
 @{
     if (Model.dt_posts is not null)
     {
-        <div class="posts_inner">
-            @{
-                foreach (DataRow dr in Model.dt_posts.Rows)
-                {
-                    int p_id = (int)dr[0];
-                    string post_type = (string)dr["p_post_type"];
+        foreach (DataRow dr in Model.dt_posts.Rows)
+        {
+            int p_id = (int)dr[0];
+            string post_type = (string)dr["p_post_type"];
 
-                    if (post_type == "history")
-                    {
-                        <div class="info_text history">
-                            @dr["p_changed_field"] changed from "@dr["p_before_val"]" to "@dr["p_after_val"]" by @dr["us_username"] on
-                            @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="post" id="post_@p_id">
+            if (post_type == "history")
+            {
+                <div class="header history">
+                    @dr["p_changed_field"] changed from "@dr["p_before_val"]" to "@dr["p_after_val"]" by @dr["us_username"] on
+                    @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
+                </div>
+            }
+            else
+            {
+                <div class="post" id="post_@p_id">
 
-                            @{
-                                if (post_type == "comment")
-                                {
-                                    <div class="info_text">
-                                        Comment by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
-                                    </div>
-                                    string p_text = (string)dr["p_text"];
-                                    if (!string.IsNullOrWhiteSpace(p_text))
-                                    {
-                                        <pre class="post_text">@p_text</pre>
-                                    }
-                                }
+                    @{
+                        if (post_type == "comment")
+                        {
+                            <div class="header">
+                                Comment by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
+                            </div>
+                            string p_text = (string)dr["p_text"];
+                            if (!string.IsNullOrWhiteSpace(p_text))
+                            {
+                                <pre class="body">@p_text</pre>
+                            }
+                        }
 
-                                else if (post_type == "email")
-                                {
-                                    <div class="info_text">
-                                        Email sent by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
-                                    </div>
-                                    <div>
-                                        <span>To: @dr["p_email_to"]</span>
-                                    </div>
+                        else if (post_type == "email")
+                        {
+                            <div class="header">
+                                Email sent by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
+                            </div>
+                            <div>
+                                <span>To: @dr["p_email_to"]</span>
+                            </div>
 
-                                    <pre class="post_text">@dr["p_text"]</pre>
-                                }
+                            <pre class="body">@dr["p_text"]</pre>
+                        }
 
-                                else if (post_type == "reply")
-                                {
-                                    <div class="info_text">
-                                        Email received from @dr["p_email_from"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
-                                    </div>
-                                    string html_part = (string)dr["p_email_from_html_part"];
-                                    if (html_part != "")
-                                    {
-                                        <!--sandbox prevents script-->
-                                        <iframe sandbox="allow-same-origin" onload="resizeIframe(this)" class="html_part_iframe"
-                                            src="HtmlPart?p_id=@p_id">
-                                        </iframe>
-                                    }
-                                    else
-                                    {
-                                        <pre class="post_text">@dr["p_text"]</pre>
-                                    }
-                                }
+                        else if (post_type == "reply")
+                        {
+                            <div class="header">
+                                Email received from @dr["p_email_from"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
+                            </div>
+                            string html_part = (string)dr["p_email_from_html_part"];
+                            if (html_part != "")
+                            {
+                                <!--sandbox prevents script-->
+                                <iframe sandbox="allow-same-origin" onload="resizeIframe(this)" class="html_part_iframe"
+                                    src="HtmlPart?p_id=@p_id">
+                                </iframe>
+                            }
+                            else
+                            {
+                                <pre class="body">@dr["p_text"]</pre>
+                            }
+                        }
 
 
 
-                                DataTable dt_files = Model.GetPostAttachments(p_id);
-                                foreach (DataRow file_row in dt_files.Rows)
-                                {
-                                    int pa_id = (int)file_row[0];
-                                    string content_type = (string)file_row["pa_file_content_type"];
-                                    if (content_type != "")
-                                    {
-                                        <div class="info_text">
-                                            File: @file_row["pa_file_name"], Size: @file_row["pa_file_length"],
-                                            Type: @file_row["pa_file_content_type"]]
-                                            &nbsp;&nbsp;
-                                            <a href="/File?handler=File&pa_id=@pa_id" download="@file_row["pa_file_name"]">Download</a>
-                                            &nbsp;&nbsp;
+                        DataTable dt_files = Model.GetPostAttachments(p_id);
+                        foreach (DataRow file_row in dt_files.Rows)
+                        {
+                            int pa_id = (int)file_row[0];
+                            string content_type = (string)file_row["pa_file_content_type"];
+                            if (content_type != "")
+                            {
+                                <div class="header">
+                                    File: @file_row["pa_file_name"], Size: @file_row["pa_file_length"],
+                                    Type: @file_row["pa_file_content_type"]]
+                                    &nbsp;&nbsp;
+                                    <a href="/File?handler=File&pa_id=@pa_id" download="@file_row["pa_file_name"]">Download</a>
+                                    &nbsp;&nbsp;
 
-                                            @{
-                                                if (content_type.Contains("image"))
-                                                {
-                                                    <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@pa_id', this)">View</div>
-                                                }
-                                            }
-
-                                        </div>
+                                    @{
                                         if (content_type.Contains("image"))
                                         {
-                                            <div style="display:none" class="post_image" id="image_div_@pa_id">
-                                                <img class="post_img" src="/File?handler=File&pa_id=@pa_id" />
-                                            </div>
+                                            <div class="show_hide_image fake_link" onclick="show_hide_image('#image_div_@pa_id', this)">View</div>
                                         }
                                     }
+
+                                </div>
+                                if (content_type.Contains("image"))
+                                {
+                                    <div style="display:none" class="post_image" id="image_div_@pa_id">
+                                        <img class="post_img" src="/File?handler=File&pa_id=@pa_id" />
+                                    </div>
                                 }
                             }
-
-                        </div>
-                        <!--end post-->
+                        }
                     }
-                }
+
+                </div>
+                <!--end post-->
             }
-        </div>
+        }
+
         <!--posts inner-->
     }
 

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Issue";
 }
 
-<div class="just_left">
+<div class="navigation">
     
     @{
         string referer = HttpContext.Request.Headers["Referer"].ToString();
@@ -43,8 +43,9 @@
 </div>
 <partial name="_FlashPartial" />
 
-    <div class="form_div">
-    <form class="issue_form" method="post">
+<div class="column">
+    <div class="form">
+    <form method="post">
 
         <input type="hidden" asp-for="force_create" value=""/>
         @{
@@ -192,8 +193,8 @@
 
         bool us_user_is_report_only = bd_util.is_user_report_only(HttpContext);
         
-        <div class="form_div">
-            <form class="post_form" id="post_form" method="post" enctype="multipart/form-data">
+        <div class="form">
+            <form id="post_form" method="post" enctype="multipart/form-data">
                 <table class="form_table">
 
                     @{
@@ -278,6 +279,8 @@
         
      }
 }
+
+</div>
 
 @section Scripts {
     

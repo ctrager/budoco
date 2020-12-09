@@ -1,0 +1,79 @@
+﻿@import "variables.css";
+
+html, body {
+    min-height: 100vh;
+}
+
+body {
+    padding: 8px;
+}
+
+/* layout */
+
+.float-left {
+    float: left !important;
+}
+
+.float-right {
+    float: right !important;
+}
+
+.float-none {
+    float: none !important;
+}
+
+.column {
+    width: 960px;
+    margin: 0 auto;
+}
+
+/* layout */
+
+/* menu */
+/* menu */
+
+/* navigation */
+
+.navigation {
+    margin-bottom: 20px;
+}
+
+/* navigation */
+
+/* form */
+
+.form {
+    text-align: left;
+    background-color: var(--form-background-color);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* form */
+
+/* post */
+
+.post {
+    background-color: var(--post-background-color);
+    border: 1px solid var(--post-border-color);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+    .post .header {
+        color: var(--post-header-color);
+        font-size: 0.875rem;
+    }
+
+        .post .header:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+    .post .body {
+        background-color: var(--post-body-background-color);
+        border: 1px dashed var(--post-body-border-color);
+    }
+
+/* post */

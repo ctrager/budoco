@@ -1,0 +1,17 @@
+﻿:root {
+    /* main */
+    --background-color: #fff;
+    --font-family: Arial, sans-serif;
+    --font-size: 16px;
+    --color: #333;
+    /* menu */
+    --form-background-color: #eee;
+    /* form */
+    --form-background-color: #eee;
+    /* post */
+    --post-background-color: #fafffa;
+    --post-border-color: gray;
+    --post-header-color: green;
+    --post-body-background-color: #fafafa;
+    --post-body-border-color: gray;
+}
