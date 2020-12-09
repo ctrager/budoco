@@ -22,7 +22,7 @@
     @{
         if (bd_config.get(bd_config.UseCustomCss) == 1)
         {
-            string custom_css_filename = bd_config.get(bd_config.UseCustomCss);
+            string custom_css_filename = bd_config.get(bd_config.CustomCssFilename);
             <link rel="stylesheet" href="/@custom_css_filename" />
         }
     }

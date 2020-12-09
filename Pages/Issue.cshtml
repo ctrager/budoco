@@ -38,8 +38,7 @@
         {
             <span class="gray">Next</span>
         }
-
-    }
+    } <!--end code-->
 </div>
 <partial name="_FlashPartial" />
 
@@ -47,8 +46,8 @@
     <form class="issue_form" method="post">
 
         <input type="hidden" asp-for="force_create" value=""/>
-        @{
-            
+        
+            @{
             if (Model.id != 0)
             {
                 <div id="id_and_info">
@@ -63,129 +62,100 @@
                     }
                     </span>
                 </div>
-            
             }
-        }
+            }<!--end code-->
+        
+      
         <table class="form_table">
         
-        <tr>
-            <td><label>Description</label>
-            <td colspan=3><input class="issue_description_input" asp-for="description" disabled="@Model.disable_dropdowns_when_not_null"></input>
-        </tr>
+            <tr>
+                <td><label>Description</label>
+                <td colspan=3><input class="issue_description_input" asp-for="description" disabled="@Model.disable_dropdowns_when_not_null"></input>
+            </tr>
 
-        <tr>
-            <td><label>Details</label>
-            <td colspan=3><textarea class="issue_textarea" asp-for="details" disabled="@Model.disable_dropdowns_when_not_null"></textarea>
-        </tr>
+            <tr>
+                <td><label>Details</label>
+                <td colspan=3><textarea class="issue_textarea" asp-for="details" disabled="@Model.disable_dropdowns_when_not_null"></textarea>
+            </tr>
         
-
         </table>
-        <table class="form_table">
+
+        <div class="dropdown_container">
             
-            <td><!--left-->
-                <table class="form-table"><!--left-->
-                
-                <tr class="issue_organization">
-                    <td><label class="issue_select_label">Organization</label>
-                    <td><select  class="issue_select" asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.disable_dropdowns_when_not_null">
-                    </select>
-                </tr>
-        
-                @{    
-                if (bd_config.get(bd_config.CustomFieldEnabled1) == 1) 
-                {
-                <tr class="issue_custom_1">
-                    <td><label class="issue_select_label">@Model.custom_1_label</label>
-                    <td><select  class="issue_select" asp-for="custom_1_id" asp-items="@Model.custom_1_list" disabled="@Model.disable_dropdowns_when_not_null">
-                        <option value="0">[None]</option>
-                     </select>
-                </tr>
-                }
+            @{
+
+            <label class="issue_select_label" id="organization_label">Organization</label>
+            <select class="issue_select" asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.disable_dropdowns_when_not_null">
+            </select>
+            
+            if (bd_config.get(bd_config.CustomFieldEnabled1) == 1) 
+            {
+                <label class="issue_select_label" id="custom_1_label">@Model.custom_1_label</label>
+                <select  class="issue_select" asp-for="custom_1_id" asp-items="@Model.custom_1_list" disabled="@Model.disable_dropdowns_when_not_null">
+                    <option value="0">[None]</option>
+                </select>
+            }
+
+            if (bd_config.get(bd_config.CustomFieldEnabled2) == 1) 
+            {
+                <label class="issue_select_label" id="custom_2_label">@Model.custom_2_label</label>
+                <select  class="issue_select" asp-for="custom_2_id" asp-items="@Model.custom_2_list" disabled="@Model.disable_dropdowns_when_not_null">
+                    <option value="0">[None]</option>
+                </select>
+            }
+            
+            if (bd_config.get(bd_config.CustomFieldEnabled3) == 1) 
+            {
+                <label class="issue_select_label" id="custom_3_label">@Model.custom_3_label</label>
+                <select  class="issue_select" asp-for="custom_3_id" asp-items="@Model.custom_3_list" disabled="@Model.disable_dropdowns_when_not_null">
+                    <option value="0">[None]</option>
+                </select>
+            }
+            
+            if (bd_config.get(bd_config.CustomFieldEnabled4) == 1) 
+            {
+                <label class="issue_select_label" id="custom_4_label">@Model.custom_4_label</label>
+                <select  class="issue_select" asp-for="custom_4_id" asp-items="@Model.custom_4_list" disabled="@Model.disable_dropdowns_when_not_null">
+                    <option value="0">[None]</option>
+                </select>
+            }
+            
+            if (bd_config.get(bd_config.CustomFieldEnabled5) == 1) 
+            {
+                <label class="issue_select_label" id="custom_5_label">@Model.custom_5_label</label>
+                <select  class="issue_select" asp-for="custom_5_id" asp-items="@Model.custom_5_list" disabled="@Model.disable_dropdowns_when_not_null">
+                    <option value="0">[None]</option>
+                </select>
+            }
+            
+            if (bd_config.get(bd_config.CustomFieldEnabled6) == 1) 
+            {
+                <label class="issue_select_label" id="custom_6_label">@Model.custom_6_label</label>
+                <select  class="issue_select" asp-for="custom_6_id" asp-items="@Model.custom_6_list" disabled="@Model.disable_dropdowns_when_not_null">
+                    <option value="0">[None]</option>
+                </select>
+            }
+            }<!--end code-->
+            
     
-                if (bd_config.get(bd_config.CustomFieldEnabled2) == 1) 
-                {
-                <tr class="issue_custom_2">
-                    <td><label class="issue_select_label">@Model.custom_2_label</label>
-                    <td><select  class="issue_select" asp-for="custom_2_id" asp-items="@Model.custom_2_list" disabled="@Model.disable_dropdowns_when_not_null">
-                        <option value="0">[None]</option>
-                     </select>
-                </tr>
-                }
-                
-                if (bd_config.get(bd_config.CustomFieldEnabled3) == 1) 
-                {
-                <tr class="issue_custom_3">
-                    <td><label class="issue_select_label">@Model.custom_3_label</label>
-                    <td><select  class="issue_select" asp-for="custom_3_id" asp-items="@Model.custom_3_list" disabled="@Model.disable_dropdowns_when_not_null">
-                        <option value="0">[None]</option>
-                     </select>
-                </tr>
-                }
-                if (bd_config.get(bd_config.CustomFieldEnabled4) == 1) 
-                {
-                <tr class="issue_custom_4">
-                    <td><label class="issue_select_label">@Model.custom_4_label</label>
-                    <td><select  class="issue_select" asp-for="custom_4_id" asp-items="@Model.custom_4_list" disabled="@Model.disable_dropdowns_when_not_null">
-                        <option value="0">[None]</option>
-                     </select>
-                </tr>
-                }
-                if (bd_config.get(bd_config.CustomFieldEnabled5) == 1) 
-                {
-                <tr class="issue_custom_5">
-                    <td><label class="issue_select_label">@Model.custom_5_label</label>
-                    <td><select  class="issue_select" asp-for="custom_5_id" asp-items="@Model.custom_5_list" disabled="@Model.disable_dropdowns_when_not_null">
-                        <option value="0">[None]</option>
-                     </select>
-                </tr>
-                }
-                if (bd_config.get(bd_config.CustomFieldEnabled6) == 1) 
-                {
-                <tr class="issue_custom_6">
-                    <td><label class="issue_select_label">@Model.custom_6_label</label>
-                    <td><select  class="issue_select" asp-for="custom_6_id" asp-items="@Model.custom_6_list" disabled="@Model.disable_dropdowns_when_not_null">
-                        <option value="0">[None]</option>
-                     </select>
-                </tr>
-                }
-                }
-                </table> <!--left-->
-            </td><!--left-->
-            
-            
-            <td><!--right-->
-                <table>
-                <tr class="issue_assigned_to">
-                    <td><label class="issue_select_label">Assigned To</label>
-                    <td><select  class="issue_select" asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_user_list" disabled="@Model.disable_dropdowns_when_not_null">
-                        <option value="0">[None]</option>
-                    </select>
-                 
-                </tr>
-                </table><!--right-->
-            </td><!--right-->
-        </tr>
-          
-        </table>
-  
+        </div> <!-- dropdown container -->
 
         @{
-            if (Model.disable_dropdowns_when_not_null is null)
-            {
-                string button_text = (Model.id == 0) ? "Create" : "Update";
-                <div>
-                    <button id="create_or_update_button" type="submit">@button_text</button>
-                    <span class="prep_for_another fake_link" onclick="prep_for_another()">Use this issue as a starting point for new issue</span>
-  
-                </div>
-            }
-        }
+        if (Model.disable_dropdowns_when_not_null is null)
+        {
+            string button_text = (Model.id == 0) ? "Create" : "Update";
+            <div>
+                <button id="create_or_update_button" type="submit">@button_text</button>
+                <span class="prep_for_another fake_link" onclick="prep_for_another()">Use this issue as a starting point for new issue</span>
 
+            </div>
+        }
+        }<!--end code-->
 
     </form>
     </div> <!--form_div-->
 
-@{
+    @{
     if (Model.id != 0)
     {
         <div id="posts" class="posts_outer"></div>
@@ -203,36 +173,43 @@
                     } 
                     else
                     {
-                    <tr><td>
-                        <input onchange="comment_or_email(this)" type="radio" id="comment" name="post_type" value="comment" checked>
-                        <label for="comment">Comment</label>
-                        <input onchange="comment_or_email(this)" type="radio" id="email" name="post_type" value="email">
-                        <label for="email">Email</label><br>
-                    </td></tr>
-                    }
+                        <!-- comment or email radio buttons -->
+                        <tr><td>
+                            <input onchange="comment_or_email(this)" type="radio" id="comment" name="post_type" value="comment" checked>
+                            <label for="comment">Comment</label>
+                            <input onchange="comment_or_email(this)" type="radio" id="email" name="post_type" value="email">
+                            <label for="email">Email</label><br>
+                        </td></tr>
                     }
                     
-                    @{
-                        if (Model.dt_post_email_to is not null) {
-                    <tr id="email_fields" style="display:none;"><td>
-                        <button type="button" onclick="open_post_email_to_select()" id="post_email_to_label" placeholder="user@example.com">To:</button>
-                        <div id="post_email_to_select" style="visibility: hidden;" 
-                            class="post_email_to_select dont_flash_when_selected" tabindex="999"><!--tabindex is for onblur-->
-                            <div class="post_email_to_select_close">
-                                <span onclick="close_post_email_to_select()">Close</span>
-                            </div>
-                            @{
-                                 foreach (DataRow dr in Model.dt_post_email_to.Rows)
-                                {
-                                    <div class="post_email_to_select_row">@dr[0]</div>
+                    if (Model.dt_post_email_to is not null)
+                    {
+                        <tr id="email_fields" style="display:none;"><td>
+                          
+                            <!-- "To" button -->
+                            <button type="button" onclick="open_post_email_to_select()" id="post_email_to_label" placeholder="user@example.com">To:</button>
+                        
+                            <!-- modal fake dropdown of to addresses -->
+                            <div id="post_email_to_select" style="visibility: hidden;" 
+                                class="post_email_to_select dont_flash_when_selected" tabindex="999"><!--tabindex is for onblur-->
+                                <div class="post_email_to_select_close">
+                                    <span onclick="close_post_email_to_select()">Close</span>
+                                </div>
+                                @{
+                                    foreach (DataRow dr in Model.dt_post_email_to.Rows)
+                                    {
+                                        <div class="post_email_to_select_row">@dr[0]</div>
+                                    }
                                 }
-                            }
-                        </div> 
-                        <span id="hidden_row_count" style="display:none;">@Model.dt_post_email_to.Rows.Count</span>                        
-                        <input class="post_form_email_to_input" asp-for="post_email_to" value="">
-                    </td></tr>
-                        }
+                            </div> 
+                           
+                            <!-- used for sizing the list of addresses -->
+                            <span id="hidden_row_count" style="display:none;">@Model.dt_post_email_to.Rows.Count</span>                        
+                            <input class="post_form_email_to_input" asp-for="post_email_to" value="">
+                        </td></tr>
                     }
+                    }<!--end code-->
+                    
 
                     <tr><td>
                         <textarea class="post_form_textarea" name="post_text" id="post_text"></textarea>

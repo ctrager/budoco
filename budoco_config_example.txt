@@ -71,7 +71,11 @@ ImapPassword: YOUR_PASSWORD   <<< CHANGE THIS
 # You can enable/disable them, rename them, whatever.
 # Youl would also want to adjust your Issue Queries to name
 # in sync with the names here. 
+#
+# See also the CustomCssFilename setting below which has an example of 
+# arranging the items in the order you want.
 ###############################################################################
+##############################################################################
 
 CustomFieldEnabled1: 1
 CustomFieldLabelSingular1: Status

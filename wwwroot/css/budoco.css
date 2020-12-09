@@ -255,10 +255,6 @@ form {
     margin-bottom: 5px;
 }
 
-.issue_select {
-    width: 290px;
-}
-
 #status_elements {
     order: 6;
 }
@@ -283,12 +279,6 @@ form {
     width: 850px;
 }
 
-/*
-#post_email_to_select {
-    width: 300px;
-}
-*/
-
 .name_input {
     width: 300px;
 }
@@ -303,16 +293,7 @@ form {
 
 /* prove I can hide things on the issue form */
 
-/*
-.issue_organization {
-    display: none;
-}
 
-.issue_assigned_to {
-    display: none;
-}
-
-*/
 
 /* data tables */
 table.dt {
@@ -503,5 +484,99 @@ textarea#sql {
     margin: 20px;
     padding: 5px;
     border-radius: 5px;
+}
 
+
+.issue_select {
+    margin-top: 5px;
+    margin-right: 40px;
+}
+.issue_select_label {
+    margin-top: 5px;
+}
+
+.dropdown_container {
+    padding-left: 5px;
+    display: grid;
+    grid-template-columns: 110px 330px 110px 330px;
+}
+
+#organization_label {
+    grid-row-start: 1;
+    grid-column-start: 1;
+}
+
+#organization_id {
+    grid-row-start: 1;
+    grid-column-start: 2;
+}
+
+#assigned_to_user_label {
+    grid-row-start: 1;
+    grid-column-start: 3;
+}
+
+#assigned_to_user_id {
+    grid-row-start: 1;
+    grid-column-start: 4;
+}
+
+/* status in initial config */
+#custom_1_label {
+    grid-row-start: 2;
+    grid-column-start: 3;
+}
+#custom_1_id {
+    grid-row-start: 2;
+    grid-column-start: 4;
+}
+
+/* priority in initial config */
+#custom_2_label {
+    grid-row-start: 2;
+    grid-column-start: 1;
+}
+#custom_2_id {
+    grid-row-start: 2;
+    grid-column-start: 2;
+}
+
+/* colors in initial config */
+#custom_3_label {
+    grid-row-start: 6;
+    grid-column-start: 1;
+}
+#custom_3_id {
+    grid-row-start: 6;
+    grid-column-start: 2;
+}
+
+/* category in initial config */
+#custom_4_label {
+    grid-row-start: 3;
+    grid-column-start: 1;
+}
+#custom_4_id {
+    grid-row-start: 3;
+    grid-column-start: 2;
+}
+
+/* five in initial config */
+#custom_5_label {
+    grid-row-start: 7;
+    grid-column-start: 1;
+}
+#custom_5_id {
+    grid-row-start: 7;
+    grid-column-start: 2;
+}
+
+/* six in initial config */
+#custom_6_label {
+    grid-row-start: 8;
+    grid-column-start: 1;
+}
+#custom_6_id {
+    grid-row-start: 8;
+    grid-column-start: 2;
 }

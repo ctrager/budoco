@@ -1,35 +1,80 @@
-﻿/* change the colors of the logo in the upper right.
+﻿/* 
 
-You can change the name in budoco_config_active.txt
+This file demonstrates overriding the styles in budoco.css.
+Especially useful for when arranging the custom fields on the issue page.
+
+See budoco_config_active.txt, the settings:
+
+UseCustomCss: 1
+CustomCssFilename: custom_css_example.css
 
 */
 
-.menu_table>tbody>tr>td.logo {
 
-    font-size: 20px;
-    letter-spacing: 2px;
+ul.menu {
     background-color: blue;
-    height: 60px;
-    width: 140px;
-
 }
 
-
-.menu_table>tbody>tr>td.logo>a,
-.menu_table>tbody>tr>td.logo>a:visited,
-.menu_table>tbody>tr>td.logo>a:hover {
+ul.menu>li>a {
+    background-color: blue;
     color: white;
     font-weight: bold;
+}
+
+ul.menu>li>a.logo {
+    background-color: red;
+    color: white;
     font-family: serif;
-    font-size: 24pt;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-style: italic;
+} 
+
+#organization_label {
+    grid-row-start: 3;
+    grid-column-start: 1;
 }
 
-/* Hide dropdowns you don't need on the issue page */
-
-.issue_organization {
-    display: none;
+#organization_id {
+    grid-row-start: 3;
+    grid-column-start: 2;
 }
 
-.issue_project {
-    display: none;
+#assigned_to_user_label {
+    grid-row-start: 1;
+    grid-column-start: 1;
 }
+
+#assigned_to_user_id {
+    grid-row-start: 1;
+    grid-column-start: 2;
+}
+
+#custom_1_label {
+    grid-row-start: 2;
+    grid-column-start: 1;
+}
+#custom_1_id {
+    grid-row-start: 2;
+    grid-column-start: 2;
+}
+
+#custom_2_label {
+    grid-row-start: 4;
+    grid-column-start: 1;
+}
+#custom_2_id {
+    grid-row-start: 4;
+    grid-column-start: 2;
+}
+
+#custom_4_label {
+    grid-row-start: 5;
+    grid-column-start: 1;
+}
+#custom_4_id {
+    grid-row-start: 5;
+    grid-column-start: 2;
+}
+
