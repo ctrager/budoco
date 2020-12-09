@@ -2,9 +2,9 @@
 
 Table of Contents
 
-* [What is Budoco?](#What-is-Budoco)
-* [Installation] (#Installation)
-* [Using Budoco] (#Using-Budoco)
+* [What is Budoco?](#what-is-budoco)
+* [How to Install](#how-to-install)
+* [Using Budoco](#using-budoco)
 
 ## What is Budoco?
 
@@ -12,7 +12,7 @@ Budoco is a Issue (Bug/Task/Ticket) tracking system.
 
 Budoco is built using .NET 5 ("dotnet core") and PostgreSQL.
 
-Budoco is a rewrite of **BU**gtracker.NET, but this time on **DO**tnet **CO**re, hence the name BU-DO-CO. Good things about Budoco which were also true of BugTracker.NET:
+Budoco is a rewrite of **BU**gtracker.NET (aka "btnet"), but this time on **DO**tnet **CO**re, hence the name BU-DO-CO. Good things about Budoco which were also true of btnet:
 
 * Budoco is easy to install and start using. 
 * It's fast and lightweight. It won't slow you down.
@@ -20,16 +20,16 @@ Budoco is a rewrite of **BU**gtracker.NET, but this time on **DO**tnet **CO**re,
 * It sends and receives email which gets tracked with the issue. So a good fit for a help desk, or company that works with multiple clients.
 * It has a lightweight permission system specifically specifically for keeping external organizations separate from each other.
 
-Differences from BugTracker.NET:
-* BugTracker.NET allows for more customization, at least for now.
-* BugTracker.NET has a more complicated permission system.
-* BugTracker.NET only runs on Windows. Budoco runs wherever .NET 5 runs. I've been using Linux (Ubuntu).
-* BugTracker.NET uses MS SQL Server. Budoco uses PostgreSQL.
+Differences from btnet:
+* btnet allows for more customization, at least for now.
+* btnet has a more complicated permission system.
+* btnet only runs on Windows. Budoco runs wherever .NET 5 runs. I've been using Linux (Ubuntu).
+* btnet uses MS SQL Server. Budoco uses PostgreSQL.
 
- More about BugTracker.NET here; <a href="http://ifdefined.com/bugtrackernet.html">BugTracker.NET home page</a>
+ More about btnet here; <a href="http://ifdefined.com/bugtrackernet.html">BugTracker.NET home page</a>
 
 
-I first released BugTracker.NET in 2001, originally to learn the hot new language C#. Within a couple years BugTracker.NET was pretty solid. Probably thousands of organziations used it and maybe many are still using it. But, time moves on. I moved on to other technologies, and then retired and mostly stopped coding in 2016. Dev teams moved on too, to Github and Jira for their issue tracking needs. Microsoft moved on too, from Windows only .NET to cross-platform Dotnet Core. They are no longer developing the technologies BugTracker.NET depends on. So, why did I decide to do a rewrite of BugTracker.NET? Because it was November 2020 and I needed a distraction from the US presedential election and COVID-19, that's why. 
+I first released btnet in 2001, originally to learn the hot new language C#. Within a couple years BugTracker.NET was pretty solid. Probably thousands of organziations used it and maybe many are still using it. But, time moves on. I moved on to other technologies, and then retired and mostly stopped coding in 2016. Dev teams moved on too, to Github and Jira for their issue tracking needs. Microsoft moved on too, from Windows only .NET to cross-platform Dotnet Core. They are no longer developing the technologies btnet depends on. So, why did I decide to do a rewrite of btnet? Because it was November 2020 and I needed a distraction from the US presedential election and COVID-19, that's why. 
 
 If Budoco is amusing you in any way, let me know at ctrager@yahoo.com
   
@@ -137,17 +137,21 @@ Here we are in the year 2020 and Microsoft adopted a format for configuration fi
 dotnet run
 ```
 
-Login as admin/admin. You will be redirected to a reset password page. If you are just playing around and want to create more users, set "DebugAutoConfirmRegistration" to 1 in budoco_config_active.txt to SKIP the step where a user would have to confirm registration by clicking on a link in an email.
+Login as admin/admin. You will be redirected to a reset password page. If you are just playing around and want to create more users, set "DebugAutoConfirmRegistration" to 1 in budoco_config_active.txt to SKIP the step where a user would have to confirm registration by clicking on a link in an email. Change the setting back when you are running it for real.
 
 ## Using Budoco
 
-The philosophy of both old BugTracker.NET and new Budoco is that they are easy to get started with but highly customizable. Note the different views in the Issues page. Visit the Admin/Queries page. Try creating your own SQL views. Also note the CustomField settings in budoco_settings_active.txt.
+The philosophy of both old BugTracker.NET and new Budoco is that they are easy to get started with but highly customizable. To get to know Buduco first try running it loaded with demo data (Corey TODO explain how to do this) and then take a tour. This should just take a few minutes:
 
-Note the little variable $ME in some of the queries, which you can use like this to limit rows to just that user's issues:
-```
-where i_created_by_user = $ME
-```
+* Read the comments in budoco_config_example.txt to get an overview of the customizations controlled via config. Experiment with some of the customization settings.
 
-A key feature of Budoco is that it lets you send out emails related to the issue that get tracked with the issue. When somebody responds to the email, that response is tracked with the issue too.
+* Visit the "Issues" page and try the different views.
 
+* Visit the "Admin" page and then the Admin "Issue Queries" page and see how the SQL implements the Issue views.
+
+* Visit the Users and Organizations pages to get to know the permissions system.
+
+Good luck, and let me know how it goes.
+
+[Corey Trager](http://ctrager.github.io)
 
