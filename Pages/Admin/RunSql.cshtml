@@ -15,7 +15,10 @@
     <div>
         <textarea class="pre" asp-for="sql"></textarea>
     </div>
+    
     <button type="button" onclick="submit_post()">Run SQL</button>
+    <span class="waiting" style="display:none">Running...</span>
+       
                 
 </form>
 </div>
@@ -26,7 +29,7 @@
 @section Scripts {
 <script>
     function submit_post() {
-
+        show_waiting()
         $.ajax({
             url: 'RunSql?handler=Run',
             data: $('#sql_form').serialize(),
@@ -34,14 +37,18 @@
             
             success: function (html_from_server) {
                 $("#results").html(html_from_server);
+                hide_waiting()
             },
             
             failure: function(response) {
+                hide_waiting()
                 alert(response)
             },
 
             statusCode: {
+
                 500: function(responseObject, textStatus, jqXHR) {
+                    hide_waiting()
                     alert(JSON.stringify(responseObject));
                 }
             }

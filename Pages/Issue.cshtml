@@ -190,7 +190,7 @@
         <div id="posts" class="posts_outer"></div>
 
         bool us_user_is_report_only = bd_util.is_user_report_only(HttpContext);
-           
+        
         <div class="form_div">
             <form class="post_form" id="post_form" method="post" enctype="multipart/form-data">
                 <table class="form_table">
@@ -268,6 +268,8 @@
 
                     <tr><td>
                         <button type="button" onclick="submit_post()">Submit</button>
+                        <span class="waiting" style="display:none">Posting...</span>
+       
                     </td></tr>
                 </table>
             </form>
@@ -337,6 +339,8 @@
     }
 
     function submit_post() {
+        show_waiting()
+
         no_file = $("#uploaded_file1").val() == ""
         && $("#uploaded_file2").val() == ""
         && $("#uploaded_file3").val() == "";
@@ -359,17 +363,25 @@
                     blank_out_post_form();
                 }
                 $("#posts").html(posts_as_html);
+                hide_waiting()
             },
             
             failure: function(response) {
+                hide_waiting()
                 alert(response)
             },
 
             statusCode: {
+                400: function() {
+                    hide_waiting()
+                    alert("post- server returned status code of 400");
+                },
                 413: function() {
+                    hide_waiting()
                     alert("The total size of the files you are uploading is too big. (http status 413)");
                 },
                 500: function() {
+                    hide_waiting()
                     alert("post- server returned status code of 500");
                 }
             }

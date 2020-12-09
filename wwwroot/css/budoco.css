@@ -495,3 +495,13 @@ textarea#sql {
     color: green;
     width: 800px;
 }
+
+.waiting {
+
+    background-color: yellow;
+    border: 1px solid red;
+    margin: 20px;
+    padding: 5px;
+    border-radius: 5px;
+
+}

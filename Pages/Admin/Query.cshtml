@@ -96,6 +96,8 @@
         <tr><td>
             <button type="button" onclick="run_sql()">Run SQL - Don't Save</button>
             <button type="button" onclick="maybe_save()">Save in Database</button>
+            <span class="waiting" style="display:none">Running Query...</span>
+     
         </td></tr>
     </table>
 </form>
@@ -133,6 +135,7 @@
     }
 
     function run_sql() {
+        show_waiting()
         $(".flash_parent").remove(); // remove previous flash message
         $.ajax({
             url: 'Query?handler=Run',
@@ -142,14 +145,17 @@
             success: function (html_from_server) {
                 $("#results").html(html_from_server);
                 sql_is_dirty = false;
+                hide_waiting()
             },
             
             failure: function(response) {
+                hide_waiting()
                 alert(response)
             },
 
             statusCode: {
                 500: function(responseObject, textStatus, jqXHR) {
+                    hide_waiting()
                     alert(JSON.stringify(responseObject));
                 }
             }
