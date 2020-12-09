@@ -17,6 +17,10 @@ namespace budoco
 
     public static class bd_db
     {
+        // this is only meaningful in testing with one client
+        // because it's global, not per
+        public static int query_count = 0;
+
         static string date_format;
 
         // "static constructor"
@@ -104,6 +108,8 @@ namespace budoco
 
         public static bool exists(string sql, Dictionary<string, dynamic> sql_parameters = null)
         {
+            log_sql(sql, sql_parameters);
+
             object obj = exec_scalar(sql, sql_parameters);
             if (obj is null)
             {
@@ -144,7 +150,9 @@ namespace budoco
 
         static void log_sql(string sql, Dictionary<string, dynamic> sql_parameters = null)
         {
-            bd_util.log(sql);
+            query_count++;
+
+            bd_util.log("SQL " + query_count.ToString() + ":" + sql);
             if (sql_parameters is not null)
             {
                 foreach (string key in sql_parameters.Keys)

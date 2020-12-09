@@ -130,6 +130,11 @@ namespace budoco
                 // let's do it every url, so that we don't have to restart
                 bd_config.load_config();
 
+                // For counting how many queries per page, but only
+                // trustworthy when there's one client, because it's
+                // global, not per session
+                bd_db.query_count = 0;
+
                 await next.Invoke();
             });
 
