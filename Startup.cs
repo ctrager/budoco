@@ -9,6 +9,7 @@ using Serilog;
 using RazorPartialToString.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Npgsql.Logging;
+using System.Threading;
 
 
 namespace budoco
@@ -126,10 +127,12 @@ namespace budoco
 
                 bd_util.log(
                     DateTime.Now.ToString("hh:mm:ss")
-                    + " "
+                    + " URL: "
                     + context.Request.GetDisplayUrl()
-                    + ", "
-                    + budoco_session_id);
+                    + ", Session: "
+                    + budoco_session_id
+                    + ", Thread: "
+                    + System.Threading.Thread.CurrentThread.ManagedThreadId);
 
                 // let's do it every url, so that we don't have to restart
                 bd_config.load_config();

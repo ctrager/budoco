@@ -112,11 +112,16 @@ create database budoco;
 \q
 ```
 
-Create the tables:
+Create and load the tables. If you want to just try out Budoco, then use the demo script:
 
 ```
-psql -d budoco -U postgres -f sql/setup.sql
-psql -d budoco -U postgres -f sql/queries.sql
+cd sql
+./create_and_load_tables_demo.sh
+```
+
+When you are ready to use it for real, use the production script:
+```
+./create_and_load_tables_production.sh
 ```
 
 ### 4) Configure Budoco

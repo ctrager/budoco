@@ -15,9 +15,6 @@
     <meta http-equiv="Expires" content="0">
     <title>@ViewData["Title"] - @bd_config.get(bd_config.AppName)</title>
     <link rel="stylesheet" href="~/css/budoco.css" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
 
     @{
         if (bd_config.get(bd_config.UseCustomCss) == 1)
@@ -104,6 +101,9 @@
             <div class="content_parent">
                 @RenderBody()
             </div>
+
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
 
             @await RenderSectionAsync("Scripts", required: false)
 
