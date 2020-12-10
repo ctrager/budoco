@@ -49,7 +49,6 @@ $(function () {
                 opacity: 0
             }, 300, function () {
                 $modal.hide();
-                $modal.remove();
                 $body.css("overflow", "auto");
             });
         }

@@ -602,7 +602,6 @@ textarea#sql {
     .modal>.window {
         width: 800px;
         margin: 0 auto;
-        top: -1000px;
         position: relative;
         background-color: #eeeeee;
         border: 2px solid lightgray;
