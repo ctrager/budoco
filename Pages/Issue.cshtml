@@ -257,7 +257,7 @@
 }
 
 @section Scripts {
-    
+    <script src="~/lib/regex-weburl.js" asp-append-version="true"></script>
     <script>
         
     $(document).ready(function() {
@@ -274,7 +274,7 @@
             var after = $(this).data("after");
             var result = `<h1>Before:</h1> <pre>${before}</pre> <br><br>  <h1>After:</h1> <pre>${after}</pre>`;
 
-            budoco.modal.show("Before and After", result);
+            budoco.modal.show("Before and After", turnUrls(result));
         });
      });
  
@@ -286,7 +286,7 @@
             success: function (posts_as_html) {
                 // blank out form
                 blank_out_post_form();
-                $("#posts").html(posts_as_html)
+                addPosts(posts_as_html);
             },
             
             failure: function (response) {
@@ -350,7 +350,8 @@
                 if (!posts_as_html.startsWith("<!--error-->")) {
                     blank_out_post_form();
                 }
-                $("#posts").html(posts_as_html);
+
+                addPosts(posts_as_html);
                 hide_waiting()
             },
             
@@ -375,6 +376,20 @@
             }
         }) // end submit post
     } // end func
+
+    function addPosts(posts_as_html) {
+        $("#posts").html(posts_as_html)
+            .find(".post_text")
+            .each(function () {
+                var $this = $(this);
+
+                $this.html(turnUrls($this.html()));
+            });
+    }
+
+    function turnUrls(content) {
+        return content.replace(re_weburl, "<a href='$1'>$1</a>");
+    }
 
     function show_hide_image(image_div_id, link) {
         if ($(link).html() == "View") {
