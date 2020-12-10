@@ -117,12 +117,22 @@ namespace budoco.Pages
         public string post_error = "";
         public int user_org;
 
+        DateTime time1;
+        DateTime time2;
+
         public void OnGet()
         {
+            time1 = DateTime.Now;
+
             if (!bd_util.check_user_permissions(HttpContext))
                 return;
 
             GetIssue();
+
+            time2 = DateTime.Now;
+            TimeSpan timespan = time2 - time1;
+            bd_util.log("Issue OnGet milliseconds:" + timespan.TotalMilliseconds.ToString());
+
         }
 
         public void OnPost()
@@ -807,6 +817,8 @@ namespace budoco.Pages
 
         public async Task<ContentResult> OnGetPostsAsync()
         {
+            time1 = DateTime.Now;
+
             // client fetches posts using ajax
 
             //check permission
@@ -831,6 +843,11 @@ namespace budoco.Pages
 
             // get the html as a string and return it to ajax client
             String html = await _renderer.RenderPartialToStringAsync("_IssuePostsPartial", this);
+
+            time2 = DateTime.Now;
+            TimeSpan timespan = time2 - time1;
+            bd_util.log("OnGetPostsAsync milliseconds:" + timespan.TotalMilliseconds.ToString());
+
 
             if (post_error != "")
             {

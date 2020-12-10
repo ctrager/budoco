@@ -24,30 +24,6 @@
         }
     }
 
-    <script>
-
-        $(document).ready(function () {
-
-            $("#goto_input").on("keydown", function (event) {
-                if (event.keyCode == 13) {
-                    goto();
-                }
-            });
-
-            $("#goto_button").on("click", function (event) {
-                goto();
-            });
-        });
-
-        function goto() {
-            var issue_id = $("#goto_input").val();
-            if (issue_id == 0)
-                alert("Enter issue ID#")
-            else
-                location.href = "/Issue?id=" + issue_id
-        }
-    </script>
-
 </head>
 
 @{
@@ -116,6 +92,29 @@
 
             <script src="~/lib/jquery/dist/jquery.min.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
+            <script>
+
+                $(document).ready(function () {
+
+                    $("#goto_input").on("keydown", function (event) {
+                        if (event.keyCode == 13) {
+                            goto();
+                        }
+                    });
+
+                    $("#goto_button").on("click", function (event) {
+                        goto();
+                    });
+                });
+
+                function goto() {
+                    var issue_id = $("#goto_input").val();
+                    if (issue_id == 0)
+                        alert("Enter issue ID#")
+                    else
+                        location.href = "/Issue?id=" + issue_id
+                }
+            </script>
 
             @await RenderSectionAsync("Scripts", required: false)
 
