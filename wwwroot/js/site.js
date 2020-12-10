@@ -13,3 +13,56 @@ function show_waiting() {
     document.body.style.cursor = 'wait';
     $(".waiting").show();
 }
+
+budoco = window.budoco || {};
+
+$(function () {
+    var factory = function () {
+        var $body = $(document.body);
+        var $modal = $("<div class='modal'><div class='window'><div class='header'></div><div class='body'></div><div class='footer'><button class='btn'>Ok</button></div></div></div>");
+        var $modalWindow = $modal.find(".window");
+        var $modalHeader = $modalWindow.find(".header");
+        var $modalBody = $modalWindow.find(".body");
+        var $okButton = $modalWindow.find(".btn");
+
+        function show(title, content) {
+            $modalHeader.text(title);
+            $modalBody.html(content);
+
+            $body.append($modal);
+
+            $okButton.on('click', function () {
+                close();
+            });
+
+            $body.css("overflow", "hidden");
+            $modal.show();
+            $modalWindow.animate({
+                top: 100,
+                opacity: 1
+            }, 300); 
+        }
+
+        function close() {
+            $modalWindow.animate({
+                top: -1000,
+                opacity: 0
+            }, 300, function () {
+                $modal.hide();
+                $modal.remove();
+                $body.css("overflow", "auto");
+            });
+        }
+
+        return {
+            show: function (title, content) {
+                show(title, content);
+            },
+            close: function () {
+                close();
+            }
+        };
+    }
+
+    budoco.modal = factory();
+});
