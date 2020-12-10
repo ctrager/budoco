@@ -266,6 +266,16 @@
             get_posts();
             prepare_post_email_to_select();
         }
+
+        $("#posts").on('click', '.history-ref', function (e) {
+            e.preventDefault();
+
+            var before = $(this).data("before");
+            var after = $(this).data("after");
+            var result = `<div><div><div>Before:</div><div>${before}</div></div><div><div>After:</div><div>${after}</div></div></div>`;
+
+            budoco.modal.show("History", result);
+        });
      });
  
     function get_posts() {
