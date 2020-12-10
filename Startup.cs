@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Serilog;
 using RazorPartialToString.Services;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Http.Features;
+using Npgsql.Logging;
+
 
 namespace budoco
 {
@@ -20,6 +21,9 @@ namespace budoco
             Configuration = configuration;
 
             bd_util.log(Configuration["Budoco:DebugWhatEnvIsThis"]);
+
+            //NpgsqlLogManager.Provider = new ConsoleLoggingProvider(NpgsqlLogLevel.Debug, false, false);
+            NpgsqlLogManager.Provider = new bd_pg_log_provider();
 
             // If there are pending outgoing emails try to send them.
             bd_email.spawn_email_sending_thread();
