@@ -60,7 +60,7 @@ namespace budoco.Pages
                         /* i_details */
                         select
                             i_id,
-                            i_details,
+                            i_description,
                             'Details' as context_location,
                             0 as p_id,
                             i_details as search_text,
@@ -89,7 +89,7 @@ namespace budoco.Pages
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', p_text)
                             /*AND_ORG*/
                         order by
-                            rank desc /*limit 1000*/
+                            rank desc limit 400
                     ) hits 
                     where
                         rank > 0.01
