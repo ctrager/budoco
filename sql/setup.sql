@@ -129,6 +129,18 @@ qu_is_default boolean default false
 
 create unique index qu_name_index on queries (qu_name);
 
+/* REPORTS */
+create table reports
+(
+	rp_id serial primary key,
+	rp_desc varchar(80) not null,
+	rp_sql text not null,
+	rp_chart_type varchar(8) not null
+);
+
+create unique index unique_rp_desc on reports (rp_desc);
+
+
 create table issues 
 (
 i_id serial primary key,
@@ -256,13 +268,3 @@ insert into queries (qu_name, qu_sql) values (
 'Raw "select * from issues" Please run queries.sql',
 'select * from issues order by i_id desc');
 
-/* REPORTS */
-create table reports
-(
-	rp_id serial primary key,
-	rp_desc varchar(200) not null,
-	rp_sql text not null,
-	rp_chart_type varchar(8) not null
-);
-
-create unique index unique_rp_desc on reports (rp_desc);
