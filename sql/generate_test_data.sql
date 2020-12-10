@@ -1,7 +1,80 @@
 /* 
-This generates random data for test.
-It's only designed to run after running setup.sql because it depends on postgres sequences to be in their initial state.
+This generates random data for testing and demo'ing.
+Run setup.sql first
+Then run this
+When you are done playing and want the real thing, run setup.sql again
 */
+
+/* create issues */
+DO $$ 
+DECLARE
+   my_counter int := 0;
+   my_s text;
+   number_of_issues int := 4000; /* how many issues to generate */
+   my_array text[] := '{"dog", "cat", "human", 
+      "apple", "orange", "tree", "water", "rock", "sun", "moon", "bug", "violin"}';
+BEGIN
+
+/* create issues */
+loop
+   my_counter := my_counter + 1;
+  
+   insert into issues (
+   i_description, 
+   i_created_by_user, 
+   i_assigned_to_user,
+   i_organization,
+   i_custom_1, i_custom_2, i_custom_4)
+   values (
+   
+   /* a random string for the description */
+   my_array[floor(random() * 12 + 1)::int] 
+   || ' ' 
+   || my_array[floor(random() * 12 + 1)::int]
+   || ' ' 
+   || my_array[floor(random() * 12 + 1)::int],
+   
+
+   /* created by,. random users from 1 to 8 */
+   floor(random() * 8 + 1)::int,
+
+   /* assigned to, random users from 0 to 8 */
+   floor(random() * 9 )::int,
+   
+   /* random numbers from 0 to 3 for the org and custom fields */
+   floor(random() * 4)::int, -- org
+   floor(random() * 4 )::int, -- custom 1
+   floor(random() * 4 )::int, -- custom 2
+   floor(random() * 4 )::int -- custom 4
+   );
+
+   if my_counter = number_of_issues then
+      exit; 
+   end if;
+end loop;
+
+/* for the last issue created, create 10 posts  */
+my_counter := 0;
+loop
+   my_counter := my_counter + 1;
+   insert into posts (p_issue, p_post_type, p_text, p_created_by_user)
+   values(
+      number_of_issues,
+      'comment',
+
+      my_array[floor(random() * 12 + 1)::int] -- random string of "dog apple bug" etc
+      || ' ' 
+      || my_array[floor(random() * 12 + 1)::int]
+      || ' ' 
+      || my_array[floor(random() * 12 + 1)::int],
+
+      1);
+   if my_counter > 10 then
+      exit; 
+   end if;
+end loop;
+
+END $$;
 
 
 insert into users 
@@ -10,68 +83,21 @@ values('inactive', 'inactive@example.com', false, 'anything');
 
 insert into users 
 (us_username, us_email_address, us_is_report_only, us_password) 
-values('report', 'report_only@example.com', false, 'anything');
+values('reportonly', 'report_only@example.com', true, 'anything');
 
 insert into users 
 (us_username, us_email_address, us_organization, us_password) 
-values('org', 'belongs_to_organization@example.com', 2, 'anything');
+values('org2', 'org2@example.com', 2, 'anything');
 
-/* create issues */
-DO $$ 
-DECLARE
-   my_int int := 0;
-   my_s varchar(30);
-   number_of_issues int := 2000; /* how many issues to generate */
-BEGIN
+insert into users 
+(us_username, us_email_address, us_organization, us_password) 
+values('org3', 'org3@example.com', 3, 'anything');
 
-/* create issues */
-loop
-   my_int := my_int + 1;
-   my_s := cast (my_int as varchar);
-  
-   insert into issues (
-   i_description, 
-   i_created_by_user, 
-   i_assigned_to_user,
-   i_organization,
-   i_custom_1, i_custom_2, i_custom_3, i_custom_4)
-   values (
-   
-   /* a random string for the description */
-   my_s || ' ' ||  substr(md5(random()::text), 0, floor(random() * 30 + 1)::int),
-   
-   /* created by,. random users from 1 to 4 */
-   floor(random() * 4 + 1)::int,
+insert into users 
+(us_username, us_email_address, us_organization, us_is_report_only, us_password) 
+values('org2_and_reportonly', 'org2_reportonly@example.com', 2, true, 'anything');
 
-   /* assigned to, random users from 0 to 4 */
-   floor(random() * 5 )::int,
-   
-   /* random numbers from 0 to 3 for the atributre, etc */
-   floor(random() * 4)::int, -- org
-   floor(random() * 4 )::int, -- custom 1
-   floor(random() * 4 )::int, -- 2
-   floor(random() * 4 )::int, -- 3
-   floor(random() * 4 )::int  -- 4
-   );
+insert into users 
+(us_username, us_email_address, us_is_admin, us_password) 
+values('anotheradmin', 'another_admin@example.com', true, 'anything');
 
-   if my_int = number_of_issues then
-      exit; 
-   end if;
-end loop;
-
-/* for the last issue created, create 10 posts  */
-my_int := 0;
-loop
-   my_int := my_int + 1;
-   insert into posts (p_issue, p_post_type, p_text, p_created_by_user)
-   values(
-      number_of_issues,
-      'comment',
-      substr(md5(random()::text), 0, floor(random() * 30 + 1)::int),
-      1);
-   if my_int > 10 then
-      exit; 
-   end if;
-end loop;
-
-END $$;

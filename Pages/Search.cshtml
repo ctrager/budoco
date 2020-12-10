@@ -41,23 +41,26 @@
 @{
 
     if (Model.dt is not null) {
-<table class="dt">
+<div class="info_text just_left">@Model.dt.Rows.Count rows</div>
+<table id="dt" class="dt" style="display:none">
     @{
         <tr>
             @{
-                <th>@Model.dt.Columns[0].ColumnName</th>
-                <th>@Model.dt.Columns[1].ColumnName</th>
-                <th>@Model.dt.Columns[2].ColumnName</th>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Context</th>
+                @* <th>Score</th> *@
             }
         </tr>
         for (int row = 0; row < Model.dt.Rows.Count; row++)
         {
             DataRow dr = Model.dt.Rows[row];
+            int i_id = (int)dr[0];
             <tr>
-                <td><a href="/Issue?id=@dr[0]">@dr[0]</a></td>
-                <td><a href="/Issue?id=@dr[0]">@dr[1]</a></td>
+                <td><a href="/Issue?id=@i_id">@i_id</a></td>
+                <td><a href="/Issue?id=@i_id">@dr["Description"]</a></td>
                 <td>
-                    <span class="search_context">@dr[2]</span>
+                    <span class="search_context">@dr["Context"]</span>
                     &nbsp;
                     @{
                         int p_id = (int)@dr["p_id"];
@@ -71,6 +74,7 @@
                         }
                     }
                 </td>
+                @* <td>@(10* (float)dr["score"])</td> *@
             </tr>
         }
     }
@@ -80,7 +84,8 @@
 
 
 @section Scripts {
-    <script>
+<script>
+
     $(document).ready(function() {
 
         replace_headline_delimeters()
@@ -91,11 +96,14 @@
         // do it here to avoid Html.Raw, xss risk
         $(".search_context").each(function() {
             s = $(this).html()
-            console.log(s)
             s = s.replaceAll("SSTART","<b>")
             s = s.replaceAll("SSTOP","</b>")
             $(this).html(s)
         })
+        
+        $("#dt").show();
+
     }
-    </script>
+
+</script>
 }

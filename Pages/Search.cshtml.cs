@@ -30,7 +30,7 @@ namespace budoco.Pages
                     context as ""Context"", 
                     context_location,
                     p_id,
-                    max(rank) as score 
+                    max(rank) as score
                 from
                 (
                     select
@@ -89,7 +89,7 @@ namespace budoco.Pages
                             websearch_to_tsquery('english', '$') @@ to_tsvector('english', p_text)
                             /*AND_ORG*/
                         order by
-                            rank desc limit 20
+                            rank desc /*limit 1000*/
                     ) hits 
                     where
                         rank > 0.01
@@ -101,7 +101,7 @@ namespace budoco.Pages
                     p_id,
                     context
                 order by
-                    score,
+                    score desc,
                     p_id,
                     i_id desc";
 
