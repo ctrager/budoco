@@ -593,10 +593,7 @@ textarea#sql {
     bottom: 0;
     height: 100vh;
     border-radius: 6px;
-    /*
-    opacity: .6;
-    background-color: lightgray;
-    */
+    background-color: rgba(100,100,100,.5);
 }
 
     .modal>.window {
@@ -606,9 +603,6 @@ textarea#sql {
         background-color: #eeeeee;
         border: 2px solid lightgray;
         border-radius: 15px;
-       
-        /* this line doesn't work!?!?! */
-        opacity: 1 !important;
     }
 
         .modal>.window>.header {
