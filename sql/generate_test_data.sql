@@ -78,6 +78,10 @@ END $$;
 
 
 insert into users 
+(us_username, us_email_address, us_password) 
+values('normal', 'normal@example.com', 'anything');
+
+insert into users 
 (us_username, us_email_address, us_is_active, us_password) 
 values('inactive', 'inactive@example.com', false, 'anything');
 
