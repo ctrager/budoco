@@ -120,9 +120,12 @@ cd sql
 ```
 
 When you are ready to use it for real, use the production script:
+
 ```
 ./create_and_load_tables_production.sh
 ```
+
+Both scripts start by destroying whatever data is currently in the budoco database.
 
 ### 4) Configure Budoco
 
@@ -135,7 +138,7 @@ cp budoco_config_example.txt budoco_config_active.txt
 Open the new copy and edit it according to the instructions in it. At a minimum, change the database username and password. The hardest part for me was getting my emails to work using my gmail and yahoo accounts, because there are extra steps you have to do on their websites to allow unfamiliar apps to connect to their SMTP servers.
 
 \<RANT>
-Here we are in the year 2020 and Microsoft adopted a format for configuration files, "appsetings.json", that does *NOT* support comments. It makes me miss the ".ini" files from Windows 3.1 from the early 90s.
+Here we are in the year 2020 and Microsoft adopted a format for configuration files, "appsettings.json", that does *NOT* support comments. It makes me miss the ".ini" files from Windows 3.1 from the early 90s.
 \</RANT>
 
 ## Running Budoco

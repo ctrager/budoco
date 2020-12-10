@@ -19,7 +19,7 @@ budoco = window.budoco || {};
 $(function () {
     var factory = function () {
         var $body = $(document.body);
-        var $modal = $("<div class='modal'><div class='window'><div class='header'></div><div class='body'></div><div class='footer'><button class='btn'>Ok</button></div></div></div>");
+        var $modal = $("#modal");
         var $modalWindow = $modal.find(".window");
         var $modalHeader = $modalWindow.find(".header");
         var $modalBody = $modalWindow.find(".body");
@@ -40,7 +40,7 @@ $(function () {
             $modalWindow.animate({
                 top: 100,
                 opacity: 1
-            }, 300); 
+            }, 300);
         }
 
         function close() {

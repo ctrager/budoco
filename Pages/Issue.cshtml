@@ -272,9 +272,9 @@
 
             var before = $(this).data("before");
             var after = $(this).data("after");
-            var result = `<div><div><div>Before:</div><div>${before}</div></div><div><div>After:</div><div>${after}</div></div></div>`;
+            var result = `<h1>Before:</h1> <pre>${before}</pre> <br><br>  <h1>After:</h1> <pre>${after}</pre>`;
 
-            budoco.modal.show("History", result);
+            budoco.modal.show("Before and After", result);
         });
      });
  
