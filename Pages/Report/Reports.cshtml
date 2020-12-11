@@ -1,5 +1,5 @@
 @page
-@model IndexModel
+@model ReportsModel
 
 @{
     ViewData["Title"] = "Reports";
@@ -7,9 +7,14 @@
 
 <h1>@ViewData["Title"]</h1>
 
+@{
+    if (bd_util.is_user_admin(HttpContext)) 
+    {
 <div>
     <a asp-page="Edit">Create Report</a>
 </div>
+    }
+}
 
 <partial name="_FlashPartial" />
 
@@ -39,19 +44,20 @@
 
                                 if (chartType == "pie" || chartType == "line" || chartType == "bar")
                                 {
-                                    <a target='_blank' asp-page="View" asp-route-id="@dr["rp_id"]" asp-route-view="chart">@chartType</a>
+                                    <a target='_blank' asp-page="ViewReport" asp-route-id="@dr["rp_id"]" asp-route-view="chart">@chartType</a>
                                 }
                             }
                         </td>
 
                         <td>
-                            <a target='_blank' asp-page="View" asp-route-id="@dr["rp_id"]" asp-route-view="data">data</a>
+                            <a target='_blank' asp-page="ViewReport" asp-route-id="@dr["rp_id"]" asp-route-view="data">data</a>
                         </td>
 
                         @if (bd_util.is_user_admin(HttpContext) /*|| security.user.can_edit_reports*/)
                         {
                             <td colspan="2">
                                 <a asp-page="Edit" asp-route-id="@dr["rp_id"]">Edit</a>
+                                &nbsp;&nbsp;
                                 <a asp-page="Delete" asp-route-id="@dr["rp_id"]">Delete</a>
                             </td>
                         }

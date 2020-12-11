@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace budoco.Pages.Report
 {
-    public sealed class ViewModel : PageModel
+    public sealed class ViewReportModel : PageModel
     {
         private const int DefaultScale = 1;
 
@@ -30,10 +30,8 @@ namespace budoco.Pages.Report
 
         public IActionResult OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN) /*|| security.user.can_use_reports*/)
-            {
+            if (!bd_util.check_user_permissions(HttpContext))
                 return Page();
-            }
 
             var sql = @"
                 select
@@ -170,9 +168,9 @@ namespace budoco.Pages.Report
             }
 
             // we need to create fonts for our legend and title
-            var fontLegend = new Font("Verdana", 10);
+            var fontLegend = new Font("Arial", 10);
 
-            var fontTitle = new Font("Verdana", 12, FontStyle.Bold);
+            var fontTitle = new Font("Arial", 12, FontStyle.Bold);
             var titleHeight = fontTitle.Height + pageTopMargin;
 
             // We need to create a legend and title, how big do these need to be?
@@ -193,8 +191,13 @@ namespace budoco.Pages.Report
             var height = width + legendHeight + titleHeight + pageTopMargin;
             var pieHeight = width; // maintain a one-to-one ratio
 
+            // Corey says... quick and dirty fix porting this from BugTracker.NET
+            // to Budoco. Instead of images on white background, Chrome displays on
+            // black background, so we need the margin otherwise image looks bad.
+            var extra_x = 50;
+
             // Create a rectange for drawing our pie
-            var pieRect = new Rectangle(0, titleHeight, width, pieHeight);
+            var pieRect = new Rectangle(0 + (extra_x / 2), titleHeight, width, pieHeight);
 
             // Create our pie chart, start by creating an ArrayList of colors
             var colors = new ArrayList
@@ -217,14 +220,14 @@ namespace budoco.Pages.Report
             var currentDegree = 0.0F;
 
             // Create a Bitmap instance
-            var objBitmap = new Bitmap(width, height);
+            var objBitmap = new Bitmap(width + extra_x, height + extra_x);
 
             using var objGraphics = Graphics.FromImage(objBitmap);
             using var blackBrush = new SolidBrush(Color.Black);
             using var whiteBrush = new SolidBrush(Color.White);
 
             // Put a white backround in
-            objGraphics.FillRectangle(whiteBrush, 0, 0, width, height);
+            objGraphics.FillRectangle(whiteBrush, 0, 0, width + extra_x, height + (extra_x / 2));
             for (i = 0; i < dataTable.Rows.Count; i++)
             {
                 objGraphics.FillPie(
@@ -249,7 +252,7 @@ namespace budoco.Pages.Report
             // Create the legend
             objGraphics.DrawRectangle(
                 new Pen(Color.Gray, 1),
-                0,
+                0 + (extra_x / 2),
                 height - legendHeight,
                 width - 4,
                 legendHeight - 1);
@@ -299,9 +302,9 @@ namespace budoco.Pages.Report
 
             var maxGridLines = 20 / scale;
 
-            var fontTitle = new Font("Verdana", 12, FontStyle.Bold);
+            var fontTitle = new Font("Arial", 12, FontStyle.Bold);
 
-            var fontLegend = new Font("Verdana", 8);
+            var fontLegend = new Font("Arial", 8);
             var pageBottomMargin = 3 * fontLegend.Height;
             var pageLeftMargin = 4 * fontLegend.Height + xAxisTextOffset; // where the y axis text goes
 
@@ -326,9 +329,12 @@ namespace budoco.Pages.Report
                 while (max / gridLineInterval > maxGridLines)
                     gridLineInterval *= 10 / scale;
 
+            // Corey's quick and dirty fix for Budoco
+            int extra_x = 50;
+
             // Create a Bitmap instance
             var objBitmap = new Bitmap(
-                pageLeftMargin + chartWidth, // total width
+                pageLeftMargin + chartWidth + extra_x, // total width
                 pageTopMargin + fontTitle.Height + chartHeight + pageBottomMargin); // total height
 
             using var objGraphics = Graphics.FromImage(objBitmap);
@@ -339,14 +345,14 @@ namespace budoco.Pages.Report
             objGraphics.FillRectangle(
                 whiteBrush, // yellow
                 0, 0,
-                pageLeftMargin + chartWidth, // far left
+                pageLeftMargin + chartWidth + extra_x, // far left
                 pageTopMargin + fontTitle.Height + chartHeight + pageBottomMargin); // bottom
 
             // gray chart background
             objGraphics.FillRectangle(
                 new SolidBrush(Color.FromArgb(204, 204, 204)), // gray
                 pageLeftMargin, pageTopMargin + fontTitle.Height,
-                pageLeftMargin + chartWidth,
+                pageLeftMargin + chartWidth - extra_x,
                 chartHeight);
 
             // draw title
@@ -382,24 +388,6 @@ namespace budoco.Pages.Report
                     chartBottom - y);
             }
 
-            /*
-            // draw high water mark
-            y = (int)(max * vertical_scale_factor);
-
-            objGraphics.DrawString(
-                Convert.ToString(i),
-                fontLegend,
-                blackBrush,
-                x_axis_text_offset, (chart_bottom-y) - (fontLegend.Height/2));
-
-            // grid line
-            objGraphics.DrawLine(
-                black_pen,
-                page_left_margin,
-                chart_bottom-y,
-                page_left_margin + chart_width,
-                chart_bottom-y);
-        */
 
             // draw bars
             var barSpace = chartWidth / dataTable.Rows.Count;
@@ -446,9 +434,9 @@ namespace budoco.Pages.Report
 
             var maxGridLines = 20 / scale;
 
-            var fontTitle = new Font("Verdana", 12, FontStyle.Bold);
+            var fontTitle = new Font("Arial", 12, FontStyle.Bold);
 
-            var fontLegend = new Font("Verdana", 8);
+            var fontLegend = new Font("Arial", 8);
             var pageBottomMargin = 3 * fontLegend.Height;
             var pageLeftMargin = 4 * fontLegend.Height + xAxisTextOffset; // where the y axis text goes
 
@@ -472,9 +460,12 @@ namespace budoco.Pages.Report
                 while (max / gridLineInterval > maxGridLines)
                     gridLineInterval *= 10 / scale;
 
+            // Corey's quick and dirty fix for Budoco
+            int extra_x = 50;
+
             // Create a Bitmap instance
             var objBitmap = new Bitmap(
-                pageLeftMargin + chartWidth, // total width
+                pageLeftMargin + chartWidth + extra_x, // total width
                 pageTopMargin + fontTitle.Height + chartHeight + pageBottomMargin); // total height
 
             using var objGraphics = Graphics.FromImage(objBitmap);
@@ -483,16 +474,16 @@ namespace budoco.Pages.Report
 
             // white overall background
             objGraphics.FillRectangle(
-                whiteBrush, // yellow
+                whiteBrush,
                 0, 0,
-                pageLeftMargin + chartWidth, // far left
+                pageLeftMargin + chartWidth + extra_x, // far left
                 pageTopMargin + fontTitle.Height + chartHeight + pageBottomMargin); // bottom
 
             // gray chart background
             objGraphics.FillRectangle(
                 new SolidBrush(Color.FromArgb(204, 204, 204)), // gray
                 pageLeftMargin, pageTopMargin + fontTitle.Height,
-                pageLeftMargin + chartWidth,
+                pageLeftMargin + chartWidth - extra_x,
                 chartHeight);
 
             // draw title
@@ -601,8 +592,8 @@ namespace budoco.Pages.Report
             var xAxisTextOffset = 8 / scale; // gap between edge and start of x axis text
             var pageTopMargin = 40 / scale; // gape between chart and top of page
 
-            var fontTitle = new Font("Verdana", 12, FontStyle.Bold);
-            var fontLegend = new Font("Verdana", 8);
+            var fontTitle = new Font("Arial", 12, FontStyle.Bold);
+            var fontLegend = new Font("Arial", 8);
             var pageBottomMargin = 3 * fontLegend.Height;
             var pageLeftMargin = 4 * fontLegend.Height + xAxisTextOffset; // where the y axis text goes
 
@@ -617,7 +608,7 @@ namespace budoco.Pages.Report
 
             // white overall background
             objGraphics.FillRectangle(
-                whiteBrush, // yellow
+                whiteBrush,
                 0, 0,
                 pageLeftMargin + chartWidth, // far left
                 pageTopMargin + fontTitle.Height + chartHeight + pageBottomMargin); // bottom

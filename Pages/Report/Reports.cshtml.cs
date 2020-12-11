@@ -4,16 +4,14 @@ using System.Data;
 
 namespace budoco.Pages.Report
 {
-    public sealed class IndexModel : PageModel
+    public sealed class ReportsModel : PageModel
     {
         public DataTable dt;
 
         public void OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN) /*|| security.user.can_use_reports || security.user.can_edit_reports*/)
-            {
+            if (!bd_util.check_user_permissions(HttpContext))
                 return;
-            }
 
             string sql = @"
                 select

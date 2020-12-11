@@ -49,7 +49,7 @@ namespace budoco.Pages.Report
 
             bd_db.exec(sql, dict);
 
-            Response.Redirect("/Report/Index");
+            Response.Redirect("/Report/Reports");
         }
     }
 }

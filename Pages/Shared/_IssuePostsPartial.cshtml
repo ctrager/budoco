@@ -28,9 +28,9 @@
                                 by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
                             </div>
                         }
-                    }
+                    } // end history
                     else
-                    {
+                    { // not history
                         <div class="post" id="post_@p_id">
 
                             @{
@@ -78,13 +78,12 @@
                                 }
 
 
-
                                 DataTable dt_files = Model.GetPostAttachments(p_id);
                                 foreach (DataRow file_row in dt_files.Rows)
                                 {
                                     int pa_id = (int)file_row[0];
                                     string content_type = (string)file_row["pa_file_content_type"];
-                                    if (content_type != "")
+                                    if (content_type != "") // should never be blank...
                                     {
                                         <div class="info_text">
                                             File: @file_row["pa_file_name"], Size: @file_row["pa_file_length"],
@@ -108,16 +107,19 @@
                                             </div>
                                         }
                                     }
-                                }
+                                } 
+                                @* end for each attachment *@
                             }
 
-                        </div>
-                        <!--end post-->
-                    }
-                }
+                        </div> @* end not history div *@
+
+                    } 
+                    @* not history post *@
+                } 
+                @* end for each post *@
             }
         </div>
-        <!--posts inner-->
+        @* posts inner div *@
     }
 
     if (!string.IsNullOrEmpty(Model.post_error))

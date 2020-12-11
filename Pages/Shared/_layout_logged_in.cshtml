@@ -54,11 +54,11 @@
                     <input type="number" class="goto_input" id="goto_input" placeholder="ID#" />
                 </li>
 
+                <li><a asp-page="/Report/Reports">Reports</a></li>
 
                 @{
                     if (is_admin)
                     {
-                        <li><a asp-page="/Report/Index">Reports</a></li>
                         <li><a asp-page="/Admin/Admin">Admin</a></li>
                         if (bd_config.get(bd_config.DebugEnableRunSql) == 1)
                         {

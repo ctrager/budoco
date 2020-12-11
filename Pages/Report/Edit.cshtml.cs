@@ -87,7 +87,7 @@ namespace budoco.Pages.Report
                 bd_util.set_flash_msg(HttpContext, bd_util.UPDATE_WAS_SUCCESSFUL);
             }
 
-            Response.Redirect("/Report/Index");
+            Response.Redirect("/Report/Reports");
         }
 
         private bool IsValid()

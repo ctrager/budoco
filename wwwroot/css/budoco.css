@@ -151,6 +151,9 @@ h1::after {
     white-space: pre;
 }
 
+img {
+    width: 900px;
+}
 
 .crud_table {
     display: inline-block;
