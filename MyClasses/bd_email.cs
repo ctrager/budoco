@@ -310,42 +310,63 @@ namespace budoco
                 stream.Close();
             }
 
-            int issue_id = get_incoming_issue_id_from_subject(message.Subject);
+            int issue_id = bd_issue.get_incoming_issue_id_from_subject(message.Subject);
 
             // no magic number in the subject, so this isn't a reply 
             if (issue_id == 0)
             {
                 // Create a new issue?
-                if (bd_config.get(bd_config.EnableIncomingEmailIssueCreation) == 1)
-                {
-                    // Corey TODO: Create new issue
-                    // Use email subject as issue description
-                    // What do we put in details?  Email To Line, CC line, BCC Line?
-                    // 
-                    // Create a post from the email itself
-                }
-                else
+                if (bd_config.get(bd_config.EnableIncomingEmailIssueCreation) == 0)
                 {
                     return false; // we don't recognize this email as one of ours
                 }
             }
 
-            InternetAddress from = message.From[0];
-            bd_util.log("email from:" + from.ToString());
-            bd_util.log(message.TextBody);
-            string text_body = message.TextBody.Trim();
-            string html_body = message.HtmlBody.Trim();
+            string from = message.From[0].ToString();
+
+            bd_util.log("email from: " + from + ", Subject: " + message.Subject);
+
+            string text_body = message.TextBody;
+            string html_body = message.HtmlBody;
+
 
             if (text_body is null)
             {
                 text_body = "";
             }
+            else
+            {
+                text_body = text_body.Trim();
+            }
+
             if (html_body is null)
             {
                 html_body = "";
             }
+            else
+            {
+                html_body = html_body.Trim();
+            }
 
-            int post_id = create_post_from_email(issue_id, from.ToString(), text_body, html_body);
+            if (issue_id == 0)
+            {
+                // Corey TODO
+                // Run filters against from and subject here
+                // if the filter fail, log and return
+                // else create a new issue and get the issue id.
+                // we will use the text part for the issue details and html part for the ppost
+                issue_id = bd_issue.create_issue(message.Subject, text_body, bd_util.SYSTEM_USER_ID_ZERO);
+            }
+
+            int post_id = bd_issue.create_post_from_email(bd_issue.POST_TYPE_REPLY_IN, issue_id, from.ToString(), text_body, html_body);
+
+            insert_attachments(post_id, issue_id, message);
+
+            return true; // delete this message
+        }
+
+        static void insert_attachments(int post_id, int issue_id, MimeMessage message)
+        {
 
             using (var iter = new MimeIterator(message))
             {
@@ -358,108 +379,12 @@ namespace budoco
                     {
                         if (part.FileName is not null)
                         {
-                            insert_attachment_as_post(post_id, issue_id, part);
+                            bd_issue.insert_attachment_as_post(post_id, issue_id, part);
                         }
 
                     }
                 }
             }
-            return true; // delete this message
-        }
-
-        static int create_post_from_email(int issue_id, string from, string text_body, string html_body)
-        {
-            var sql = @"insert into posts
-                (p_issue, p_post_type, p_text, p_created_by_user, p_email_from, p_email_from_html_part)
-                values(@p_issue, @p_post_type, @p_text, @p_created_by_user, @p_email_from, @p_email_from_html_part)
-                returning p_id";
-
-            var dict = new Dictionary<string, dynamic>();
-            dict["@p_issue"] = issue_id;
-            dict["@p_post_type"] = "reply";
-            dict["@p_text"] = text_body;
-            dict["@p_email_from_html_part"] = html_body;
-            dict["@p_created_by_user"] = 1; // system
-            dict["@p_email_from"] = from;
-
-            int post_id = (int)bd_db.exec_scalar(sql, dict);
-            return post_id;
-        }
-
-        static void insert_attachment_as_post(int post_id, int issue_id, MimePart part)
-        {
-            bd_util.log(part.ContentType + "," + part.FileName);
-
-            var sql = @"insert into post_attachments
-                (pa_post, pa_issue, pa_file_name, pa_file_length, pa_file_content_type, pa_content)
-                values(@pa_post, @pa_issue, @pa_file_name, @pa_file_length, @pa_file_content_type, @pa_content)";
-
-            var dict = new Dictionary<string, dynamic>();
-
-            dict["@pa_post"] = post_id;
-            dict["@pa_issue"] = issue_id;
-            dict["@pa_file_name"] = part.FileName;
-            dict["@pa_file_content_type"]
-                = part.ContentType.MediaType + "/" + part.ContentType.MediaSubtype;
-
-            MemoryStream memory_stream = new MemoryStream();
-            part.Content.DecodeTo(memory_stream);
-            dict["@pa_file_length"] = memory_stream.Length;
-            dict["@pa_content"] = memory_stream.ToArray();
-
-            bd_db.exec(sql, dict);
-
-        }
-
-        static int get_incoming_issue_id_from_subject(string subject)
-        {
-            int issue_id = 0;
-            int microseconds = 0;
-
-            // parse the "[#123-456] Computer won't turn on"
-            // the 123 is the issue_id
-            // the 456 is the microseconds part, "US" format specifier, of the i_created_date
-            int start_of_id = subject.IndexOf("[#") + 2;
-
-            if (start_of_id > 0)
-            {
-                int end_of_id = subject.IndexOf("]");
-                if (end_of_id > start_of_id)
-                {
-                    int length = end_of_id - start_of_id;
-                    string issue_and_microseconds = subject.Substring(start_of_id, length);
-                    string[] pair = issue_and_microseconds.Split("-");
-                    if (pair.Length == 2)
-                    {
-                        bool is_int = int.TryParse(pair[0], out issue_id);
-                        if (is_int)
-                        {
-                            int.TryParse(pair[1], out microseconds);
-                        }
-                    }
-                }
-            }
-
-            if (issue_id == 0)
-                return 0;
-
-            // Fetch the issue. 
-            // Don't just use the id, because we don't want people to just guess issues.
-            // Also use the microseconds part of the creation timestamp.
-            var sql = @"select i_id from issues where i_id = @i_id 
-                and to_char(i_created_date, 'US') = @microseconds";
-
-            var dict = new Dictionary<string, dynamic>();
-            dict["@i_id"] = issue_id;
-            dict["@microseconds"] = microseconds.ToString();
-
-            object obj = bd_db.exec_scalar(sql, dict);
-
-            if (obj is not null)
-                return issue_id;
-            else
-                return 0;
-
         }
 
         public static bool validate_email_address(string address)
@@ -514,6 +439,5 @@ namespace budoco
                 System.Threading.Thread.Sleep(milliseconds);
             }
         }
-
     }
 }

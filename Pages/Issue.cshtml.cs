@@ -351,19 +351,7 @@ namespace budoco.Pages
             {
 
                 // create a new issue
-
-                sql = @"insert into issues 
-                (i_description, i_details, i_created_by_user, 
-                i_organization,
-                i_custom_1, i_custom_2,i_custom_3,i_custom_4,i_custom_5,i_custom_6,
-                i_assigned_to_user) 
-                values(@i_description, @i_details, @i_created_by_user, 
-                @i_organization, 
-                @i_custom_1, @i_custom_2, @i_custom_3, @i_custom_4, @i_custom_5, @i_custom_6,
-                @i_assigned_to_user) 
-                returning i_id";
-
-                this.id = (int)bd_db.exec_scalar(sql, GetValuesDict());
+                this.id = (int)bd_db.exec_scalar(bd_issue.INSERT_ISSUE_SQL, GetValuesDict());
                 bd_util.set_flash_msg(HttpContext, bd_util.CREATE_WAS_SUCCESSFUL);
                 Response.Redirect("Issue?id=" + this.id.ToString());
             }
@@ -419,7 +407,7 @@ namespace budoco.Pages
 
             var dict = new Dictionary<string, dynamic>();
             dict["@p_issue"] = id;
-            dict["@p_post_type"] = "history";
+            dict["@p_post_type"] = bd_issue.POST_TYPE_HISTORY;
             dict["@p_created_by_user"] = bd_util.get_user_id_from_session(HttpContext);
             dict["@p_created_date"] = last_updated_date; // same date as issue, sync the history
 
@@ -724,7 +712,7 @@ namespace budoco.Pages
             dict["@i_last_post_user"] = bd_util.get_user_id_from_session(HttpContext);
             bd_db.exec(sql, dict);
 
-            if (post_type == "email")
+            if (post_type == bd_issue.POST_TYPE_EMAIL_OUT)
             {
                 //SendIssueEmail();
                 QueueEmail(post_id);
@@ -735,7 +723,7 @@ namespace budoco.Pages
 
         bool IsValidPost()
         {
-            if (post_type == "email")
+            if (post_type == bd_issue.POST_TYPE_EMAIL_OUT)
             {
                 if (string.IsNullOrWhiteSpace(post_email_to))
                 {

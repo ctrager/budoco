@@ -28,6 +28,7 @@ namespace budoco
         public const string NAME_ALREADY_USED = "Name is already being used.";
         public const string NAME_IS_REQUIRED = "Name is required.";
         public const string NEXT_URL = "next_url";
+        public const int SYSTEM_USER_ID_ZERO = 1;
 
         public static void log(object msg)
         {

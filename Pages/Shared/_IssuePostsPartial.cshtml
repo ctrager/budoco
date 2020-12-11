@@ -8,7 +8,7 @@
                     int p_id = (int)dr[0];
                     string post_type = (string)dr["p_post_type"];
 
-                    if (post_type == "history")
+                    if (post_type == bd_issue.POST_TYPE_HISTORY)
                     {
                         string changed_field = (string)@dr["p_changed_field"];
                         string before_val = (string)dr["p_before_val"];
@@ -34,7 +34,7 @@
                         <div class="post" id="post_@p_id">
 
                             @{
-                                if (post_type == "comment")
+                                if (post_type == bd_issue.POST_TYPE_COMMENT)
                                 {
                                     <div class="info_text">
                                         Comment by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
@@ -46,7 +46,7 @@
                                     }
                                 }
 
-                                else if (post_type == "email")
+                                else if (post_type == bd_issue.POST_TYPE_EMAIL_OUT)
                                 {
                                     <div class="info_text">
                                         Email sent by @dr["us_username"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
@@ -58,7 +58,7 @@
                                     <pre class="post_text">@dr["p_text"]</pre>
                                 }
 
-                                else if (post_type == "reply")
+                                else if (post_type == bd_issue.POST_TYPE_REPLY_IN || post_type == bd_issue.POST_TYPE_EMAIL_IN)
                                 {
                                     <div class="info_text">
                                         Email received from @dr["p_email_from"] on @dr["p_created_date"]&nbsp;&nbsp;post #@p_id
@@ -73,7 +73,7 @@
                                     }
                                     else
                                     {
-                                        <pre class="post_text">@dr["p_text"]</pre>
+                                        <pre class=" post_text">@dr["p_text"]</pre>
                                     }
                                 }
 
@@ -107,15 +107,15 @@
                                             </div>
                                         }
                                     }
-                                } 
+                                }
                                 @* end for each attachment *@
                             }
 
                         </div> @* end not history div *@
 
-                    } 
+                    }
                     @* not history post *@
-                } 
+                }
                 @* end for each post *@
             }
         </div>

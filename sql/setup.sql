@@ -168,7 +168,7 @@ create table posts
 p_id serial primary key,
 p_issue int not null,
 /* comment, email, reply, history */
-p_post_type varchar(8) not null,
+p_post_type varchar(12) not null,
 p_text text not null default '',
 p_email_to text not null default '',
 p_email_from text not null default '',
