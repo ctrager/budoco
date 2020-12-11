@@ -301,6 +301,7 @@ namespace budoco
             bd_util.log("email subject:" + message.Subject);
             string debug_folder = bd_config.get(bd_config.DebugFolderToSaveEmails);
 
+            // save the incoming email as a text file, so we can study it
             if (debug_folder != "")
             {
                 filename_suffix_count++;
@@ -311,9 +312,22 @@ namespace budoco
 
             int issue_id = get_incoming_issue_id_from_subject(message.Subject);
 
+            // no magic number in the subject, so this isn't a reply 
             if (issue_id == 0)
             {
-                return false; // we don't recognize this email as one of ours
+                // Create a new issue?
+                if (bd_config.get(bd_config.EnableIncomingEmailIssueCreation) == 1)
+                {
+                    // Corey TODO: Create new issue
+                    // Use email subject as issue description
+                    // What do we put in details?  Email To Line, CC line, BCC Line?
+                    // 
+                    // Create a post from the email itself
+                }
+                else
+                {
+                    return false; // we don't recognize this email as one of ours
+                }
             }
 
             InternetAddress from = message.From[0];

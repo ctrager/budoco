@@ -1,0 +1,24 @@
+###############################################################################
+# Lines beginning with "#" are comments
+# 
+# For each incoming email, Budoco runs the rules in order until the condition
+# matches the email. Hitting that condition short circuits the rest of the
+# conditions, so the order of the conditions here is important.
+#
+# The last line should must be either "Allow" or "Deny". It's the action
+# taken if none of the above conditions apply.
+# 
+###############################################################################
+
+# You can test the email Subject
+DenyIfSubjectContains: loan offer
+DenyIfSubjectContains: loose weight
+
+# And or you can test the "From"
+AllowIfFromContains: ctrager
+DenyIfFromContains: linkedin.com
+
+# If none of the above rules apply, either Allow or Deny
+Deny
+# or
+# Allow

@@ -75,7 +75,6 @@ ImapPassword: YOUR_PASSWORD   <<< CHANGE THIS
 # See also the CustomCssFilename setting below which has an example of 
 # arranging the items in the order you want.
 ###############################################################################
-##############################################################################
 
 CustomFieldEnabled1: 1
 CustomFieldLabelSingular1: Status
@@ -142,6 +141,25 @@ DateFormat: yyyy-MM-dd HH:mm
 # was an error and you have to look in the logs for the details.
 UseDeveloperExceptionPage: 1
 
+###############################################################################
+# Let incoming emails create issues.
+# 
+# In addition to handling replies from emails sent from Budoco, you can also
+# let incoming emails create Issues. 
+###############################################################################
+
+# U N D E R   C O N S T R U C T I O N
+EnableIncomingEmailIssueCreation: 1
+
+###############################################################################
+# You can filter the incoming emails either allowing them to create issues
+# or denying them, similar to firewall rules.
+# See the file "incoming_email_filter_example.txt"
+###############################################################################
+
+#IncomingEmailFilterFile: incoming_email_filter.txt
+# leave blank for no filter
+IncomingEmailFilterFile: 
 
 ###############################################################################
 #
