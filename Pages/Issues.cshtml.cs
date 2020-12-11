@@ -128,7 +128,7 @@ namespace budoco.Pages
             {
                 issue_list.Add((int)row[0]);
             }
-            bd_session.Set("issue_list", issue_list);
+            bd_session.Set(HttpContext, "issue_list", issue_list);
 
         }
 

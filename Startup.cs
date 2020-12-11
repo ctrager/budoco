@@ -116,6 +116,10 @@ namespace budoco
             // corey added a step in the pipeline
             app.Use(async (context, next) =>
             {
+
+                bd_util.log("Startup.cs URL: " + context.Request.GetDisplayUrl());
+
+
                 // The default behavior expires the session id every app restart which
                 // meant I had to re-log in every time I changed code    
                 string budoco_session_id = null;
@@ -125,17 +129,11 @@ namespace budoco
                     context.Session.SetString(bd_util.BUDOCO_SESSION_ID, budoco_session_id);
                 }
 
-                bd_util.log(
-                    DateTime.Now.ToString("hh:mm:ss")
-                    + " URL: "
-                    + context.Request.GetDisplayUrl()
-                    + ", Session: "
-                    + budoco_session_id
-                    + ", Thread: "
-                    + System.Threading.Thread.CurrentThread.ManagedThreadId);
 
-                // let's do it every url, so that we don't have to restart
-                bd_config.load_config();
+                // This was an experiment, but we don't want to check user permissions
+                // for pages like Login, Register, Forgot Password...
+                //if (bd_util.check_user_permissions(context))
+                //{
 
                 // For counting how many queries per page, but only
                 // trustworthy when there's one client, because it's
@@ -143,12 +141,17 @@ namespace budoco
                 bd_db.query_count = 0;
 
                 await next.Invoke();
+
+                // Unnecessary because Serilog does it in the file log already
+                // bd_util.log("Startup.cs URL end: " + context.Request.GetDisplayUrl());
+
             });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
+
         }
     }
 }

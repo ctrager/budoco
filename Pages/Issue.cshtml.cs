@@ -254,7 +254,7 @@ namespace budoco.Pages
             }
 
             // for prev, next issue
-            List<int> issue_list = bd_session.Get("issue_list");
+            List<int> issue_list = bd_session.Get(HttpContext, "issue_list");
             if (issue_list is not null)
             {
                 int current_position_in_list = issue_list.IndexOf(id);

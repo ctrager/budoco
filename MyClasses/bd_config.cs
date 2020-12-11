@@ -122,61 +122,71 @@ namespace budoco
 
         public static void load_config()
         {
-            bd_util.log("bd_config.load_config()");
+            // Tradeoffs. On the one hand we hurt concurrency because
+            // each request has to go through this lock, because it's
+            // called from Startup.cs for each request.
+            // On the other hand, this is a friggin' issue tracker, 
+            // not that busy, and this logic doesn't take long
+            // and it's great for us to be able to change config without
+            // restarting the app.
 
-            var lines = File.ReadLines("budoco_config_active.txt");
-
-            int line_count = 0;
-
-            foreach (var line in lines)
+            lock (my_lock)
             {
-                line_count++;
-                if (string.IsNullOrWhiteSpace(line))
-                    continue;
+                DateTime time1 = DateTime.Now;
 
-                if (line.StartsWith("#"))
-                    continue;
+                var lines = File.ReadLines("budoco_config_active.txt");
 
-                string[] pair = line.Split(":");
+                int line_count = 0;
 
-                if (pair.Length < 2)
-                    throw new Exception(
-                        "Line " + line_count.ToString() + " is bad:\n" + line);
-
-                // handle ":" in the value, like http://localhost
-                if (pair.Length > 2)
+                foreach (var line in lines)
                 {
-                    for (int i = 2; i < pair.Length; i++)
+                    line_count++;
+                    if (string.IsNullOrWhiteSpace(line))
+                        continue;
+
+                    if (line.StartsWith("#"))
+                        continue;
+
+                    string[] pair = line.Split(":");
+
+                    if (pair.Length < 2)
+                        throw new Exception(
+                            "Line " + line_count.ToString() + " is bad:\n" + line);
+
+                    // handle ":" in the value, like http://localhost
+                    if (pair.Length > 2)
                     {
-                        pair[1] += ":" + pair[i];
+                        for (int i = 2; i < pair.Length; i++)
+                        {
+                            pair[1] += ":" + pair[i];
+                        }
                     }
-                }
 
-                // We have a valid key=value line.
-                string key = pair[0].Trim();
+                    // We have a valid key=value line.
+                    string key = pair[0].Trim();
 
-                if (key == "")
-                    throw new Exception(
-                        "Line " + line_count.ToString() + " is bad:\n" + line);
+                    if (key == "")
+                        throw new Exception(
+                            "Line " + line_count.ToString() + " is bad:\n" + line);
 
-                string string_value = pair[1].Trim();
-                int int_value;
+                    string string_value = pair[1].Trim();
+                    int int_value;
 
-                if (Int32.TryParse(string_value, out int_value))
-                {
-                    lock (my_lock)
+                    if (Int32.TryParse(string_value, out int_value))
                     {
+
                         dict[key] = int_value;
                     }
-                }
-                else
-                {
-                    lock (my_lock)
+                    else
                     {
                         dict[key] = string_value;
                     }
-                }
-            }
+                } // end for each line
+                DateTime time2 = DateTime.Now;
+                TimeSpan timespan = time2 - time1;
+                bd_util.log("bd_config.load_config() milliseconds: " + timespan.TotalMilliseconds.ToString());
+
+            } // end lock
         }
 
         public static void log_config()
@@ -197,7 +207,6 @@ namespace budoco
                 return dict[key];
             }
         }
-
 
     }
 }

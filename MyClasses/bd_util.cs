@@ -31,8 +31,9 @@ namespace budoco
 
         public static void log(object msg)
         {
-            Console.WriteLine(msg.ToString()); // here on purpose
-            Log.Information(msg.ToString());
+            string s = System.Threading.Thread.CurrentThread.ManagedThreadId + " " + msg.ToString();
+            Console.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + " " + s);
+            Log.Information(s);
         }
 
         public static string get_flash_msg(HttpContext context)
@@ -86,6 +87,11 @@ namespace budoco
 
         public static bool check_user_permissions(HttpContext context, bool must_be_admin = false)
         {
+            // just in case....
+            if (context.Request.GetDisplayUrl().ToLower().Contains("admin"))
+            {
+                must_be_admin = true;
+            }
 
             string session_id = context.Request.Cookies[bd_util.BUDOCO_SESSION_ID];
             bool redirect = false;

@@ -1,37 +1,38 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace budoco
 {
     public static class bd_session
     {
         /*
-        
-            Because we can't store objects in HttpContext.Session, which is
-            just memory, I said, what the heck, let me create a simple 
-            place to store things that persist across requests.
-
-            So far (nov 2020), not using it though.
-
+            I created this because we can't store objects in HttpContext.Session
+            the way we could in the old Session. We can only store strings and ints
+            in the new Session.
         */
 
         static Dictionary<string, dynamic> cache = new Dictionary<string, dynamic>();
         static object my_lock = new object();
 
-        public static void Set(string key, dynamic obj)
+        public static void Set(HttpContext context, string key, dynamic obj)
         {
+            // because multiple threads could be using this.
             lock (my_lock)
             {
-                cache[key] = obj;
+                // we make the thing unique per session by prepending session.
+                cache[context.Session.Id + key] = obj;
             }
         }
 
-        public static dynamic Get(string key)
+        public static dynamic Get(HttpContext context, string key)
         {
+            // because multple threads could be using this.
             lock (my_lock)
             {
-                if (cache.ContainsKey(key))
-                    return cache[key];
+                string session_id_and_key = context.Session.Id + key;
+                if (cache.ContainsKey(session_id_and_key))
+                    return cache[session_id_and_key];
                 else
                     return null;
             }
