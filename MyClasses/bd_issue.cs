@@ -40,7 +40,7 @@ namespace budoco
         {
             int user_org = 0;
 
-            if (user_id != bd_util.SYSTEM_USER_ID_ZERO)
+            if (user_id != bd_util.SYSTEM_USER_ID)
             {
                 user_org = (int)bd_db.exec_scalar("select us_organization from users where us_id = " + user_id.ToString());
             }

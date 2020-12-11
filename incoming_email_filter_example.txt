@@ -11,14 +11,15 @@
 ###############################################################################
 
 # You can test the email Subject
-DenyIfSubjectContains: loan offer
 DenyIfSubjectContains: loose weight
+AllowIfSubjectContains: software
 
 # And or you can test the "From"
 AllowIfFromContains: ctrager
 DenyIfFromContains: linkedin.com
 
-# If none of the above rules apply, either Allow or Deny
+# If none of the above rules apply, either Allow or Deny.
+# if there is no last line the default behavior is "Allow".
 Deny
 # or
 # Allow

@@ -16,6 +16,8 @@ namespace budoco
     {
         static int filename_suffix_count = 0;
 
+        static List<string[]> filter_lines = new List<string[]>();
+
         public static void queue_email(string type, string to, string subject, string body, int post_id = 0)
         {
             string sql = @"insert into outgoing_email_queue
@@ -70,7 +72,7 @@ namespace budoco
 
         // read the table outgoing_email_queue, try to send an email for each row
         // and if good, delete the row
-        public static void threadproc_send_emails()
+        static void threadproc_send_emails()
         {
             var sql = @"select * from outgoing_email_queue 
                 where oq_sending_attempt_count < @max_retries
@@ -122,7 +124,7 @@ namespace budoco
         }
 
 
-        public static void send_email(string to, string subject, string body_text, int post_id = 0)
+        static void send_email(string to, string subject, string body_text, int post_id = 0)
         {
 
             var message = new MimeMessage();
@@ -218,12 +220,13 @@ namespace budoco
 
         }
 
-        public static void threadproc_fetch_incoming_messages()
+        static void threadproc_fetch_incoming_messages()
         {
             while (true)
             {
                 if (bd_config.get(bd_config.EnableIncomingEmail) == 1)
                 {
+                    load_filter_lines();
                     fetch_incoming_messages();
                 }
 
@@ -233,7 +236,53 @@ namespace budoco
             }
         }
 
-        public static void fetch_incoming_messages()
+        static void load_filter_lines()
+        {
+            // get the lines for filtering by subject and from
+
+            filter_lines.Clear();
+            if (!File.Exists("incoming_email_filter_active.txt"))
+                return;
+
+
+            var lines = File.ReadLines("incoming_email_filter_active.txt");
+
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("#"))
+                {
+                    continue;
+                }
+                string[] pair = line.Split(":");
+                if (pair.Length != 2)
+                {
+                    continue;
+                }
+                pair[0] = pair[0].Trim();
+
+                if (pair[0] == AllowIfFromContains
+                || pair[0] == AllowIfSubjectContains
+                || pair[0] == DenyIfFromContains
+                || pair[0] == DenyIfSubjectContains)
+                {
+                    pair[1] = pair[1].Trim().ToLower();
+                    bd_util.log("filter_line:" + pair[0] + ":" + pair[1]);
+                    filter_lines.Add(pair);
+                }
+                else
+                {
+                    if (pair[0] == "Allow" || pair[0] == "Deny")
+                    {
+                        pair[1] = null;
+                        bd_util.log("filter_line:" + pair[0]);
+                        filter_lines.Add(pair);
+                    }
+                }
+
+            } // end foreach
+        }
+
+        static void fetch_incoming_messages()
         {
 
             using (var client = new ImapClient())
@@ -295,6 +344,11 @@ namespace budoco
             process_incoming_message(message);
         }
 
+        const string DenyIfSubjectContains = "DenyIfSubjectContains";
+        const string DenyIfFromContains = "DenyIfFromContains";
+        const string AllowIfSubjectContains = "AllowIfSubjectContains";
+        const string AllowIfFromContains = "AllowIfFromContains";
+
         static bool process_incoming_message(MimeMessage message)
         {
 
@@ -350,12 +404,11 @@ namespace budoco
 
             if (issue_id == 0)
             {
-                // Corey TODO
-                // Run filters against from and subject here
-                // if the filter fail, log and return
-                // else create a new issue and get the issue id.
-                // we will use the text part for the issue details and html part for the ppost
-                issue_id = bd_issue.create_issue(message.Subject, text_body, bd_util.SYSTEM_USER_ID_ZERO);
+
+                if (!is_email_allowed(from, message.Subject))
+                    return false;
+
+                issue_id = bd_issue.create_issue(message.Subject, text_body, bd_util.SYSTEM_USER_ID);
             }
 
             int post_id = bd_issue.create_post_from_email(bd_issue.POST_TYPE_REPLY_IN, issue_id, from.ToString(), text_body, html_body);
@@ -364,6 +417,48 @@ namespace budoco
 
             return true; // delete this message
         }
+
+        static bool is_email_allowed(string from, string subject)
+        {
+            string lower_from = from.ToLower();
+            string lower_subject = subject.ToLower();
+
+            foreach (string[] pair in filter_lines)
+            {
+                if (pair[0] == DenyIfFromContains && lower_from.Contains(pair[1]))
+                {
+                    bd_util.log(pair[0] + ":" + lower_from);
+                    return false; // denied
+                }
+
+                if (pair[0] == DenyIfSubjectContains && lower_subject.Contains(pair[1]))
+                {
+                    bd_util.log(pair[0] + ":" + lower_subject);
+                    return false;
+                }
+
+                if (pair[0] == AllowIfFromContains && lower_from.Contains(pair[1]))
+                {
+                    bd_util.log(pair[0] + ":" + lower_from);
+                    return true; // allow
+                }
+
+                if (pair[0] == AllowIfSubjectContains && lower_subject.Contains(pair[1]))
+                {
+                    bd_util.log(pair[0] + ":" + lower_subject);
+                    return true;
+                }
+
+                if (pair[0] == "Deny")
+                {
+                    bd_util.log("Deny " + lower_from + " " + lower_subject);
+                    return false;
+                }
+            }
+
+            return true; // allowed
+        }
+
 
         static void insert_attachments(int post_id, int issue_id, MimeMessage message)
         {
@@ -402,7 +497,7 @@ namespace budoco
         }
 
 
-        public static void threadproc_expire_registration_requests()
+        static void threadproc_expire_registration_requests()
         {
             while (true)
             {

@@ -104,8 +104,6 @@ namespace budoco
         public const string InviteUserExpirationInHours = "InviteUserExpirationInHours";
         public const string IssueEmailPreamble = "IssueEmailPreamble";
         public const string EnableIncomingEmailIssueCreation = "EnableIncomingEmailIssueCreation";
-        public const string IncomingEmailFilterFile = "IncomingEmailFilterFile";
-
 
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 

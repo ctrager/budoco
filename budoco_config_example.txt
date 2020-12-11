@@ -142,24 +142,16 @@ DateFormat: yyyy-MM-dd HH:mm
 UseDeveloperExceptionPage: 1
 
 ###############################################################################
-# Let incoming emails create issues.
-# 
 # In addition to handling replies from emails sent from Budoco, you can also
 # let incoming emails create Issues. 
+# You can filter the incoming emails based on "From" or "Subject" similar
+# to setting up firewall rules.
+# See the comments in the file "incoming_emaiL_filter_example.txt"
+# The app looks for "incoming_email_filter_active.txt"
+#
 ###############################################################################
 
-# U N D E R   C O N S T R U C T I O N
 EnableIncomingEmailIssueCreation: 1
-
-###############################################################################
-# You can filter the incoming emails either allowing them to create issues
-# or denying them, similar to firewall rules.
-# See the file "incoming_email_filter_example.txt"
-###############################################################################
-
-#IncomingEmailFilterFile: incoming_email_filter.txt
-# leave blank for no filter
-IncomingEmailFilterFile: 
 
 ###############################################################################
 #
