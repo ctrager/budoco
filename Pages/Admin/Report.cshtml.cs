@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Net;
 
-namespace budoco.Pages.Report
+namespace budoco.Pages
 {
-    public sealed class EditReportModel : PageModel
+    public sealed class ReportModel : PageModel
     {
         [FromQuery]
         public int id { get; set; }
@@ -37,7 +37,7 @@ namespace budoco.Pages.Report
             {
                 // Get this entry's data from the db and fill in the form
                 var sql = @"select
-                    rp_desc, rp_sql, rp_chart_type
+                    rp_name, rp_sql, rp_chart_type
                     from reports where rp_id=@id";
 
                 var dict = new Dictionary<string, object>
@@ -48,19 +48,14 @@ namespace budoco.Pages.Report
                 DataRow dr = bd_db.get_datarow(sql, dict);
 
                 // Fill in this form
-                name = (string)dr["rp_desc"];
+                name = (string)dr["rp_name"];
                 chartType = (string)dr["rp_chart_type"];
-
-                //if (Util.get_setting("HtmlEncodeSql","0") == "1")
-                //{
-                //  sql_text.Value = Server.HtmlEncode((string) dr["rp_sql"]);
-                //}
-                //else
-                //{
                 sqlText = (string)dr["rp_sql"];
-                //}
             }
         }
+
+
+
 
         public void OnPost()
         {
@@ -87,7 +82,7 @@ namespace budoco.Pages.Report
                 bd_util.set_flash_msg(HttpContext, bd_util.UPDATE_WAS_SUCCESSFUL);
             }
 
-            Response.Redirect("/Report/Reports");
+            OnGet();
         }
 
         private bool IsValid()
@@ -126,7 +121,7 @@ namespace budoco.Pages.Report
         private void Create()
         {
             var sql = @"insert into reports
-                (rp_desc, rp_sql, rp_chart_type)
+                (rp_name, rp_sql, rp_chart_type)
                 values (@name, @sql, @chart_type)";
 
             var dict = new Dictionary<string, object>
@@ -143,7 +138,7 @@ namespace budoco.Pages.Report
         {
             var sql = @"
                 update reports set
-                    rp_desc = @name,
+                    rp_name = @name,
                     rp_sql = @sql,
                     rp_chart_type = @chart_type
                 where
@@ -159,5 +154,6 @@ namespace budoco.Pages.Report
 
             bd_db.exec(sql, dict);
         }
+
     }
 }

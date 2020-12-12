@@ -6,7 +6,7 @@
 delete from reports;
 
 /* Some examples to get you started */
-insert into reports (rp_desc, rp_sql, rp_chart_type)
+insert into reports (rp_name, rp_sql, rp_chart_type)
     values('Issues by Status',
     'select c1_name "status", count(1) "count"
     from issues
@@ -15,7 +15,7 @@ insert into reports (rp_desc, rp_sql, rp_chart_type)
     order by c1_name',
     'pie');
 
-insert into reports (rp_desc, rp_sql, rp_chart_type)
+insert into reports (rp_name, rp_sql, rp_chart_type)
     values('Issues by Priority',
     'select c2_name "priority", count(1) "count"
     from issues
@@ -24,7 +24,7 @@ insert into reports (rp_desc, rp_sql, rp_chart_type)
     order by c2_name',
     'pie');
 
-insert into reports (rp_desc, rp_sql, rp_chart_type)
+insert into reports (rp_name, rp_sql, rp_chart_type)
     values('Issues by Category',
     'select c4_name "category", count(1) "count"
     from issues
@@ -33,7 +33,7 @@ insert into reports (rp_desc, rp_sql, rp_chart_type)
     order by c4_name',
     'pie');
 
-insert into reports (rp_desc, rp_sql, rp_chart_type)
+insert into reports (rp_name, rp_sql, rp_chart_type)
     values('Issues by Month',
     'select DATE_PART(''month'', i_created_date) "month", count(1) "count"
     from issues
@@ -41,7 +41,7 @@ insert into reports (rp_desc, rp_sql, rp_chart_type)
     order by DATE_PART(''year'', i_created_date), DATE_PART(''month'', i_created_date)',
     'bar');
 
-insert into reports (rp_desc, rp_sql, rp_chart_type)
+insert into reports (rp_name, rp_sql, rp_chart_type)
     values('Issues by Day of Year',
     'select DATE_PART(''doy'', i_created_date) "day of year", count(1) "count"
     from issues
@@ -49,7 +49,7 @@ insert into reports (rp_desc, rp_sql, rp_chart_type)
     DATE_PART(''doy'', i_created_date) order by 1',
     'line');
 
-insert into reports (rp_desc, rp_sql, rp_chart_type)
+insert into reports (rp_name, rp_sql, rp_chart_type)
     values('Issues by User',
     'create temp table temp as
     select i_created_by_user, count(1) "r"
@@ -68,7 +68,7 @@ insert into reports (rp_desc, rp_sql, rp_chart_type)
     order by 1', 
     'table');
 
---insert into reports (rp_desc, rp_sql, rp_chart_type)
+--insert into reports (rp_name, rp_sql, rp_chart_type)
 --    values ('Hours by Org, Year, Month',
 --    'select og_name "organization",
 --    datepart(year,tsk_created_date) "year",
@@ -84,7 +84,7 @@ insert into reports (rp_desc, rp_sql, rp_chart_type)
 --    group by og_name,datepart(year,tsk_created_date), datepart(month,tsk_created_date)',
 --    'table');
 
---insert into reports (rp_desc, rp_sql, rp_chart_type)
+--insert into reports (rp_name, rp_sql, rp_chart_type)
 --    values ('Hours Remaining by Project',
 --    'select pj_name "project",
 --    convert(decimal(8,1),sum(

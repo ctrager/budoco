@@ -33,7 +33,7 @@ namespace budoco.Pages
             if (user_id == 0)
             {
                 bd_util.set_flash_err(HttpContext, "You need to sign in.");
-                Response.Redirect("Login");
+                Response.Redirect("/Login");
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace budoco.Pages
             if (user_id == 0)
             {
                 bd_util.set_flash_err(HttpContext, "You need to sign in.");
-                Response.Redirect("Login");
+                Response.Redirect("/Login");
                 return;
             }
 

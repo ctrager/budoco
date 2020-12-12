@@ -16,13 +16,13 @@
         }
         else
         {
-            <a href="Issues">Back to Issues</a>
+            <a href="/Issues">Back to Issues</a>
         }
         <span>&nbsp;&nbsp;&nbsp;</span>
 
         if (Model.prev_issue_id_in_list != 0)
         {
-            <a href="Issue?id=@Model.prev_issue_id_in_list">Prev</a>
+            <a href="/Issue?id=@Model.prev_issue_id_in_list">Prev</a>
         }
         else
         {
@@ -32,7 +32,7 @@
         <span>&nbsp;&nbsp;</span>
         if (Model.next_issue_id_in_list != 0)
         {
-            <a href="Issue?id=@Model.next_issue_id_in_list">Next</a>
+            <a href="/Issue?id=@Model.next_issue_id_in_list">Next</a>
         }
         else
         {

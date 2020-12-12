@@ -14,7 +14,7 @@
     <input name="action" value="delete" />
 </form>
 
-<div class="data_table_div">
+<div class="data_table_div crud_table">
 
     <table class="dt">
         @{
@@ -37,7 +37,7 @@
                         {
                             if (col == 0)
                             {
-                                <td><a href="@(Model.singular_table_name + "?id=" + dr[0])">@dr[col]</a></td>
+                                <td><a href="/Admin/@(Model.singular_table_name + "?id=" + dr[0])">@dr[col]</a></td>
                             }
                             else
                             {
@@ -47,7 +47,7 @@
                     }
 
                     <td>
-                        <a href="@(Model.singular_table_name + "?id=" + dr[0])">
+                        <a href="/Admin/@(Model.singular_table_name + "?id=" + dr[0])">
                             Update
                         </a>
                         &nbsp;&nbsp;

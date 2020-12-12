@@ -1,0 +1,18 @@
+@page
+@model ReportsAdminModel
+
+@{
+    ViewData["Title"] = "Reports Admin";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<partial name="_FlashPartial" />
+
+<div><a href="/Admin/Report?id=0">Create Report</a></div>
+
+<partial name="_CrudDataTableWithDeletePartial" />
+
+@section Scripts {
+
+}

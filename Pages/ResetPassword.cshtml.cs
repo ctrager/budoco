@@ -108,7 +108,7 @@ namespace budoco.Pages
             {
                 errs.Add("Password reset failed. Please try again.");
                 bd_util.set_flash_errs(HttpContext, errs);
-                Response.Redirect("ResetPasswordRequest");
+                Response.Redirect("/ResetPasswordRequest");
 
             }
 

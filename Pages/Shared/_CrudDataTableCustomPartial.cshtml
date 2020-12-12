@@ -37,7 +37,7 @@
                         {
                             if (col == 0)
                             {
-                                <td><a href="Detail?id=@(dr[0])&field=@(Model.field)">@dr[col]</a></td>
+                                <td><a href="/Admin/Detail?id=@(dr[0])&field=@(Model.field)">@dr[col]</a></td>
                             }
                             else
                             {
@@ -48,7 +48,7 @@
 
 
                     <td>
-                        <a href="Detail?id=@(dr[0])&field=@(Model.field)">Update</a>
+                        <a href="/Admin/Detail?id=@(dr[0])&field=@(Model.field)">Update</a>
                         @{
                             int number_of_issues = Convert.ToInt32(dr["Number of Issues"]);
                             if (number_of_issues == 0)

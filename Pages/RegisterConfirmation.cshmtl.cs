@@ -26,7 +26,7 @@ namespace budoco.Pages
             if (dr_registration is null)
             {
                 bd_util.set_flash_err(HttpContext, "Registration request not found. Please register again.");
-                Response.Redirect("Register");
+                Response.Redirect("/Register");
             }
             else
             {
@@ -64,7 +64,7 @@ namespace budoco.Pages
 
                 bd_util.set_flash_msg(HttpContext, "Welcome. Registration was successful. You can now log in.");
 
-                Response.Redirect("Login");
+                Response.Redirect("/Login");
             }
 
         }

@@ -109,7 +109,7 @@ namespace budoco.Pages
 
             }
 
-            Response.Redirect("Query?id=" + id.ToString());
+            Response.Redirect("/Admin/Query?id=" + id.ToString());
         }
 
         Dictionary<string, dynamic> GetValuesDict()
@@ -133,6 +133,20 @@ namespace budoco.Pages
             if (string.IsNullOrWhiteSpace(name))
             {
                 errs.Add(bd_util.NAME_IS_REQUIRED);
+            }
+
+            else
+            {
+                var sql = "select 1 from queries where qu_name = @name and qu_id != @id";
+
+                var dict = new Dictionary<string, dynamic>();
+                dict["@name"] = name;
+                dict["@id"] = id;
+
+                if (bd_db.exists(sql, dict))
+                {
+                    errs.Add("Name is already in use.");
+                }
             }
 
             if (string.IsNullOrWhiteSpace(sql))

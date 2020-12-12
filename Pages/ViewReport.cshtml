@@ -1,0 +1,27 @@
+﻿@page
+@model ViewReportModel
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+@{
+    string referer = HttpContext.Request.Headers["Referer"].ToString();
+    if (referer.Contains("Admin"))
+    {
+        <a href="@referer">Back to Update Report</a>
+
+    }
+    else
+    {
+        <a href="/Reports">Back to Reports</a>
+
+    }
+}
+
+
+</div>
+
+<partial name="_ReportDataTablePartial" />
+
+@section Scripts {
+}

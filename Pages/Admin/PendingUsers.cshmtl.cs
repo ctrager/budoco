@@ -23,7 +23,14 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return;
 
-            string sql = @"select * from registration_requests order by rr_created_date desc";
+            string sql = @"select 
+            rr_id as ""ID"",
+            rr_created_date as ""Date Created"",
+            rr_username as ""Username"",
+            rr_email_address as ""Email"",
+            case when rr_is_invitation = true then 'Invitation' else 'Registration' end as ""Type"",
+            rr_organization as ""Organization""
+            from registration_requests order by rr_created_date desc";
 
             dt = bd_db.get_datatable(sql);
         }

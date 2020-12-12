@@ -133,12 +133,12 @@ create unique index qu_name_index on queries (qu_name);
 create table reports
 (
 	rp_id serial primary key,
-	rp_desc varchar(80) not null,
+	rp_name varchar(80) not null,
 	rp_sql text not null,
 	rp_chart_type varchar(8) not null
 );
 
-create unique index unique_rp_desc on reports (rp_desc);
+create unique index unique_rp_name on reports (rp_name);
 
 
 create table issues 

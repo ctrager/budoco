@@ -1,17 +1,32 @@
 ﻿@page
-@model EditReportModel
+@model ReportModel
 
 @{
     ViewData["Title"] = "Report";
 }
 
-<h1>@(Model.id == 0 ? "Create" : "Update") @ViewData["Title"]</h1>
+<h1>Create/Update  @ViewData["Title"]</h1>
 
 <div>
-    <a asp-page="Reports">Back to Reports</a>
+    <a href="/Admin/ReportsAdmin">Back to Reports</a>
 </div>
 
+@{
+    if (Model.id != 0)
+    {
+<div>
+    <span class="fake_link" onclick="view_chart()">View Chart</span>
+    &nbsp;
+    &nbsp;
+    <span class="fake_link" onclick="view_data()">View Data</span>
+ 
+</div>
+    }
+}
+
 <partial name="_FlashPartial" />
+
+<span id="hidden_id" data-id="@Model.id" />
 
 <div class="form_div">
     <form method="post">
@@ -35,39 +50,23 @@
                     <td>
                         <div>
                             <span>
-                                @{
-                                    var id = Guid.NewGuid();
-                                }
-
-                                <input type="radio" asp-for="chartType" value="table" id="@id">
-                                <label asp-for="@id">Table</label>
+                                <input type="radio" asp-for="chartType" value="table" id="table">
+                                <label for="table">Table</label>
                             </span>
 
                             <span>
-                                @{
-                                    id = Guid.NewGuid();
-                                }
-
-                                <input type="radio" asp-for="chartType" value="pie" id="@id">
-                                <label asp-for="@id">Pie</label>
+                                <input type="radio" asp-for="chartType" value="pie" id="pie">
+                                <label for="pie">Pie</label>
                             </span>
 
                             <span>
-                                @{
-                                    id = Guid.NewGuid();
-                                }
-
-                                <input type="radio" asp-for="chartType" value="bar" id="@id">
-                                <label asp-for="@id">Bar</label>
+                                <input type="radio" asp-for="chartType" value="bar" id="bar">
+                                <label for="bar">Bar</label>
                             </span>
 
                             <span>
-                                @{
-                                    id = Guid.NewGuid();
-                                }
-
-                                <input type="radio" asp-for="chartType" value="line" id="@id">
-                                <label asp-for="@id">Line</label>
+                                <input type="radio" asp-for="chartType" value="line" id="line">
+                                <label for="line">Line</label>
                             </span>
                         </div>
                     </td>
@@ -106,4 +105,18 @@
 </div>
 
 @section Scripts {
+    <script>
+        function view_chart() {
+            id = $('#hidden_id').data("id")
+            view = $('input[name="chartType"]:checked').val();
+            url = "/ViewReport?id=" + id + "&view=" + view
+            location.href = url
+        }
+
+        function view_data() {
+            id = $('#hidden_id').data("id")
+            url = "/ViewReport?id=" + id + "&view=data"
+            location.href = url
+        }
+    </script>
 }

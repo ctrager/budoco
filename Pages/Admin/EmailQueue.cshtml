@@ -17,10 +17,12 @@ Refresh this page
 <div class="fake_link" onclick="reset_counts()">
 Reset retry counts
 </div>
+<div class="info_text">MaxNumberOfSendingRetries=@bd_config.get(bd_config.MaxNumberOfSendingRetries)</div>
 
 <div class="fake_link" onclick="retry()">
 Retry sending
 </div>
+<div class="info_text">You may need to reset the retry counts first.</div>
 
 <partial name="_CrudDataTableWithDeletePartial" />
 

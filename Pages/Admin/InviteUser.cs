@@ -78,7 +78,7 @@ namespace budoco.Pages
 
             bd_util.set_flash_msg(HttpContext, "Invitation has been placed in outgoing mail queue.");
 
-            Response.Redirect("InviteUser");
+            Response.Redirect("/Admin/InviteUser");
 
         }
 

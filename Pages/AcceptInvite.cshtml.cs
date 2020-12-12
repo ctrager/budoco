@@ -97,7 +97,7 @@ namespace budoco.Pages
 
             bd_util.set_flash_msg(HttpContext, "Welcome. You can now log in.");
 
-            Response.Redirect("Login");
+            Response.Redirect("/Login");
 
         }
 

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace budoco.Pages.Report
+namespace budoco.Pages
 {
     public sealed class ViewReportModel : PageModel
     {
@@ -35,7 +35,7 @@ namespace budoco.Pages.Report
 
             var sql = @"
                 select
-                    rp_desc,
+                    rp_name,
                     rp_sql,
                     rp_chart_type
                 from
@@ -52,7 +52,7 @@ namespace budoco.Pages.Report
 
             var rp_sql = (string)dr["rp_sql"];
             var chart_type = (string)dr["rp_chart_type"];
-            var desc = (string)dr["rp_desc"];
+            var desc = (string)dr["rp_name"];
 
             // replace the magic pseudo variable
             rp_sql = rp_sql.Replace("$ME", HttpContext.Session.GetInt32("us_id").ToString());

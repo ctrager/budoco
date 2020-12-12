@@ -23,7 +23,7 @@
                         {
                             if (col == 0)
                             {
-                                <td><a href="@(Model.singular_table_name + "?id=" + dr[0])">@dr[col]</a></td>
+                                <td><a href="/Admin/@(Model.singular_table_name + "?id=" + dr[0])">@dr[col]</a></td>
                             }
                             else
                             {
@@ -33,7 +33,7 @@
                     }
 
                     <td>
-                        <a href="@(Model.singular_table_name + "?id=" + dr[0])">
+                        <a href="/Admin/@(Model.singular_table_name + "?id=" + dr[0])">
                             Update
                         </a>
                     </td>

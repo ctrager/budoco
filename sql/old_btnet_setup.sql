@@ -590,12 +590,12 @@ create clustered index hgap_hgrev_index on hg_affected_paths (hgap_hgrev_id)
 create table reports
 (
 rp_id int identity constraint pk_reports primary key not null,
-rp_desc nvarchar(200) not null,
+rp_name nvarchar(200) not null,
 rp_sql ntext not null,
 rp_chart_type varchar(8) not null
 )
 
-create unique index unique_rp_desc on reports (rp_desc)
+create unique index unique_rp_name on reports (rp_name)
 
 /* Some examples to get you started */
 

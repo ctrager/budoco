@@ -22,9 +22,16 @@ namespace budoco.Pages
             if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
                 return;
 
-            string sql = @"select oq_id, oq_date_created, oq_email_type, 
-            oq_post_id, oq_sending_attempt_count, oq_last_sending_attempt_date, oq_last_exception,
-            oq_email_to, oq_email_subject
+            string sql = @"select 
+            oq_id as ""ID"",
+            oq_date_created as ""Date Created"",
+            oq_email_type as ""Email Type"",
+            oq_post_id as ""Post ID"",
+            oq_sending_attempt_count as ""Number of Send Attempts"",
+            oq_last_sending_attempt_date as ""Most Recent Send Attempt"",
+            oq_last_exception as ""Last Error"",
+            oq_email_to as ""Email To"",
+            oq_email_subject as ""Email Subject""
             from outgoing_email_queue order by oq_date_created desc";
 
             dt = bd_db.get_datatable(sql);

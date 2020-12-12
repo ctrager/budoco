@@ -1,0 +1,8 @@
+BEGIN;
+
+ALTER TABLE reports 
+RENAME COLUMN rp_desc TO rp_name;
+
+update db_version set db_version = 4;
+
+COMMIT;

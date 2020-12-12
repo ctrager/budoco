@@ -34,7 +34,7 @@
                     {
                         if (Model.page > 1)
                         {
-                            <a href="Issues?query_id=@Model.query_id&page=@(Model.page - 1)&sort=@Model.sort">Prev</a>
+                            <a href="/Issues?query_id=@Model.query_id&page=@(Model.page - 1)&sort=@Model.sort">Prev</a>
                         }
                         else
                         {
@@ -44,7 +44,7 @@
                         <span>&nbsp;&nbsp;</span>
                         if (Model.page < number_of_pages)
                         {
-                            <a href="Issues?query_id=@Model.query_id&page=@(Model.page + 1)&sort=@Model.sort">Next</a>
+                            <a href="/Issues?query_id=@Model.query_id&page=@(Model.page + 1)&sort=@Model.sort">Next</a>
                         }
                         else
                         {
@@ -83,7 +83,7 @@
                                 {
                                     if (col == 0)
                                     {
-                                        <td><a href="Issue?id=@dr[0]">@dr[col]</a></td>
+                                        <td><a href="/Issue?id=@dr[0]">@dr[col]</a></td>
                                     }
                                     else
                                     {
@@ -93,7 +93,7 @@
                                 }
                             }
                             <td>
-                                <a href="Issue?id=@dr[0]">
+                                <a href="/Issue?id=@dr[0]">
                                     Details
                                 </a>
                             </td>
