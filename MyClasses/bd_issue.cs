@@ -38,32 +38,43 @@ namespace budoco
 
         public static int create_issue(string description, string details, int user_id)
         {
-            int user_org = 0;
+            int i_organization = 0;
 
             if (user_id != bd_util.SYSTEM_USER_ID)
             {
-                user_org = (int)bd_db.exec_scalar("select us_organization from users where us_id = " + user_id.ToString());
+                i_organization = (int)bd_db.exec_scalar("select us_organization from users where us_id = " + user_id.ToString());
+
+            }
+            else
+            {
+                object obj = bd_db.exec_scalar("select og_id from organizations where og_is_default is true order by og_name limit 1");
+                if (obj is not null)
+                {
+                    i_organization = (int)obj;
+                }
             }
 
-            // get defaults
-
-            //int i_organization = user_org == 0 ? get_default : user_org;
-
             var dict = new Dictionary<string, dynamic>();
+            int custom_1_id = bd_issue.get_default_for_custom_field("1");
+            int custom_2_id = bd_issue.get_default_for_custom_field("2");
+            int custom_3_id = bd_issue.get_default_for_custom_field("3");
+            int custom_4_id = bd_issue.get_default_for_custom_field("4");
+            int custom_5_id = bd_issue.get_default_for_custom_field("5");
+            int custom_6_id = bd_issue.get_default_for_custom_field("6");
 
             dict["@i_description"] = description;
             dict["@i_details"] = details;
             dict["@i_created_by_user"] = user_id;
             dict["@i_last_updated_user"] = user_id;
-            dict["@i_custom_1"] = 0; // custom_1_id;
-            dict["@i_custom_2"] = 0; // custom_2_id;
-            dict["@i_custom_3"] = 0; // custom_3_id;
-            dict["@i_custom_4"] = 0; // custom_4_id;
-            dict["@i_custom_5"] = 0; // custom_5_id;
-            dict["@i_custom_6"] = 0; // custom_6_id;
+            dict["@i_custom_1"] = custom_1_id;
+            dict["@i_custom_2"] = custom_2_id;
+            dict["@i_custom_3"] = custom_3_id;
+            dict["@i_custom_4"] = custom_4_id;
+            dict["@i_custom_5"] = custom_5_id;
+            dict["@i_custom_6"] = custom_6_id;
 
             dict["@i_assigned_to_user"] = 0; // assigned_to_user_id;
-            dict["@i_organization"] = user_org;
+            dict["@i_organization"] = i_organization;
 
 
             int issue_id = (int)bd_db.exec_scalar(bd_issue.INSERT_ISSUE_SQL, dict);
@@ -166,6 +177,24 @@ namespace budoco
                 return 0;
 
         }
+
+        public static int get_default_for_custom_field(string number)
+        {
+            if (bd_config.get("CustomFieldEnabled" + number) == 0)
+                return 0;
+
+            string sql = "select c$_id from custom_$ where c$_is_default is true order by c$_name limit 1";
+            sql = sql.Replace("$", number);
+
+            object obj = bd_db.exec_scalar(sql);
+
+            if (obj is null)
+                return 0;
+            else
+                return (int)obj;
+
+        }
+
 
     }
 }

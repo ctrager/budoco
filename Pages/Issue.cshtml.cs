@@ -275,65 +275,32 @@ namespace budoco.Pages
             }
         }
 
-
         void SelectDefaultDropdownOptions()
         {
             //Defaults values for dropdowns
-
-            DataRow dr;
-
             if (user_org != 0)
             {
                 // We ony put one option in the select, so it's selected
             }
             else
             {
-                dr = bd_db.get_datarow("select og_id, og_name from organizations where og_is_default is true order by og_name limit 1");
-                if (dr is not null)
+                // get the default org
+                object obj = bd_db.exec_scalar("select og_id from organizations where og_is_default is true order by og_name limit 1");
+                if (obj is not null)
                 {
-                    organization_id = (int)dr[0];
+                    organization_id = (int)obj;
                 }
             }
 
-            int? default_id;
-
-            default_id = GetDefaultForCustomDropdown("1");
-            if (default_id is not null)
-                custom_1_id = (int)default_id;
-            default_id = GetDefaultForCustomDropdown("2");
-            if (default_id is not null)
-                custom_2_id = (int)default_id;
-            default_id = GetDefaultForCustomDropdown("3");
-            if (default_id is not null)
-                custom_3_id = (int)default_id;
-            default_id = GetDefaultForCustomDropdown("4");
-            if (default_id is not null)
-                custom_4_id = (int)default_id;
-            default_id = GetDefaultForCustomDropdown("5");
-            if (default_id is not null)
-                custom_5_id = (int)default_id;
-            default_id = GetDefaultForCustomDropdown("6");
-            if (default_id is not null)
-                custom_6_id = (int)default_id;
+            custom_1_id = bd_issue.get_default_for_custom_field("1");
+            custom_2_id = bd_issue.get_default_for_custom_field("2");
+            custom_3_id = bd_issue.get_default_for_custom_field("3");
+            custom_4_id = bd_issue.get_default_for_custom_field("4");
+            custom_5_id = bd_issue.get_default_for_custom_field("5");
+            custom_6_id = bd_issue.get_default_for_custom_field("6");
 
         }
 
-        int? GetDefaultForCustomDropdown(string number)
-        {
-            if (bd_config.get("CustomFieldEnabled" + number) == 0)
-                return null;
-
-            string sql = "select c$_id from custom_$ where c$_is_default is true order by c$_name limit 1";
-            sql = sql.Replace("$", number);
-
-            DataRow dr = bd_db.get_datarow(sql);
-
-            if (dr is null)
-                return null;
-            else
-                return (int)dr[0];
-
-        }
 
         void OnIssueFormPost()
         {
