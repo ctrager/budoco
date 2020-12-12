@@ -6,7 +6,7 @@ using System.Net;
 
 namespace budoco.Pages.Report
 {
-    public sealed class EditModel : PageModel
+    public sealed class EditReportModel : PageModel
     {
         [FromQuery]
         public int id { get; set; }

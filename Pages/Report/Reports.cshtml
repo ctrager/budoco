@@ -11,7 +11,7 @@
     if (bd_util.is_user_admin(HttpContext)) 
     {
 <div>
-    <a asp-page="Edit">Create Report</a>
+    <a asp-page="EditReport">Create Report</a>
 </div>
     }
 }
@@ -56,7 +56,7 @@
                         @if (bd_util.is_user_admin(HttpContext) /*|| security.user.can_edit_reports*/)
                         {
                             <td colspan="2">
-                                <a asp-page="Edit" asp-route-id="@dr["rp_id"]">Edit</a>
+                                <a asp-page="EditReport" asp-route-id="@dr["rp_id"]">Edit</a>
                                 &nbsp;&nbsp;
                                 <a asp-page="Delete" asp-route-id="@dr["rp_id"]">Delete</a>
                             </td>

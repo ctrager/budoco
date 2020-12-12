@@ -62,6 +62,13 @@ namespace budoco
             int custom_5_id = bd_issue.get_default_for_custom_field("5");
             int custom_6_id = bd_issue.get_default_for_custom_field("6");
 
+            // description is too long, but we don't want to loose it
+            // so let's prepend it to details;
+            if (description.Length > 200)
+            {
+                details = description + "\n\n" + details;
+            }
+
             dict["@i_description"] = description;
             dict["@i_details"] = details;
             dict["@i_created_by_user"] = user_id;

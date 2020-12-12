@@ -19,11 +19,11 @@
     <table class="form_table">
         <tr>
             <td><label>Username or Email</label>
-            <td><input asp-for="username" />
+            <td><input  maxlength="20" asp-for="username" />
         </tr>
         <tr>
             <td><label>Password</label>
-            <td><input type="password" asp-for="password" />
+            <td><input maxlength="50" type="password" asp-for="password" />
         </tr>
         <tr><td><button type="submit">Login</button>
         </tr>

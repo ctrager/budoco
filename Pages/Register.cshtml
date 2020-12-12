@@ -17,15 +17,15 @@
     <table class="form_table">
     <tr>
         <td><label>Username</label>
-        <td><input asp-for="username" />
+        <td><input  maxlength="20" asp-for="username" />
     </tr>
     <tr>
         <td><label>Email</label>
-        <td><input type="email" asp-for="email_address" />
+        <td><input maxlength="64" type="email" asp-for="email_address" />
     </tr>
     <tr>
         <td><label>Create a password</label>
-        <td><input type="password" asp-for="password" />
+        <td><input maxlength="50" type="password" asp-for="password" />
     </tr>
     <tr>
         <td><button type="submit">Register</button>
