@@ -30,8 +30,6 @@ namespace budoco.Pages
 
         public IActionResult OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext))
-                return Page();
 
             var sql = @"
                 select

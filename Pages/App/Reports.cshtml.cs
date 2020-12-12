@@ -10,8 +10,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext))
-                return;
 
             string sql = @"
                 select

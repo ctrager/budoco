@@ -38,9 +38,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-
-            bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN);
-
             string sql = "select * from users where us_id = " + id.ToString();
 
             DataRow dr = bd_db.get_datarow(sql);
@@ -58,8 +55,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
 
             if (!IsValid())
             {

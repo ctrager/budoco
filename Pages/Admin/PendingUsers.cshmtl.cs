@@ -20,9 +20,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
             string sql = @"select 
             rr_id as ""ID"",
             rr_created_date as ""Date Created"",
@@ -37,9 +34,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
             string sql = "delete from registration_requests where rr_id = @rr_id";
             var dict = new Dictionary<string, dynamic>();
             dict["@rr_id"] = delete_id;

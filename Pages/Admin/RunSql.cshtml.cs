@@ -29,10 +29,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
             if (bd_config.get(bd_config.DebugEnableRunSql) != 1)
                 return;
 
@@ -40,9 +36,6 @@ namespace budoco.Pages
 
         public async Task<ContentResult> OnPostRunAsync()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return Content("<div>Must be admin</div>");
-
             if (bd_config.get(bd_config.DebugEnableRunSql) == 0)
             {
                 return Content("<div>DebugEnableRunSql: 0</div>");

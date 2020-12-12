@@ -86,20 +86,42 @@ namespace budoco
             return options;
         }
 
-        public static bool check_user_permissions(HttpContext context, bool must_be_admin = false)
+
+        public static bool check_user_permissions(HttpContext context)
         {
-            // just in case....
-            if (context.Request.GetDisplayUrl().ToLower().Contains("admin"))
+
+            // The default behavior expires the session id every app restart which
+            // meant I had to re-log in every time I changed code    
+            string session_id = null;
+            if (context.Request.Cookies.ContainsKey(bd_util.BUDOCO_SESSION_ID))
+            {
+                session_id = context.Request.Cookies[bd_util.BUDOCO_SESSION_ID];
+                context.Session.SetString(bd_util.BUDOCO_SESSION_ID, session_id);
+            }
+
+            string url = context.Request.GetDisplayUrl().ToLower();
+
+            bool must_be_admin = false;
+
+            if (url.Contains("admin/"))
             {
                 must_be_admin = true;
             }
+            else if (!url.Contains("app/"))
+            {
+                // don't redirect, because Login, About, Register, etc, don't reuire permission checking
+                return true; // because user doesn't need to be logged in.
+            }
 
-            string session_id = context.Request.Cookies[bd_util.BUDOCO_SESSION_ID];
+            // at this point, url contains either "Admin/" or "App/", so must be
+            // signed in.
+
             bool redirect = false;
             DataRow dr = null;
 
             if (string.IsNullOrEmpty(session_id))
             {
+                // no cookie
                 redirect = true;
             }
             else
@@ -119,10 +141,10 @@ namespace budoco
             if (redirect)
             {
                 // for user clicking on links in emails
-                string url = context.Request.GetDisplayUrl();
-                if (url.Contains("Issue?id="))
+                string url_for_issue = context.Request.GetDisplayUrl();
+                if (url_for_issue.Contains("Issue?id="))
                 {
-                    context.Session.SetString(NEXT_URL, url);
+                    context.Session.SetString(NEXT_URL, url_for_issue);
                 }
 
                 context.Response.Redirect("/Login");

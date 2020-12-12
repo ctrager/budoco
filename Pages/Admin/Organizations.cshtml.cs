@@ -11,9 +11,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
             string sql = @"select 
             og_id as ""ID"",
             og_name as ""Name"",

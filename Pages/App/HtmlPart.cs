@@ -16,7 +16,6 @@ namespace budoco.Pages
 
         public ContentResult OnGet()
         {
-            bd_util.check_user_permissions(HttpContext);
 
             string html = (string)bd_db.exec_scalar("select p_email_from_html_part from posts where p_id = "
                 + p_id.ToString());

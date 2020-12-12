@@ -19,9 +19,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
             string sql = @"select 
             oq_id as ""ID"",
             oq_date_created as ""Date Created"",
@@ -39,13 +36,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
-
             if (action == "reset_counts")
             {
                 string sql = "update outgoing_email_queue set oq_sending_attempt_count = 0";

@@ -26,7 +26,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            bd_util.check_user_permissions(HttpContext);
 
             user_id = bd_util.get_user_id_from_session(HttpContext);
 
@@ -55,8 +54,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-
-            bd_util.check_user_permissions(HttpContext);
 
             user_id = bd_util.get_user_id_from_session(HttpContext);
 

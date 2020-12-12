@@ -124,9 +124,6 @@ namespace budoco.Pages
         {
             time1 = DateTime.Now;
 
-            if (!bd_util.check_user_permissions(HttpContext))
-                return;
-
             GetIssue();
 
             time2 = DateTime.Now;
@@ -137,8 +134,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-            if (!bd_util.check_user_permissions(HttpContext))
-                return;
 
             OnIssueFormPost();
             GetIssue();
@@ -623,7 +618,6 @@ namespace budoco.Pages
 
         public Task<ContentResult> OnPostAddPostAsync()
         {
-            bd_util.check_user_permissions(HttpContext);
 
             if (post_email_to is not null)
             {
@@ -736,7 +730,7 @@ namespace budoco.Pages
 
             string issue_email_preamble = bd_config.get(bd_config.IssueEmailPreamble);
             issue_email_preamble = issue_email_preamble.Replace("$URL",
-                bd_config.get(bd_config.WebsiteUrlRootWithoutSlash) + "/Issue?id=" + id.ToString());
+                bd_config.get(bd_config.WebsiteUrlRootWithoutSlash) + "/App/Issue?id=" + id.ToString());
             string email_body = issue_email_preamble + "\n\n" + post_text;
 
             bd_email.queue_email("post",

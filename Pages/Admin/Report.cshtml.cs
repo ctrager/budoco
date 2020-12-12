@@ -22,10 +22,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN) /*|| security.user.can_edit_reports*/)
-            {
-                return;
-            }
 
             // add or edit?
             if (id == 0)
@@ -59,11 +55,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN) /*|| security.user.can_edit_reports*/)
-            {
-                return;
-            }
-
             if (!IsValid())
             {
                 return;

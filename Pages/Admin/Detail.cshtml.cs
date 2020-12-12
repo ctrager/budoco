@@ -34,8 +34,6 @@ namespace budoco.Pages
         public void OnGet()
         {
 
-            bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN);
-
             singular_label = bd_config.get("CustomFieldLabelSingular" + field.ToString());
             plural_label = bd_config.get("CustomFieldLabelPlural" + field.ToString());
 
@@ -64,9 +62,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
             singular_label = bd_config.get("CustomFieldLabelSingular" + field.ToString());
             plural_label = bd_config.get("CustomFieldLabelPlural" + field.ToString());
 

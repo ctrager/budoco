@@ -15,12 +15,6 @@ namespace budoco.Pages
         public async Task<FileContentResult> OnGetFileAsync()
         {
 
-            if (!bd_util.check_user_permissions(HttpContext))
-            {
-                HttpContext.Response.StatusCode = 403;
-                return null;
-            }
-
             var sql = @"/*File*/select pa_file_content_type, pa_content
                 from post_attachments where pa_id = " + pa_id.ToString();
 

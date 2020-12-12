@@ -11,8 +11,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext))
-                return;
 
             string sql = @"
                 select
@@ -29,8 +27,6 @@ namespace budoco.Pages
 
         public void OnPost(int delete_id)
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
 
             string sql = "delete from reports where rp_id = " + delete_id.ToString();
             bd_db.exec(sql);

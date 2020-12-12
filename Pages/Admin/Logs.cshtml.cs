@@ -26,8 +26,6 @@ namespace budoco.Pages
 
         public void OnGet()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
 
             string log_folder = GetFolderWithSlash();
 
@@ -47,9 +45,6 @@ namespace budoco.Pages
 
         public ActionResult OnGetFile()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return null;
-
             string log_folder = GetFolderWithSlash();
 
             string full_path = log_folder + filename;

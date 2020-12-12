@@ -27,16 +27,11 @@ namespace budoco.Pages
 
         public void OnGet(string action)
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
             organizations = bd_db.prepare_select_list("select og_id, og_name from organizations order by og_name");
         }
 
         public void OnPost()
         {
-
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
 
             if (!IsValid())
             {

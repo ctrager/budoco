@@ -47,9 +47,6 @@ namespace budoco.Pages
         public void OnGet()
         {
 
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
-
             if (id == 0)
             {
                 is_active = true;
@@ -69,9 +66,6 @@ namespace budoco.Pages
 
         public void OnPost()
         {
-
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return;
 
             if (!IsValid())
             {
@@ -183,8 +177,6 @@ namespace budoco.Pages
         // No promises though. You need to trust your admins.
         public async Task<ContentResult> OnPostRunAsync()
         {
-            if (!bd_util.check_user_permissions(HttpContext, bd_util.MUST_BE_ADMIN))
-                return Content("<div>Must be admin</div>");
 
             dt = null;
             error = null;

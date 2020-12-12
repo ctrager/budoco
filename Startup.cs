@@ -120,32 +120,13 @@ namespace budoco
 
                 bd_util.log("Startup.cs URL: " + context.Request.GetDisplayUrl());
 
+                bool allowed = bd_util.check_user_permissions(context);
 
-                // The default behavior expires the session id every app restart which
-                // meant I had to re-log in every time I changed code    
-                string budoco_session_id = null;
-                if (context.Request.Cookies.ContainsKey(bd_util.BUDOCO_SESSION_ID))
+                if (allowed)
                 {
-                    budoco_session_id = context.Request.Cookies[bd_util.BUDOCO_SESSION_ID];
-                    context.Session.SetString(bd_util.BUDOCO_SESSION_ID, budoco_session_id);
+                    bd_db.query_count = 0; // just to see how many queries we do on busy pages. Not threadsafe, but doesn't matter.
+                    await next.Invoke();
                 }
-
-
-                // This was an experiment, but we don't want to check user permissions
-                // for pages like Login, Register, Forgot Password...
-                //if (bd_util.check_user_permissions(context))
-                //{
-
-                // For counting how many queries per page, but only
-                // trustworthy when there's one client, because it's
-                // global, not per session
-                bd_db.query_count = 0;
-
-                await next.Invoke();
-
-                // Unnecessary because Serilog does it in the file log already
-                // bd_util.log("Startup.cs URL end: " + context.Request.GetDisplayUrl());
-
             });
 
             app.UseEndpoints(endpoints =>

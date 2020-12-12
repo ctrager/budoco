@@ -14,9 +14,6 @@ namespace budoco.Pages
     {
         public void OnGet()
         {
-            // if not logged in, redirect to login
-            if (!bd_util.check_user_permissions(HttpContext))
-                return;
 
             // logged in so, redirect to main issues list
             Response.Redirect("/App/Issues");
