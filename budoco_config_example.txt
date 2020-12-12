@@ -142,6 +142,8 @@ DateFormat: yyyy-MM-dd HH:mm
 UseDeveloperExceptionPage: 1
 
 ###############################################################################
+# Let incoming emails create issues.
+# 
 # In addition to handling replies from emails sent from Budoco, you can also
 # let incoming emails create Issues. 
 # You can filter the incoming emails based on "From" or "Subject" similar
@@ -160,7 +162,6 @@ EnableIncomingEmailIssueCreation: 1
 # You probably won't use them unless you are working with the code.
 #
 ###############################################################################
-
 
 # For development/test, you can set to true to not send email
 # 0 = DO send emails, 1 = do NOT send emails

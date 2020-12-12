@@ -14,11 +14,17 @@ Budoco is built using .NET 5 ("dotnet core") and PostgreSQL.
 
 Budoco is a rewrite of **BU**gtracker.NET (aka "btnet"), but this time on **DO**tnet **CO**re, hence the name BU-DO-CO. Good things about Budoco which were also true of btnet:
 
+
 * Budoco is easy to install and start using. 
+
 * It's fast and lightweight. It won't slow you down.
-* It is highly customizable if you are comfortable tweaking some SQL statements. It's not too hard because you will have some examples to follow.
+
+* It is highly customizable if you are comfortable tweaking some SQL statements. It's not too hard because you will have some examples to follow. Here's one way that Budoco can look: https://budoco.net. You can register as a new user or sign on as "admin", password "admin". It's just demo data but please be nice.
+
 * It sends and receives email which gets tracked with the issue. So a good fit for a help desk, or company that works with multiple clients.
+
 * It has a lightweight permission system specifically specifically for keeping external organizations separate from each other.
+
 * If you decide to fork the code and change it, your learning curve will be short because I'm too impatient to learn fancy abstractions. Each page is pretty much get the input, read the database, throw up some HTML.
 
 Differences from btnet:
