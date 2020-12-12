@@ -258,6 +258,7 @@
 
 @section Scripts {
     <script src="~/lib/regex-weburl.js" asp-append-version="true"></script>
+    <script src="~/lib/diff_match_patch.js" asp-append-version="true"></script>
     <script>
         
     $(document).ready(function() {
@@ -272,9 +273,14 @@
 
             var before = $(this).data("before");
             var after = $(this).data("after");
-            var result = `<h1>Before:</h1> <pre>${before}</pre> <br><br>  <h1>After:</h1> <pre>${after}</pre>`;
+            var dmp = new diff_match_patch();
 
-            budoco.modal.show("Before and After", turnUrls(result));
+            dmp.Diff_Timeout = 0;
+
+            var diff = dmp.diff_main(`${before}`, `${after}`, false);
+            var result = dmp.diff_prettyHtml(diff);
+
+            budoco.modal.show("Before and After", result);
         });
      });
  
