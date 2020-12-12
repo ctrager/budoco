@@ -67,7 +67,7 @@ namespace budoco.Pages
             }
             else
             {
-                Response.Redirect("/Issues");
+                Response.Redirect("/App/Issues");
             }
 
         }

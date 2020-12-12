@@ -57,8 +57,8 @@
             DataRow dr = Model.dt.Rows[row];
             int i_id = (int)dr[0];
             <tr>
-                <td><a href="/Issue?id=@i_id">@i_id</a></td>
-                <td><a href="/Issue?id=@i_id">@dr["Description"]</a></td>
+                <td><a href="/App/Issue?id=@i_id">@i_id</a></td>
+                <td><a href="/App/Issue?id=@i_id">@dr["Description"]</a></td>
                 <td>
                     <span class="search_context">@dr["Context"]</span>
                     &nbsp;

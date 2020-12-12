@@ -196,7 +196,7 @@ namespace budoco.Pages
                 {
                     bd_util.set_flash_err(HttpContext, "Issue " + id.ToString() + " not found.");
                     id = 0;
-                    Response.Redirect("/Issues");
+                    Response.Redirect("/App/Issues");
                     return;
                 }
 
@@ -320,7 +320,7 @@ namespace budoco.Pages
                 // create a new issue
                 this.id = (int)bd_db.exec_scalar(bd_issue.INSERT_ISSUE_SQL, GetValuesDict());
                 bd_util.set_flash_msg(HttpContext, bd_util.CREATE_WAS_SUCCESSFUL);
-                Response.Redirect("/Issue?id=" + this.id.ToString());
+                Response.Redirect("/App/Issue?id=" + this.id.ToString());
             }
             else
             {

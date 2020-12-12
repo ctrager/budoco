@@ -31,7 +31,7 @@
     function submit_post() {
         show_waiting()
         $.ajax({
-            url: 'RunSql?handler=Run',
+            url: '/Admin/RunSql?handler=Run',
             data: $('#sql_form').serialize(),
             type: 'post',
             

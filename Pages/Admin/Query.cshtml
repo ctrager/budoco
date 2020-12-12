@@ -138,7 +138,7 @@
         show_waiting()
         $(".flash_parent").remove(); // remove previous flash message
         $.ajax({
-            url: 'Query?handler=Run',
+            url: '/Admin/Query?handler=Run',
             data: $('#sql_form').serialize(),
             type: 'post',
             

@@ -19,7 +19,7 @@ namespace budoco.Pages
                 return;
 
             // logged in so, redirect to main issues list
-            Response.Redirect("/Issues");
+            Response.Redirect("/App/Issues");
 
         }
     }

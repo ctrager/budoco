@@ -44,9 +44,9 @@
 
                 <li><a class="logo" asp-page="/Index">@bd_config.get(bd_config.AppName)</a></li>
 
-                <li><a asp-page="/Issues">View Issues</a></li>
-                <li><a asp-page="/Issue">Create Issue</a></li>
-                <li><a asp-page="/Search">Search</a></li>
+                <li><a asp-page="/App/Issues">View Issues</a></li>
+                <li><a asp-page="/App/Issue">Create Issue</a></li>
+                <li><a asp-page="/App/Search">Search</a></li>
 
 
                 <li>
@@ -54,7 +54,7 @@
                     <input type="number" class="goto_input" id="goto_input" placeholder="ID#" />
                 </li>
 
-                <li><a asp-page="/Reports">Reports</a></li>
+                <li><a asp-page="/App/Reports">Reports</a></li>
 
                 @{
                     if (is_admin)
@@ -70,7 +70,7 @@
                 <!-- from most to least right -->
                 <li class="menu_right"><a href="/About">About</a></li>
                 <li class="menu_right"><a href="/Login?action=signout">Sign Out</a></li>
-                <li class="menu_right"><a href="/UserSettings">@bd_util.get_username_from_session(Context)</a></li>
+                <li class="menu_right"><a href="/App/UserSettings">@bd_util.get_username_from_session(Context)</a></li>
 
             </ul>
 

@@ -16,13 +16,13 @@
         }
         else
         {
-            <a href="/Issues">Back to Issues</a>
+            <a href="/App/Issues">Back to Issues</a>
         }
         <span>&nbsp;&nbsp;&nbsp;</span>
 
         if (Model.prev_issue_id_in_list != 0)
         {
-            <a href="/Issue?id=@Model.prev_issue_id_in_list">Prev</a>
+            <a href="/App/Issue?id=@Model.prev_issue_id_in_list">Prev</a>
         }
         else
         {
@@ -32,7 +32,7 @@
         <span>&nbsp;&nbsp;</span>
         if (Model.next_issue_id_in_list != 0)
         {
-            <a href="/Issue?id=@Model.next_issue_id_in_list">Next</a>
+            <a href="/App/Issue?id=@Model.next_issue_id_in_list">Next</a>
         }
         else
         {
@@ -287,7 +287,7 @@
     function get_posts() {
         $.ajax({
             type: "Get",
-            url: "/Issue?handler=Posts&id=@Model.id",
+            url: "/App/Issue?handler=Posts&id=@Model.id",
  
             success: function (posts_as_html) {
                 // blank out form
@@ -345,7 +345,7 @@
         }
 
         $.ajax({
-            url: '/Issue?id=@Model.id&handler=AddPost',
+            url: '/App/Issue?id=@Model.id&handler=AddPost',
             data: new FormData(document.getElementById("post_form")),
             contentType: false,
             processData: false,
