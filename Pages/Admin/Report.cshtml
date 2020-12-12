@@ -109,13 +109,13 @@
         function view_chart() {
             id = $('#hidden_id').data("id")
             view = $('input[name="chartType"]:checked').val();
-            url = "/ViewReport?id=" + id + "&view=" + view
+            url = "/App/ViewReport?id=" + id + "&view=" + view
             location.href = url
         }
 
         function view_data() {
             id = $('#hidden_id').data("id")
-            url = "/ViewReport?id=" + id + "&view=data"
+            url = "/App/ViewReport?id=" + id + "&view=data"
             location.href = url
         }
     </script>
