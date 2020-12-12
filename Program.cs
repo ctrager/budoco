@@ -24,7 +24,7 @@ namespace budoco
             Log.Logger = new LoggerConfiguration()
 
                 .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Debug)
                 .MinimumLevel.Override("budoco", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.File(log_file_location,
