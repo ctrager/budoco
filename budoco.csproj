@@ -13,6 +13,12 @@
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+
+
+    <Content Include="sql\**"> 
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory> 
+    </Content>
   </ItemGroup>
+
 
 </Project>

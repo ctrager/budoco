@@ -33,7 +33,7 @@ namespace budoco.Pages
 
             bd_util.log(log_folder);
 
-            files = System.IO.Directory.GetFiles(log_folder); // , ";");
+            files = System.IO.Directory.GetFiles(log_folder);
 
             for (int i = 0; i < files.Length; i++)
             {

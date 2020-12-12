@@ -16,7 +16,7 @@ namespace budoco
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             bd_util.log("Startup");
             Configuration = configuration;
@@ -26,13 +26,14 @@ namespace budoco
             //NpgsqlLogManager.Provider = new ConsoleLoggingProvider(NpgsqlLogLevel.Debug, false, false);
             NpgsqlLogManager.Provider = new bd_pg_log_provider();
 
+            bd_db.update_db_schema(env.ContentRootPath);
+
             // If there are pending outgoing emails try to send them.
             bd_email.spawn_email_sending_thread();
 
             bd_email.spawn_email_receiving_thread();
 
             bd_email.spawn_registration_request_expiration_thread();
-
 
         }
 

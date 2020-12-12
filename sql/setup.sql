@@ -268,3 +268,10 @@ insert into queries (qu_name, qu_sql) values (
 'Raw "select * from issues" Please run queries.sql',
 'select * from issues order by i_id desc');
 
+-- one row, for schema changes, "migrations"
+drop table db_version;
+create table db_version
+(
+db_version int 
+);
+insert into db_version (db_version) values(1);

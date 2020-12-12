@@ -4,7 +4,8 @@ using Npgsql;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
-
+using System.Linq;
+using System.IO;
 
 namespace budoco
 {
@@ -219,5 +220,27 @@ namespace budoco
 
         }
 
+        public static void update_db_schema(string content_root_path)
+        {
+            int current_db_version = (int)bd_db.exec_scalar("select db_version from db_version");
+
+            string db_changes_folder = content_root_path + "/sql/db_changes/";
+
+            string[] files = System.IO.Directory.GetFiles(db_changes_folder);
+
+            Array.Sort(files, StringComparer.InvariantCulture);
+
+            foreach (string file in files)
+            {
+                string digits = new String(file.Where(Char.IsDigit).ToArray());
+                int version_from_filename = Convert.ToInt32(digits);
+
+                if (version_from_filename > current_db_version)
+                {
+                    string sql = File.ReadAllText(file);
+                    bd_db.exec(sql);
+                }
+            }
+        }
     }
 }
