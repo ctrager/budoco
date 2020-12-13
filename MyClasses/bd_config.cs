@@ -104,6 +104,9 @@ namespace budoco
         public const string InviteUserExpirationInHours = "InviteUserExpirationInHours";
         public const string IssueEmailPreamble = "IssueEmailPreamble";
         public const string EnableIncomingEmailIssueCreation = "EnableIncomingEmailIssueCreation";
+        public const string DebugLogLevelMicrosoft = "DebugLogLevelMicrosoft";
+        public const string DebugLogLevelBudoco = "DebugLogLevelBudoco";
+        public const string DebugLogLevelPostgres = "DebugLogLevelPostgres";
 
         static Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>();
 

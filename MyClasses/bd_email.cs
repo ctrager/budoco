@@ -102,8 +102,8 @@ namespace budoco
                 }
                 catch (Exception exception)
                 {
-                    bd_util.log(exception.Message);
-                    bd_util.log(exception.StackTrace);
+                    bd_util.log(exception.Message, Serilog.Events.LogEventLevel.Error);
+                    bd_util.log(exception.StackTrace, Serilog.Events.LogEventLevel.Error);
                     increment_retry_count(oq_id, exception.Message);
                 }
             }
@@ -337,7 +337,7 @@ namespace budoco
 
         static void debug_read_message_from_file(string path)
         {
-            bd_util.log("fake email input:" + path);
+            bd_util.log("fake email input:" + path, Serilog.Events.LogEventLevel.Warning);
             FileStream stream = File.OpenRead(path);
             var parser = new MimeParser(stream);
             MimeMessage message = parser.ParseMessage();
@@ -510,7 +510,6 @@ namespace budoco
                 // Regisgtrations
                 hours = bd_config.get(bd_config.RegistrationRequestExpirationInHours);
                 time_in_past = DateTime.Now.AddHours(-1 * hours);
-                bd_util.log(time_in_past);
                 dict["@date"] = time_in_past;
 
                 sql = @"delete from registration_requests 
@@ -521,7 +520,6 @@ namespace budoco
                 // Invitations
                 hours = bd_config.get(bd_config.InviteUserExpirationInHours);
                 time_in_past = DateTime.Now.AddHours(-1 * hours);
-                bd_util.log(time_in_past);
                 dict["@date"] = time_in_past;
 
                 sql = @"delete from registration_requests 

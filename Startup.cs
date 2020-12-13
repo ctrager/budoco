@@ -23,7 +23,7 @@ namespace budoco
             bd_util.log(Configuration["Budoco:DebugWhatEnvIsThis"]);
 
             //NpgsqlLogManager.Provider = new ConsoleLoggingProvider(NpgsqlLogLevel.Debug, false, false);
-            NpgsqlLogManager.Provider = new bd_pg_log_provider();
+            NpgsqlLogManager.Provider = new budoco_pg.bd_pg_log_provider();
 
             bd_db.update_db_schema(env.ContentRootPath);
 

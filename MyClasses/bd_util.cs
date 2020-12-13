@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Data;
 using System.Security.Cryptography;
-using Serilog;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
 using Microsoft.AspNetCore.Http.Extensions;
+
+public class bd { }; // for logging context
 
 namespace budoco
 {
@@ -18,6 +18,7 @@ namespace budoco
     writing code that isn't DRY, I make a function here.
     
     */
+
 
     public static class bd_util
     {
@@ -30,11 +31,26 @@ namespace budoco
         public const string NEXT_URL = "next_url";
         public const int SYSTEM_USER_ID = 1;
 
-        public static void log(object msg)
+        static Serilog.ILogger _logger = null;
+
+
+        public static void init_serilog_context()
+        {
+            _logger = Serilog.Log.ForContext<bd>();
+        }
+
+        public static void log(object msg, Serilog.Events.LogEventLevel level = Serilog.Events.LogEventLevel.Information)
         {
             string s = System.Threading.Thread.CurrentThread.ManagedThreadId + " " + msg.ToString();
-            Console.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + " " + s);
-            Log.Information(s);
+
+            if (_logger is not null)
+            {
+                _logger.Write(level, s);
+            }
+            else
+            {
+                Console.WriteLine(System.DateTime.Now.ToString("HH-mm-ss-fff") + " " + s);
+            }
         }
 
         public static string get_flash_msg(HttpContext context)

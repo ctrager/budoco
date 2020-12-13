@@ -24,8 +24,6 @@
 </head>
 
 @{
-    bd_util.log("layout_simple http status: " +
-            HttpContextAccessor.HttpContext.Response.StatusCode.ToString());
     if (HttpContextAccessor.HttpContext.Response.StatusCode == 302)
     {
 

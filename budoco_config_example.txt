@@ -209,4 +209,19 @@ DebugPathToEmailFile:
 # DebugFolderToSaveEmails: budoco_logs
 DebugFolderToSaveEmails: 
 
+# Control how much logging the app does.
+# When you say 3 for Warning, that means the log message
+# has to be at least a 3. You won't see 2s, Information.
+#
+#Verbose = 0,
+#Debug = 1,
+#Information = 2,
+#Warning = 3,
+#Error = 4,
+#Fatal = 5
+
+# Microsoft can be very verbose
+DebugLogLevelMicrosoft: 2
+DebugLogLevelBudoco: 2
+DebugLogLevelPostgres: 2
 

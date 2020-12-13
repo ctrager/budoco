@@ -57,7 +57,6 @@ namespace budoco.Pages
             bd_db.exec(sql, dict);
 
             string next_url = HttpContext.Session.GetString(bd_util.NEXT_URL);
-            Console.WriteLine(" qqqqqqqqqqqqqqq next_url " + next_url);
             HttpContext.Session.SetString(bd_util.NEXT_URL, "");
 
             if (!string.IsNullOrEmpty(next_url)

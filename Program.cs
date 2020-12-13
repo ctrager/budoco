@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-
+using Serilog.Events;
 
 namespace budoco
 {
@@ -18,18 +18,33 @@ namespace budoco
         {
             Console.WriteLine("Main"); // here on purpose
 
+            // We have to load_config first to get Serilog's folder
             bd_config.load_config();
 
             string log_file_location = bd_config.get(bd_config.LogFileFolder) + "/budoco_log_.txt";
-            Log.Logger = new LoggerConfiguration()
 
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Debug)
-                .MinimumLevel.Override("budoco", Serilog.Events.LogEventLevel.Information)
+            LogEventLevel microsoft_level = (LogEventLevel)bd_config.get(bd_config.DebugLogLevelMicrosoft);
+            LogEventLevel budoco_lovel = (LogEventLevel)bd_config.get(bd_config.DebugLogLevelBudoco);
+            LogEventLevel postgres_level = (LogEventLevel)bd_config.get(bd_config.DebugLogLevelPostgres);
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+
+                .MinimumLevel.Override("Microsoft", microsoft_level)
+                .MinimumLevel.Override("bd", budoco_lovel)
+                .MinimumLevel.Override("bd_pg", postgres_level)
+
                 .Enrich.FromLogContext()
+                .WriteTo.Console(outputTemplate:
+                "{Timestamp:HH:mm:ss.ms} {Level:u3} {SourceContext} {Message:lj}{NewLine}{Exception}")
                 .WriteTo.File(log_file_location,
-                    rollingInterval: RollingInterval.Day)
+                    rollingInterval: RollingInterval.Day,
+                outputTemplate:
+                "{Timestamp:HH:mm:ss.ms} {Level:u3} {SourceContext} {Message:lj}{NewLine}{Exception}")
                 .CreateLogger();
+
+            // We have to do this after the Serilog setup.
+            bd_util.init_serilog_context();
 
             // Write config to log, even though budoco can pick up most changes without
             // being restarted and we don't log the changed values.

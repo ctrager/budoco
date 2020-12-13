@@ -1,23 +1,32 @@
 using budoco;
+using Microsoft.Extensions.Logging;
 using Npgsql.Logging;
 using System;
 using System.Linq;
+using Serilog;
 
-namespace budoco
+public class bd_pg { }; // for logging context
+
+namespace budoco_pg
 {
+
     class bd_pg_log_provider : INpgsqlLoggingProvider
     {
         public NpgsqlLogger CreateLogger(string name)
         {
-            return new bd_pg_logger(name);
+            return new bd_pg_logger();
         }
     }
 
     class bd_pg_logger : NpgsqlLogger
     {
-        int highest_ms = 0;
-        internal bd_pg_logger(string name)
+
+        Serilog.ILogger _logger;
+
+        public bd_pg_logger()
         {
+            _logger = Serilog.Log.ForContext<bd_pg>();
+
         }
 
         public override bool IsEnabled(NpgsqlLogLevel level)
@@ -25,37 +34,25 @@ namespace budoco
             return true;
         }
 
+        int highest_ms = 0;
+
         public override void Log(NpgsqlLogLevel level, int connectorId, string msg, Exception exception = null)
         {
+
+            _logger.Write((Serilog.Events.LogEventLevel)level, msg);
+
             if (msg.StartsWith("Query duration"))
             {
-                bd_util.log(msg);
 
                 string digits = new String(msg.Where(Char.IsDigit).ToArray());
                 int ms = Convert.ToInt32(digits);
                 if (ms > highest_ms)
                 {
                     highest_ms = ms;
-                    bd_util.log("Query duration high water mark is now " + digits);
+                    _logger.Information("Query duration high water mark is now " + digits);
                 }
 
             }
-            else if (level == NpgsqlLogLevel.Warn)
-            {
-                Serilog.Log.Warning(msg);
-                Console.WriteLine("PG Warning: " + msg);
-            }
-            else if (level == NpgsqlLogLevel.Error)
-            {
-                Serilog.Log.Error(msg);
-                Console.WriteLine("PG Error: " + msg);
-            }
-            else if (level == NpgsqlLogLevel.Fatal)
-            {
-                Serilog.Log.Fatal(msg);
-                Console.WriteLine("PG Fatal: " + msg);
-            }
-
         }
     }
 }

@@ -27,12 +27,11 @@
 </head>
 
 @{
-    bd_util.log("layout_simple http status: " +
-            HttpContextAccessor.HttpContext.Response.StatusCode.ToString());
     if (HttpContextAccessor.HttpContext.Response.StatusCode == 302)
     {
+        bd_util.log("_layout_logged_in.cshtml: HttpStatus 302", Serilog.Events.LogEventLevel.Warning);
 
-        <body>This is a redirect</body>
+        <body> This is a redirect </body>
         IgnoreBody();
         IgnoreSection("Scripts");
     }
