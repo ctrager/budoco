@@ -152,7 +152,7 @@ h1::after {
 }
 
 img {
-    width: 900px;
+    max-width: 900px;
 }
 
 .crud_table {

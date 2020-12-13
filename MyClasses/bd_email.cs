@@ -474,7 +474,7 @@ namespace budoco
                     {
                         if (part.FileName is not null)
                         {
-                            bd_issue.insert_attachment_as_post(post_id, issue_id, part);
+                            bd_issue.insert_post_attachment_from_email_attachment(post_id, issue_id, part);
                         }
 
                     }

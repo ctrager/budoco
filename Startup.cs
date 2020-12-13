@@ -9,7 +9,7 @@ using Serilog;
 using RazorPartialToString.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Npgsql.Logging;
-using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace budoco
 {
@@ -74,7 +74,7 @@ namespace budoco
             // });
 
             // for screenshots
-            services.AddCors();
+            //services.AddCors();
 
 
             // services.Configure<ApiBehaviorOptions>(options =>
@@ -87,11 +87,11 @@ namespace budoco
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgery)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             bd_util.log("Configure");
 
-            app.UseCors();
+            //app.UseCors();
 
             // https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-5.0
             // for nginx
@@ -130,10 +130,7 @@ namespace budoco
             app.Use(async (context, next) =>
             {
 
-
                 bd_util.log("Startup.cs URL: " + context.Request.GetDisplayUrl());
-
-                antiforgery.GetTokens(context);
 
                 bool allowed = bd_util.check_user_permissions(context);
 

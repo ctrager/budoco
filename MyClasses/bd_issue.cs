@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using MimeKit;
 using System.IO;
-using MailKit.Net.Imap;
-using MailKit;
-using System.Threading;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Composition.Convention;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 
 namespace budoco
 {
@@ -90,6 +85,28 @@ namespace budoco
 
         }
 
+        // COREY todo make the following server methods  DRYer
+
+        public static int create_comment_post_with_image(int issue_id, int user_id, string image_data)
+        {
+            var sql = @"insert into posts
+                (p_issue, p_post_type, p_text, p_created_by_user)
+                values(@p_issue, @p_post_type, @p_text, @p_created_by_user)
+                returning p_id";
+
+            var dict = new Dictionary<string, dynamic>();
+            dict["@p_issue"] = issue_id;
+            dict["@p_post_type"] = bd_issue.POST_TYPE_COMMENT;
+            dict["@p_text"] = "";
+            dict["@p_created_by_user"] = 1; // system
+
+            int post_id = (int)bd_db.exec_scalar(sql, dict);
+
+            insert_post_attachment_from_dataurl(post_id, issue_id, image_data);
+
+            return post_id;
+        }
+
         public static int create_post_from_email(string post_type, int issue_id, string from, string text_body, string html_body)
         {
             var sql = @"insert into posts
@@ -109,7 +126,32 @@ namespace budoco
             return post_id;
         }
 
-        public static void insert_attachment_as_post(int post_id, int issue_id, MimePart part)
+        public static void insert_post_attachment_from_dataurl(int post_id, int issue_id, string image_data)
+        {
+
+            var sql = @"insert into post_attachments
+                (pa_post, pa_issue, pa_file_name, pa_file_length, pa_file_content_type, pa_content)
+                values(@pa_post, @pa_issue, @pa_file_name, @pa_file_length, @pa_file_content_type, @pa_content)";
+
+            var dict = new Dictionary<string, dynamic>();
+
+            dict["@pa_post"] = post_id;
+            dict["@pa_issue"] = issue_id;
+            dict["@pa_file_name"] = "screenshot.png";
+            dict["@pa_file_content_type"] = "image/png";
+
+            // turn UrlData format into bin
+            string base_64_string = Regex.Match(image_data, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            byte[] bytea = Convert.FromBase64String(base_64_string);
+
+            dict["@pa_content"] = bytea;
+            dict["@pa_file_length"] = bytea.Length;
+
+            bd_db.exec(sql, dict);
+        }
+
+
+        public static void insert_post_attachment_from_email_attachment(int post_id, int issue_id, MimePart part)
         {
             bd_util.log(part.ContentType + "," + part.FileName);
 
@@ -133,6 +175,30 @@ namespace budoco
             bd_db.exec(sql, dict);
 
         }
+
+        public static void insert_post_attachment_from_uploaded_file(int post_id, int issue_id, IFormFile uploaded_file)
+        {
+
+            var sql = @"insert into post_attachments
+                (pa_post, pa_issue, pa_file_name, pa_file_length, pa_file_content_type, pa_content)
+                values(@pa_post, @pa_issue, @pa_file_name, @pa_file_length, @pa_file_content_type, @pa_content)";
+
+            var dict = new Dictionary<string, dynamic>();
+
+            dict["@pa_post"] = post_id;
+            dict["@pa_issue"] = issue_id;
+            dict["@pa_file_name"] = uploaded_file.FileName;
+            dict["@pa_file_length"] = uploaded_file.Length;
+            dict["@pa_file_content_type"] = uploaded_file.ContentType;
+
+            MemoryStream memory_stream = new MemoryStream();
+            uploaded_file.CopyTo(memory_stream);
+
+            dict["@pa_content"] = memory_stream.ToArray();
+
+            bd_db.exec(sql, dict);
+        }
+
 
         public static int get_incoming_issue_id_from_subject(string subject)
         {

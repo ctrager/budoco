@@ -743,25 +743,7 @@ namespace budoco.Pages
 
         void InsertPostAttachment(int post_id, int issue_id, IFormFile uploaded_file)
         {
-
-            var sql = @"insert into post_attachments
-                (pa_post, pa_issue, pa_file_name, pa_file_length, pa_file_content_type, pa_content)
-                values(@pa_post, @pa_issue, @pa_file_name, @pa_file_length, @pa_file_content_type, @pa_content)";
-
-            var dict = new Dictionary<string, dynamic>();
-
-            dict["@pa_post"] = post_id;
-            dict["@pa_issue"] = issue_id;
-            dict["@pa_file_name"] = uploaded_file.FileName;
-            dict["@pa_file_length"] = uploaded_file.Length;
-            dict["@pa_file_content_type"] = uploaded_file.ContentType;
-
-            MemoryStream memory_stream = new MemoryStream();
-            uploaded_file.CopyTo(memory_stream);
-
-            dict["@pa_content"] = memory_stream.ToArray();
-
-            bd_db.exec(sql, dict);
+            bd_issue.insert_post_attachment_from_uploaded_file(post_id, issue_id, uploaded_file);
         }
 
         public async Task<ContentResult> OnGetPostsAsync()
