@@ -5,3 +5,5 @@ budoco_logs/
 incoming_email_filter_active.txt
 budoco_config_active.txt
 budoco_config_active.txt.PROD
+# artificat of deply
+git_log.txt
