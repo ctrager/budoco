@@ -25,6 +25,8 @@ Budoco is a rewrite of **BU**gtracker.NET (aka "btnet"), but this time on **DO**
 
 * It has a lightweight permission system specifically specifically for keeping external organizations separate from each other.
 
+* It works well with a companion [screenshot app](https://github.com/ctrager/budoco_screenshot) that lets you take a screenshot and post it as an issue with just two clicks.
+
 * If you decide to fork the code and change it, your learning curve will be short because I'm too impatient to learn fancy abstractions. Each page is pretty much get the input, read the database, throw up some HTML.
 
 Differences from btnet:
@@ -63,6 +65,7 @@ sudo apt-get update
 sudo apt-get install -y dotnet-sdk-5.0
 
 Also, for the "Reports" charts feature:
+
 ```
 sudo apt-get install libgdiplus
 ```
