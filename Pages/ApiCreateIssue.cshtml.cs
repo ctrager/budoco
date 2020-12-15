@@ -38,19 +38,19 @@ namespace budoco.Pages
             if (string.IsNullOrEmpty(username))
             {
                 result.error = "username missing";
-                return FormatResult(result);
+                return new JsonResult(result);
             }
 
             if (string.IsNullOrEmpty(username))
             {
                 result.error = "password missing";
-                return FormatResult(result);
+                return new JsonResult(result);
             }
 
             if (string.IsNullOrEmpty(username))
             {
                 result.error = "description missing";
-                return FormatResult(result);
+                return new JsonResult(result);
             }
 
             string sql = "select us_id, us_is_active, us_password from users where us_username = @username";
@@ -61,7 +61,7 @@ namespace budoco.Pages
             if (dr is null)
             {
                 result.error = "invalid username or password";
-                return FormatResult(result);
+                return new JsonResult(result);
             }
 
             string password_in_db = (string)dr["us_password"];
@@ -69,13 +69,13 @@ namespace budoco.Pages
             if (!bd_util.check_password_against_hash(password, password_in_db))
             {
                 result.error = "invalid username or password";
-                return FormatResult(result);
+                return new JsonResult(result);
             }
 
             if (!(bool)dr["us_is_active"])
             {
                 result.error = "username is inactive";
-                return FormatResult(result);
+                return new JsonResult(result);
             }
 
             int issue_id = bd_issue.create_issue(description, "posted via API", (int)dr["us_id"]);
@@ -87,14 +87,9 @@ namespace budoco.Pages
             result.issue_id = issue_id;
             result.post_id = post_id;
 
-            var json = JsonSerializer.Serialize<MyResult>(result);
-            return new JsonResult(json);
+            return new JsonResult(result);
         }
 
-        JsonResult FormatResult(MyResult result)
-        {
-            var json = JsonSerializer.Serialize<MyResult>(result);
-            return new JsonResult(json);
-        }
+
     }
 }
