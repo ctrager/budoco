@@ -78,6 +78,9 @@ namespace budoco
                 // Because we will control it with nginx,
                 // which gives good specific 413 status rather than vague 400 status
                 options.Limits.MaxRequestBodySize = null;
+
+                // This works
+                //options.ListenAnyIP(8000);
             });
         });
 
