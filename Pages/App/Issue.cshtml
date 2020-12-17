@@ -88,6 +88,10 @@
             <select class="issue_select" asp-for="organization_id" asp-items="@Model.organization_list" disabled="@Model.disable_dropdowns_when_not_null">
             </select>
             
+            <label class="issue_select_label" id="assigned_to_user_label">Organization</label>
+            <select class="issue_select" asp-for="assigned_to_user_id" asp-items="@Model.assigned_to_user_list" disabled="@Model.disable_dropdowns_when_not_null">
+            </select>
+
             if (bd_config.get(bd_config.CustomFieldEnabled1) == 1) 
             {
                 <label class="issue_select_label" id="custom_1_label">@Model.custom_1_label</label>
