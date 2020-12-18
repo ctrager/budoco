@@ -23,7 +23,7 @@ Budoco is a rewrite of **BU**gtracker.NET (aka "btnet"), but this time on **DO**
 
 * It sends and receives email which gets tracked with the issue. So a good fit for a help desk, or company that works with multiple clients.
 
-* It has a lightweight permission system specifically specifically for keeping external organizations separate from each other.
+* It has a lightweight permission system specifically for keeping external organizations separate from each other.
 
 * It works well with a companion [screenshot app](https://github.com/ctrager/budoco_screenshot) that lets you take a screenshot and post it as an issue with just two clicks.
 
