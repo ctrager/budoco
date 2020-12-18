@@ -28,7 +28,8 @@ namespace budoco.Pages
             us_created_date as ""Created""
             from users
             left outer join organizations on og_id = us_organization
-            where us_username != 'system'";
+            where us_username != 'system'
+            order by us_username";
 
             dt = bd_db.get_datatable(sql);
         }

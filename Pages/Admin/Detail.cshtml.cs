@@ -48,7 +48,8 @@ namespace budoco.Pages
                 c$_name as ""name"",
                 c$_is_active as ""is_active"",
                 c$_is_default as ""is_default""
-                from custom_$ where c$_id = " + id.ToString();
+                from custom_$ where c$_id = " + id.ToString()
+                + " order by c$_name";
 
                 sql = sql.Replace("$", field.ToString());
 

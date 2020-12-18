@@ -17,10 +17,7 @@ namespace budoco.Pages
                     rp_id as ""ID"",
                     rp_name as ""Name"",
                     rp_chart_type as ""Chart Type""
-                from
-                    reports
-                order
-                    by rp_name";
+                from reports order by rp_name";
 
             dt = bd_db.get_datatable(sql);
         }

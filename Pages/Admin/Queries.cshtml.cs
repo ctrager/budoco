@@ -13,7 +13,8 @@ namespace budoco.Pages
         public void OnGet()
         {
             string sql = @"select qu_id as ""ID"", qu_name as ""Name"", qu_description as ""Description"", qu_sql as ""SQL"", 
-            qu_is_active as ""Active"", qu_is_default as ""Default"" from queries order by qu_name";
+            qu_is_active as ""Active"", qu_is_default as ""Default"" 
+            from queries order by qu_name";
             dt = bd_db.get_datatable(sql);
         }
 
