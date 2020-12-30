@@ -274,4 +274,4 @@ create table db_version
 (
 db_version int 
 );
-insert into db_version (db_version) values(1);
+insert into db_version (db_version) values(4);
